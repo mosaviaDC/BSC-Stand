@@ -1,0 +1,43 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BSC_Stand.Views.Windows"
+        xmlns:ViewModels="clr-namespace:BSC_Stand.ViewModels" 
+        x:Class="BSC_Stand.Views.Windows.MenuWindow"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        mc:Ignorable="d"
+        Title="MenuWindow" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <Grid>
+        <Menu Height="45" VerticalAlignment="Top">
+            <Menu.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
+            </Menu.Background>
+
+        </Menu>
+        <Grid Margin="0,45,0,0">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.7*"/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="0"  Width="5" ShowsPreview="True" HorizontalAlignment="Right" VerticalAlignment="Stretch"></GridSplitter>
+            <GridSplitter Grid.Column="1"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
+            <GridSplitter Grid.Column="2"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
+            <GridSplitter Grid.Column="3"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
+            
+        </Grid>
+        <StatusBar Height="45" VerticalAlignment="Bottom">
+            <StatusBar.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
+            </StatusBar.Background>
+        </StatusBar>
+        
+        
+        
+    </Grid>
+
+</Window>
