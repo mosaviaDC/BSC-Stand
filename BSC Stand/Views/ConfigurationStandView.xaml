@@ -17,8 +17,8 @@
         </Grid.ColumnDefinitions>
 
 
-        <GroupBox Grid.Column="0" Header="Stand Configuration"></GroupBox>
-        <GroupBox Grid.Column="1" Header="Settings "></GroupBox>
+        <GroupBox Grid.Column="0"  Header="Stand Configuration" Padding="0"></GroupBox>
+        <GroupBox Grid.Column="1" Header="Settings" Padding="0"></GroupBox>
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="2" VerticalAlignment="Stretch"></GridSplitter>
     </Grid>
 </UserControl>

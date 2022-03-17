@@ -8,26 +8,29 @@
         x:Class="BSC_Stand.Views.Windows.MenuWindow"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:configWindows ="clr-namespace:BSC_Stand.Views"
-        
+        xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MenuWindow" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="ЭО БСК" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized">
 
     <Grid>
         <Menu Height="45" VerticalAlignment="Top">
             <Menu.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
             </Menu.Background>
+            
+         
+
 
         </Menu>
         <Grid Margin="0,45,0,45">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                <ColumnDefinition  Width="0.3*"></ColumnDefinition>
                 <ColumnDefinition Width="0.7*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <GroupBox BorderThickness="0" x:Name="StandConfiguration" Grid.Column="0">
+            <GroupBox  Padding="0" x:Name="StandConfiguration" Grid.Column="0">
                 <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>
             </GroupBox>
-            <GroupBox Grid.Column="1" BorderThickness="0" Margin="-5,0,0,0" >
+            <GroupBox Padding="0" Grid.Column="1"   >
                 <configWindows:StandVizualizationView></configWindows:StandVizualizationView>
             </GroupBox>
           
@@ -42,6 +45,25 @@
             <StatusBar.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
             </StatusBar.Background>
+            <StatusBarItem HorizontalAlignment="Left">
+                <TextBlock Text="Техническое Сообщение 1">
+
+                </TextBlock>
+                
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Left">
+                <TextBlock Text="Техническое Сообщение 2">
+
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Center">
+                <ProgressBar Width="150" Value="75" SmallChange="0.01" >
+
+                </ProgressBar>
+            </StatusBarItem>
+            
+
+
         </StatusBar>
         
         
