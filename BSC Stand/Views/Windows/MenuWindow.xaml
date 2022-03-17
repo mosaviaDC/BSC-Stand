@@ -7,6 +7,8 @@
         xmlns:ViewModels="clr-namespace:BSC_Stand.ViewModels" 
         x:Class="BSC_Stand.Views.Windows.MenuWindow"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        xmlns:configWindows ="clr-namespace:BSC_Stand.Views"
+        
         mc:Ignorable="d"
         Title="MenuWindow" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized">
 
@@ -18,44 +20,19 @@
 
         </Menu>
         <Grid Margin="0,45,0,45">
-            <Grid.ColumnDefinitions >
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.4*"/>
-                <ColumnDefinition Width="0.7*"/>
-                <ColumnDefinition Width="0.4*"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <GridSplitter Grid.Column="0"  Width="5" ShowsPreview="True" HorizontalAlignment="Right" VerticalAlignment="Stretch"></GridSplitter>
-            <GridSplitter Grid.Column="1"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
-            <GridSplitter Grid.Column="2"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
-            <GridSplitter Grid.Column="3"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
-            <GroupBox Grid.Column="0">
-                <Grid>
-
-                </Grid>
-
+            <GroupBox Header="Конфигурация стенда" x:Name="StandConfiguration" Grid.Column="0">
+                <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>
             </GroupBox>
-            <GroupBox Grid.Column="1">
-                <Grid>
-
-                </Grid>
-
+            <GroupBox Header="Визуализация" Grid.Column="1">
+                <configWindows:StandVizualizationView></configWindows:StandVizualizationView>
             </GroupBox>
-            <GroupBox Grid.Column="3">
-                <Grid>
+            <GroupBox Header="Текущие параметры" Grid.Column="2"></GroupBox>
 
-                </Grid>
-
-            </GroupBox>
-
-
-            <GroupBox Grid.Column="4">
-                <Grid>
-                 
-                </Grid>
-           
-            </GroupBox>
-            
-            
         </Grid>
         <StatusBar Height="45" VerticalAlignment="Bottom">
             <StatusBar.Background>
