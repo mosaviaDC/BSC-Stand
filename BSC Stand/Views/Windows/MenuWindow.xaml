@@ -22,16 +22,20 @@
         <Grid Margin="0,45,0,45">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                <ColumnDefinition Width="0.7*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="Конфигурация стенда" x:Name="StandConfiguration" Grid.Column="0">
+            <GroupBox BorderThickness="0" x:Name="StandConfiguration" Grid.Column="0">
                 <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>
             </GroupBox>
-            <GroupBox Header="Визуализация" Grid.Column="1">
+            <GroupBox Grid.Column="1" BorderThickness="0" Margin="-5,0,0,0" >
                 <configWindows:StandVizualizationView></configWindows:StandVizualizationView>
             </GroupBox>
-            <GroupBox Header="Текущие параметры" Grid.Column="2"></GroupBox>
+          
+            <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" Width="5" HorizontalAlignment="Right">
+                
+            </GridSplitter>
+            
+
 
         </Grid>
         <StatusBar Height="45" VerticalAlignment="Bottom">

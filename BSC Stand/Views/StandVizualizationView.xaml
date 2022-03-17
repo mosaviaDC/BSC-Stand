@@ -6,17 +6,33 @@
              xmlns:local="clr-namespace:BSC_Stand.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#FFAC4C4C" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.7*"></RowDefinition>
-            <RowDefinition Height="0.3*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" Height="5" VerticalAlignment="Bottom"></GridSplitter>
-        <GroupBox Grid.Row="0">
-            <Grid Background="#FFC3B6B6" >
-                
+    <Grid >
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="0" Width="15" HorizontalAlignment="Right" VerticalAlignment="Stretch"></GridSplitter>
+
+
+
+        <GroupBox  BorderThickness="1" Header="Graphics" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.7*"></RowDefinition>
+                    <RowDefinition Height="0.3*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0"> </GroupBox>
+                <GridSplitter Grid.Row="0" VerticalAlignment="Bottom" Height="2" HorizontalAlignment="Stretch"></GridSplitter>
             </Grid>
         </GroupBox>
+     
+        <GroupBox  BorderThickness="0" Header="Current Parametres" Grid.Column="1">
+        </GroupBox>
         
+
+
     </Grid>
 </UserControl>
