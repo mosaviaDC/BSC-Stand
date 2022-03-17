@@ -9,6 +9,7 @@ namespace BSC_Stand.ViewModels
     internal class MenuWindowViewModel:ViewModels.Base.ViewModelBase
     {
         #region Properties
+        public string TestMenu;
         #endregion
 
         #region Commands

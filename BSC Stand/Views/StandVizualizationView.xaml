@@ -3,10 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:oxy="http://oxyplot.org/wpf"
              xmlns:local="clr-namespace:BSC_Stand.Views"
+             xmlns:vm ="clr-namespace:BSC_Stand.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:StandVizualizationViewModel></vm:StandVizualizationViewModel>
+    </UserControl.DataContext>
+  
+   
     <Grid >
+        
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </Grid.Background>
@@ -24,7 +32,20 @@
                     <RowDefinition Height="0.7*"></RowDefinition>
                     <RowDefinition Height="0.3*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <GroupBox  Grid.Row="0" Background="White" SnapsToDevicePixels="False"  Padding="0"/>
+                <GroupBox  Grid.Row="0" Background="White" SnapsToDevicePixels="False"  Padding="0">
+                    
+                    <Grid>
+                
+                        <oxy:PlotView Margin="0,0,0,0" Model="{Binding testPlotModel}">
+                            
+                        </oxy:PlotView>
+                 
+                        
+
+                    </Grid>
+
+
+                </GroupBox>
                 <GridSplitter Grid.Row="0" VerticalAlignment="Bottom" Height="2" HorizontalAlignment="Stretch"></GridSplitter>
             </Grid>
         </GroupBox>
