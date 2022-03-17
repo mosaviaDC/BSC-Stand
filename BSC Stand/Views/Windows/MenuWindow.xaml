@@ -17,7 +17,7 @@
             </Menu.Background>
 
         </Menu>
-        <Grid Margin="0,45,0,0">
+        <Grid Margin="0,45,0,45">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.4*"/>
@@ -28,6 +28,33 @@
             <GridSplitter Grid.Column="1"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
             <GridSplitter Grid.Column="2"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
             <GridSplitter Grid.Column="3"  Width="5" ShowsPreview="True" VerticalAlignment="Stretch"></GridSplitter>
+            <GroupBox Grid.Column="0">
+                <Grid>
+
+                </Grid>
+
+            </GroupBox>
+            <GroupBox Grid.Column="1">
+                <Grid>
+
+                </Grid>
+
+            </GroupBox>
+            <GroupBox Grid.Column="3">
+                <Grid>
+
+                </Grid>
+
+            </GroupBox>
+
+
+            <GroupBox Grid.Column="4">
+                <Grid>
+                 
+                </Grid>
+           
+            </GroupBox>
+            
             
         </Grid>
         <StatusBar Height="45" VerticalAlignment="Bottom">
