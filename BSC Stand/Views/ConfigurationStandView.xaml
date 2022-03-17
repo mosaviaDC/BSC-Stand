@@ -6,22 +6,19 @@
              xmlns:local="clr-namespace:BSC_Stand.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Grid Background="White">
+
+    <Grid >
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"></ColumnDefinition>
-            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+            <ColumnDefinition Width="0.4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Column="0">
-            <Grid Background="#FFCCCCCC">
-                
-            </Grid>
-        </GroupBox>
-        <GroupBox Grid.Column="1">
-            <Grid Background="#FFE0E0E0">
 
-            </Grid>
-        </GroupBox>
-        <GridSplitter Grid.Column="0" Width="5" ></GridSplitter>
+
+        <GroupBox Grid.Column="0" Header="Stand Configuration"></GroupBox>
+        <GroupBox Grid.Column="1" Header="Settings "></GroupBox>
+        <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="2" VerticalAlignment="Stretch"></GridSplitter>
     </Grid>
 </UserControl>
