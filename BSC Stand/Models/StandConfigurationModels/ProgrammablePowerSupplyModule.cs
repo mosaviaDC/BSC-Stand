@@ -15,9 +15,17 @@ namespace BSC_Stand.Models.StandConfigurationModels
         public float Amperage { get; set; }
         public float Voltage { get; set; }
         public float Power { get; set; }
-        public ProgrammablePowerSupplyModule(string Name="Тетрон 15016С")
+        public float MaxAmperage { get; set; }
+        public float MinAmperage { get; set; }
+        public float MaxVoltage { get; set; }
+        public float MinVoltage { get; set; }
+        public ProgrammablePowerSupplyModule(string Name, float MinAmperage, float MaxAmperage,float MinVoltage,float MaxVoltage )
         {
             ModuleName = Name;
+            this.MaxAmperage = MaxAmperage;
+            this.MinAmperage = MinAmperage;
+            this.MaxVoltage = MaxVoltage;
+            this.MinVoltage = MinVoltage;
         }
     }
 }

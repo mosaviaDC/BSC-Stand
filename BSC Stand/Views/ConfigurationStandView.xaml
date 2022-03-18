@@ -54,6 +54,63 @@
                         <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Min A"></TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MinAmperage}" TextAlignment="Left"></TextBox>
+                        </Grid>
+                        
+                        
+                        
+                        
+                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Max A"></TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MaxAmperage}" TextAlignment="Left"></TextBox>
+                        </Grid>
+
+                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Min V"></TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MinVoltage}" TextAlignment="Left"></TextBox>
+                        </Grid>
+
+                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Min V"></TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MaxVoltage}" TextAlignment="Left"></TextBox>
+                        </Grid>
+
+
+
+                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.05*">
                                    
                                 </ColumnDefinition>
                                 <ColumnDefinition Width="0.05*">
@@ -78,7 +135,14 @@
 
                     </TreeViewItem>
                     <TreeViewItem Header="Режимы">
-                        
+                        <ListBox>
+                            <ListBoxItem>
+                                <TextBlock>Удержание V</TextBlock>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <TextBlock>Удержание A</TextBlock>
+                            </ListBoxItem>
+                        </ListBox>
                     </TreeViewItem>
                 </TreeView>
             </StackPanel>

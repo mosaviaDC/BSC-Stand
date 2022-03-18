@@ -73,9 +73,9 @@ namespace BSC_Stand.ViewModels
         public StandConfigurationViewModel()
         {
             
-            _Tetron15016C = new ProgrammablePowerSupplyModule();
-            _AKIP_1311 = new ProgrammablePowerSupplyModule("АКИП-1311");
-            _AKIP_1311_4 = new ProgrammablePowerSupplyModule("АКИП-1311/4");
+            _Tetron15016C = new ProgrammablePowerSupplyModule("Тетрон 15016С", 0,16,0,160);
+            _AKIP_1311 = new ProgrammablePowerSupplyModule("АКИП-1311", 0, 20, 0, 40);
+            _AKIP_1311_4 = new ProgrammablePowerSupplyModule("АКИП-1311/4", 0, 96.4f, 0, 50);
             _selectedConfigModule = _Tetron15016C;
             programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
             programmablePowerSupplyModules.Add(_Tetron15016C);
