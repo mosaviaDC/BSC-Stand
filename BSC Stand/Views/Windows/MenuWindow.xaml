@@ -32,11 +32,11 @@
             <GroupBox  Padding="0" x:Name="StandConfiguration" Grid.Column="0">
                 <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>
             </GroupBox>
-            <GroupBox Padding="0" Grid.Column="1"   >
+            <GroupBox Padding="0" Grid.Column="1">
                 <configWindows:StandVizualizationView></configWindows:StandVizualizationView>
             </GroupBox>
           
-            <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" Width="5" HorizontalAlignment="Right">
+            <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" Width="5"  HorizontalAlignment="Right">
                 
             </GridSplitter>
             

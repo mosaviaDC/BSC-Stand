@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BSC_Stand.Views"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:vm ="clr-namespace:BSC_Stand.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
+    <UserControl.DataContext>
+        <vm:StandConfigurationViewModel></vm:StandConfigurationViewModel>
+    </UserControl.DataContext>
     <Grid >
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
@@ -17,8 +22,68 @@
         </Grid.ColumnDefinitions>
 
 
-        <GroupBox Grid.Column="0"  Header="Stand Configuration" Padding="0"></GroupBox>
-        <GroupBox Grid.Column="1" Header="Settings" Padding="0"></GroupBox>
+        <GroupBox Grid.Column="0"  Header="StandConfiguration" Padding="0">
+            <Grid>
+                <ListBox x:Name="StandConfigurationModules" ItemsSource="{Binding programmablePowerSupplyModules}" SelectedItem="{Binding SelectedConfigModule}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate >
+                            <StackPanel >
+                                <TextBlock Text="{Binding ModuleName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                                       
+                   
+                        
+                   
+                </ListBox>
+                
+           
+                
+            </Grid>
+            
+            
+            
+        </GroupBox>
+        <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Settings" Padding="0">
+            <StackPanel>
+                <TextBlock  Text="{Binding SelectedConfigModule.ModuleName}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
+              
+                <TreeView Background="#26673AB7" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-1,0,0,0"  >
+                    <TreeViewItem Header="Параметры">
+                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.05*">
+                                   
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Сила тока"></TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.Amperage}" TextAlignment="Left"></TextBox>
+                        </Grid>
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="0.05*">
+
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Напряжение"></TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.Voltage}" TextAlignment="Left"></TextBox>
+                        </Grid>
+
+                    </TreeViewItem>
+                    <TreeViewItem Header="Режимы">
+                        
+                    </TreeViewItem>
+                </TreeView>
+            </StackPanel>
+
+        </GroupBox>
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="2" VerticalAlignment="Stretch"></GridSplitter>
     </Grid>
 </UserControl>
