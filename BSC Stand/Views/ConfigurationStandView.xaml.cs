@@ -25,6 +25,6 @@ namespace BSC_Stand.Views
             InitializeComponent();
         }
 
-
+     
     }
 }

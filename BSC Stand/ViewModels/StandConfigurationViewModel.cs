@@ -11,14 +11,14 @@ using BSC_Stand.Infastructure.Commands;
 using BSC_Stand.Models.StandConfigurationModels;
 using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
 
+
 namespace BSC_Stand.ViewModels
 {
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
 
-      
         #region Properties
-       private ProgrammablePowerSupplyModule _AKIP1311;
+        private ProgrammablePowerSupplyModule _AKIP1311;
        public ProgrammablePowerSupplyModule AKIP1311
         {
             get => _AKIP1311;
@@ -44,7 +44,15 @@ namespace BSC_Stand.ViewModels
         #endregion
 
         #region Commands
-
+        public ICommand MouseWheelHandleCommand { get; }
+        private void MouseWheelHandleCommandExecute(object p)
+        {
+            Debug.WriteLine(p.ToString());
+        }
+        private bool CanMouseWheelHandleCommandExecuted(object p)
+        {
+            return true;
+        }
 
 
         #endregion
@@ -153,8 +161,8 @@ namespace BSC_Stand.ViewModels
                 programmablePowerSupplyModules.Add(_AKIP1311_4);
                 programmablePowerSupplyModules.Add(_Tetron15016C);
 
-                #region Commands
-
+            #region Commands
+            MouseWheelHandleCommand = new ActionCommand(MouseWheelHandleCommandExecute, CanMouseWheelHandleCommandExecuted);
                 #endregion
 
             
