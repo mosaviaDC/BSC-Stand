@@ -26,7 +26,7 @@
 
         <GroupBox Grid.Column="0"  Header="Конфигурация стенда" Padding="0">
             <Grid>
-                <ListBox x:Name="StandConfigurationModules" ItemsSource="{Binding programmablePowerSupplyModules}" SelectedItem="{Binding SelectedConfigModule}">
+                <ListBox  x:Name="StandConfigModules" ItemsSource="{Binding programmablePowerSupplyModules, Mode=OneWay}">
                     <ListBox.ItemTemplate>
                         <DataTemplate >
                             <StackPanel >
@@ -34,10 +34,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                                       
-                   
-                        
-                   
+
                 </ListBox>
                 
            
@@ -49,9 +46,76 @@
         </GroupBox>
         <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Параметры модулей" Padding="0">
             <StackPanel>
-                <TextBlock  Text="{Binding SelectedConfigModule.ModuleName}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
+                <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
+                <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TreeViewItem Header="Режимы">
+                        <ListBox x:Name="configurationModesList"  ItemsSource="{Binding SelectedItem.Modes, ElementName=StandConfigModules}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding ModeName}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </TreeViewItem>
+
+                    <TreeViewItem Header="{Binding SelectedItem.ModeName, ElementName=configurationModesList}" HorizontalAlignment="Stretch">
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition>
+                                        
+                                    </RowDefinition>
+                                    <RowDefinition>
+
+                                    </RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*">
+
+                                    </ColumnDefinition>
+                                    <ColumnDefinition Width="0.3*">
+
+                                    </ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Text="Min Value"></TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Max value</TextBlock>
+                                <TextBox Grid.Row="1" Grid.Column="0" Margin="10" Text="{Binding SelectedItem.MinValue, ElementName=configurationModesList}" Cursor="IBeam" ></TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedItem.MaxValue, ElementName=configurationModesList}" Cursor="IBeam" ></TextBox>
+
+                            </Grid>
+                            
+                            
+                        </StackPanel>
+                          
+                        
+                    </TreeViewItem>
+                    
+                    
+                    
+
+                </TreeView>
+               
+                 
               
-                <TreeView Background="#26673AB7" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-1,0,0,0"  >
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <!--<TreeView Background="#26673AB7" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-1,0,0,0"  >
                     <TreeViewItem Header="Параметры">
                         <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
                             <Grid.ColumnDefinitions>
@@ -146,7 +210,7 @@
                             </ListBoxItem>
                         </ListBox>
                     </TreeViewItem>
-                </TreeView>
+                </TreeView>-->
             </StackPanel>
 
         </GroupBox>

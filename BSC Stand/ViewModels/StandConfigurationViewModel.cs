@@ -9,60 +9,33 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using BSC_Stand.Infastructure.Commands;
 using BSC_Stand.Models.StandConfigurationModels;
+using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
 
 namespace BSC_Stand.ViewModels
 {
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
-        #region Properties
 
-        private  ProgrammablePowerSupplyModule _selectedConfigModule;
-        public ProgrammablePowerSupplyModule SelectedConfigModule
+      
+        #region Properties
+       private ProgrammablePowerSupplyModule _AKIP1311;
+       public ProgrammablePowerSupplyModule AKIP1311
         {
-            get => _selectedConfigModule;
-            set => Set(ref _selectedConfigModule, value);
+            get => _AKIP1311;
+            set=>Set(ref _AKIP1311, value);
+        }
+
+        private ProgrammablePowerSupplyModule _AKIP1311_4;
+        public ProgrammablePowerSupplyModule AKIP1311_4
+        {
+            get => _AKIP1311_4;
+            set => Set(ref _AKIP1311_4, value);
         }
         public ObservableCollection<ProgrammablePowerSupplyModule> programmablePowerSupplyModules { get; set; }
-
-
-
-        private ProgrammablePowerSupplyModule _Tetron15016C;
-        public ProgrammablePowerSupplyModule Tetron15016C 
-        {
-            get => _Tetron15016C;
-
-            set => Set(ref _Tetron15016C, value);
-        }
-
-        private ProgrammablePowerSupplyModule _AKIP_1311;
-        public ProgrammablePowerSupplyModule AKIP_1311
-        {
-            get => _AKIP_1311;
-            set => Set(ref _AKIP_1311, value);
-        }
-
-        private ProgrammablePowerSupplyModule _AKIP_1311_4;
-        public ProgrammablePowerSupplyModule AKIP_1311_4
-        {
-            get => _AKIP_1311_4;
-            set => Set(ref _AKIP_1311_4, value);
-        }
-
-
-
-
         #endregion
 
         #region Commands
-       public ICommand SelectedItemCommand { get; }
-       private void SelectedItemCommandExecute(object p)
-        {
-            Debug.WriteLine("**");
-        }
-       private bool CanSelectedItemCommandExecuted(object p )
-        {
-            return true;
-        }
+
 
 
         #endregion
@@ -72,22 +45,73 @@ namespace BSC_Stand.ViewModels
 
         public StandConfigurationViewModel()
         {
+            List<ConfigurationMode> Akip1311_Config = new List<ConfigurationMode>()
+            {
+                 new ConfigurationMode()
+            {
+                ModeName = "Стабилизация напряжения",
+                Discreteness = 0.5f,
+                MinValue = 0,
+                MaxValue = 60,
+                ModeUnit = "В"
+            },
+                 new ConfigurationMode()
+            {
+                ModeName = "Cтабилизация силы тока",
+                Discreteness = 0.5f,
+                MinValue = 0,
+                MaxValue = 25,
+                ModeUnit = "A"
+            },
+                 new ConfigurationMode()
+            {
+                ModeName = "Cтабилизация мощности",
+                Discreteness = 0.5f,
+                MinValue = 60,
+                MaxValue = 600,
+                ModeUnit = "Вт"
+                 }
+            };
+            List<ConfigurationMode> Akip1311_4Config = new List<ConfigurationMode>()
+            {
+                 new ConfigurationMode()
+            {
+                ModeName = "Стабилизация напряжения",
+                Discreteness = 0.5f,
+                MinValue = 0,
+                MaxValue = 60,
+                ModeUnit = "В"
+            },
+                 new ConfigurationMode()
+            {
+                ModeName = "Cтабилизация силы тока",
+                Discreteness = 0.5f,
+                MinValue = 0,
+                MaxValue = 25,
+                ModeUnit = "A"
+            },
+                 new ConfigurationMode()
+            {
+                ModeName = "Cтабилизация мощности",
+                Discreteness = 0.5f,
+                MinValue = 60,
+                MaxValue = 600,
+                ModeUnit = "Вт"
+                 }
+            };
+            ProgrammablePowerSupplyModule _AKIP1311 = new ProgrammablePowerSupplyModule("Акип 1311",Akip1311_Config);
+                ProgrammablePowerSupplyModule _AKIP1311_4 = new ProgrammablePowerSupplyModule("Акип 1311/4",Akip1311_4Config);
+                programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
+
+                programmablePowerSupplyModules.Add(_AKIP1311);
+                programmablePowerSupplyModules.Add(_AKIP1311_4);
+
+                #region Commands
+
+                #endregion
+
             
-            _Tetron15016C = new ProgrammablePowerSupplyModule("Тетрон 15016С", 0,16,0,160);
-            _AKIP_1311 = new ProgrammablePowerSupplyModule("АКИП-1311", 0, 20, 0, 40);
-            _AKIP_1311_4 = new ProgrammablePowerSupplyModule("АКИП-1311/4", 0, 96.4f, 0, 50);
-            _selectedConfigModule = _Tetron15016C;
-            programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
-            programmablePowerSupplyModules.Add(_Tetron15016C);
-            programmablePowerSupplyModules.Add(_AKIP_1311);
-            programmablePowerSupplyModules.Add(_AKIP_1311_4);
-            #region Commands
-            SelectedItemCommand = new ActionCommand(SelectedItemCommandExecute);
-            SelectedItemCommand.Execute(null);
-            #endregion
-
         }
-
 
 
 
