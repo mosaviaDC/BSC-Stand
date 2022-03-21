@@ -83,7 +83,11 @@
 
                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Text="Min Value"></TextBlock>
                                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Max value</TextBlock>
-                                <TextBox Grid.Row="1" Grid.Column="0" Margin="10" Text="{Binding SelectedItem.MinValue, ElementName=configurationModesList}" Cursor="IBeam" ></TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="0" Margin="10"  Text="{Binding SelectedItem.MinValue, ElementName=configurationModesList}" Cursor="IBeam" >
+                                   
+                                   
+                                    
+                                </TextBox>
                                 <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedItem.MaxValue, ElementName=configurationModesList}" Cursor="IBeam" ></TextBox>
 
                             </Grid>

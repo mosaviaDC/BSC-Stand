@@ -16,8 +16,6 @@ namespace BSC_Stand.ViewModels
         {
           
             testPlotModel = new PlotModel();
-           
-            
             var verticalAxis = new LinearAxis { Position = AxisPosition.Left,  Minimum = 0, Maximum = 1000 };
             
             var horizontalAxis = new LinearAxis { Position = AxisPosition.Bottom, Maximum = 1000};
