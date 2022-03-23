@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BSC_Stand.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +16,15 @@ namespace BSC_Stand
     /// </summary>
     public partial class App : Application
     {
+
+        public static void ConfigureServices(HostBuilderContext host,IServiceCollection services)
+        {
+            // services.AddSingleton
+            services.AddSingleton<MenuWindowViewModel>();
+            services.AddSingleton<StandConfigurationViewModel>();
+            services.AddSingleton<StandVizualizationViewModel>();
+
+        }
+      
     }
 }

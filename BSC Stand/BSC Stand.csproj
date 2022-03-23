@@ -6,6 +6,7 @@
     <RootNamespace>BSC_Stand</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <StartupObject>BSC_Stand.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.1.6" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="OxyPlot.Core" Version="2.1.0" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.0" />
