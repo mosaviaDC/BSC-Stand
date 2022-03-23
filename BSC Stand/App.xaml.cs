@@ -1,4 +1,5 @@
-﻿using BSC_Stand.ViewModels;
+﻿
+using BSC_Stand.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -41,7 +42,6 @@ namespace BSC_Stand
             services.AddSingleton<MenuWindowViewModel>();
             services.AddSingleton<StandConfigurationViewModel>();
             services.AddSingleton<StandVizualizationViewModel>();
-
         }
       
     }

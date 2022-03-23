@@ -6,14 +6,11 @@
              xmlns:local="clr-namespace:BSC_Stand.Views"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:vm ="clr-namespace:BSC_Stand.ViewModels"
+             DataContext="{Binding StandConfigurationViewModel ,Source={StaticResource ViewModelLocator}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <vm:StandConfigurationViewModel></vm:StandConfigurationViewModel>
-    </UserControl.DataContext>
-    
-    
+
+
     <Grid >
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
