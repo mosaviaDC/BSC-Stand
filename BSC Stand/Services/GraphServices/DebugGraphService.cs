@@ -31,7 +31,11 @@ namespace BSC_Stand.Services.GraphServices
             DataPoint[] dataPoints = new DataPoint[25];
             for (int i = 0; i < dataPoints.Length; i++)
             {
-                dataPoints[i] = new DataPoint(i+CurrentIndex,random.Next(100,105));
+                dataPoints[i] = new DataPoint(i+CurrentIndex,random.Next(100,102));
+                if (CurrentIndex % 3 ==0)
+                {
+                    dataPoints[i] = new DataPoint(i+CurrentIndex,random.Next(250,265));
+                }
             }
             CurrentIndex += 25;
             return dataPoints.ToList();

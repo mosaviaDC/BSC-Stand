@@ -79,13 +79,13 @@ namespace BSC_Stand.ViewModels
             Debug.WriteLine(numberOfVisiblePoints);
             
            
-            if (numberOfVisiblePoints <= 100)
+            if (numberOfVisiblePoints <= 3000)
             {
-                testPlotModel.InvalidatePlot(true);
+                testPlotModel.PlotView.InvalidatePlot(true);
                
             }
-            else if (numberOfVisiblePoints <=1000)
-            testPlotModel.PlotView.InvalidatePlot(true);
+           // else if (numberOfVisiblePoints <=3000)
+          //  testPlotModel.PlotView.InvalidatePlot(true);
 
 
             //   testPlotModel.PlotView.
