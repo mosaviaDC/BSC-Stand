@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.Extensions.Logging;
 using BSC_Stand.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +25,7 @@ namespace BSC_Stand
             var host = Host;
             base.OnStartup(e);
             await host.StartAsync().ConfigureAwait(false);
+            
         }
 
         protected override async void OnExit(ExitEventArgs e)

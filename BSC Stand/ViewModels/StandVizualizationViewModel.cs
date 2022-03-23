@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using BSC_Stand.Services.FileLoggingService;
+using System.IO;
 
 namespace BSC_Stand.ViewModels
 {
     internal class StandVizualizationViewModel:ViewModels.Base.ViewModelBase
     {
         public PlotModel testPlotModel  { get; private set; }
-        public StandVizualizationViewModel()
+        public StandVizualizationViewModel(ILoggerFactory factory)
         {
-          
+            factory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
+            var logger = factory.CreateLogger("FileLogger");
+      
             testPlotModel = new PlotModel();
             var verticalAxis = new LinearAxis { Position = AxisPosition.Left,  Minimum = 0, Maximum = 1000 };
             

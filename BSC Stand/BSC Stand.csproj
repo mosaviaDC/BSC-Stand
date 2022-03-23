@@ -26,8 +26,4 @@
     <ProjectReference Include="..\TestingConsoleApplicaton\TestingConsoleApplicaton.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
