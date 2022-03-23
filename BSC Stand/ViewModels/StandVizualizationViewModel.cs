@@ -67,7 +67,7 @@ namespace BSC_Stand.ViewModels
         {
             // Debug.WriteLine("UpdatePlot");
 
-   
+            s1.Points.AddRange(_graphService.GetDataPoints());
             int numberOfVisiblePoints = 0;
             foreach (DataPoint dataPoint in s1.Points)
             {
@@ -79,14 +79,15 @@ namespace BSC_Stand.ViewModels
             Debug.WriteLine(numberOfVisiblePoints);
             
            
-            if (numberOfVisiblePoints <= 500)
+            if (numberOfVisiblePoints <= 100)
             {
                 testPlotModel.InvalidatePlot(true);
-
+               
             }
+            else if (numberOfVisiblePoints <=1000)
             testPlotModel.PlotView.InvalidatePlot(true);
-            s1.Points.AddRange(_graphService.GetDataPoints());
-          
+
+
             //   testPlotModel.PlotView.
             //testPlotModel.InvalidatePlot(true);
         }
