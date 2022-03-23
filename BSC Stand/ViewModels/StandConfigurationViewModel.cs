@@ -33,7 +33,7 @@ namespace BSC_Stand.ViewModels
             get => _Tetron15016C;
             set => Set(ref _Tetron15016C, value);
         }
-
+        
 
 
         private ProgrammablePowerSupplyModule _AKIP1311_4;
