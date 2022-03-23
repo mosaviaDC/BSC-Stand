@@ -29,7 +29,7 @@ namespace BSC_Stand
                 config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             });
-            builder.ConfigureServices((App.ConfigureServices);
+            builder.ConfigureServices((App.ConfigureServices));
 
             return builder;
         }
