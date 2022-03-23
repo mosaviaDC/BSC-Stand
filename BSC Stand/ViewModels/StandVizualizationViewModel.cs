@@ -15,10 +15,9 @@ namespace BSC_Stand.ViewModels
     internal class StandVizualizationViewModel:ViewModels.Base.ViewModelBase
     {
         public PlotModel testPlotModel  { get; private set; }
-        public StandVizualizationViewModel(ILoggerFactory factory)
+        public StandVizualizationViewModel(IFileLogger fileLogger)
         {
-            factory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
-            var logger = factory.CreateLogger("FileLogger");
+            fileLogger.Log("а");
       
             testPlotModel = new PlotModel();
             var verticalAxis = new LinearAxis { Position = AxisPosition.Left,  Minimum = 0, Maximum = 1000 };

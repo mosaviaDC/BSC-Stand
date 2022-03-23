@@ -12,12 +12,13 @@ using BSC_Stand.Models.StandConfigurationModels;
 using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
 using Microsoft.Extensions.Logging;
 using BSC_Stand.Services.FileLoggingService;
+using System.IO;
 
 namespace BSC_Stand.ViewModels
 {
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
-        private readonly ILogger _logger;
+       
         #region Properties
         private ProgrammablePowerSupplyModule _AKIP1311;
        public ProgrammablePowerSupplyModule AKIP1311
@@ -61,10 +62,10 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion Services
 
-        public StandConfigurationViewModel(ILogger<StandConfigurationViewModel> logger)
+        public StandConfigurationViewModel(IFileLogger fileLogger)
         {
-            _logger = logger;
-            _logger.Log(LogLevel.Information, "тестовый лог");
+  
+  
             #region Commands
             MouseWheelHandleCommand = new ActionCommand(MouseWheelHandleCommandExecute, CanMouseWheelHandleCommandExecuted);
             #endregion
