@@ -164,9 +164,9 @@ namespace BSC_Stand.ViewModels
                 ModeUnit = "Вт"
                  }
             };
-            ProgrammablePowerSupplyModule _AKIP1311 = new ProgrammablePowerSupplyModule("Акип 1311",Akip1311_Config);
-            ProgrammablePowerSupplyModule _AKIP1311_4 = new ProgrammablePowerSupplyModule("Акип 1311/4",Akip1311_4Config);
-            _Tetron15016C = new ProgrammablePowerSupplyModule("Тетрон15016С", Tetron15016CConfig);
+            ProgrammablePowerSupplyModule _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
+            ProgrammablePowerSupplyModule _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
+            _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
                 programmablePowerSupplyModules.Add(_AKIP1311_4);

@@ -15,8 +15,52 @@ using System.Threading;
 
 namespace BSC_Stand.ViewModels
 {
-    internal class StandVizualizationViewModel:ViewModels.Base.ViewModelBase
+    internal class StandVizualizationViewModel : ViewModels.Base.ViewModelBase
     {
+        #region Properties
+        private string _TextBlock;
+        public string TextBlock
+        {
+            get => _TextBlock;
+            set => Set(ref _TextBlock, value);
+        }
+
+
+        private float _27VBusAmperage;
+        public float L27VBusAmperage
+        {
+            get => _27VBusAmperage;
+            set => Set(ref _27VBusAmperage, value);
+        }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #endregion 
+
+
+
+
+
         public PlotModel testPlotModel { get; set; }
         private IGraphService _graphService;
         private TwoColorAreaSeries s1;
@@ -26,10 +70,19 @@ namespace BSC_Stand.ViewModels
 
         {  
             _graphService = graphService;
-         
+
+            for (int i = 0; i < 150; i++)
+            {
+                _TextBlock += $"Информационное сообщение {i} \n";
+            }
+
+
+       //     _TextBlock = "Информационное Сообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\n ";
+
+
             testPlotModel = new PlotModel()
             {
-                Title = "Title"
+                Title = "Циклограмма"
             };
             s1 = new TwoColorAreaSeries
             {
@@ -84,8 +137,9 @@ namespace BSC_Stand.ViewModels
                 testPlotModel.PlotView.InvalidatePlot(true);
                
             }
-           // else if (numberOfVisiblePoints <=3000)
-          //  testPlotModel.PlotView.InvalidatePlot(true);
+
+            // else if (numberOfVisiblePoints <=3000)
+            //  testPlotModel.PlotView.InvalidatePlot(true);
 
 
             //   testPlotModel.PlotView.
