@@ -18,10 +18,11 @@ namespace BSC_Stand.Views
     /// <summary>
     /// Interaction logic for StandVizualizationView.xaml
     /// </summary>
-    public partial class StandVizualizationView : UserControl
+    public partial class ConfigurationStandGraphsView : UserControl
     {
-        public StandVizualizationView()
+        public ConfigurationStandGraphsView()
         {
+        
             InitializeComponent();
         }
     }
