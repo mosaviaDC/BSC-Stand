@@ -28,12 +28,12 @@ namespace BSC_Stand.Services.GraphServices
         public List<DataPoint> GetDataPoints()
         {
             Random random = new Random();
-            DataPoint[] dataPoints = new DataPoint[25];
+            DataPoint[] dataPoints = new DataPoint[2];
             for (int i = 0; i < dataPoints.Length; i++)
             {
                 dataPoints[i] = new DataPoint(i+CurrentIndex,random.Next(100,105));
             }
-            CurrentIndex += 25;
+            CurrentIndex += 2;
             return dataPoints.ToList();
         }
 
