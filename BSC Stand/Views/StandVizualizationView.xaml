@@ -27,7 +27,7 @@
 
 
 
-        <GroupBox   Header="Graphics" Grid.Column="0" Padding="0,0,0,0">
+        <GroupBox   Header="График" Grid.Column="0" Padding="0,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.7*"></RowDefinition>
@@ -47,11 +47,84 @@
 
 
                 </GroupBox>
+
+                <GroupBox Grid.Row="1">
+                    <ScrollViewer>
+                        <TextBlock Text="{Binding TextBlock, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
+                    </ScrollViewer>
+                    
+                    
+                    
+                </GroupBox>
+                
+                
+                
+                
                 <GridSplitter Grid.Row="0" VerticalAlignment="Bottom" Height="2" HorizontalAlignment="Stretch"></GridSplitter>
             </Grid>
         </GroupBox>
        
-        <GroupBox   Header="Current Parametres" Padding="0" Grid.Column="1">
+        <GroupBox   Header="Параметры" Padding="0" Grid.Column="1">
+            <TreeView>
+                <TreeViewItem Header="Шина 27В">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="0" MinWidth="50">Ток </TextBlock>
+                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="1" MinWidth="50" Text="{Binding L27VBusAmperage}"></TextBlock>
+                        <TextBlock Margin="5"   Grid.Row="1" Grid.Column ="0" MinWidth="50">Напряжение</TextBlock>
+                        <TextBlock  Margin="5" Grid.Row="1" Grid.Column ="1" MinWidth="50" Text="{Binding L27VBusAmperage}"></TextBlock>
+                    </Grid>
+                    
+                    
+                </TreeViewItem>
+                <TreeViewItem Header="Шина 100В">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Margin="5"   Grid.Row="0" Grid.Column ="0" MinWidth="50">Ток</TextBlock>
+                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="1" MinWidth="50" Text="{Binding L27VBusAmperage}"></TextBlock>
+                        <TextBlock  Margin="5"  Grid.Row="1" Grid.Column ="0" MinWidth="50">Напряжение</TextBlock>
+                        <TextBlock Margin="5"  Grid.Row="1" Grid.Column ="1" MinWidth="50" Text="{Binding L27VBusAmperage}"></TextBlock>
+                    </Grid>
+
+
+                </TreeViewItem>
+                <TreeViewItem Header="Температура">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column ="0" MinWidth="50" Margin="5" >Температура ЭО БСК</TextBlock>
+                        <TextBlock  Grid.Row="0" Grid.Column ="1" MinWidth="50" Margin="5"  Text="{Binding L27VBusAmperage}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column ="0" MinWidth="50" Margin="5" >Температура ИБХА</TextBlock>
+                        <TextBlock  Grid.Row="1" Grid.Column ="1" MinWidth="50" Margin="5" Text="{Binding L27VBusAmperage}"></TextBlock>
+                    </Grid>
+
+
+                </TreeViewItem>
+            </TreeView>
+            
+            
+            
+            
         </GroupBox>
        
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch"></GridSplitter>
