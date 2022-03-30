@@ -58,17 +58,20 @@ namespace BSC_Stand.ViewModels
         #region Commands
         public ICommand AddConfigToCyclogram { get; set; }
 
-        public void AddConfigToCyclogramExecuted (object p)
+        public void AddConfigToCyclogramExecuted(object p)
         {
-            var module = (ProgrammablePowerSupplyModule)p;
-            ConfigurationModes.Add(module.Modes[0]);
-            _standVizualizationViewModel.UpdatePlotModel(module.Modes[0]);
+            var configMode = (ConfigurationMode)p;
+            ConfigurationModes.Add(configMode);
+            Test(configMode);
+
         }
+
         public bool CanAddConfigToCyclogramExecuted (object p)
         {
             return true;
         }
 
+        public ICommand UpdateCommand { get; set; }
 
         #endregion
 
@@ -81,6 +84,7 @@ namespace BSC_Stand.ViewModels
 
             #region Commands
             AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
+            UpdateCommand = new ActionCommand(Test);
             #endregion
             #region Services
             #endregion
@@ -182,19 +186,22 @@ namespace BSC_Stand.ViewModels
              _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
              _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
                 //     _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
-                ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+              ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+              ConfigurationModes.CollectionChanged += ConfigurationModes_CollectionChanged;
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
                 programmablePowerSupplyModules.Add(_AKIP1311_4);
             //    programmablePowerSupplyModules.Add(_Tetron15016C);
 
-         
-
-            
+        
         }
-
-
-
-
+        private void Test(object p)
+        {
+            _standVizualizationViewModel.UpdateAllPlot(this.ConfigurationModes);
+        }
+        private void ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            _standVizualizationViewModel.UpdateAllPlot(this.ConfigurationModes);
+        }
     }
 }

@@ -88,16 +88,21 @@
                                 <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedItem.MaxValue, ElementName=configurationModesList}"  Cursor="IBeam"  ></TextBox>
 
                             </Grid>
-                            <Button  Command="{Binding AddConfigToCyclogram}" CommandParameter="{Binding SelectedItem, ElementName=StandConfigModules}" Cursor="Hand" > Добавить в циклограмму</Button>
+                            <Button  Command="{Binding AddConfigToCyclogram}" CommandParameter="{Binding SelectedItem, ElementName=configurationModesList, Mode=OneWay}" Cursor="Hand" >Добавить в циклограмму</Button>
                             
                         </StackPanel>
                           
                         
                     </TreeViewItem>
                     <TreeViewItem Header="Циклограмма">
-                        <DataGrid ItemsSource="{Binding ConfigurationModes}" AutoGenerateColumns="False" MinWidth="400">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn  Header="Мин. Значение" Binding="{Binding Path=MinValue}">
+                        <DataGrid  ItemsSource="{Binding ConfigurationModes, Mode=OneWay}"  IsReadOnly="False" AutoGenerateColumns="False" MinWidth="400">
+                            <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="CellEditEnding" >
+                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}"></behaviors:InvokeCommandAction>
+                            </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
+                            <DataGrid.Columns  >
+                                <DataGridTextColumn    Header="Мин. Значение"  CanUserSort="True"  Binding="{Binding Path=MinValue}" DisplayIndex="0">
 
 
                                 </DataGridTextColumn>

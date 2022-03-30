@@ -49,7 +49,7 @@ namespace BSC_Stand.Services.GraphServices
             var s1 = new TwoColorAreaSeries
             {
                 Title = "Power at ",
-                TrackerFormatString = "{2:0} сек",
+                TrackerFormatString = "{4:0} Вт {2:0} сек",
                 Color = OxyColors.Black,
                 Color2 = OxyColors.Red,
                 Fill = OxyColors.Transparent,

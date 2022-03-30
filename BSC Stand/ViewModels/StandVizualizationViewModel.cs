@@ -89,7 +89,7 @@ namespace BSC_Stand.ViewModels
             s1 = new TwoColorAreaSeries
             {
                 Title = "Мощность ",
-                TrackerFormatString = "{2:0} Вт",
+                TrackerFormatString = "{4:0} Вт {2:0} сек",
                 Color = OxyColors.Black,
                 Color2 = OxyColors.Brown,
                 MarkerFill = OxyColors.Red,
@@ -133,15 +133,48 @@ namespace BSC_Stand.ViewModels
                 //    s1.Points.Add(new DataPoint(configMode.Duration, configMode.MaxValue));
                 //}
 
-                testPlotModel.InvalidatePlot(true);
+               
             }
             else
             {
+                s1.Points.Add(new DataPoint(0, configurationMode.MaxValue));
                 s1.Points.Add(new DataPoint(configurationMode.Duration, configurationMode.MaxValue));
             }
+            testPlotModel.InvalidatePlot(true);
 
 
+        }
+        public void UpdateAllPlot(ObservableCollection<ConfigurationMode> configurationModes)
+        {
+          
+            if (configurationModes.Count ==0)
+            {
+                s1.Points.Add(new DataPoint(configurationModes.First().Duration, configurationModes.First().MaxValue));
+            }
+            else
+            {
+                Debug.WriteLine(configurationModes.Count);
+                s1.Points.Clear();
+                
+                for (int i = 2; i < configurationModes.Count; i++)
+                {
+                    configurationModes[i].Duration += configurationModes[i - 1].Duration;
+                    //Debug.WriteLine(configurationModes[i].Duration + configurationModes[i-1].Duration);
+                    s1.Points.Add(new DataPoint(configurationModes[i].Duration, configurationModes[i].MaxValue));
+                }
+            }
+            testPlotModel.InvalidatePlot(true);
+            
 
+            //   s1.Points.Clear();
+            //s1.Points.Add(new DataPoint(0, 0));
+            //    for (int i = 1; i < configurationModes.Count; i++)
+            //    {
+            //    Debug.WriteLine("Update AllPlot");
+            //    s1.Points.Add(new DataPoint(configurationModes[i].Duration + s1.Points.Last().X, configurationModes[i].MaxValue));
+               
+            //    }
+            
         }
 
 
