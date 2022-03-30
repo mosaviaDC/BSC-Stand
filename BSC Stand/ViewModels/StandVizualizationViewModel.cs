@@ -146,35 +146,60 @@ namespace BSC_Stand.ViewModels
         }
         public void UpdateAllPlot(ObservableCollection<ConfigurationMode> configurationModes)
         {
-          
-            if (configurationModes.Count ==0)
+           
+            ConfigurationMode[] modes = new ConfigurationMode[configurationModes.Count];
+            s1.Points.Clear();
+            if (configurationModes.Count>0)
+            for (int i = 0; i < modes.Length; i++)
             {
-                s1.Points.Add(new DataPoint(configurationModes.First().Duration, configurationModes.First().MaxValue));
-            }
-            else
-            {
-                Debug.WriteLine(configurationModes.Count);
-                s1.Points.Clear();
-                
-                for (int i = 2; i < configurationModes.Count; i++)
-                {
-                    configurationModes[i].Duration += configurationModes[i - 1].Duration;
-                    //Debug.WriteLine(configurationModes[i].Duration + configurationModes[i-1].Duration);
-                    s1.Points.Add(new DataPoint(configurationModes[i].Duration, configurationModes[i].MaxValue));
-                }
-            }
-            testPlotModel.InvalidatePlot(true);
-            
+                    if (i == 0)
+                    {
+                        modes[i] = new ConfigurationMode()
+                        {
+                            Discreteness = configurationModes[i].Discreteness,
+                            MaxValue = configurationModes[i].MaxValue,
+                            MinValue = configurationModes[i].MinValue,
+                            ModeName = configurationModes[i].ModeName,
+                            Duration = configurationModes[i].Duration,
+                            ModeUnit = configurationModes[i].ModeUnit,
+                            
 
-            //   s1.Points.Clear();
-            //s1.Points.Add(new DataPoint(0, 0));
-            //    for (int i = 1; i < configurationModes.Count; i++)
-            //    {
-            //    Debug.WriteLine("Update AllPlot");
-            //    s1.Points.Add(new DataPoint(configurationModes[i].Duration + s1.Points.Last().X, configurationModes[i].MaxValue));
-               
-            //    }
-            
+                        };
+                        s1.Points.Add(new DataPoint(0,modes[i].MaxValue));
+                    }
+
+                    if (i > 0)
+                    {
+                        int sum = 0;
+                        for (int j=0;j< configurationModes.Count; j++)
+                        {
+                            sum += configurationModes[j].Duration;
+                        }
+
+                        Debug.WriteLine($"{sum}");
+                        modes[i] = new ConfigurationMode()
+                        {
+                            Discreteness = configurationModes[i].Discreteness,
+                            MaxValue = configurationModes[i].MaxValue,
+                            MinValue = configurationModes[i].MinValue,
+                            ModeName = configurationModes[i].ModeName,
+                            Duration = sum,
+                            ModeUnit = configurationModes[i].ModeUnit,
+
+                        };
+                        s1.Points.Add(new DataPoint(modes[i].Duration, modes[i].MaxValue));
+                    }
+             
+            }
+
+         
+           
+ 
+
+            Debug.WriteLine($"UpdateAllPlot {modes.Length}");
+            //ObservableCollection<ConfigurationMode> newConfigs = new ObservableCollection<ConfigurationMode>();
+            //newConfigs = configurationMode();
+            testPlotModel.InvalidatePlot(true);
         }
 
 

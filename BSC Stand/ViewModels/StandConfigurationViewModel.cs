@@ -201,7 +201,7 @@ namespace BSC_Stand.ViewModels
         }
         private void ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            _standVizualizationViewModel.UpdateAllPlot(this.ConfigurationModes);
+            Test(null);
         }
     }
 }
