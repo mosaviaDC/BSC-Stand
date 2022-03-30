@@ -20,11 +20,15 @@ namespace BSC_Stand.ViewModels
     {
        
         #region Properties
-        private ProgrammablePowerSupplyModule _AKIP1311;
+       private ProgrammablePowerSupplyModule _AKIP1311;
        public ProgrammablePowerSupplyModule AKIP1311
         {
             get => _AKIP1311;
-            set=>Set(ref _AKIP1311, value);
+            set
+            {
+                Debug.WriteLine("Set");
+                Set(ref _AKIP1311, value);
+            }
         }
 
         private ProgrammablePowerSupplyModule _Tetron15016C;
@@ -33,25 +37,34 @@ namespace BSC_Stand.ViewModels
             get => _Tetron15016C;
             set => Set(ref _Tetron15016C, value);
         }
-        
 
 
         private ProgrammablePowerSupplyModule _AKIP1311_4;
         public ProgrammablePowerSupplyModule AKIP1311_4
         {
             get => _AKIP1311_4;
-            set => Set(ref _AKIP1311_4, value);
+            set
+            {
+              
+                Set(ref _AKIP1311_4, value);
+            }
         }
+        public ObservableCollection<ConfigurationMode> ConfigurationModes { get; set; }
         public ObservableCollection<ProgrammablePowerSupplyModule> programmablePowerSupplyModules { get; set; }
+
+        private readonly StandVizualizationViewModel _standVizualizationViewModel;
         #endregion
 
         #region Commands
-        public ICommand MouseWheelHandleCommand { get; }
-        private void MouseWheelHandleCommandExecute(object p)
+        public ICommand AddConfigToCyclogram { get; set; }
+
+        public void AddConfigToCyclogramExecuted (object p)
         {
-            Debug.WriteLine(p.ToString());
+            var module = (ProgrammablePowerSupplyModule)p;
+            ConfigurationModes.Add(module.Modes[0]);
+            _standVizualizationViewModel.UpdatePlotModel(module.Modes[0]);
         }
-        private bool CanMouseWheelHandleCommandExecuted(object p)
+        public bool CanAddConfigToCyclogramExecuted (object p)
         {
             return true;
         }
@@ -62,12 +75,12 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion Services
 
-        public StandConfigurationViewModel(IFileLogger fileLogger)
+        public StandConfigurationViewModel(IFileLogger fileLogger,StandVizualizationViewModel standVizualizationViewModel)
         {
-  
-  
+            _standVizualizationViewModel = standVizualizationViewModel;
+
             #region Commands
-            MouseWheelHandleCommand = new ActionCommand(MouseWheelHandleCommandExecute, CanMouseWheelHandleCommandExecuted);
+            AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
             #endregion
             #region Services
             #endregion
@@ -75,29 +88,30 @@ namespace BSC_Stand.ViewModels
 
             List<ConfigurationMode> Akip1311_Config = new List<ConfigurationMode>()
             {
-                 new ConfigurationMode()
-            {
-                ModeName = "Стабилизация напряжения",
-                Discreteness = 0.5f,
-                MinValue = 0,
-                MaxValue = 60,
-                ModeUnit = "В"
-            },
-                 new ConfigurationMode()
-            {
-                ModeName = "Cтабилизация силы тока",
-                Discreteness = 0.5f,
-                MinValue = 0,
-                MaxValue = 25,
-                ModeUnit = "A"
-            },
+            //     new ConfigurationMode()
+            //{
+            //    ModeName = "Стабилизация напряжения",
+            //    Discreteness = 0.5f,
+            //    MinValue = 0,
+            //    MaxValue = 60,
+            //    ModeUnit = "В"
+            //},
+            //     new ConfigurationMode()
+            //{
+            //    ModeName = "Cтабилизация силы тока",
+            //    Discreteness = 0.5f,
+            //    MinValue = 0,
+            //    MaxValue = 25,
+            //    ModeUnit = "A"
+            //},
                  new ConfigurationMode()
             {
                 ModeName = "Cтабилизация мощности",
                 Discreteness = 0.5f,
                 MinValue = 60,
                 MaxValue = 600,
-                ModeUnit = "Вт"
+                ModeUnit = "Вт",
+                Duration = 15
                  }
             };
             List<ConfigurationMode> Tetron15016CConfig = new List<ConfigurationMode>()
@@ -139,38 +153,40 @@ namespace BSC_Stand.ViewModels
             };
             List<ConfigurationMode> Akip1311_4Config = new List<ConfigurationMode>()
             {
-                 new ConfigurationMode()
-            {
-                ModeName = "Стабилизация напряжения",
-                Discreteness = 0.5f,
-                MinValue = 0,
-                MaxValue = 60,
-                ModeUnit = "В"
-            },
-                 new ConfigurationMode()
-            {
-                ModeName = "Cтабилизация силы тока",
-                Discreteness = 0.5f,
-                MinValue = 0,
-                MaxValue = 25,
-                ModeUnit = "A"
-            },
+            //     new ConfigurationMode()
+            //{
+            //    ModeName = "Стабилизация напряжения",
+            //    Discreteness = 0.5f,
+            //    MinValue = 0,
+            //    MaxValue = 60,
+            //    ModeUnit = "В"
+            //},
+            //     new ConfigurationMode()
+            //{
+            //    ModeName = "Cтабилизация силы тока",
+            //    Discreteness = 0.5f,
+            //    MinValue = 0,
+            //    MaxValue = 25,
+            //    ModeUnit = "A"
+            //},
                  new ConfigurationMode()
             {
                 ModeName = "Cтабилизация мощности",
                 Discreteness = 0.5f,
                 MinValue = 60,
                 MaxValue = 600,
-                ModeUnit = "Вт"
+                ModeUnit = "Вт",
+                Duration = 15
                  }
             };
-            ProgrammablePowerSupplyModule _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
-            ProgrammablePowerSupplyModule _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
-            _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
+             _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
+             _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
+                //     _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
+                ConfigurationModes = new ObservableCollection<ConfigurationMode>();
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
                 programmablePowerSupplyModules.Add(_AKIP1311_4);
-                programmablePowerSupplyModules.Add(_Tetron15016C);
+            //    programmablePowerSupplyModules.Add(_Tetron15016C);
 
          
 

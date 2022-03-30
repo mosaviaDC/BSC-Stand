@@ -81,23 +81,40 @@
                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Text="Мин. Значение"></TextBlock>
                                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Макс. Значение</TextBlock>
                                 <TextBox Grid.Row="1" Grid.Column="0" Margin="10"  x:Name="test" Text="{Binding SelectedItem.MinValue, ElementName=configurationModesList}" Cursor="IBeam"  >
-                                    <behaviors:Interaction.Triggers>
-                                        <behaviors:EventTrigger EventName="MouseWheel" x:Name="test1">
-                                            <behaviors:InvokeCommandAction Command="{Binding MouseWheelHandleCommand}" CommandParameter="{Binding Source , ElementName=test1}"/>
-                                        </behaviors:EventTrigger>
-                                    </behaviors:Interaction.Triggers>
+                                 
                                    
                                     
                                 </TextBox>
                                 <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedItem.MaxValue, ElementName=configurationModesList}"  Cursor="IBeam"  ></TextBox>
 
                             </Grid>
-                            
+                            <Button  Command="{Binding AddConfigToCyclogram}" CommandParameter="{Binding SelectedItem, ElementName=StandConfigModules}" Cursor="Hand" > Добавить в циклограмму</Button>
                             
                         </StackPanel>
                           
                         
                     </TreeViewItem>
+                    <TreeViewItem Header="Циклограмма">
+                        <DataGrid ItemsSource="{Binding ConfigurationModes}" AutoGenerateColumns="False" MinWidth="400">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn  Header="Мин. Значение" Binding="{Binding Path=MinValue}">
+
+
+                                </DataGridTextColumn>
+                                <DataGridTextColumn  Header="Макс. Значение" Binding="{Binding Path=MaxValue}">
+                                    
+                                    
+                                </DataGridTextColumn>
+                                <DataGridTextColumn  Header="Продолжительность" Binding="{Binding Path=Duration}">
+                                    
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                            
+                            
+                            
+                        </DataGrid>
+                    </TreeViewItem>
+                    
                     
                     
                     

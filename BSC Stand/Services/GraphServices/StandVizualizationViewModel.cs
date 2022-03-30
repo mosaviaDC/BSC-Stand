@@ -12,6 +12,8 @@ using System.IO;
 using BSC_Stand.Services.GraphServices;
 using System.Diagnostics;
 using System.Threading;
+using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+using System.Collections.ObjectModel;
 
 namespace BSC_Stand.ViewModels
 {
@@ -110,11 +112,39 @@ namespace BSC_Stand.ViewModels
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(UpdatePlot);
-            timer.Start();
+         //   timer.Start();
 
            
            
         }
+
+        public void UpdatePlotModel(ConfigurationMode configurationMode)
+        {
+          
+            if (s1.Points.Count > 0)
+            {
+                Debug.WriteLine("UpdatePlot");
+                var previos = s1.Points.Last();
+
+
+                s1.Points.Add(new DataPoint(previos.X + configurationMode.Duration, configurationMode.MaxValue));
+                //foreach (var configMode in configurationModes)
+                //{
+                //    s1.Points.Add(new DataPoint(configMode.Duration, configMode.MaxValue));
+                //}
+
+                testPlotModel.InvalidatePlot(true);
+            }
+            else
+            {
+                s1.Points.Add(new DataPoint(configurationMode.Duration, configurationMode.MaxValue));
+            }
+
+
+
+        }
+
+
 
         private  void UpdatePlot(object sender, EventArgs e)
         {

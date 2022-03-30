@@ -13,6 +13,7 @@ namespace BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels
         public float Discreteness { get; set; }
         public string? ModeName { get; set; }
 
+        public int Duration { get; set; }
         /// <summary>
         /// Единицы измерения
         /// </summary>
