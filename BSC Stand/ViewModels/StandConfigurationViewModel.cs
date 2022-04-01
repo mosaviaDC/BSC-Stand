@@ -18,7 +18,9 @@ namespace BSC_Stand.ViewModels
 {
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
+
        
+
         #region Properties
        private ProgrammablePowerSupplyModule _AKIP1311;
        public ProgrammablePowerSupplyModule AKIP1311
@@ -61,8 +63,23 @@ namespace BSC_Stand.ViewModels
         public void AddConfigToCyclogramExecuted(object p)
         {
             var configMode = (ConfigurationMode)p;
-            ConfigurationModes.Add(configMode);
-            Test(configMode);
+
+            if (configMode != null)
+            {
+                ConfigurationMode configurationMode = new ConfigurationMode()
+                {
+                    Discreteness = configMode.Discreteness,
+                    Duration = configMode.Duration,
+                    MaxValue = configMode.MaxValue,
+                    ModeName = configMode.ModeName,
+                    MinValue = configMode.MinValue,
+                    ModeUnit = configMode.ModeUnit,
+
+                };
+
+                ConfigurationModes.Add(configurationMode);
+                Test(configMode);
+            }
 
         }
 
@@ -197,7 +214,17 @@ namespace BSC_Stand.ViewModels
         }
         private void Test(object p)
         {
-            _standVizualizationViewModel.UpdateAllPlot(this.ConfigurationModes);
+            try
+            {
+                var currentSelectedItem = (ConfigurationMode)p;
+                Debug.WriteLine($"CurrentSelectedItem{currentSelectedItem?.MaxValue} ");
+                
+                _standVizualizationViewModel.UpdateAllPlot(this.ConfigurationModes);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
         private void ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

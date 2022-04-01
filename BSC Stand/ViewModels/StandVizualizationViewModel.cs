@@ -21,22 +21,19 @@ namespace BSC_Stand.ViewModels
     {
         #region Properties
         private string _TextBlock;
-        public string TextBlock
-        {
-            get => _TextBlock;
-            set => Set(ref _TextBlock, value);
-        }
+        //public string TextBlock
+        //{
+        //    get => _TextBlock;
+        //    set => Set(ref _TextBlock, value);
+        //}
 
 
-        private float _27VBusAmperage;
-        public float L27VBusAmperage
-        {
-            get => _27VBusAmperage;
-            set => Set(ref _27VBusAmperage, value);
-        }
-        
-
-
+        //private float _27VBusAmperage;
+        //public float L27VBusAmperage
+        //{
+        //    get => _27VBusAmperage;
+        //    set => Set(ref _27VBusAmperage, value);
+        //}
 
 
 
@@ -57,7 +54,10 @@ namespace BSC_Stand.ViewModels
 
 
 
-        #endregion 
+
+
+
+        #endregion
 
 
 
@@ -70,7 +70,7 @@ namespace BSC_Stand.ViewModels
 
         public StandVizualizationViewModel(IFileLogger fileLogger, IGraphService graphService)
 
-        {  
+        {
             _graphService = graphService;
 
             for (int i = 0; i < 150; i++)
@@ -79,7 +79,7 @@ namespace BSC_Stand.ViewModels
             }
 
 
-       //     _TextBlock = "Информационное Сообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\n ";
+            //     _TextBlock = "Информационное Сообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\nСообщение\n ";
 
 
             testPlotModel = new PlotModel()
@@ -104,17 +104,17 @@ namespace BSC_Stand.ViewModels
                 MarkerType = MarkerType.Diamond,
                 MarkerSize = 1,
             };
-           
+
             testPlotModel.Series.Add(s1);
             testPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Unit = "Вт", ExtraGridlines = new[] { 0.0 } });
-            testPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Unit="сек" });
+            testPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Unit = "сек", ExtraGridlines = new[] { 0.0 } });
 
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(UpdatePlot);
-         //   timer.Start();
+            //   timer.Start();
 
-           
+   
            
         }
 
@@ -123,7 +123,7 @@ namespace BSC_Stand.ViewModels
           
             if (s1.Points.Count > 0)
             {
-                Debug.WriteLine("UpdatePlot");
+               // Debug.WriteLine("UpdatePlot");
                 var previos = s1.Points.Last();
 
 
@@ -147,60 +147,104 @@ namespace BSC_Stand.ViewModels
         public void UpdateAllPlot(ObservableCollection<ConfigurationMode> configurationModes)
         {
            
-            ConfigurationMode[] modes = new ConfigurationMode[configurationModes.Count];
             s1.Points.Clear();
-            if (configurationModes.Count>0)
-            for (int i = 0; i < modes.Length; i++)
+            if (configurationModes.Count == 1)
             {
-                    if (i == 0)
-                    {
-                        modes[i] = new ConfigurationMode()
-                        {
-                            Discreteness = configurationModes[i].Discreteness,
-                            MaxValue = configurationModes[i].MaxValue,
-                            MinValue = configurationModes[i].MinValue,
-                            ModeName = configurationModes[i].ModeName,
-                            Duration = configurationModes[i].Duration,
-                            ModeUnit = configurationModes[i].ModeUnit,
-                            
-
-                        };
-                        s1.Points.Add(new DataPoint(0,modes[i].MaxValue));
-                    }
-
-                    if (i > 0)
-                    {
-                        int sum = 0;
-                        for (int j=0;j< configurationModes.Count; j++)
-                        {
-                            sum += configurationModes[j].Duration;
-                        }
-
-                        Debug.WriteLine($"{sum}");
-                        modes[i] = new ConfigurationMode()
-                        {
-                            Discreteness = configurationModes[i].Discreteness,
-                            MaxValue = configurationModes[i].MaxValue,
-                            MinValue = configurationModes[i].MinValue,
-                            ModeName = configurationModes[i].ModeName,
-                            Duration = sum,
-                            ModeUnit = configurationModes[i].ModeUnit,
-
-                        };
-                        s1.Points.Add(new DataPoint(modes[i].Duration, modes[i].MaxValue));
-                    }
-             
+                
+               
             }
+            
+            {
+                s1.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
+                s1.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
+
+                foreach (var configurationMode in configurationModes)
+                {
+                    if (configurationModes.IndexOf(configurationMode) > 0)
+                    {
+                        s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                        s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
+                    }
+                
+                }
+
+            }
+            testPlotModel.InvalidatePlot(true);
+            
+
+
+        }
+
+
+
+
+
+
+
+
+          
+
+
+            //ConfigurationMode[] modes = new ConfigurationMode[configurationModes.Count];
+            //s1.Points.Clear();
+            //if (configurationModes.Count > 0)
+            //{
+            //    if (configurationModes.Count == 1)
+            //    {
+            //        s1.Points.Add(new DataPoint(configurationModes[0].Duration,configurationModes[0].MaxValue));
+            //    }
+            //    for (int i = 0; i < modes.Length; i++)
+            //    {
+            //        if (i == 0)
+            //        {
+            //            modes[i] = new ConfigurationMode()
+            //            {
+            //                Discreteness = configurationModes[i].Discreteness,
+            //                MaxValue = configurationModes[i].MaxValue,
+            //                MinValue = configurationModes[i].MinValue,
+            //                ModeName = configurationModes[i].ModeName,
+            //                Duration = configurationModes[i].Duration,
+            //                ModeUnit = configurationModes[i].ModeUnit,
+
+
+            //            };
+            //            s1.Points.Add(new DataPoint(0, modes[i].MaxValue));
+            //        }
+
+            //        if (i > 0)
+            //        {
+            //            int sum = 0;
+            //            for (int j = 0; j < configurationModes.Count; j++)
+            //            {
+            //                sum += configurationModes[j].Duration;
+            //            }
+
+            //       //     Debug.WriteLine($"{sum}");
+            //            modes[i] = new ConfigurationMode()
+            //            {
+            //                Discreteness = configurationModes[i].Discreteness,
+            //                MaxValue = configurationModes[i].MaxValue,
+            //                MinValue = configurationModes[i].MinValue,
+            //                ModeName = configurationModes[i].ModeName,
+            //                Duration = sum,
+            //                ModeUnit = configurationModes[i].ModeUnit,
+
+            //            };
+            //            s1.Points.Add(new DataPoint(modes[i].Duration, modes[i].MaxValue));
+            //        }
+
+            //    }
+            
 
          
            
  
 
-            Debug.WriteLine($"UpdateAllPlot {modes.Length}");
+         //   Debug.WriteLine($"UpdateAllPlot {modes.Length}");
             //ObservableCollection<ConfigurationMode> newConfigs = new ObservableCollection<ConfigurationMode>();
             //newConfigs = configurationMode();
-            testPlotModel.InvalidatePlot(true);
-        }
+        //    testPlotModel.InvalidatePlot(true);
+        
 
 
 

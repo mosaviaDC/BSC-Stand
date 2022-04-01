@@ -11,12 +11,16 @@ namespace BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels
         public float MinValue { get; set; }
         public float MaxValue { get; set; }
         public float Discreteness { get; set; }
-        public string? ModeName { get; set; }
+        public string ModeName { get; set; }
 
-        public int Duration { get; set; }
+        public int Duration
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// Единицы измерения
         /// </summary>
-        public string? ModeUnit { get; set; }
+        public string ModeUnit { get; set; }
     }
 }
