@@ -100,7 +100,7 @@
                         
                     </TreeViewItem>
                     <TreeViewItem Header="Циклограмма">
-                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}" ItemsSource="{Binding Source={StaticResource 27BusCyclogram}}"  IsReadOnly="False" AutoGenerateColumns="False" MinWidth="400">
+                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}" ItemsSource="{Binding Source={StaticResource 27BusCyclogram}}"  IsReadOnly="False" AutoGenerateColumns="False" MinWidth="400"  MaxHeight="500">
                             <behaviors:Interaction.Triggers>
                             <behaviors:EventTrigger EventName="BeginningEdit" >
                                     <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
@@ -108,8 +108,6 @@
                             </behaviors:Interaction.Triggers>
                             <DataGrid.Columns  >
                                 <DataGridTextColumn  Header="Мин. Значение"  CanUserSort="True"  Binding="{Binding Path=MinValue}" DisplayIndex="0">
-
-
                                 </DataGridTextColumn>
                                 <DataGridTextColumn  Header="Зад. Значение" Binding="{Binding Path=MaxValue}">
                                     
@@ -124,6 +122,7 @@
                             
                             
                         </DataGrid>
+                        <TextBlock Width="150">Количество повторений</TextBlock>
                     </TreeViewItem>
                     
                     
