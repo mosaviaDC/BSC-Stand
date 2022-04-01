@@ -19,7 +19,7 @@ namespace BSC_Stand.ViewModels
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
 
-       //public ConfigurationMode 
+      public ConfigurationMode SelectedConfigMode { get; set; }
       
      
 
