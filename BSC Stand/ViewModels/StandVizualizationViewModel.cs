@@ -21,19 +21,19 @@ namespace BSC_Stand.ViewModels
     {
         #region Properties
         private string _TextBlock;
-        //public string TextBlock
-        //{
-        //    get => _TextBlock;
-        //    set => Set(ref _TextBlock, value);
-        //}
+        public string TextBlock
+        {
+            get => _TextBlock;
+            set => Set(ref _TextBlock, value);
+        }
 
 
-        //private float _27VBusAmperage;
-        //public float L27VBusAmperage
-        //{
-        //    get => _27VBusAmperage;
-        //    set => Set(ref _27VBusAmperage, value);
-        //}
+        private float _27VBusAmperage;
+        public float L27VBusAmperage
+        {
+            get => _27VBusAmperage;
+            set => Set(ref _27VBusAmperage, value);
+        }
 
 
 

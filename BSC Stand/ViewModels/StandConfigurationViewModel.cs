@@ -19,7 +19,10 @@ namespace BSC_Stand.ViewModels
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
 
-       
+       //public ConfigurationMode 
+      
+     
+
 
         #region Properties
        private ProgrammablePowerSupplyModule _AKIP1311;
