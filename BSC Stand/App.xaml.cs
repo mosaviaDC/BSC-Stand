@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using BSC_Stand.Services.FileLoggingService;
 using BSC_Stand.Services.GraphServices;
+using BSC_Stand.Services.FileDialogService;
 
 namespace BSC_Stand
 {
@@ -47,6 +48,8 @@ namespace BSC_Stand
             services.AddSingleton<StandVizualizationViewModel>();
             services.AddSingleton<IFileLogger,FileLoggerService>();
             services.AddSingleton<IGraphService, DebugGraphService>();
+            services.AddSingleton<IFileDialog, FileDialogService>();
+            
         }
       
     }

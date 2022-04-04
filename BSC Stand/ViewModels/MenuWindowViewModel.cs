@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using BSC_Stand.Services.FileDialogService;
+using System.Windows.Input;
 
 namespace BSC_Stand.ViewModels
 {
@@ -12,7 +14,7 @@ namespace BSC_Stand.ViewModels
         #region Properties
         private PerformanceCounter RamCounter;
         #endregion
-
+        private IFileDialog _fileDialogService;
         private string _RamUsageText;
 
         public string RamUsageText
@@ -32,13 +34,17 @@ namespace BSC_Stand.ViewModels
        
 
         #region Commands
+        
+
         #endregion
 
         #region Services
         #endregion
 
-        public MenuWindowViewModel()
+        public MenuWindowViewModel(IFileDialog  fileDialogService)
         {
+            _fileDialogService = fileDialogService;
+            _fileDialogService.SaveFileDialog();
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(UpdatePerformance) ;
