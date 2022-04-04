@@ -108,7 +108,7 @@
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                         <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>
-                                        <Binding Path="SelectedItem" ElementName="configurationModesList"></Binding>
+                                        <Binding Path="SelectedConfigMode"  ></Binding>
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>

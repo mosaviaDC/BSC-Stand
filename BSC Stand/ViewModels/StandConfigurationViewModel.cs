@@ -72,6 +72,7 @@ namespace BSC_Stand.ViewModels
            
             if (configMode != null && programmablePowerSupplyModule !=null)
             {
+                Debug.WriteLine(configMode.MaxValue);
                 ConfigurationMode configurationMode = new ConfigurationMode()
                 {
                     Discreteness = configMode.Discreteness,
@@ -239,7 +240,7 @@ namespace BSC_Stand.ViewModels
 
         private void UpdateCyclograms(object p )
         {
-            Debug.WriteLine($"{Bus27ConfigurationModes.Count} {Bus100ConfigurationModes.Count}");
+         //   Debug.WriteLine($"{Bus27ConfigurationModes.Count} {Bus100ConfigurationModes.Count}");
             _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes);
             _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
 
