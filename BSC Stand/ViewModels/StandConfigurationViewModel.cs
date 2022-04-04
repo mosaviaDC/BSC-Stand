@@ -54,7 +54,8 @@ namespace BSC_Stand.ViewModels
                 Set(ref _AKIP1311_4, value);
             }
         }
-        public ObservableCollection<ConfigurationMode> ConfigurationModes { get; set; }
+        public ObservableCollection<ConfigurationMode> Bus27ConfigurationModes { get; set; }
+        public ObservableCollection<ConfigurationMode> Bus100ConfigurationModes { get; set; }
         public ObservableCollection<ProgrammablePowerSupplyModule> programmablePowerSupplyModules { get; set; }
 
         private readonly StandVizualizationViewModel _standVizualizationViewModel;
@@ -65,9 +66,11 @@ namespace BSC_Stand.ViewModels
 
         public void AddConfigToCyclogramExecuted(object p)
         {
-            var configMode = (ConfigurationMode)p;
-
-            if (configMode != null)
+            var parametres = (object[])p;
+            var programmablePowerSupplyModule = (ProgrammablePowerSupplyModule)parametres[0];
+            var configMode = (ConfigurationMode)parametres[1];
+           
+            if (configMode != null && programmablePowerSupplyModule !=null)
             {
                 ConfigurationMode configurationMode = new ConfigurationMode()
                 {
@@ -79,9 +82,17 @@ namespace BSC_Stand.ViewModels
                     ModeUnit = configMode.ModeUnit,
 
                 };
+                if (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 27В)")
+                {
+                     Bus27ConfigurationModes.Add(configurationMode);
+                }
+                else if    (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 100В)")
+                {
+                    Bus100ConfigurationModes.Add(configurationMode);
+                }
+                UpdateCyclograms(null);
+                // Bus27ConfigurationModes.Add(configurationMode);
 
-                ConfigurationModes.Add(configurationMode);
-                Test(configMode);
             }
 
         }
@@ -104,7 +115,7 @@ namespace BSC_Stand.ViewModels
 
             #region Commands
             AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
-            UpdateCommand = new ActionCommand(Test);
+            UpdateCommand = new ActionCommand(UpdateCyclograms);
             #endregion
             #region Services
             #endregion
@@ -206,8 +217,10 @@ namespace BSC_Stand.ViewModels
              _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
              _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
                 //     _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
-              ConfigurationModes = new ObservableCollection<ConfigurationMode>();
-              ConfigurationModes.CollectionChanged += ConfigurationModes_CollectionChanged;
+              Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+              Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+              Bus27ConfigurationModes.CollectionChanged += ConfigurationModes_CollectionChanged;
+              Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
                 programmablePowerSupplyModules.Add(_AKIP1311_4);
@@ -215,19 +228,34 @@ namespace BSC_Stand.ViewModels
 
         
         }
+
+        private void Bus100ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateCyclograms(null);
+        }
+
+        private void UpdateCyclograms(object p )
+        {
+            if (p!=null)
+            SelectedConfigMode = (ConfigurationMode)p;
+            Debug.WriteLine($"{Bus27ConfigurationModes.Count} {Bus100ConfigurationModes.Count}");
+            _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes);
+            _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
+
+
+        }
+
+
+
+
+
+
+
+
+
         private void Test(object p)
         {
-            try
-            {
-                var currentSelectedItem = (ConfigurationMode)p;
-                Debug.WriteLine($"CurrentSelectedItem{currentSelectedItem?.MaxValue} ");
-                
-                _standVizualizationViewModel.UpdateAllPlot(this.ConfigurationModes);
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            
         }
         private void ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

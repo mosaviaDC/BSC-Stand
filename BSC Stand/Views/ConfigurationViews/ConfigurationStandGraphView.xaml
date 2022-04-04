@@ -36,12 +36,18 @@
                 <GroupBox  Grid.Row="0" Background="White" SnapsToDevicePixels="False"  Padding="0">
                     
                     <Grid>
-                
-                        <oxy:PlotView Model="{Binding testPlotModel}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <oxy:PlotView Grid.Row="0" Model="{Binding Bus27PlotModel}">
                             
                         </oxy:PlotView>
-                 
-                        
+                        <oxy:PlotView Grid.Row="1" Model="{Binding Bus100PlotModel}">
+
+                        </oxy:PlotView>
+
+
 
                     </Grid>
 
