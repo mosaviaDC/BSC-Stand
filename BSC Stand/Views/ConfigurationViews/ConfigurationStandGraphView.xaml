@@ -20,7 +20,7 @@
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+            <ColumnDefinition Width="0.8*"></ColumnDefinition>
             <ColumnDefinition Width="0.3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
        
@@ -28,33 +28,39 @@
 
 
         <GroupBox   Header="График" Grid.Column="0" Padding="0,0,0,0">
+
+         
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.7*"></RowDefinition>
-                    <RowDefinition Height="0.3*"></RowDefinition>
+                    <RowDefinition Height="0.8*"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <GroupBox  Grid.Row="0" Background="White" SnapsToDevicePixels="False"  Padding="0">
                     
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*"></RowDefinition>
-                            <RowDefinition Height="0.5*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <oxy:PlotView Grid.Row="0" Model="{Binding Bus27PlotModel}">
-                            
-                        </oxy:PlotView>
-                        <oxy:PlotView Grid.Row="1" Model="{Binding Bus100PlotModel}">
+                            <Grid ShowGridLines="True">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.5*" MaxHeight="700"></RowDefinition>
+                                    <RowDefinition Height="0.5*" MaxHeight="700"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <oxy:PlotView Grid.Row="0" Model="{Binding Bus27PlotModel}">
 
-                        </oxy:PlotView>
+                                </oxy:PlotView>
+                                <oxy:PlotView Grid.Row="1" Model="{Binding Bus100PlotModel}">
+
+                                </oxy:PlotView>
 
 
+                                <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="2.5"></GridSplitter>
+                            </Grid>
 
-                    </Grid>
-
+                     
+                        
+                  
+                   
 
                 </GroupBox>
 
-                <GroupBox Grid.Row="1">
+                <GroupBox Header="" Grid.Row="1">
                     <ScrollViewer>
                         <TextBlock Text="{Binding TextBlock, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
                     </ScrollViewer>
@@ -73,7 +79,7 @@
         <GroupBox   Header="Параметры" Padding="0" Grid.Column="1">
             <TreeView>
                 <TreeViewItem Header="Шина 27В">
-                    <Grid>
+                    <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*"></RowDefinition>
                             <RowDefinition Height="0.5*"></RowDefinition>
@@ -82,13 +88,13 @@
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="0" MinWidth="50">Ток </TextBlock>
+                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="0" MinWidth="50">Ток</TextBlock>
                         <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="1" MinWidth="50" Text=""></TextBlock>
                         <TextBlock Margin="5"   Grid.Row="1" Grid.Column ="0" MinWidth="50">Напряжение</TextBlock>
                         <TextBlock  Margin="5" Grid.Row="1" Grid.Column ="1" MinWidth="50" Text=""></TextBlock>
                     </Grid>
-                    
-                    
+
+
                 </TreeViewItem>
                 <TreeViewItem Header="Шина 100В">
                     <Grid>
@@ -123,7 +129,8 @@
                         <TextBlock Grid.Row="1" Grid.Column ="0" MinWidth="50" Margin="5" >Температура ИБХА</TextBlock>
                         <TextBlock  Grid.Row="1" Grid.Column ="1" MinWidth="50" Margin="5" Text=" "></TextBlock>
                     </Grid>
-
+                 
+                    
 
                 </TreeViewItem>
             </TreeView>

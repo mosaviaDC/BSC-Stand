@@ -10,10 +10,10 @@
         xmlns:configWindows ="clr-namespace:BSC_Stand.Views"
         xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ЭО БСК" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized">
-    <Window.DataContext>
-        <ViewModels:MenuWindowViewModel/>
-    </Window.DataContext>
+        Title="ЭО БСК" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+       DataContext="{Binding MenuWindowViewModel ,Source={StaticResource ViewModelLocator}}"
+    >
+   
     <Grid>
         <Menu Height="45" VerticalAlignment="Top">
             <Menu.Background>
@@ -54,7 +54,7 @@
                 
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Left">
-                <TextBlock Text="Техническое Сообщение 2">
+                <TextBlock  Width="300"   Text="{Binding RamUsageText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
 
                 </TextBlock>
             </StatusBarItem>

@@ -132,12 +132,27 @@
                                 </Style>
                             </DataGrid.Style>
                             <behaviors:Interaction.Triggers>
-                            <behaviors:EventTrigger EventName="BeginningEdit" >
+                                <behaviors:EventTrigger EventName="QueryCursor" >
+                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>
+
+
+                                <!--<behaviors:EventTrigger EventName="BeginningEdit" >
                                     <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
                             </behaviors:EventTrigger>
+                             <behaviors:EventTrigger EventName="CellEditEnding" >
+                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="RowEditEnding" >
+                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>-->
                             </behaviors:Interaction.Triggers>
                             
-                                <DataGrid.Columns  >
+                       
+                              
+
+
+                            <DataGrid.Columns  >
                                 <DataGridTextColumn  Header="Мин. Значение"  CanUserSort="True"  Binding="{Binding Path=MinValue}" DisplayIndex="0">
                                 </DataGridTextColumn>
                                 <DataGridTextColumn  Header="Зад. Значение" Binding="{Binding Path=MaxValue}">

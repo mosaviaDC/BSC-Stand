@@ -91,8 +91,6 @@ namespace BSC_Stand.ViewModels
                     Bus100ConfigurationModes.Add(configurationMode);
                 }
                 UpdateCyclograms(null);
-                // Bus27ConfigurationModes.Add(configurationMode);
-
             }
 
         }
@@ -120,7 +118,12 @@ namespace BSC_Stand.ViewModels
             #region Services
             #endregion
 
-
+            SelectedConfigMode = new ConfigurationMode()
+            {
+                Duration = 15,
+                MaxValue = 600,
+                MinValue = 600
+            };
             List<ConfigurationMode> Akip1311_Config = new List<ConfigurationMode>()
             {
             //     new ConfigurationMode()
@@ -236,8 +239,6 @@ namespace BSC_Stand.ViewModels
 
         private void UpdateCyclograms(object p )
         {
-            if (p!=null)
-            SelectedConfigMode = (ConfigurationMode)p;
             Debug.WriteLine($"{Bus27ConfigurationModes.Count} {Bus100ConfigurationModes.Count}");
             _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes);
             _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
