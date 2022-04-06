@@ -96,9 +96,9 @@
                                 </Grid.ColumnDefinitions>
 
 
-                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Text="Мин. Значение"></TextBlock>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Макс. Значение</TextBlock>
-                                <TextBox Grid.Row="1" Grid.Column="0" Margin="10"  x:Name="test" Text="{Binding SelectedConfigMode.MinValue}" Cursor="IBeam"/>
+
+                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Заданное Значение</TextBlock>
+                               
                                 <TextBlock Grid.Row="0"  Grid.Column="2" Margin="10">Продолжительность</TextBlock>
                                   
                                 <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedConfigMode.MaxValue}"  Cursor="IBeam"  ></TextBox>
@@ -153,8 +153,7 @@
 
 
                             <DataGrid.Columns  >
-                                <DataGridTextColumn  Header="Мин. Значение"  CanUserSort="True"  Binding="{Binding Path=MinValue}" DisplayIndex="0">
-                                </DataGridTextColumn>
+                                
                                 <DataGridTextColumn  Header="Зад. Значение" Binding="{Binding Path=MaxValue}">
                                     
                                     
@@ -168,7 +167,7 @@
                             
                             
                         </DataGrid>
-                        <TextBlock Width="150">Количество повторений</TextBlock>
+                        <TextBlock Width="150">Количество циклов</TextBlock>
                     </TreeViewItem>
                     
                     
