@@ -34,8 +34,8 @@ namespace BSC_Stand.ViewModels
        
 
         #region Commands
-        
-
+        public ICommand OpenFileCommand { get; set; }
+        public ICommand SaveFileCommand { get; set; }   
         #endregion
 
         #region Services
@@ -44,7 +44,8 @@ namespace BSC_Stand.ViewModels
         public MenuWindowViewModel(IFileDialog  fileDialogService)
         {
             _fileDialogService = fileDialogService;
-        
+
+           
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(UpdatePerformance) ;
@@ -55,7 +56,7 @@ namespace BSC_Stand.ViewModels
 
         private void UpdatePerformance(object sender, EventArgs e)
         {
-           
+            RamUsageText = $"Ram Usage: {RamCounter.NextValue()/100}";
         }
 
        

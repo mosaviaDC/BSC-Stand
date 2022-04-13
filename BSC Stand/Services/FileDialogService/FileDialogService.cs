@@ -14,8 +14,8 @@ namespace BSC_Stand.Services.FileDialogService
             string filePath = null;
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                // Filter = ("CsvFiles (*.csv)|*.csv"),
-                InitialDirectory = Environment.CurrentDirectory,
+                Filter = ("(*.json)|*.json"),
+                InitialDirectory = Environment.CurrentDirectory + "Файлы пользователя" + "Конфигурация экспериментов",
                 Title = Title
 
 
@@ -37,8 +37,8 @@ namespace BSC_Stand.Services.FileDialogService
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
-                InitialDirectory = Environment.CurrentDirectory,
-                Filter = "(*.cs) |*.cs"
+                InitialDirectory = Environment.CurrentDirectory + "Файлы пользователя" + "Конфигурация экспериментов",
+                Filter = "(*.json) |*.json"
             };
             if (saveFileDialog.ShowDialog() == true)
             {

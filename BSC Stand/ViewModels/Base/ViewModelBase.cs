@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BSC_Stand.ViewModels.Base
 {
-    internal abstract class ViewModelBase
+    internal abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string ProperyName = "")

@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Файлы пользователя\sample.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.1.6" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -24,6 +28,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestingConsoleApplicaton\TestingConsoleApplicaton.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Файлы пользователя\sample.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
