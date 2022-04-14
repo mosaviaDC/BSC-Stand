@@ -44,7 +44,7 @@ namespace BSC_Stand.ViewModels
         public MenuWindowViewModel(IFileDialog  fileDialogService)
         {
             _fileDialogService = fileDialogService;
-
+            //_fileDialogService.OpenFileDialog();
            
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
