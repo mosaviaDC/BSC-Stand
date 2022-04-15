@@ -11,7 +11,7 @@ namespace BSC_Stand.Services
 {
     internal interface IProjectConfigurationService
     {
-        Task SaveProjectConfiguration(string filePath, ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode> V100ConfigurationModes);
+        Task SaveProjectConfiguration(string filePath, ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode> V100ConfigurationModes, int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount);
 
         Task<FileProjectConfigurationModel> GetProjectConfiguration(string FilePath);
 

@@ -20,12 +20,32 @@ namespace BSC_Stand.ViewModels
     {
 
       public ConfigurationMode SelectedConfigMode { get; set; }
-      
-     
+
+
+
+    
+
+        private int _V27BusCyclogramRepeatCount;
+        private string currentOpenedFilePath;
+
+        public int V27BusCyclogramRepeatCount
+        {
+            get => _V27BusCyclogramRepeatCount;
+            set=> Set(ref _V27BusCyclogramRepeatCount, value);
+        }
+
+        private int _V100BusCyclogramRepeatCount;
+
+        public int V100BusCyclogramRepeatCount
+        {
+            get => _V100BusCyclogramRepeatCount;
+            set => Set(ref _V100BusCyclogramRepeatCount, value);
+        }
+
 
 
         #region Properties
-       private ProgrammablePowerSupplyModule _AKIP1311;
+        private ProgrammablePowerSupplyModule _AKIP1311;
        public ProgrammablePowerSupplyModule AKIP1311
         {
             get => _AKIP1311;
@@ -59,6 +79,7 @@ namespace BSC_Stand.ViewModels
         public ObservableCollection<ProgrammablePowerSupplyModule> programmablePowerSupplyModules { get; set; }
 
         private readonly StandVizualizationViewModel _standVizualizationViewModel;
+        private readonly IProjectConfigurationService _projectConfigurationServce;
         #endregion
 
         #region Commands
@@ -108,10 +129,10 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion Services
 
-        public StandConfigurationViewModel(IFileLogger fileLogger,StandVizualizationViewModel standVizualizationViewModel)
+        public StandConfigurationViewModel(IFileLogger fileLogger,StandVizualizationViewModel standVizualizationViewModel,IProjectConfigurationService projectConfigurationService)
         {
             _standVizualizationViewModel = standVizualizationViewModel;
-
+            _projectConfigurationServce = projectConfigurationService;
             #region Commands
             AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
             UpdateCommand = new ActionCommand(UpdateCyclograms);
@@ -220,7 +241,9 @@ namespace BSC_Stand.ViewModels
             };
              _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
              _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
-                //     _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
+            V27BusCyclogramRepeatCount = 1;
+            V100BusCyclogramRepeatCount = 1;
+           
               Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
               Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
              Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
@@ -228,7 +251,7 @@ namespace BSC_Stand.ViewModels
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
                 programmablePowerSupplyModules.Add(_AKIP1311_4);
-            //    programmablePowerSupplyModules.Add(_Tetron15016C);
+
 
         
         }
@@ -247,15 +270,18 @@ namespace BSC_Stand.ViewModels
          //   Debug.WriteLine($"{Bus27ConfigurationModes.Count} {Bus100ConfigurationModes.Count}");
             _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes);
             _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
-
+           
 
         }
 
-        public void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig)
+        public void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount)
         {
             this.Bus100ConfigurationModes.Clear();
             this.Bus27ConfigurationModes.Clear();
-            
+           
+            V27BusCyclogramRepeatCount = V27BusRepeatCount;
+            V100BusCyclogramRepeatCount= V100BusRepeatCount;
+
             foreach(var p in V27BusConfig)
             {
                 Bus27ConfigurationModes.Add(p);

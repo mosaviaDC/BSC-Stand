@@ -22,10 +22,10 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task SaveProjectConfiguration(string filePath,ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode>V100ConfigurationModes)
+        public async Task SaveProjectConfiguration(string filePath,ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode>V100ConfigurationModes,int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount)
         {
 
-            FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel (V100ConfigurationModes, V27ConfigurationModes);
+            FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel (V100ConfigurationModes, V27ConfigurationModes,V27ConfigurationModesRepeatCount,V100ConfigurationModesRepeatCount);
 
 
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
@@ -37,6 +37,8 @@ namespace BSC_Stand.Services
             await createStream.DisposeAsync();
         }
 
+
+    
     
 
 

@@ -71,8 +71,8 @@ namespace BSC_Stand.ViewModels
                 var result = await _projectConfigurationService.GetProjectConfiguration(CurrentOpenedFileName);
                 if (result != null)
                 {
-                    _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes);
-                    Title += $" {CurrentOpenedFileName}";
+                    _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes,result.V27BusCyclogramRepeatCount,result.V100BusCyclogramRepeatCount);
+                    Title = $"ЭО БСК {CurrentOpenedFileName}";
                 }
             }
            
@@ -85,14 +85,23 @@ namespace BSC_Stand.ViewModels
 
         public ICommand SaveFileCommand { get; set; }   
 
+
+        public ICommand CheckFileCommand { get; set; }
+
+        private void CheckFile(object p)
+        {
+          Title = $"ЭО БСК {CurrentOpenedFileName} *";
+        }
+
+
         private async void SaveFileCommandExecute(object p)
         {
             //Если горячая клавиша и есть имя файла
             if (p != null && CurrentOpenedFileName !=null)
             {
-                await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes);
+                await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes,_standConfigurationViewModel.V27BusCyclogramRepeatCount,_standConfigurationViewModel.V100BusCyclogramRepeatCount);
 
-
+                Title = $"ЭО БСК {CurrentOpenedFileName}";
 
 
             }
@@ -101,7 +110,8 @@ namespace BSC_Stand.ViewModels
                 CurrentOpenedFileName = _fileDialogService.SaveFileDialog();
                 if (CurrentOpenedFileName != null)
 
-                    await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes);
+                    await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes,_standConfigurationViewModel.V27BusCyclogramRepeatCount,_standConfigurationViewModel.V100BusCyclogramRepeatCount);
+                Title = $"ЭО БСК {CurrentOpenedFileName}";
             }
 
 
@@ -130,6 +140,7 @@ namespace BSC_Stand.ViewModels
             #region Commands
             SaveFileCommand = new ActionCommand(SaveFileCommandExecute, CanSaveFileCommandExecuted);
             OpenFileCommand = new ActionCommand(OpenFileCommandExecute, CanOpenFileCommandExecuted);
+            CheckFileCommand = new ActionCommand(CheckFile);
             #endregion
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);

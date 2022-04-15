@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:convertes="clr-namespace:BSC_Stand.Infastructure"
              xmlns:local="clr-namespace:BSC_Stand.Views"
+             xmlns:vm="clr-namespace:BSC_Stand.ViewModels"
              xmlns:nullValue="clr-namespace:BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
@@ -15,12 +16,9 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="27VBusCyclogram" Source="{Binding Bus27ConfigurationModes}"/>
         <CollectionViewSource x:Key="100VbusCyclogram" Source="{Binding Bus100ConfigurationModes}"/>
+        
         <convertes:AddConfigModeContverter x:Key="AddConfigModeConverter"></convertes:AddConfigModeContverter>
     </UserControl.Resources>
-
-
-    
-
     <Grid >
         
         <Grid.Background>
@@ -74,7 +72,7 @@
 
                     <TreeViewItem Header="{Binding SelectedItem.ModeName, ElementName=configurationModesList}" HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch">
-                            <Grid>
+                            <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition>
                                         
@@ -118,14 +116,14 @@
                         
                     </TreeViewItem>
                     <TreeViewItem Header="Циклограмма">
-                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}"   IsReadOnly="False" AutoGenerateColumns="False" MinWidth="400"  MaxHeight="500">
+                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}"   IsReadOnly="False" AutoGenerateColumns="False"  MaxHeight="500">
                             <DataGrid.Style>
                                 <Style TargetType="DataGrid">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 27В)">
                                             <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource 27VBusCyclogram}}" ></Setter>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
                                             <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource 100VbusCyclogram}}" ></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -135,24 +133,22 @@
                                 <behaviors:EventTrigger EventName="QueryCursor" >
                                     <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
                                 </behaviors:EventTrigger>
-
-
-                                <!--<behaviors:EventTrigger EventName="BeginningEdit" >
-                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
-                            </behaviors:EventTrigger>
-                             <behaviors:EventTrigger EventName="CellEditEnding" >
-                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
+                                <behaviors:EventTrigger EventName="CellEditEnding">
+                                    <behaviors:InvokeCommandAction Command="{Binding  Source={StaticResource ViewModelLocator}, Path= MenuWindowViewModel.CheckFileCommand}"></behaviors:InvokeCommandAction>
                                 </behaviors:EventTrigger>
-                                <behaviors:EventTrigger EventName="RowEditEnding" >
-                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
-                                </behaviors:EventTrigger>-->
+                                <behaviors:EventTrigger EventName="SizeChanged">
+                                    <behaviors:InvokeCommandAction Command="{Binding  Source={StaticResource ViewModelLocator}, Path= MenuWindowViewModel.CheckFileCommand}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>
+
+
+
                             </behaviors:Interaction.Triggers>
                             
                        
                               
 
 
-                            <DataGrid.Columns  >
+                            <DataGrid.Columns>
                                 
                                 <DataGridTextColumn  Header="Зад. Значение" Binding="{Binding Path=MaxValue}">
                                     
@@ -162,12 +158,33 @@
                                     
                                 </DataGridTextColumn>
                                 
+
                             </DataGrid.Columns>
-                            
-                            
+
+
                             
                         </DataGrid>
-                        <TextBlock Width="150">Количество циклов</TextBlock>
+                        <Grid MinWidth="300">
+                            <TextBlock Width="150" Text="Количество повторений" HorizontalAlignment="Left" ></TextBlock>
+                            <TextBox Width="20">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
+                                                <Setter Property="Text"  Value="{Binding Path= V27BusCyclogramRepeatCount}"></Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
+                                                <Setter Property="Text"  Value="{Binding Path=V100BusCyclogramRepeatCount}"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+
+
+                        </Grid>
+                       
+
                     </TreeViewItem>
                     
                     
@@ -176,118 +193,7 @@
 
                 </TreeView>
                
-                 
-              
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <!--<TreeView Background="#26673AB7" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-1,0,0,0"  >
-                    <TreeViewItem Header="Параметры">
-                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.05*">
 
-                                </ColumnDefinition>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Min A"></TextBlock>
-                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MinAmperage}" TextAlignment="Left"></TextBox>
-                        </Grid>
-                        
-                        
-                        
-                        
-                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Max A"></TextBlock>
-                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MaxAmperage}" TextAlignment="Left"></TextBox>
-                        </Grid>
-
-                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Min V"></TextBlock>
-                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MinVoltage}" TextAlignment="Left"></TextBox>
-                        </Grid>
-
-                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Max V"></TextBlock>
-                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.MaxVoltage}" TextAlignment="Left"></TextBox>
-                        </Grid>
-
-
-
-                        <Grid  Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.05*">
-                                   
-                                </ColumnDefinition>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Сила тока"></TextBlock>
-                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.Amperage}" TextAlignment="Left"></TextBox>
-                        </Grid>
-                        <Grid Width="200">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                                <ColumnDefinition Width="0.05*">
-
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Напряжение"></TextBlock>
-                            <TextBox Grid.Column="1" Text="{Binding SelectedConfigModule.Voltage}" TextAlignment="Left"></TextBox>
-                        </Grid>
-
-                    </TreeViewItem>
-                    <TreeViewItem Header="Режимы">
-                        <ListBox>
-                            <ListBoxItem>
-                                <TextBlock>Удержание V</TextBlock>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                                <TextBlock>Удержание A</TextBlock>
-                            </ListBoxItem>
-                        </ListBox>
-                    </TreeViewItem>
-                </TreeView>-->
             </StackPanel>
 
         </GroupBox>

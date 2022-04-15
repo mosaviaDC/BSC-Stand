@@ -10,7 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Файлы пользователя\sample.json" />
+    <None Remove="Файлы пользователя\Конифгурация экспериментов\sample.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Файлы пользователя\Конифгурация экспериментов\sample.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,12 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestingConsoleApplicaton\TestingConsoleApplicaton.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Файлы пользователя\sample.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

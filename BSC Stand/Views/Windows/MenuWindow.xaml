@@ -24,10 +24,10 @@
    
     <Grid>
         <Menu Height="45" VerticalAlignment="Top">
-            <Button  Background="{x:Null}" BorderBrush="Black" Cursor="Hand" Command="{Binding OpenFileCommand}">
-                <fa5:FontAwesome Foreground="Black"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Icon="Solid_FileImport"></fa5:FontAwesome>
+            <Button  Background="{x:Null}" BorderBrush="Black" Cursor="Hand" Command="{Binding OpenFileCommand}" ToolTip="Открыть файл Ctrl+S">
+                <fa5:FontAwesome Foreground="Black"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"  Icon="Solid_FileImport"></fa5:FontAwesome>
             </Button>
-            <Button Background="{x:Null}" BorderBrush="Black" Command="{Binding SaveFileCommand}">
+            <Button Background="{x:Null}" BorderBrush="Black" Command="{Binding SaveFileCommand}" ToolTip="Сохранить файл Ctrl+S">
                 <fa5:FontAwesome Foreground="Black" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Icon="Solid_FileExport"></fa5:FontAwesome>
             </Button>
           
