@@ -79,7 +79,7 @@ namespace BSC_Stand.ViewModels
         public ObservableCollection<ProgrammablePowerSupplyModule> programmablePowerSupplyModules { get; set; }
 
         private readonly StandVizualizationViewModel _standVizualizationViewModel;
-        private readonly IProjectConfigurationService _projectConfigurationServce;
+
         #endregion
 
         #region Commands
@@ -131,8 +131,9 @@ namespace BSC_Stand.ViewModels
             Debug.WriteLine("UndoCommand");
             var lastConfig = V27BusConfigurationStack.Pop();
             this.Bus27ConfigurationModes = lastConfig;
+            
             this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
-           
+        
 
             ////this.Bus27ConfigurationModes.CollectionChanged -= Bus27ConfigurationModes_CollectionChanged;
             ////this.Bus27ConfigurationModes.Clear();
@@ -170,10 +171,10 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion Services
 
-        public StandConfigurationViewModel(IFileLogger fileLogger,StandVizualizationViewModel standVizualizationViewModel,IProjectConfigurationService projectConfigurationService)
+        public StandConfigurationViewModel(IFileLogger fileLogger,StandVizualizationViewModel standVizualizationViewModel)
         {
             _standVizualizationViewModel = standVizualizationViewModel;
-            _projectConfigurationServce = projectConfigurationService;
+          
             #region Commands
             AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
             UpdateCommand = new ActionCommand(UpdateCyclograms);
@@ -286,13 +287,13 @@ namespace BSC_Stand.ViewModels
             V27BusCyclogramRepeatCount = 1;
             V100BusCyclogramRepeatCount = 1;
            
-             Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
-             Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
-             Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
-             Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
-                programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
-                programmablePowerSupplyModules.Add(_AKIP1311);
-                programmablePowerSupplyModules.Add(_AKIP1311_4);
+            Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+            Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+            Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
+            Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
+            programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
+            programmablePowerSupplyModules.Add(_AKIP1311);
+            programmablePowerSupplyModules.Add(_AKIP1311_4);
 
 
         
@@ -339,9 +340,6 @@ namespace BSC_Stand.ViewModels
             {
                 Bus100ConfigurationModes.Add(p);
             }
-
-
-
         }
 
     }
