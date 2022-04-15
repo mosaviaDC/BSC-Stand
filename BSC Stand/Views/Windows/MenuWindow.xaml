@@ -10,16 +10,24 @@
         xmlns:configWindows ="clr-namespace:BSC_Stand.Views"
         xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ЭО БСК" Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized"
-       DataContext="{Binding MenuWindowViewModel ,Source={StaticResource ViewModelLocator}}"
+        Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        DataContext="{Binding MenuWindowViewModel ,Source={StaticResource ViewModelLocator}}"
+        Title="{Binding Title}"
+    
     >
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenFileCommand}"  Gesture="CTRL+O" Key="O"></KeyBinding>
+        <KeyBinding Command="{Binding SaveFileCommand}"  CommandParameter="HotKey" Gesture="CTRL+S" Key="S"></KeyBinding>
+    </Window.InputBindings>
+    
+    
    
     <Grid>
         <Menu Height="45" VerticalAlignment="Top">
-            <Button  Background="{x:Null}" BorderBrush="Black" Cursor="Hand">
+            <Button  Background="{x:Null}" BorderBrush="Black" Cursor="Hand" Command="{Binding OpenFileCommand}">
                 <fa5:FontAwesome Foreground="Black"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Icon="Solid_FileImport"></fa5:FontAwesome>
             </Button>
-            <Button Background="{x:Null}" BorderBrush="Black">
+            <Button Background="{x:Null}" BorderBrush="Black" Command="{Binding SaveFileCommand}">
                 <fa5:FontAwesome Foreground="Black" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Icon="Solid_FileExport"></fa5:FontAwesome>
             </Button>
           

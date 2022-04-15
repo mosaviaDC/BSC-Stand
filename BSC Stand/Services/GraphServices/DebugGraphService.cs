@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Axes;
-
-namespace BSC_Stand.Services.GraphServices
+namespace BSC_Stand.Services
 {
     internal class DebugGraphService : IGraphService
     {

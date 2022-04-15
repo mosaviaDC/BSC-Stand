@@ -11,7 +11,7 @@ using BSC_Stand.Infastructure.Commands;
 using BSC_Stand.Models.StandConfigurationModels;
 using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
 using Microsoft.Extensions.Logging;
-using BSC_Stand.Services.FileLoggingService;
+using BSC_Stand.Services;
 using System.IO;
 
 namespace BSC_Stand.ViewModels
@@ -223,7 +223,7 @@ namespace BSC_Stand.ViewModels
                 //     _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
               Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
               Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
-              Bus27ConfigurationModes.CollectionChanged += ConfigurationModes_CollectionChanged;
+             Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
               Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
@@ -237,6 +237,10 @@ namespace BSC_Stand.ViewModels
         {
             UpdateCyclograms(null);
         }
+        private void Bus27ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateCyclograms(null);
+        }
 
         private void UpdateCyclograms(object p )
         {
@@ -247,21 +251,23 @@ namespace BSC_Stand.ViewModels
 
         }
 
-
-
-
-
-
-
-
-
-        private void Test(object p)
+        public void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig)
         {
+            this.Bus100ConfigurationModes.Clear();
+            this.Bus27ConfigurationModes.Clear();
             
+            foreach(var p in V27BusConfig)
+            {
+                Bus27ConfigurationModes.Add(p);
+            }
+            foreach (var p in V100BusConfig)
+            {
+                Bus100ConfigurationModes.Add(p);
+            }
+
+
+
         }
-        private void ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            Test(null);
-        }
+
     }
 }

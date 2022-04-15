@@ -10,8 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using BSC_Stand.Services.FileLoggingService;
-using BSC_Stand.Services.GraphServices;
-using BSC_Stand.Services.FileDialogService;
+using BSC_Stand.Services;
+
 
 namespace BSC_Stand
 {
@@ -49,6 +49,7 @@ namespace BSC_Stand
             services.AddSingleton<IFileLogger,FileLoggerService>();
             services.AddSingleton<IGraphService, DebugGraphService>();
             services.AddSingleton<IFileDialog, FileDialogService>();
+            services.AddSingleton<IProjectConfigurationService, ProjectConfigurationService>();
             
         }
       

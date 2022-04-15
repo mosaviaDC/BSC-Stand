@@ -9,7 +9,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using BSC_Stand.Services.FileLoggingService;
 using System.IO;
-using BSC_Stand.Services.GraphServices;
+using BSC_Stand.Services;
 using System.Diagnostics;
 using System.Threading;
 using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
