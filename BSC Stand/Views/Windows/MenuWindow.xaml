@@ -18,6 +18,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFileCommand}"  Gesture="CTRL+O" Key="O"></KeyBinding>
         <KeyBinding Command="{Binding SaveFileCommand}"  CommandParameter="HotKey" Gesture="CTRL+S" Key="S"></KeyBinding>
+        <KeyBinding Command="{Binding  Source={StaticResource ViewModelLocator}, Path=StandConfigurationViewModel.UndoDataGridCommand}" Gesture="CTRL+Z"/>
     </Window.InputBindings>
     
     

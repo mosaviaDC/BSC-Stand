@@ -22,9 +22,9 @@ namespace BSC_Stand.ViewModels
       public ConfigurationMode SelectedConfigMode { get; set; }
 
 
+        private Stack<ObservableCollection<ConfigurationMode>> V27BusConfigurationStack = new Stack<ObservableCollection<ConfigurationMode>>();
 
-    
-
+        private bool UndoRedoCommandExecuted = false;
         private int _V27BusCyclogramRepeatCount;
         private string currentOpenedFilePath;
 
@@ -93,7 +93,7 @@ namespace BSC_Stand.ViewModels
            
             if (configMode != null && programmablePowerSupplyModule !=null)
             {
-                Debug.WriteLine(configMode.MaxValue);
+                
                 ConfigurationMode configurationMode = new ConfigurationMode()
                 {
                     Discreteness = configMode.Discreteness,
@@ -122,6 +122,47 @@ namespace BSC_Stand.ViewModels
             return true;
         }
 
+        public ICommand UndoDataGridCommand { get; set; }
+
+        public void UndoDataGridCommandExecuted(object p)
+        {
+
+            
+            Debug.WriteLine("UndoCommand");
+            var lastConfig = V27BusConfigurationStack.Pop();
+            this.Bus27ConfigurationModes = lastConfig;
+            this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
+           
+
+            ////this.Bus27ConfigurationModes.CollectionChanged -= Bus27ConfigurationModes_CollectionChanged;
+            ////this.Bus27ConfigurationModes.Clear();
+            ////this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
+            //////var lastConfig = V27BusConfigurationStack.Pop();
+            ////Debug.WriteLine("Undo" + lastConfig.Count);
+            //foreach (var r in lastConfig)
+            //{
+            //    Debug.WriteLine(r.MaxValue);
+            //    this.Bus27ConfigurationModes.Add(r);
+            //}
+
+
+
+
+            UpdateCyclograms(null);
+
+        }
+
+        public bool CanUndoDataGridCommandExecuted(object p)
+        {
+            if (V27BusConfigurationStack.Count > 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+
+
         public ICommand UpdateCommand { get; set; }
 
         #endregion
@@ -136,6 +177,7 @@ namespace BSC_Stand.ViewModels
             #region Commands
             AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
             UpdateCommand = new ActionCommand(UpdateCyclograms);
+            UndoDataGridCommand = new ActionCommand(UndoDataGridCommandExecuted, CanUndoDataGridCommandExecuted);
             #endregion
             #region Services
             #endregion
@@ -244,10 +286,10 @@ namespace BSC_Stand.ViewModels
             V27BusCyclogramRepeatCount = 1;
             V100BusCyclogramRepeatCount = 1;
            
-              Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
-              Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+             Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+             Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
              Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
-              Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
+             Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
                 programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
                 programmablePowerSupplyModules.Add(_AKIP1311);
                 programmablePowerSupplyModules.Add(_AKIP1311_4);
@@ -258,11 +300,18 @@ namespace BSC_Stand.ViewModels
 
         private void Bus100ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            UpdateCyclograms(null);
+           // UpdateCyclograms(null);
+            
         }
         private void Bus27ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            UpdateCyclograms(null);
+                Debug.WriteLine("Collect Cnaged");
+                V27BusConfigurationStack.Push(this.Bus27ConfigurationModes);
+               
+            
+          
+            
+          
         }
 
         private void UpdateCyclograms(object p )
