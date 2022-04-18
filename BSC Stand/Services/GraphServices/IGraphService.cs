@@ -12,6 +12,5 @@ namespace BSC_Stand.Services
 
         List<DataPoint> GetDataPoints();
 
-
     }
 }

@@ -7,13 +7,22 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <StartupObject>BSC_Stand.Program</StartupObject>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="OwenioNet.DataConverter.dll" />
+    <None Remove="OwenioNet.dll" />
     <None Remove="Файлы пользователя\Конифгурация экспериментов\sample.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="OwenioNet.DataConverter.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OwenioNet.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Файлы пользователя\Конифгурация экспериментов\sample.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -24,8 +33,10 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="NModbus" Version="3.0.72" />
     <PackageReference Include="OxyPlot.Core" Version="2.1.0" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.0" />
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +45,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestingConsoleApplicaton\TestingConsoleApplicaton.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="OwenioNet">
+      <HintPath>OwenioNet.dll</HintPath>
+    </Reference>
+    <Reference Include="OwenioNet.DataConverter">
+      <HintPath>OwenioNet.DataConverter.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

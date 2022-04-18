@@ -36,18 +36,5 @@ namespace BSC_Stand.Services
             await JsonSerializer.SerializeAsync(createStream, projectConfiguration,jsonSerializerOptions);
             await createStream.DisposeAsync();
         }
-
-
-    
-    
-
-
-
-
-
-
-
-
-
     }
 }

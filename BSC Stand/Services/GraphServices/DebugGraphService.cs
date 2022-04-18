@@ -53,20 +53,8 @@ namespace BSC_Stand.Services
                 Color2 = OxyColors.Red,
                 Fill = OxyColors.Transparent,
                 Fill2 = OxyColors.Transparent,
-                //Color = OxyColors.Black,
-                //Color2 = OxyColors.Brown,
-                //MarkerFill = OxyColors.Red,
-                ////  Fill = OxyColors.Tomato,
-                ////Fill2 = OxyColors.LightBlue,
-                //MarkerFill2 = OxyColors.Blue,
-                //MarkerStroke = OxyColors.Brown,
-                //MarkerStroke2 = OxyColors.Black,
-                //StrokeThickness = 2,
                 Limit = 130,
-             
 
-                //   MarkerType = MarkerType.Circle,
-                // MarkerSize = 3,
             };
             
 
