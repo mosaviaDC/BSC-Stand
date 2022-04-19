@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NModbus;
+using NModbus.Device;
+using System.Net.Sockets;
+using System.Net;
+using System.Diagnostics;
+using System.Threading;
+
+namespace BSC_Stand.Services
+{
+    internal class ModBusService: IModbusService
+    {
+        private readonly IModbusMaster owenController;
+
+        private readonly TcpClient owenControllerTCPCLient;
+
+
+        public ModBusService()
+        {
+            IModbusFactory modbusFactory = new ModbusFactory();
+
+            owenControllerTCPCLient = new TcpClient("10.0.6.10", 502);
+            owenController =  modbusFactory.CreateMaster(owenControllerTCPCLient);
+        }
+
+        public async Task<ushort[]> ReadDataFromOwenController()
+        {
+            return await owenController.ReadHoldingRegistersAsync(1, 0, 3);
+          
+        }
+
+       
+    }
+}

@@ -15,7 +15,7 @@ using OwenioNet.DataConverter;
 using BSC_Stand.Infastructure.Owen;
 using NModbus.IO;
 using NModbus.Device;
-
+using NModbus;
 
 namespace BSC_Stand.ViewModels
 {
@@ -31,6 +31,8 @@ namespace BSC_Stand.ViewModels
         private readonly IFileDialog _fileDialogService;
         private readonly IProjectConfigurationService _projectConfigurationService;
         private readonly StandConfigurationViewModel _standConfigurationViewModel;
+        private readonly IModbusService _modbusService;
+
         #endregion
         private string _Title;
         public string Title
@@ -128,12 +130,13 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion
 
-        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel)
+        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService)
         {
             #region Services
             _fileDialogService = fileDialogService;
             _projectConfigurationService = projectConfigurationService;
             _standConfigurationViewModel = standConfigurationViewModel;
+            _modbusService = modbusService;
             #endregion
             #region Commands
             SaveFileCommand = new ActionCommand(SaveFileCommandExecute, CanSaveFileCommandExecuted);
@@ -148,26 +151,33 @@ namespace BSC_Stand.ViewModels
             _Title = "ЭО БСК";
             _RamUsageText = $"Ram Usage: {RamCounter.NextValue()}";
 
+     
 
- 
+        }
 
 
 
-            using (var owenProtocol = OwenProtocolMaster.Create(new OwenTCPClientAdapter("10.0.6.10", 502), null))
+
+            private async void UpdatePerformance(object sender, EventArgs e)
             {
-                owenProtocol.OwenRead(0x265, OwenioNet.Types.AddressLengthType.Bits11, "ab.L");
-                owenProtocol.OwenWrite(0x265, OwenioNet.Types.AddressLengthType.Bits11, "ab.L", new byte[] { 0x45, 0x87 });
-              
-            }
+                 ushort[] result =  await _modbusService.ReadDataFromOwenController();
 
-        
-            }       
+                 byte[] data = new byte[result.Length * sizeof(ushort)];
 
-            private void UpdatePerformance(object sender, EventArgs e)
-        {
-         
+            var r = BitConverter.GetBytes(result[0]);
+            Buffer.BlockCopy(r,0,data, 0, r.Length);
+
+            r = BitConverter.GetBytes(result[1]);
+            Buffer.BlockCopy(r, 0, data, 2, r.Length);
+
+            Debug.WriteLine(BitConverter.ToSingle(data, 0));
             RamUsageText = $"Ram Usage: {RamCounter.NextValue() / 100}";
+
             }
+          
+            
+      
+            
 
 
         }
