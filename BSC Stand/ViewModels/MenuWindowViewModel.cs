@@ -16,6 +16,7 @@ using BSC_Stand.Infastructure.Owen;
 using NModbus.IO;
 using NModbus.Device;
 using NModbus;
+using BSC_Stand.Views.Windows;
 
 namespace BSC_Stand.ViewModels
 {
@@ -26,6 +27,7 @@ namespace BSC_Stand.ViewModels
         #region Properties
         private PerformanceCounter RamCounter;
         private string CurrentOpenedFileName = null;
+        private readonly IWindowService _windowService;
         #endregion
         #region Services
         private readonly IFileDialog _fileDialogService;
@@ -126,6 +128,13 @@ namespace BSC_Stand.ViewModels
         }
 
 
+        public ICommand OpenPeriodStandParamsControlWindowCommand { get; set; }
+        public void OpenPeriodStandParamsControlWindowCommandExecute(object p)
+        {
+            _windowService.ShowWindow<StandParamsControl>(this);
+           
+        }
+
 
 
         #endregion
@@ -133,18 +142,20 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion
 
-        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel)
+        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService)
         {
             #region Services
             _fileDialogService = fileDialogService;
             _projectConfigurationService = projectConfigurationService;
             _standConfigurationViewModel = standConfigurationViewModel;
+            _windowService = windowService;
             //_modbusService = modbusService;
             #endregion
             #region Commands
             SaveFileCommand = new ActionCommand(SaveFileCommandExecute, CanSaveFileCommandExecuted);
             OpenFileCommand = new ActionCommand(OpenFileCommandExecute, CanOpenFileCommandExecuted);
             CheckFileCommand = new ActionCommand(CheckFile);
+            OpenPeriodStandParamsControlWindowCommand = new ActionCommand(OpenPeriodStandParamsControlWindowCommandExecute);
             #endregion
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
