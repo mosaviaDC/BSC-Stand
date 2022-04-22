@@ -13,7 +13,9 @@ namespace BSC_Stand.Services
         public void ShowWindow<T>(object DataContext) where T:Window, new()
         {
             T window = new T();
+            window.DataContext = DataContext;
             window.Show();
+           
         }
     }
 }
