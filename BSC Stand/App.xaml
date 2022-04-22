@@ -6,9 +6,11 @@
              xmlns:local="clr-namespace:BSC_Stand"
              StartupUri="Views/Windows/MenuWindow.xaml">
     <Application.Resources>
+ 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                
+                <materialDesign:BundledTheme BaseTheme="Light"   PrimaryColor="BlueGrey" SecondaryColor="Blue" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="ViewModelLocator"/>

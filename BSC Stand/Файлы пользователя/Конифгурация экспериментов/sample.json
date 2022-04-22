@@ -1,5 +1,30 @@
 {
-  "V100BusConfigurationModes": [],
+  "V100BusConfigurationModes": [
+    {
+      "MinValue": 600,
+      "MaxValue": 600,
+      "Discreteness": 0,
+      "ModeName": null,
+      "Duration": 15,
+      "ModeUnit": null
+    },
+    {
+      "MinValue": 600,
+      "MaxValue": 600,
+      "Discreteness": 0,
+      "ModeName": null,
+      "Duration": 15,
+      "ModeUnit": null
+    },
+    {
+      "MinValue": 600,
+      "MaxValue": 600,
+      "Discreteness": 0,
+      "ModeName": null,
+      "Duration": 15,
+      "ModeUnit": null
+    }
+  ],
   "V27BusConfigurationModes": [
     {
       "MinValue": 600,

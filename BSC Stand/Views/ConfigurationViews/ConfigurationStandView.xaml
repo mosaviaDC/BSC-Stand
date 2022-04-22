@@ -32,7 +32,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <GroupBox Grid.Column="0"  Header="Конфигурация стенда" Padding="0">
+        <GroupBox Grid.Column="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
             <Grid> 
                 <ListBox  x:Name="StandConfigModules" ItemsSource="{Binding programmablePowerSupplyModules, Mode=OneWay}">
                     <ListBox.ItemTemplate>
@@ -56,7 +56,7 @@
             
             
         </GroupBox>
-        <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Параметры модулей" Padding="0">
+        <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
             <StackPanel>
                 <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
                 <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

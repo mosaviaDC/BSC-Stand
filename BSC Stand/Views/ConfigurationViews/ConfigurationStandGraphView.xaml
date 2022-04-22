@@ -23,11 +23,11 @@
             <ColumnDefinition Width="0.8*"></ColumnDefinition>
             <ColumnDefinition Width="0.3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-       
 
 
 
-        <GroupBox   Header="График" Grid.Column="0" Padding="0,0,0,0">
+
+        <GroupBox   Header="График" FontSize="12" FontFamily="Arial"  Grid.Column="0" Padding="0,0,0,0">
 
          
             <Grid>
@@ -60,7 +60,7 @@
 
                 </GroupBox>
 
-                <GroupBox Header="" Grid.Row="1">
+                <GroupBox FontSize="10" FontFamily="Arial" Grid.Row="1">
                     <ScrollViewer>
                         <TextBlock Text="{Binding TextBlock, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
                     </ScrollViewer>
@@ -75,8 +75,8 @@
                 <GridSplitter Grid.Row="0" VerticalAlignment="Bottom" Height="2" HorizontalAlignment="Stretch"></GridSplitter>
             </Grid>
         </GroupBox>
-       
-        <GroupBox   Header="Параметры" Padding="0" Grid.Column="1">
+
+        <GroupBox   Header="Параметры"  FontSize="12" FontFamily="Arial" Padding="0" Grid.Column="1">
             <TreeView>
                 <TreeViewItem Header="Шина 27В">
                     <Grid >
