@@ -33,9 +33,13 @@ namespace BSC_Stand
 
         protected override async void OnExit(ExitEventArgs e)
         {
+            App.Host.Services.GetRequiredService<MenuWindowViewModel>().SaveFileCommand.Execute(null);
+
+
             base.OnExit(e);
             var host = Host;
             await host.StopAsync().ConfigureAwait(false);
+
             host.Dispose();
             _Host = null;
         }
@@ -50,7 +54,7 @@ namespace BSC_Stand
             services.AddSingleton<IGraphService, DebugGraphService>();
             services.AddSingleton<IFileDialog, FileDialogService>();
             services.AddSingleton<IProjectConfigurationService, ProjectConfigurationService>();
-            services.AddSingleton<IModbusService, ModBusService>();
+         //   services.AddSingleton<IModbusService, ModBusService>();
             
         }
       

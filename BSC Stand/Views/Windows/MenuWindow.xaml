@@ -8,6 +8,7 @@
         x:Class="BSC_Stand.Views.Windows.MenuWindow"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:configWindows ="clr-namespace:BSC_Stand.Views"
+   
         xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized"
@@ -25,7 +26,7 @@
    
     <Grid>
         <Menu Height="45" VerticalAlignment="Top">
-            <Button  Background="{x:Null}" BorderBrush="Black" Cursor="Hand" Command="{Binding OpenFileCommand}" ToolTip="Открыть файл Ctrl+S">
+            <Button  Background="{x:Null}" BorderBrush="Black" Cursor="Hand" Command="{Binding OpenFileCommand}" ToolTip="Открыть файл Ctrl+O">
                 <fa5:FontAwesome Foreground="Black"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"  Icon="Solid_FileImport"></fa5:FontAwesome>
             </Button>
             <Button Background="{x:Null}" BorderBrush="Black" Command="{Binding SaveFileCommand}" ToolTip="Сохранить файл Ctrl+S">
@@ -40,49 +41,34 @@
 
 
         </Menu>
-        <Grid Margin="0,45,0,45">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="0.4*"></ColumnDefinition>
-                <ColumnDefinition Width="0.6*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <GroupBox  Padding="0" x:Name="StandConfiguration" Grid.Column="0">
-                <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>
-            </GroupBox>
-            <GroupBox Padding="0" Grid.Column="1">
-                <configWindows:ConfigurationStandGraphsView> </configWindows:ConfigurationStandGraphsView>
-            </GroupBox>
-          
-            <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" Width="5"  HorizontalAlignment="Right">
-                
-            </GridSplitter>
-            
+        <TabControl Margin="0,45,0,45"  >
+            <TabItem Header="Конфигурация стенда">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox  Padding="0" x:Name="StandConfiguration" Grid.Column="0">
+                        <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>
+                    </GroupBox>
+                    <GroupBox Padding="0" Grid.Column="1">
+                        <configWindows:ConfigurationStandGraphsView></configWindows:ConfigurationStandGraphsView>
+                    </GroupBox>
+
+                    <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" Width="5"  HorizontalAlignment="Right">
+
+                    </GridSplitter>
 
 
-        </Grid>
-        <StatusBar Height="45" VerticalAlignment="Bottom">
-            <StatusBar.Background>
-                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
-            </StatusBar.Background>
-            <StatusBarItem HorizontalAlignment="Left">
-                <TextBlock Text="Техническое Сообщение 1">
 
-                </TextBlock>
-                
-            </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Left">
-                <TextBlock  Width="300"   Text="{Binding RamUsageText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                </Grid>
+            </TabItem>
+            <TabItem Header="Контроль СИ СГЭ"></TabItem>
+            <TabItem Header="Анализ эксперимента"></TabItem>
+        </TabControl>
 
-                </TextBlock>
-            </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Center">
-                <ProgressBar Width="150" Value="75" SmallChange="0.01" >
-
-                </ProgressBar>
-            </StatusBarItem>
-            
-
-
-        </StatusBar>
+        <configWindows:StatusBarView></configWindows:StatusBarView>
+        
         
         
         

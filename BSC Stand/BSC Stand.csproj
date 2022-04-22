@@ -56,4 +56,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\RealTimeViews\" />
+  </ItemGroup>
+
 </Project>

@@ -96,6 +96,9 @@ namespace BSC_Stand.ViewModels
 
         private async void SaveFileCommandExecute(object p)
         {
+
+          
+
             //Если горячая клавиша и есть имя файла
             if (p != null && CurrentOpenedFileName != null)
             {
@@ -130,13 +133,13 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion
 
-        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService)
+        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel)
         {
             #region Services
             _fileDialogService = fileDialogService;
             _projectConfigurationService = projectConfigurationService;
             _standConfigurationViewModel = standConfigurationViewModel;
-            _modbusService = modbusService;
+            //_modbusService = modbusService;
             #endregion
             #region Commands
             SaveFileCommand = new ActionCommand(SaveFileCommandExecute, CanSaveFileCommandExecuted);
@@ -159,18 +162,8 @@ namespace BSC_Stand.ViewModels
 
 
             private async void UpdatePerformance(object sender, EventArgs e)
-            {
-                 ushort[] result =  await _modbusService.ReadDataFromOwenController();
+            { 
 
-                 byte[] data = new byte[result.Length * sizeof(ushort)];
-
-            var r = BitConverter.GetBytes(result[0]);
-            Buffer.BlockCopy(r,0,data, 0, r.Length);
-
-            r = BitConverter.GetBytes(result[1]);
-            Buffer.BlockCopy(r, 0, data, 2, r.Length);
-
-            Debug.WriteLine(BitConverter.ToSingle(data, 0));
             RamUsageText = $"Ram Usage: {RamCounter.NextValue() / 100}";
 
             }

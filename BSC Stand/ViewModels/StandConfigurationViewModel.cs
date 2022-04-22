@@ -308,20 +308,13 @@ namespace BSC_Stand.ViewModels
         {
                 Debug.WriteLine("Collect Cnaged");
                 V27BusConfigurationStack.Push(this.Bus27ConfigurationModes);
-               
-            
-          
-            
           
         }
 
         private void UpdateCyclograms(object p )
         {
-         //   Debug.WriteLine($"{Bus27ConfigurationModes.Count} {Bus100ConfigurationModes.Count}");
             _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes);
             _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
-           
-
         }
 
         public void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount)
@@ -340,6 +333,7 @@ namespace BSC_Stand.ViewModels
             {
                 Bus100ConfigurationModes.Add(p);
             }
+            UpdateCyclograms(null);
         }
 
     }
