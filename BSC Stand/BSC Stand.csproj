@@ -8,11 +8,13 @@
     <UseWPF>true</UseWPF>
     <StartupObject>BSC_Stand.Program</StartupObject>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <ApplicationIcon>Views\Windows\ico.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="OwenioNet.DataConverter.dll" />
     <None Remove="OwenioNet.dll" />
+    <None Remove="Views\Windows\ico.ico" />
     <None Remove="Файлы пользователя\Конифгурация экспериментов\sample.json" />
   </ItemGroup>
 
@@ -21,6 +23,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="OwenioNet.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Windows\ico.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Файлы пользователя\Конифгурация экспериментов\sample.json">

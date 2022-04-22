@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BSC_Stand.Views.Windows"
         mc:Ignorable="d"
-        Title="Проверка оборудования" Height="750" Width="1000">
+        Title="Проверка оборудования" Height="750" Width="1000"
+        Icon="ico.ico"
+        >
     <Grid>
         
     </Grid>

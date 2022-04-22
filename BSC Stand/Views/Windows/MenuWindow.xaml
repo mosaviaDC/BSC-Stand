@@ -14,7 +14,9 @@
         Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized"
         DataContext="{Binding MenuWindowViewModel ,Source={StaticResource ViewModelLocator}}"
         Title="{Binding Title}"
-    
+        Icon="ico.ico"
+
+
     >
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFileCommand}"  Gesture="CTRL+O" Key="O"></KeyBinding>
