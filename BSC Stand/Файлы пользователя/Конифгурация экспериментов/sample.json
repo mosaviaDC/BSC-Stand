@@ -1,30 +1,5 @@
 {
-  "V100BusConfigurationModes": [
-    {
-      "MinValue": 600,
-      "MaxValue": 30,
-      "Discreteness": 0,
-      "ModeName": null,
-      "Duration": 15,
-      "ModeUnit": null
-    },
-    {
-      "MinValue": 0,
-      "MaxValue": 9000,
-      "Discreteness": 0,
-      "ModeName": null,
-      "Duration": 50,
-      "ModeUnit": null
-    },
-    {
-      "MinValue": 0,
-      "MaxValue": 600,
-      "Discreteness": 0,
-      "ModeName": null,
-      "Duration": 15,
-      "ModeUnit": null
-    }
-  ],
+  "V100BusConfigurationModes": [],
   "V27BusConfigurationModes": [
     {
       "MinValue": 600,
@@ -36,7 +11,23 @@
     },
     {
       "MinValue": 600,
-      "MaxValue": 700,
+      "MaxValue": 600,
+      "Discreteness": 0,
+      "ModeName": null,
+      "Duration": 15,
+      "ModeUnit": null
+    },
+    {
+      "MinValue": 600,
+      "MaxValue": 600,
+      "Discreteness": 0,
+      "ModeName": null,
+      "Duration": 15,
+      "ModeUnit": null
+    },
+    {
+      "MinValue": 600,
+      "MaxValue": 600,
       "Discreteness": 0,
       "ModeName": null,
       "Duration": 15,

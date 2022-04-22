@@ -72,7 +72,7 @@ namespace BSC_Stand.ViewModels
                 if (result != null)
                 {
                     _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
-                    Title = $"ЭО БСК {CurrentOpenedFileName}";
+                    Title = $"{CurrentOpenedFileName} - ЭО БСК";
                 }
             }
 
@@ -90,7 +90,7 @@ namespace BSC_Stand.ViewModels
 
         private void CheckFile(object p)
         {
-            Title = $"ЭО БСК {CurrentOpenedFileName} *";
+            Title = $"{CurrentOpenedFileName}* - ЭО БСК";
         }
 
 
@@ -104,7 +104,7 @@ namespace BSC_Stand.ViewModels
             {
                 await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount);
 
-                Title = $"ЭО БСК {CurrentOpenedFileName}";
+                Title = $"{CurrentOpenedFileName} - ЭО БСК";
 
 
             }
@@ -114,7 +114,7 @@ namespace BSC_Stand.ViewModels
                 if (CurrentOpenedFileName != null)
 
                     await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount);
-                Title = $"ЭО БСК {CurrentOpenedFileName}";
+                Title = $"{CurrentOpenedFileName} - ЭО БСК";
             }
 
 

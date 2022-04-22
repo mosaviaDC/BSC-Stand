@@ -58,7 +58,7 @@
             <StackPanel>
                 <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
                 <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <TreeViewItem Header="Режимы">
+                    <TreeViewItem Header="Режимы" IsExpanded="True">
                         <ListBox x:Name="configurationModesList"  ItemsSource="{Binding SelectedItem.Modes, ElementName=StandConfigModules}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

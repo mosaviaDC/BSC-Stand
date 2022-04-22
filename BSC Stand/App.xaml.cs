@@ -33,7 +33,7 @@ namespace BSC_Stand
 
         protected override async void OnExit(ExitEventArgs e)
         {
-            App.Host.Services.GetRequiredService<MenuWindowViewModel>().SaveFileCommand.Execute(null);
+           // App.Host.Services.GetRequiredService<MenuWindowViewModel>().SaveFileCommand.Execute(null);
 
 
             base.OnExit(e);
