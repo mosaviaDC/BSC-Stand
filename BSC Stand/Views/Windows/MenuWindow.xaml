@@ -78,7 +78,8 @@
            
 
         </Menu>
-        <TabControl Margin="0,45,0,45"  >
+        <TabControl Margin="0,45,0,45"  SelectedIndex="{Binding SelectedIndex}" x:Name="TabeControl" >
+            
             <TabItem Header="Конфигурация стенда">
                 <Grid >
                     <Grid.ColumnDefinitions>
@@ -105,8 +106,11 @@
                 <configWindows:BSCControlView></configWindows:BSCControlView>
             </TabItem>
             <TabItem Header="Анализ эксперимента"></TabItem>
+            
         </TabControl>
-
+        
+        
+        
         <configWindows:StatusBarView></configWindows:StatusBarView>
 
 

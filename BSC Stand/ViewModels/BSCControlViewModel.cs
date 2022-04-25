@@ -13,13 +13,21 @@ namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
     {
-        private ObservableCollection<ConfigurationMode> bus100ConfigModes;
-        private ObservableCollection<ConfigurationMode> bus27ConfigModes;
+        private StandConfigurationViewModel _standConfigurationViewModel;
+        private RealTimeStandControlService _realTimeStandControlService;
 
         public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel) 
         {
-            RealTimeStandControlService real = new RealTimeStandControlService(this,standConfigurationViewModel );
+         _standConfigurationViewModel = standConfigurationViewModel;
+         _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel);
+
         }
 
+
+        public void StartExpiremnt()
+        {
+          
+            _realTimeStandControlService.StartExpirent();
+        }
     }
 }

@@ -33,6 +33,7 @@ namespace BSC_Stand.ViewModels
         private readonly IFileDialog _fileDialogService;
         private readonly IProjectConfigurationService _projectConfigurationService;
         private readonly StandConfigurationViewModel _standConfigurationViewModel;
+        private readonly BSCControlViewModel _BSCControlViewModel;
         private readonly IModbusService _modbusService;
 
         #endregion
@@ -57,6 +58,24 @@ namespace BSC_Stand.ViewModels
 
                 OnPropertyChanged("RamUsageText");
                 Set(ref _RamUsageText, value);
+            }
+        }
+
+        private int _SelectedIndex;
+        public int SelectedIndex
+        {
+
+            get
+            {
+                return _SelectedIndex;
+            }
+            set
+            {
+                if (value == 1)
+                {
+                    _BSCControlViewModel.StartExpiremnt();
+                }
+                Set(ref _SelectedIndex,value);
             }
         }
 
@@ -142,12 +161,13 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion
 
-        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService)
+        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService, BSCControlViewModel bSCControlViewModel)
         {
             #region Services
             _fileDialogService = fileDialogService;
             _projectConfigurationService = projectConfigurationService;
             _standConfigurationViewModel = standConfigurationViewModel;
+            _BSCControlViewModel = bSCControlViewModel;
             _windowService = windowService;
             //_modbusService = modbusService;
             #endregion
