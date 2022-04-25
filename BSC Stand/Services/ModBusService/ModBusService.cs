@@ -25,6 +25,7 @@ namespace BSC_Stand.Services
             try
             {
                 owenControllerTCPCLient = new TcpClient("10.0.6.10", 502);
+               
                 owenController = modbusFactory.CreateMaster(owenControllerTCPCLient);
             }
             catch (Exception ex)

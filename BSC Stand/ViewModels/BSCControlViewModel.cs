@@ -82,11 +82,8 @@ namespace BSC_Stand.ViewModels
             float a = BitConverter.ToSingle(bytes, 0);
             var r = DateTime.Now - StartTime;
             s1.Points.Add(new DataPoint(r.TotalSeconds,a));
-      
-
-            
-           GraphView.InvalidatePlot(true);
-            Debug.WriteLine(a);
+            GraphView.InvalidatePlot(true);
+        
         }
 
         public void SendV27ModBusCommand(ConfigurationMode configurationMode)

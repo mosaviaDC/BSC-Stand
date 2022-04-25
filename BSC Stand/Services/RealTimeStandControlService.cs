@@ -68,7 +68,7 @@ namespace BSC_Stand.Services
         public void UpdateExpiremntParams()
         {
 
-            if (V100configurationModes.Count > 0 && V27configurationModes.Count > 0)
+            if (V100configurationModes.Count > 0 || V27configurationModes.Count > 0)
             {
 
                 StartTime = DateTime.Now;
