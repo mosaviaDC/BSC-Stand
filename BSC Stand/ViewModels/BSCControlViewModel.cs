@@ -26,13 +26,13 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public void SendV27ModBusCommand()
+        public void SendV27ModBusCommand(ConfigurationMode configurationMode)
         {
-            Debug.WriteLine($"Send V27 ModBus Command {DateTime.Now}");
+            Debug.WriteLine($"Send V27 ModBus Command {DateTime.Now} {configurationMode.MaxValue}");
         }
-        public void SendV100ModBusCommand()
+        public void SendV100ModBusCommand(ConfigurationMode configurationMode)
         {
-            Debug.WriteLine($"Send V100 ModBus Command {DateTime.Now}");
+            Debug.WriteLine($"Send V100 ModBus Command {DateTime.Now} {configurationMode.MaxValue}");
         }
 
 
