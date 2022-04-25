@@ -56,9 +56,10 @@ namespace BSC_Stand
             services.AddSingleton<IFileDialog, FileDialogService>();
             services.AddSingleton<IProjectConfigurationService, ProjectConfigurationService>();
             services.AddSingleton<IWindowService, WindowService>();
-          //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
-         //   services.AddSingleton<IModbusService, ModBusService>();
-            
+            services.AddSingleton<IModbusService, ModBusService>();
+            //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
+
+
         }
       
     }

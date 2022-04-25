@@ -158,8 +158,13 @@ namespace BSC_Stand.Services
 
         }
 
+        
+        public double GetCurrentSecond()
+        {
+            var r = DateTime.Now.Day;
+            return r;
 
-
+        }
 
 
     }

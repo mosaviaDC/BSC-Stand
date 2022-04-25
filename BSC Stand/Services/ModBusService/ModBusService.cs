@@ -22,14 +22,21 @@ namespace BSC_Stand.Services
         public ModBusService()
         {
             IModbusFactory modbusFactory = new ModbusFactory();
+            try
+            {
+                owenControllerTCPCLient = new TcpClient("10.0.6.10", 502);
+                owenController = modbusFactory.CreateMaster(owenControllerTCPCLient);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Не удалось подключиться к ОВЕН");
 
-            owenControllerTCPCLient = new TcpClient("10.0.6.10", 502);
-            owenController =  modbusFactory.CreateMaster(owenControllerTCPCLient);
+            }
         }
 
         public async Task<ushort[]> ReadDataFromOwenController()
         {
-            return await owenController.ReadHoldingRegistersAsync(1, 0, 3);
+            return await owenController.ReadHoldingRegistersAsync(1, 0, 2);
           
         }
 

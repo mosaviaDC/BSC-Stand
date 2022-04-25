@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BSC_Stand.Views"
+             xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding BSCControlViewModel,Source={StaticResource ViewModelLocator}}"
@@ -42,8 +43,14 @@
                     <TextBlock Text="Статус подключения"></TextBlock>
                 </TreeViewItem>
             </TreeView>
-        </Grid>
+
+
      
+        </Grid>
+        <oxy:PlotView Grid.Column="1"  Model="{Binding  GraphView}">
+
+        </oxy:PlotView>
+
         <GridSplitter Width="3" VerticalAlignment="Stretch"></GridSplitter>
         
     </Grid>
