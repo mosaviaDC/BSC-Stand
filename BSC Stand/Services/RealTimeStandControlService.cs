@@ -16,22 +16,37 @@ namespace BSC_Stand.Services
     internal class RealTimeStandControlService 
     {
 
-        private static DispatcherTimer expiremtTimer { get; set; }
+        private static DispatcherTimer V27expirementTimer { get; set; }
+        private static DispatcherTimer V100expirementTimer { get; set; }
+        private DateTime StartTime { get;set; }
+
+        private DateTime V27NextConfigTime { get; set; }
+
+        private int V27ConfigIndex = 0;
+
+        private DateTime V100NextConfigTime { get; set; }
+
+        private int V100ConfigIndex = 0;
 
         private ObservableCollection<ConfigurationMode> V27configurationModes;
 
         private ObservableCollection<ConfigurationMode> V100configurationModes;
 
         private bool isExpirementPepformed;
-        int V27BusDuration;
-        int V100BusDuration;
+    
         public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel)
         {
             isExpirementPepformed = false;
-            expiremtTimer = new DispatcherTimer();
-            expiremtTimer.Interval = TimeSpan.FromMilliseconds(250);
-            expiremtTimer.Tick += TimerEventHandler;
-         
+            V27expirementTimer = new DispatcherTimer();
+            V27expirementTimer.Interval = TimeSpan.FromMilliseconds(250);
+            V27expirementTimer.Tick += V27TimerEventHandler;
+
+            V100expirementTimer = new DispatcherTimer();
+            V100expirementTimer.Interval = TimeSpan.FromMilliseconds(250);
+            V100expirementTimer.Tick += V100TimerEventHandler;
+
+
+
             V27configurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100configurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
            
@@ -41,21 +56,18 @@ namespace BSC_Stand.Services
         /// </summary>
         public void UpdateExpiremntParams()
         {
-
-            foreach (var p in V27configurationModes)
-            {
-                V27BusDuration += p.Duration;
-            }
-            foreach (var p in V100configurationModes)
-            {
-                V100BusDuration += p.Duration;
-            }
-            Debug.WriteLine($"V27Duration {V27BusDuration}  V100Duration {V100BusDuration}");
          
-
-           
-
-
+            StartTime = DateTime.Now;
+            V27NextConfigTime = StartTime;
+            V27NextConfigTime = V27NextConfigTime.AddSeconds(V27configurationModes[V27ConfigIndex].Duration);
+            V27ConfigIndex++;
+            V100NextConfigTime = StartTime;
+            V100NextConfigTime = V100NextConfigTime.AddSeconds(V100configurationModes[V100ConfigIndex].Duration);
+            V100ConfigIndex++;
+            Debug.WriteLine($"Send Command to modbus (V27) {DateTime.Now}");
+            Debug.WriteLine($"Send Command to modbus (V100) {DateTime.Now}");
+            V27expirementTimer.Start();
+            V100expirementTimer.Start();
         }
         public void StartExpirent()
         {
@@ -64,7 +76,7 @@ namespace BSC_Stand.Services
             {
                 isExpirementPepformed = true;
                 UpdateExpiremntParams();
-                expiremtTimer.Start();
+            
        
             }
             else if (isExpirementPepformed)
@@ -79,10 +91,50 @@ namespace BSC_Stand.Services
         }
 
 
-        public void TimerEventHandler(object sender, EventArgs e)
+        public void V27TimerEventHandler(object sender, EventArgs e)
         {
-            Debug.WriteLine(this.GetHashCode());
+         
+            if (DateTime.Now - V27NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V27NextConfigTime <= TimeSpan.FromMilliseconds(500)))
+            {
             
+                if (V27ConfigIndex >= V27configurationModes.Count)
+                {
+                    V27expirementTimer.Stop();
+                    Debug.WriteLine($"Send Command to modbus (V27) {DateTime.Now}") ;
+                    Debug.WriteLine($"V27 expirement Stop {DateTime.Now}");
+                    return;
+                }
+                
+                {
+                    Debug.WriteLine($"Send Command to modbus (V27) {DateTime.Now}");
+                    V27NextConfigTime = V27NextConfigTime.AddSeconds(V27configurationModes[V27ConfigIndex].Duration);
+                    V27ConfigIndex++;
+                }
+            }
+
+        }
+
+        public void V100TimerEventHandler(object sender, EventArgs e)
+        {
+
+            if (DateTime.Now - V100NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V100NextConfigTime <= TimeSpan.FromMilliseconds(500)))
+            {
+
+                if (V100ConfigIndex >= V100configurationModes.Count)
+                {
+                    V100expirementTimer.Stop();
+                    Debug.WriteLine($"Send Command to modbus (V100) {DateTime.Now}");
+                    Debug.WriteLine($"V100 expirement Stop {DateTime.Now}");
+                    return;
+                }
+                
+                {
+                    Debug.WriteLine($"Send Command to modbus (V100) {DateTime.Now}");
+                    V100NextConfigTime = V100NextConfigTime.AddSeconds(V100configurationModes[V100ConfigIndex].Duration);
+                    V100ConfigIndex++;
+                }
+            }
+
         }
 
 
