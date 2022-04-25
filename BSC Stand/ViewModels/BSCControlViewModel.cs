@@ -62,14 +62,11 @@ namespace BSC_Stand.ViewModels
             };
  
             GraphView.Series.Add(s1);
-
-
-
             UpdateDataTimer = new DispatcherTimer();
-         UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(1000);
-         UpdateDataTimer.Tick += UpdateDataTimer_Tick;
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
-         UpdateDataTimer.Start();
+            UpdateDataTimer.Start();
         }
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
@@ -82,9 +79,6 @@ namespace BSC_Stand.ViewModels
             Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
             temp = BitConverter.GetBytes(result[1]);
             Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
-
-
-
             float a = BitConverter.ToSingle(bytes, 0);
             var r = DateTime.Now - StartTime;
             s1.Points.Add(new DataPoint(r.TotalSeconds,a));
