@@ -40,6 +40,10 @@ namespace BSC_Stand.Services
             return await owenController.ReadHoldingRegistersAsync(1, 0, 2);
           
         }
+        public bool GetOwenConnectionStatus()
+        {
+            return owenControllerTCPCLient.Connected;
+        }
 
        
     }

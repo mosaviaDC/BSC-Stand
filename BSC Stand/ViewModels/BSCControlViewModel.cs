@@ -29,6 +29,26 @@ namespace BSC_Stand.ViewModels
         private TwoColorAreaSeries s1;
         private TwoColorAreaSeries s2;
         private DateTime StartTime;
+
+
+
+        private float _OwenTemperature;
+
+        public float OwenTemperature
+        {
+            get => _OwenTemperature;
+            set => Set(ref _OwenTemperature, value);
+        }
+
+        private bool _OwenConnectStatus;
+
+        public bool OwenConnectStatus
+        {
+            get => _OwenConnectStatus;
+            set => Set(ref _OwenConnectStatus, value);
+        }
+
+
         #endregion
 
 
@@ -71,19 +91,19 @@ namespace BSC_Stand.ViewModels
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-           var result =  await _modBusService.ReadDataFromOwenController();
+             var result =  await _modBusService.ReadDataFromOwenController();
  
-           byte[] bytes = new byte[result.Length * sizeof(ushort)];
-
+            byte[] bytes = new byte[result.Length * sizeof(ushort)];
+            OwenConnectStatus =  _modBusService.GetOwenConnectionStatus();
             var temp = BitConverter.GetBytes(result[0]);
             Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
             temp = BitConverter.GetBytes(result[1]);
             Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
-            float a = BitConverter.ToSingle(bytes, 0);
+            OwenTemperature = BitConverter.ToSingle(bytes, 0);
             var r = DateTime.Now - StartTime;
-            s1.Points.Add(new DataPoint(r.TotalSeconds,a));
+            s1.Points.Add(new DataPoint(r.TotalSeconds,OwenTemperature));
             GraphView.InvalidatePlot(true);
-        
+          
         }
 
         public void SendV27ModBusCommand(ConfigurationMode configurationMode)

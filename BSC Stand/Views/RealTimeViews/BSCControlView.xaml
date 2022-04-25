@@ -24,9 +24,9 @@
             <TextBlock Height="15" VerticalAlignment="Top" HorizontalAlignment="Stretch"   Text="Статус модулей "></TextBlock>
             <TreeView Margin="0,30,0,0">
                 <TreeViewItem IsExpanded="True" Header="Овен">
-                    <TextBlock Text="Температура ЭО БСК"></TextBlock>
+                    <TextBlock Text="{Binding OwenTemperature}"></TextBlock>
                     <TextBlock Text="Температура ИБХА"></TextBlock>
-                    <TextBlock Text="Статус подключения"></TextBlock>
+                    <TextBlock Text="{Binding OwenConnectStatus}"></TextBlock>
                 </TreeViewItem>
                 
                 

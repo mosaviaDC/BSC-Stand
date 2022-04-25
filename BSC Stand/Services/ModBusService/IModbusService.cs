@@ -11,5 +11,6 @@ namespace BSC_Stand.Services
     internal interface IModbusService
     {
         public Task<ushort[]> ReadDataFromOwenController();
+        public bool GetOwenConnectionStatus();
     }
 }
