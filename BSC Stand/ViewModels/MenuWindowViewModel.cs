@@ -178,11 +178,7 @@ namespace BSC_Stand.ViewModels
             RamUsageText = $"Ram Usage: {RamCounter.NextValue() / 100}";
 
             }
-          
-            
-      
-            
-
+         
 
         }
 

@@ -14,5 +14,7 @@ namespace BSC_Stand.ViewModels
         public StandVizualizationViewModel StandVizualizationViewModel => App.Host.Services.GetRequiredService<StandVizualizationViewModel>();
         public StandConfigurationViewModel StandConfigurationViewModel => App.Host.Services.GetRequiredService<StandConfigurationViewModel>();
 
+        public BSCControlViewModel BSCControlViewModel => App.Host.Services.GetRequiredService<BSCControlViewModel>();
+
     }
 }

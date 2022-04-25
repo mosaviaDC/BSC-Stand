@@ -50,11 +50,13 @@ namespace BSC_Stand
             services.AddSingleton<MenuWindowViewModel>();
             services.AddSingleton<StandConfigurationViewModel>();
             services.AddSingleton<StandVizualizationViewModel>();
+            services.AddSingleton<BSCControlViewModel>();
             services.AddSingleton<IFileLogger,FileLoggerService>();
             services.AddSingleton<IGraphService, DebugGraphService>();
             services.AddSingleton<IFileDialog, FileDialogService>();
             services.AddSingleton<IProjectConfigurationService, ProjectConfigurationService>();
             services.AddSingleton<IWindowService, WindowService>();
+          //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
          //   services.AddSingleton<IModbusService, ModBusService>();
             
         }

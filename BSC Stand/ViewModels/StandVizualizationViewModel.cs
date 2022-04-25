@@ -39,8 +39,8 @@ namespace BSC_Stand.ViewModels
         public PlotModel Bus27PlotModel { get; set; }
         public PlotModel Bus100PlotModel { get; set; }
         private IGraphService _graphService;
-        private TwoColorAreaSeries s1;
-        private TwoColorAreaSeries s2;
+        public TwoColorAreaSeries s1 { get; set; }
+        public TwoColorAreaSeries s2 { get; set; }
 
         #endregion
 
@@ -145,6 +145,7 @@ namespace BSC_Stand.ViewModels
                         {
                             s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
                             s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
+                            
                         }
 
                     }
