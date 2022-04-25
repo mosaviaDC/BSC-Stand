@@ -91,7 +91,7 @@ namespace BSC_Stand.ViewModels
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-             var result =  await _modBusService.ReadDataFromOwenController();
+            var result =  await _modBusService.ReadDataFromOwenController();
  
             byte[] bytes = new byte[result.Length * sizeof(ushort)];
             OwenConnectStatus =  _modBusService.GetOwenConnectionStatus();
