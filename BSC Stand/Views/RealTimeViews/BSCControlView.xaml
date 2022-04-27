@@ -61,7 +61,7 @@
                     <ColumnDefinition>
                     </ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <DataGrid Grid.Column="0" ItemsSource="{Binding  V27ConfigurationModes}" SelectedIndex="{Binding V27SelectedIndex}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid Grid.Column="0" ItemsSource="{Binding  V27ConfigurationModes}"  SelectedIndex="{Binding V27SelectedIndex}" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
 
                     <DataGrid.Columns>
 
@@ -77,7 +77,7 @@
                     </DataGrid.Columns>
 
                 </DataGrid>
-                <DataGrid Grid.Column="1" ItemsSource="{Binding V100ConfigurationModes }" SelectedIndex="{Binding V100SelectedIndex}"  IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid Grid.Column="1"   ItemsSource="{Binding V100ConfigurationModes }" SelectedIndex="{Binding V100SelectedIndex}"  IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
 
                         <DataGridTextColumn  Header="Value" Binding="{Binding Path=MaxValue}" FontSize="12">

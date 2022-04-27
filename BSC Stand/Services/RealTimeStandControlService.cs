@@ -32,7 +32,7 @@ namespace BSC_Stand.Services
         private ObservableCollection<ConfigurationMode> V27configurationModes;
 
         private ObservableCollection<ConfigurationMode> V100configurationModes;
-
+        private readonly IUserDialogWindowService _userDialogWindowService;
         private bool isExpirementPepformed;
 
         public delegate void V27Msg(CommandParams commandParams);
@@ -41,8 +41,9 @@ namespace BSC_Stand.Services
         public delegate void V100Msg(CommandParams commandParamse);
         public event V100Msg _V100MsgEvent;
 
-        public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel)
+        public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel, IUserDialogWindowService userDialogWindowService)
         {
+            _userDialogWindowService = userDialogWindowService;
             isExpirementPepformed = false;
             V27expirementTimer = new DispatcherTimer();
             V27expirementTimer.Interval = TimeSpan.FromMilliseconds(250);
@@ -95,19 +96,21 @@ namespace BSC_Stand.Services
             if (!isExpirementPepformed)
             {
                 isExpirementPepformed = true;
+                V27ConfigIndex = 0;
+                V100ConfigIndex = 0;
                 UpdateExpiremntParams();
             
        
             }
             else if (isExpirementPepformed)
             {
-                Debug.WriteLine("Эксперимент уже активен");
+                _userDialogWindowService.ShowErrorMessage("Эксперимент уже запущен");
             }
           
         }
         public void StopExpirement()
         {
-            isExpirementPepformed = true;
+            isExpirementPepformed = false;
         }
 
 

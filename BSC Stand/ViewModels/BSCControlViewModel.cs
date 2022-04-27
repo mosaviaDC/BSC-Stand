@@ -63,6 +63,7 @@ namespace BSC_Stand.ViewModels
         {
             WriteMessage("Эксперимент остановлен", MessageType.Info);
             UpdateDataTimer?.Stop();
+            _realTimeStandControlService.StopExpirement();
         }
 
 
@@ -148,7 +149,7 @@ namespace BSC_Stand.ViewModels
             _standConfigurationViewModel = standConfigurationViewModel;
             V27ConfigurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100ConfigurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
-            _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel);
+            _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService);
            _modBusService = modbusService;
 
             GraphView = new PlotModel()
