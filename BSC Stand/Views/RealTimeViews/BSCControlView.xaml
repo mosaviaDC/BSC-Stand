@@ -130,9 +130,18 @@
                     </behaviors:Interaction.Triggers>
 
                 </fa5:FontAwesome>
-                
-                
-                
+
+                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Ethernet" x:Name="CheckConnection" ToolTip="Принудительно проверить подключение">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                            <behaviors:InvokeCommandAction Command="{Binding CheckConnectionStatusCommand}" ></behaviors:InvokeCommandAction>
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+
+                </fa5:FontAwesome>
+
+
+
 
 
             </Menu>

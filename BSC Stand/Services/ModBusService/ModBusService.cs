@@ -14,37 +14,48 @@ namespace BSC_Stand.Services
 {
     internal class ModBusService: IModbusService
     {
-        private readonly IModbusMaster owenController;
+        private  IModbusMaster owenController;
 
-        private readonly TcpClient owenControllerTCPCLient;
+        private  TcpClient owenControllerTCPCLient;
 
 
-        public ModBusService()
+        
+
+
+
+        public bool InitConnections()
         {
             IModbusFactory modbusFactory = new ModbusFactory();
             try
             {
+                owenControllerTCPCLient?.Dispose();
                 owenControllerTCPCLient = new TcpClient("10.0.6.10", 502);
-               
+
                 owenController = modbusFactory.CreateMaster(owenControllerTCPCLient);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Не удалось подключиться к ОВЕН");
-
+                Debug.WriteLine("Не удалось подключиться к ОВЕН" + ex.Message);
+                return false;
             }
+
+            return true;
         }
 
         public async Task<ushort[]> ReadDataFromOwenController()
         {
-            return null;
+            if (owenControllerTCPCLient.Connected)
+            {
+                 return await owenController.ReadHoldingRegistersAsync(1, 0, 2);
+            }
 
-          //  return await owenController.ReadHoldingRegistersAsync(1, 0, 2);
-          
+            return null;
         }
         public bool GetOwenConnectionStatus()
         {
+          if (owenController!=null)
             return owenControllerTCPCLient.Connected;
+          else return false;
         }
 
        

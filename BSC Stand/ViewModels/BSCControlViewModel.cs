@@ -33,6 +33,13 @@ namespace BSC_Stand.ViewModels
 
         private void StartExpirementCommandExecute (object p)
         {
+            var connectStatus = _modBusService.InitConnections();
+            if (!connectStatus)
+            {
+                _userDialogWindowService.ShowErrorMessage("Ошибка связи");
+                return;
+            }
+
             if (V27ConfigurationModes.Count ==0 || V100ConfigurationModes.Count == 0)
             {
                 _userDialogWindowService.ShowErrorMessage("Выбрана пустая конфигурация");
@@ -56,6 +63,17 @@ namespace BSC_Stand.ViewModels
 
         }
 
+
+        public ICommand CheckConnectionStatusCommand { get; set; }
+
+        private void CheckConnectionStatusCommandExecute(object p)
+        {
+            _modBusService.InitConnections();
+            Debug.WriteLine(_modBusService.GetOwenConnectionStatus());
+            OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
+        }
+
+     
 
         public ICommand StopExpirementCommand { get; set; }
 
@@ -186,31 +204,31 @@ namespace BSC_Stand.ViewModels
             StartExpirementCommand = new ActionCommand(StartExpirementCommandExecute, CanStartExpirementCommandExecuted);
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
-
+            CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
 
             #endregion
         }
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-           
-        
-            //var result =  await _modBusService.ReadDataFromOwenController();
-            //if (result != null)
-            //{
-            //    byte[] bytes = new byte[result.Length * sizeof(ushort)];
-            //    OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
-            //    var temp = BitConverter.GetBytes(result[0]);
-            //    Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
-            //    temp = BitConverter.GetBytes(result[1]);
-            //    Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
-            //    OwenTemperature = BitConverter.ToSingle(bytes, 0);
-            //    var r = DateTime.Now - StartTime;
-            //    s1.Points.Add(new DataPoint(r.TotalSeconds, OwenTemperature));
-            //    GraphView.InvalidatePlot(true);
 
-            //}
-          
+
+            var result = await _modBusService.ReadDataFromOwenController();
+            if (result != null)
+            {
+                byte[] bytes = new byte[result.Length * sizeof(ushort)];
+                OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
+                var temp = BitConverter.GetBytes(result[0]);
+                Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
+                temp = BitConverter.GetBytes(result[1]);
+                Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
+                OwenTemperature = BitConverter.ToSingle(bytes, 0);
+                var r = DateTime.Now - StartTime;
+                s1.Points.Add(new DataPoint(r.TotalSeconds, OwenTemperature));
+                GraphView.InvalidatePlot(true);
+
+            }
+
         }
 
         public void WriteMessage(string Message, MessageType messageType)
@@ -220,11 +238,21 @@ namespace BSC_Stand.ViewModels
 
         public void SendV27ModBusCommand(CommandParams commandParams)
         {
+            if (commandParams.LastCommand)
+            {
+                StopExpirementCommandExecute(null);
+                return;
+            }
             V27SelectedIndex = commandParams.SelectedIndex;
             WriteMessage($"Отправлена команда на шину 27B: стабилизация мощности {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
         }
         public void SendV100ModBusCommand(CommandParams commandParams)
         {
+            if (commandParams.LastCommand)
+            {
+                StopExpirementCommandExecute(null);
+                return;
+            }
             V100SelectedIndex = commandParams.SelectedIndex;
             WriteMessage($"Отправлена команда на шину 100B: стабилизация мощности {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
         }

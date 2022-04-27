@@ -80,8 +80,8 @@ namespace BSC_Stand.Services
                 V100NextConfigTime = StartTime;
                 V100NextConfigTime = V100NextConfigTime.AddSeconds(V100configurationModes[V100ConfigIndex].Duration);
                 V100ConfigIndex++;
-                _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0));
-                _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0));
+                _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0,false));
+                _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0,false));
                 V27expirementTimer.Start();
                 V100expirementTimer.Start();
             }
@@ -123,7 +123,7 @@ namespace BSC_Stand.Services
                 if (V27ConfigIndex >= V27configurationModes.Count)
                 {
                     V27expirementTimer.Stop();
-                    //_V27MsgEvent?.Invoke(V27configurationModes[V27ConfigIndex]);
+                    _V27MsgEvent?.Invoke(new  (V27configurationModes[V27ConfigIndex-1],V27ConfigIndex,true));
              
                     Debug.WriteLine($"V27 expirement Stop {DateTime.Now}");
                     return;
@@ -132,7 +132,7 @@ namespace BSC_Stand.Services
                 {
                     Debug.WriteLine($"Send Command to modbus (V27) {DateTime.Now}");
                     V27NextConfigTime = V27NextConfigTime.AddSeconds(V27configurationModes[V27ConfigIndex].Duration);
-                    _V27MsgEvent?.Invoke(new (V27configurationModes[V27ConfigIndex],V27ConfigIndex));
+                    _V27MsgEvent?.Invoke(new (V27configurationModes[V27ConfigIndex],V27ConfigIndex,false));
                     V27ConfigIndex++;
                 }
             }
@@ -148,13 +148,13 @@ namespace BSC_Stand.Services
                 if (V100ConfigIndex >= V100configurationModes.Count)
                 {
                     V100expirementTimer.Stop();
-                //    _V100MsgEvent?.Invoke(V100configurationModes[V100ConfigIndex]);
+                    _V27MsgEvent?.Invoke(new(V100configurationModes[V100ConfigIndex-1], V100ConfigIndex, true));
                     Debug.WriteLine($"V100 expirement Stop {DateTime.Now}");
                     return;
                 }
                 
                 {
-                    _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[V100ConfigIndex], V100ConfigIndex));
+                    _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[V100ConfigIndex], V100ConfigIndex,false));
                     V100NextConfigTime = V100NextConfigTime.AddSeconds(V100configurationModes[V100ConfigIndex].Duration);
                     V100ConfigIndex++;
                 }
