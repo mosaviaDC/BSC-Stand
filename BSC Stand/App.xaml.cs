@@ -61,6 +61,10 @@ namespace BSC_Stand
 
 
         }
-      
+
+        private void BundledTheme_ColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color> e)
+        {
+
+        }
     }
 }

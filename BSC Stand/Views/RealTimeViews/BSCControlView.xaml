@@ -6,19 +6,28 @@
              xmlns:local="clr-namespace:BSC_Stand.Views"
              xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding BSCControlViewModel,Source={StaticResource ViewModelLocator}}"
              >
+    
     <Grid>
+        <Grid.Resources>
+            <SolidColorBrush x:Key="IconBrush" Color="DarkCyan"></SolidColorBrush>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+      
+
+        <Grid Grid.Column="0" >
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-             
+
             </Grid.RowDefinitions>
             <GridSplitter Height="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"></GridSplitter>
             <TextBlock Height="15" VerticalAlignment="Top" HorizontalAlignment="Stretch"   Text="Статус модулей "></TextBlock>
@@ -28,9 +37,9 @@
                     <TextBlock Text="Температура ИБХА"></TextBlock>
                     <TextBlock Text="{Binding OwenConnectStatus}"></TextBlock>
                 </TreeViewItem>
-                
-                
-                
+
+
+
                 <TreeViewItem Header="Шина 27 В" IsExpanded="True">
                     <TextBlock Text="?"></TextBlock>
                     <TextBlock Text="?"></TextBlock>
@@ -45,13 +54,71 @@
             </TreeView>
 
 
-     
         </Grid>
-        <oxy:PlotView Grid.Column="1"  Model="{Binding  GraphView}">
+        <GridSplitter Width="3" ></GridSplitter>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.85*" ></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Menu Grid.Row="0" VerticalAlignment="Top" Height="35" Background="AliceBlue"  HorizontalAlignment="Stretch">
+                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                         
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+
+                </fa5:FontAwesome>
+                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_StopCircle"   x:Name="StopExp" ToolTip="Остановка эксперимента">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+
+                </fa5:FontAwesome>
+
+                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+
+                </fa5:FontAwesome>
+                
+                
+                
+
+
+            </Menu>
+
+            <oxy:PlotView  Grid.Row="0" Margin="0,25,0,0" Grid.Column="1" Model="{Binding  GraphView}">
 
         </oxy:PlotView>
 
-        <GridSplitter Width="3" VerticalAlignment="Stretch"></GridSplitter>
-        
+        <Grid Grid.Column="1"  Grid.Row="1" MinHeight="75" Background="AliceBlue">
+                
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+      
+
+            <GroupBox Grid.Column="0" FontSize="8"></GroupBox>
+            <GroupBox Grid.Column="1"></GroupBox>
+            <GridSplitter Width="3" VerticalAlignment="Stretch" ></GridSplitter>
+
+        </Grid>
+
+
+
+
+        </Grid>
     </Grid>
 </UserControl>

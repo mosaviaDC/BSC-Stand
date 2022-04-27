@@ -37,7 +37,9 @@ namespace BSC_Stand.Services
 
         public async Task<ushort[]> ReadDataFromOwenController()
         {
-            return await owenController.ReadHoldingRegistersAsync(1, 0, 2);
+            return null;
+
+          //  return await owenController.ReadHoldingRegistersAsync(1, 0, 2);
           
         }
         public bool GetOwenConnectionStatus()

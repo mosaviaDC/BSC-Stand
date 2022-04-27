@@ -56,7 +56,7 @@ namespace BSC_Stand.ViewModels
         {
             _standConfigurationViewModel = standConfigurationViewModel;
             _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel);
-            _modBusService = modbusService;
+           _modBusService = modbusService;
 
             GraphView = new PlotModel()
             {
@@ -91,18 +91,21 @@ namespace BSC_Stand.ViewModels
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-            var result =  await _modBusService.ReadDataFromOwenController();
- 
-            byte[] bytes = new byte[result.Length * sizeof(ushort)];
-            OwenConnectStatus =  _modBusService.GetOwenConnectionStatus();
-            var temp = BitConverter.GetBytes(result[0]);
-            Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
-            temp = BitConverter.GetBytes(result[1]);
-            Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
-            OwenTemperature = BitConverter.ToSingle(bytes, 0);
-            var r = DateTime.Now - StartTime;
-            s1.Points.Add(new DataPoint(r.TotalSeconds,OwenTemperature));
-            GraphView.InvalidatePlot(true);
+            //var result =  await _modBusService.ReadDataFromOwenController();
+            //if (result != null)
+            //{
+            //    byte[] bytes = new byte[result.Length * sizeof(ushort)];
+            //    OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
+            //    var temp = BitConverter.GetBytes(result[0]);
+            //    Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
+            //    temp = BitConverter.GetBytes(result[1]);
+            //    Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
+            //    OwenTemperature = BitConverter.ToSingle(bytes, 0);
+            //    var r = DateTime.Now - StartTime;
+            //    s1.Points.Add(new DataPoint(r.TotalSeconds, OwenTemperature));
+            //    GraphView.InvalidatePlot(true);
+
+            //}
           
         }
 
@@ -116,7 +119,6 @@ namespace BSC_Stand.ViewModels
         }
         public void StartExpiremnt()
         {
-          
             _realTimeStandControlService.StartExpirent();
         }
     }
