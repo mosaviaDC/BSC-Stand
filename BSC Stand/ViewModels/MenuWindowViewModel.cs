@@ -71,10 +71,7 @@ namespace BSC_Stand.ViewModels
             }
             set
             {
-                if (value == 1)
-                {
-                    _BSCControlViewModel.StartExpiremnt();
-                }
+               
                 Set(ref _SelectedIndex,value);
             }
         }

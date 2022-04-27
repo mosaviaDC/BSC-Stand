@@ -90,7 +90,7 @@ namespace BSC_Stand.ViewModels
             var parametres = (object[])p;
             var programmablePowerSupplyModule = (ProgrammablePowerSupplyModule)parametres[0];
             var configMode = (ConfigurationMode)parametres[1];
-           
+            Debug.WriteLine(configMode.ModeName);
             if (configMode != null && programmablePowerSupplyModule !=null)
             {
                 
@@ -102,8 +102,8 @@ namespace BSC_Stand.ViewModels
                     ModeName = configMode.ModeName,
                     MinValue = configMode.MinValue,
                     ModeUnit = configMode.ModeUnit,
-
                 };
+               
                 if (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 27В)")
                 {
                      Bus27ConfigurationModes.Add(configurationMode);
@@ -208,7 +208,7 @@ namespace BSC_Stand.ViewModels
             //    ModeUnit = "A"
             //},
                  new ConfigurationMode()
-            {
+                {
                 ModeName = "Cтабилизация мощности",
                 Discreteness = 0.5f,
                 MinValue = 60,

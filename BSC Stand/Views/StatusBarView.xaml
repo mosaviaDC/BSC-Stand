@@ -10,12 +10,7 @@
         <StatusBar.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </StatusBar.Background>
-        <StatusBarItem HorizontalAlignment="Left">
-            <TextBlock Text="Техническое Сообщение 1">
 
-            </TextBlock>
-
-        </StatusBarItem>
         <StatusBarItem HorizontalAlignment="Left">
             <TextBlock  Width="300"   Text="{Binding RamUsageText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
 

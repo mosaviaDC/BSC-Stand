@@ -26,12 +26,12 @@
         <Grid Grid.Column="0" >
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="0.7*"></RowDefinition>
 
             </Grid.RowDefinitions>
             <GridSplitter Height="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"></GridSplitter>
             <TextBlock Height="15" VerticalAlignment="Top" HorizontalAlignment="Stretch"   Text="Статус модулей "></TextBlock>
-            <TreeView Margin="0,30,0,0">
+            <TreeView Grid.Row="0" Margin="0,30,0,0">
                 <TreeViewItem IsExpanded="True" Header="Овен">
                     <TextBlock Text="{Binding OwenTemperature}"></TextBlock>
                     <TextBlock Text="Температура ИБХА"></TextBlock>
@@ -52,8 +52,49 @@
                     <TextBlock Text="Статус подключения"></TextBlock>
                 </TreeViewItem>
             </TreeView>
+            <TextBlock Grid.Row="1" Text="Шина 27В" Height="25" VerticalAlignment="Top"  Padding="25,0,0,0"  TextAlignment="Left"></TextBlock>
+            <TextBlock Grid.Row="1" Text="Шина 100В" Height="25" VerticalAlignment="Top"  Padding="0,0,25,0" TextAlignment="Right"></TextBlock>
+            <Grid Grid.Row="1" Margin="0,25,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition>
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0" ItemsSource="{Binding  V27ConfigurationModes}" SelectedIndex="{Binding V27SelectedIndex}" IsReadOnly="True" AutoGenerateColumns="False">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn  Header="Value" Binding="{Binding Path=MaxValue}"   FontSize="12">
 
 
+                        </DataGridTextColumn>
+                        <DataGridTextColumn  Header="Dur" Binding="{Binding Path=Duration}" FontSize="12">
+
+                        </DataGridTextColumn>
+
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+                <DataGrid Grid.Column="1" ItemsSource="{Binding V100ConfigurationModes }" SelectedIndex="{Binding V100SelectedIndex}"  IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn  Header="Value" Binding="{Binding Path=MaxValue}" FontSize="12">
+
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn  Header="Dur" Binding="{Binding Path=Duration}" FontSize="12">
+
+                        </DataGridTextColumn>
+
+
+                    </DataGrid.Columns>
+
+
+
+                </DataGrid>
+            </Grid>
         </Grid>
         <GridSplitter Width="3" ></GridSplitter>
         
@@ -67,7 +108,7 @@
                 <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                         
+                            <behaviors:InvokeCommandAction Command="{Binding StartExpirementCommand}" ></behaviors:InvokeCommandAction>
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
 
@@ -75,7 +116,7 @@
                 <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_StopCircle"   x:Name="StopExp" ToolTip="Остановка эксперимента">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-
+                            <behaviors:InvokeCommandAction Command="{Binding StopExpirementCommand}" ></behaviors:InvokeCommandAction>
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
 
@@ -84,7 +125,7 @@
                 <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-
+                            <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}" ></behaviors:InvokeCommandAction>
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
 
@@ -110,8 +151,14 @@
 
       
 
-            <GroupBox Grid.Column="0" FontSize="8"></GroupBox>
-            <GroupBox Grid.Column="1"></GroupBox>
+            <GroupBox Grid.Column="0">
+                
+            </GroupBox>
+            <GroupBox Grid.Column="1">
+                    <ScrollViewer>
+                        <TextBlock  Text="{Binding DebugString}"></TextBlock>
+                    </ScrollViewer>
+                </GroupBox>
             <GridSplitter Width="3" VerticalAlignment="Stretch" ></GridSplitter>
 
         </Grid>
