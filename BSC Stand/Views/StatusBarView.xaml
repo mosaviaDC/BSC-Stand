@@ -5,19 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BSC_Stand.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+            DataContext="{Binding StatusBarViewModel ,Source={StaticResource ViewModelLocator}}"
+             >
     <StatusBar Height="45" VerticalAlignment="Bottom">
         <StatusBar.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </StatusBar.Background>
 
         <StatusBarItem HorizontalAlignment="Left">
-            <TextBlock  Width="300"   Text="{Binding RamUsageText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock  Width="300"   Text="RAM">
 
             </TextBlock>
         </StatusBarItem>
         <StatusBarItem HorizontalAlignment="Center">
-            <ProgressBar Width="150" Value="75" SmallChange="0.01" >
+            <ProgressBar Width="150" Value="{Binding CurrentProggresValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="{Binding MaxStatusBarValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
 
             </ProgressBar>
         </StatusBarItem>

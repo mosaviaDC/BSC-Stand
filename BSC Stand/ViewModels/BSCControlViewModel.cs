@@ -31,10 +31,15 @@ namespace BSC_Stand.ViewModels
         #region Commands
         public ICommand StartExpirementCommand { get; set; } 
 
-        private void StartExpirementCommandExecute (object p)
+        private async void StartExpirementCommandExecute (object p)
         {
-            var connectStatus = _modBusService.InitConnections();
-            if (!connectStatus)
+            if (_realTimeStandControlService.GetExperimentStatus())
+            {
+                _userDialogWindowService.ShowErrorMessage("Эксперимент уже активен");
+                return;
+
+            }
+            if (!_modBusService.GetOwenConnectionStatus())
             {
                 _userDialogWindowService.ShowErrorMessage("Ошибка связи");
                 return;
@@ -66,11 +71,27 @@ namespace BSC_Stand.ViewModels
 
         public ICommand CheckConnectionStatusCommand { get; set; }
 
-        private void CheckConnectionStatusCommandExecute(object p)
+        private async void CheckConnectionStatusCommandExecute(object p)
         {
-            _modBusService.InitConnections();
-            Debug.WriteLine(_modBusService.GetOwenConnectionStatus());
-            OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
+            if (_modBusService.GetBusyStatus())
+            {
+                _userDialogWindowService.ShowErrorMessage("Операция уже выполняется");
+            }
+            else
+            {
+                WriteMessage("Проверка подключения", MessageType.Info);
+                var r = await _modBusService.InitConnections();
+                if (!r.Item2)
+                {
+                    WriteMessage(r.Item1, MessageType.Warning);
+                    WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
+               
+                }
+                else
+                {
+                    WriteMessage("Проверка подключения завершена успешно",MessageType.Info);
+                }
+            }
         }
 
      
@@ -79,6 +100,14 @@ namespace BSC_Stand.ViewModels
 
         private void StopExpirementCommandExecute(object p)
         {
+            if (!_realTimeStandControlService.GetExperimentStatus())
+            {
+                _userDialogWindowService.ShowErrorMessage("Нет активного эксперимента");
+                return;
+
+            }
+
+
             WriteMessage("Эксперимент остановлен", MessageType.Info);
             UpdateDataTimer?.Stop();
             _realTimeStandControlService.StopExpirement();
@@ -163,6 +192,7 @@ namespace BSC_Stand.ViewModels
 
         public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService)
         {
+      
             _userDialogWindowService = userDialogWindowService;
             _standConfigurationViewModel = standConfigurationViewModel;
             V27ConfigurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
@@ -205,7 +235,7 @@ namespace BSC_Stand.ViewModels
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
-
+            CheckConnectionStatusCommandExecute(null);
             #endregion
         }
 
@@ -213,21 +243,21 @@ namespace BSC_Stand.ViewModels
         {
 
 
-            var result = await _modBusService.ReadDataFromOwenController();
-            if (result != null)
-            {
-                byte[] bytes = new byte[result.Length * sizeof(ushort)];
-                OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
-                var temp = BitConverter.GetBytes(result[0]);
-                Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
-                temp = BitConverter.GetBytes(result[1]);
-                Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
-                OwenTemperature = BitConverter.ToSingle(bytes, 0);
-                var r = DateTime.Now - StartTime;
-                s1.Points.Add(new DataPoint(r.TotalSeconds, OwenTemperature));
-                GraphView.InvalidatePlot(true);
+            //var result = await _modBusService.ReadDataFromOwenController();
+            //if (result != null)
+            //{
+            //    byte[] bytes = new byte[result.Length * sizeof(ushort)];
+            //    OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
+            //    var temp = BitConverter.GetBytes(result[0]);
+            //    Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
+            //    temp = BitConverter.GetBytes(result[1]);
+            //    Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
+            //    OwenTemperature = BitConverter.ToSingle(bytes, 0);
+            //    var r = DateTime.Now - StartTime;
+            //    s1.Points.Add(new DataPoint(r.TotalSeconds, OwenTemperature));
+            //    GraphView.InvalidatePlot(true);
 
-            }
+            //}
 
         }
 

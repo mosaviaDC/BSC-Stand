@@ -58,6 +58,7 @@ namespace BSC_Stand
             services.AddSingleton<IWindowService, WindowService>();
             services.AddSingleton<IModbusService, ModBusService>();
             services.AddSingleton<IUserDialogWindowService, UserWindowDialogService>();
+            services.AddSingleton<StatusBarViewModel>();
             //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
 
 

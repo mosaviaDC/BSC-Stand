@@ -29,6 +29,8 @@ namespace BSC_Stand.Services
 
         private int V100ConfigIndex = 0;
 
+        private int ExperimentDurationCount;
+
         private ObservableCollection<ConfigurationMode> V27configurationModes;
 
         private ObservableCollection<ConfigurationMode> V100configurationModes;
@@ -59,8 +61,7 @@ namespace BSC_Stand.Services
             V100configurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             _V27MsgEvent += bSCControlViewModel.SendV27ModBusCommand;
             _V100MsgEvent += bSCControlViewModel.SendV100ModBusCommand;
-            //V100Msg v100Msg = bSCControlViewModel.SendV100ModBusCommand;
-            //V27Msg v27Msg = bSCControlViewModel.SendV100ModBusCommand;
+   
           
 
         }
@@ -82,6 +83,15 @@ namespace BSC_Stand.Services
                 V100ConfigIndex++;
                 _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0,false));
                 _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0,false));
+                if (V100configurationModes.Count>= V27configurationModes.Count)
+                {
+                    ExperimentDurationCount = V100configurationModes.Count;
+                }
+                else if (V27configurationModes.Count > V100configurationModes.Count)
+                {
+
+                    ExperimentDurationCount = V27configurationModes.Count;
+                }
                 V27expirementTimer.Start();
                 V100expirementTimer.Start();
             }
@@ -99,7 +109,7 @@ namespace BSC_Stand.Services
                 V27ConfigIndex = 0;
                 V100ConfigIndex = 0;
                 UpdateExpiremntParams();
-            
+                
        
             }
             else if (isExpirementPepformed)
@@ -120,11 +130,15 @@ namespace BSC_Stand.Services
             if (DateTime.Now - V27NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V27NextConfigTime <= TimeSpan.FromMilliseconds(500)))
             {
             
-                if (V27ConfigIndex >= V27configurationModes.Count)
+                if (V27ConfigIndex == V27configurationModes.Count)
                 {
                     V27expirementTimer.Stop();
-                    _V27MsgEvent?.Invoke(new  (V27configurationModes[V27ConfigIndex-1],V27ConfigIndex,true));
-             
+                 //   _V27MsgEvent?.Invoke(new  (V27configurationModes[V27ConfigIndex-1],V27ConfigIndex,true));
+                     if (V27ConfigIndex == ExperimentDurationCount)
+                    {
+                        _V27MsgEvent?.Invoke(new(V27configurationModes[V27ConfigIndex - 1], V27ConfigIndex, true));
+                  
+                    }
                     Debug.WriteLine($"V27 expirement Stop {DateTime.Now}");
                     return;
                 }
@@ -145,10 +159,14 @@ namespace BSC_Stand.Services
             if (DateTime.Now - V100NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V100NextConfigTime <= TimeSpan.FromMilliseconds(500)))
             {
 
-                if (V100ConfigIndex >= V100configurationModes.Count)
+                if (V100ConfigIndex == V100configurationModes.Count)
                 {
                     V100expirementTimer.Stop();
-                    _V27MsgEvent?.Invoke(new(V100configurationModes[V100ConfigIndex-1], V100ConfigIndex, true));
+                    if (V100ConfigIndex == ExperimentDurationCount)
+                    {
+                        _V100MsgEvent?.Invoke(new(V100configurationModes[V100ConfigIndex - 1], V100ConfigIndex, true));
+
+                    }
                     Debug.WriteLine($"V100 expirement Stop {DateTime.Now}");
                     return;
                 }
@@ -168,6 +186,11 @@ namespace BSC_Stand.Services
             var r = DateTime.Now.Day;
             return r;
 
+        }
+
+        public bool GetExperimentStatus()
+        {
+            return isExpirementPepformed;
         }
 
 

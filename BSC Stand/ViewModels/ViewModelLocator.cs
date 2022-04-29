@@ -10,11 +10,10 @@ namespace BSC_Stand.ViewModels
     internal class ViewModelLocator
     {
         public MenuWindowViewModel MenuWindowViewModel => App.Host.Services.GetRequiredService<MenuWindowViewModel>();
-
         public StandVizualizationViewModel StandVizualizationViewModel => App.Host.Services.GetRequiredService<StandVizualizationViewModel>();
         public StandConfigurationViewModel StandConfigurationViewModel => App.Host.Services.GetRequiredService<StandConfigurationViewModel>();
-
         public BSCControlViewModel BSCControlViewModel => App.Host.Services.GetRequiredService<BSCControlViewModel>();
 
+        public StatusBarViewModel StatusBarViewModel => App.Host.Services.GetRequiredService<StatusBarViewModel>();
     }
 }

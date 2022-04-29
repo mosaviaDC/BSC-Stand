@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Diagnostics;
 using System.Threading;
+using BSC_Stand.ViewModels;
 
 namespace BSC_Stand.Services
 {
@@ -17,29 +18,51 @@ namespace BSC_Stand.Services
         private  IModbusMaster owenController;
 
         private  TcpClient owenControllerTCPCLient;
+        private StatusBarViewModel _statusBarViewModel;
 
+        private bool isBusy = false;
 
-        
-
-
-
-        public bool InitConnections()
+        public ModBusService(StatusBarViewModel statusBarViewModel)
         {
-            IModbusFactory modbusFactory = new ModbusFactory();
+            _statusBarViewModel = statusBarViewModel;
+         
+        }
+
+
+        public async Task<(string,bool)> InitConnections()
+        {
+            
+                isBusy = true;
+                 _statusBarViewModel.SetNewTask(100);
+                IModbusFactory modbusFactory = new ModbusFactory();
+                owenControllerTCPCLient?.Dispose();
+                _statusBarViewModel.UpdateTaskProgress(25);
+                 owenControllerTCPCLient = new TcpClient();
+                 string ConnectionStatus = "";
+     
             try
             {
-                owenControllerTCPCLient?.Dispose();
-                owenControllerTCPCLient = new TcpClient("10.0.6.10", 502);
-
+                await owenControllerTCPCLient.ConnectAsync("10.0.6.10", 502);
+                _statusBarViewModel.UpdateTaskProgress(75);
                 owenController = modbusFactory.CreateMaster(owenControllerTCPCLient);
+                _statusBarViewModel.UpdateTaskProgress(100);
+                isBusy = false;
+         
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Не удалось подключиться к ОВЕН" + ex.Message);
-                return false;
-            }
+                Debug.WriteLine(ex.Message);
+                _statusBarViewModel.UpdateTaskProgress(100);
+                ConnectionStatus = $"{ex.Message}";
+                isBusy = false;
+             
 
-            return true;
+            }
+            return (ConnectionStatus, owenControllerTCPCLient.Connected);
+
+
+
+
         }
 
         public async Task<ushort[]> ReadDataFromOwenController()
@@ -53,11 +76,15 @@ namespace BSC_Stand.Services
         }
         public bool GetOwenConnectionStatus()
         {
-          if (owenController!=null)
+            if (owenControllerTCPCLient != null)
             return owenControllerTCPCLient.Connected;
           else return false;
         }
 
+        public bool GetBusyStatus()
+        {
+            return isBusy;
+        }
        
     }
 }

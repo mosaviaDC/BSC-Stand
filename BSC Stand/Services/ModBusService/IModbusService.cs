@@ -12,6 +12,7 @@ namespace BSC_Stand.Services
     {
         public Task<ushort[]> ReadDataFromOwenController();
         public bool GetOwenConnectionStatus();
-        public bool InitConnections();
+        public  Task<(string, bool)> InitConnections();
+        public bool GetBusyStatus();
     }
 }
