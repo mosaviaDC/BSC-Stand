@@ -10,9 +10,7 @@ using BSC_Stand.Infastructure.Commands;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
-using OwenioNet;
-using OwenioNet.DataConverter;
-using BSC_Stand.Infastructure.Owen;
+
 using NModbus.IO;
 using NModbus.Device;
 using NModbus;

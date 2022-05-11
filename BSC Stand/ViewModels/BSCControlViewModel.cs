@@ -39,11 +39,11 @@ namespace BSC_Stand.ViewModels
                 return;
 
             }
-            if (!_modBusService.GetOwenConnectionStatus())
-            {
-                _userDialogWindowService.ShowErrorMessage("Ошибка связи");
-                return;
-            }
+            //if (!_modBusService.GetOwenConnectionStatus())
+            //{
+            //    _userDialogWindowService.ShowErrorMessage("Ошибка связи");
+            //    return;
+            //}
 
             if (V27ConfigurationModes.Count ==0 || V100ConfigurationModes.Count == 0)
             {
@@ -236,11 +236,14 @@ namespace BSC_Stand.ViewModels
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
             CheckConnectionStatusCommandExecute(null);
+            UpdateDataTimer.Start();
             #endregion
         }
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
+            
+           await _modBusService.Read27BusVoltage();
 
 
             //var result = await _modBusService.ReadDataFromOwenController();
