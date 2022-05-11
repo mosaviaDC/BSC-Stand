@@ -41,7 +41,7 @@
 
 
                 <TreeViewItem Header="Шина 27 В" IsExpanded="True">
-                    <TextBlock Text="?"></TextBlock>
+                    <TextBlock Text="{Binding V27Value, Mode=TwoWay}"></TextBlock>
                     <TextBlock Text="?"></TextBlock>
                     <TextBlock Text="Статус подключения"></TextBlock>
                 </TreeViewItem>

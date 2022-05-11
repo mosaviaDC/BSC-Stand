@@ -14,6 +14,6 @@ namespace BSC_Stand.Services
         public bool GetOwenConnectionStatus();
         public  Task<(string, bool)> InitConnections();
         public bool GetBusyStatus();
-        public Task<double> Read27BusVoltage();
+        public Single Read27BusVoltage();
     }
 }

@@ -109,7 +109,7 @@ namespace BSC_Stand.ViewModels
 
 
             WriteMessage("Эксперимент остановлен", MessageType.Info);
-            UpdateDataTimer?.Stop();
+          //  UpdateDataTimer?.Stop();
             _realTimeStandControlService.StopExpirement();
         }
 
@@ -183,6 +183,15 @@ namespace BSC_Stand.ViewModels
             set => Set(ref _OwenConnectStatus, value);
         }
 
+        private float _V27Value;
+        public float V27Value
+        {
+            get => _V27Value;
+            set=> Set(ref _V27Value, value);
+
+        }
+
+
         public ObservableCollection<ConfigurationMode> V27ConfigurationModes { get; set; }
         public ObservableCollection<ConfigurationMode> V100ConfigurationModes { get; set; }
 
@@ -207,7 +216,7 @@ namespace BSC_Stand.ViewModels
              s1 = new TwoColorAreaSeries
             {
                 Title = "Сек",
-                TrackerFormatString = "{4:0} T {2:0} сек",
+                TrackerFormatString = "{4:0} В {2:0} сек",
                 Color = OxyColors.Black,
                 Color2 = OxyColors.Brown,
                 MarkerFill = OxyColors.Red,
@@ -225,8 +234,9 @@ namespace BSC_Stand.ViewModels
  
             GraphView.Series.Add(s1);
             UpdateDataTimer = new DispatcherTimer();
-            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(10);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
+            UpdateDataTimer.Start();
             StartTime = DateTime.Now;
             
 
@@ -236,32 +246,17 @@ namespace BSC_Stand.ViewModels
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
             CheckConnectionStatusCommandExecute(null);
-            UpdateDataTimer.Start();
+          
             #endregion
         }
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-            
-           await _modBusService.Read27BusVoltage();
-
-
-            //var result = await _modBusService.ReadDataFromOwenController();
-            //if (result != null)
-            //{
-            //    byte[] bytes = new byte[result.Length * sizeof(ushort)];
-            //    OwenConnectStatus = _modBusService.GetOwenConnectionStatus();
-            //    var temp = BitConverter.GetBytes(result[0]);
-            //    Buffer.BlockCopy(temp, 0, bytes, 0, temp.Length);
-            //    temp = BitConverter.GetBytes(result[1]);
-            //    Buffer.BlockCopy(temp, 0, bytes, 2, temp.Length);
-            //    OwenTemperature = BitConverter.ToSingle(bytes, 0);
-            //    var r = DateTime.Now - StartTime;
-            //    s1.Points.Add(new DataPoint(r.TotalSeconds, OwenTemperature));
-            //    GraphView.InvalidatePlot(true);
-
-            //}
-
+            V27Value=  _modBusService.Read27BusVoltage();
+          
+            var r = DateTime.Now - StartTime;
+            s1.Points.Add(new DataPoint(r.TotalSeconds, V27Value));
+            GraphView.InvalidatePlot(true);
         }
 
         public void WriteMessage(string Message, MessageType messageType)

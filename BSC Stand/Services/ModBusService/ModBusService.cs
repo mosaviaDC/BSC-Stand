@@ -98,37 +98,23 @@ namespace BSC_Stand.Services
             return isBusy;
         }
        
-        public async Task<double> Read27BusVoltage()
+        public Single Read27BusVoltage()
         {
+                var result =  V27ModbusController.ReadInputRegisters(1, 7, 2); //Почему не работает в async&
+                if (result != null)
+                {
+                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
 
-            Debug.WriteLine(BitConverter.IsLittleEndian);
-            var result = await V27ModbusController.ReadInputRegistersAsync(1, 7,2);
-            
-            foreach (var r in result)
-            {
-                Debug.Write($"{r} ");
-            }
+                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
 
-            if (result != null)
-            {
-                byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
-             
-                var Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
-              
-                Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-                //Voltage = BitConverter.GetBytes(result[2]); // третий байт
-                //Buffer.BlockCopy(Voltage, 0, bytes, 4, Voltage.Length);
-                //Voltage = BitConverter.GetBytes(result[3]); //четвертый байт
-                //Buffer.BlockCopy(Voltage, 0, bytes, 6, Voltage.Length);
-                Debug.WriteLine($"{BitConverter.ToSingle(bytes, 0)}*") ;
-                Debug.WriteLine("");
-                return 0;
-             //   return 0;
-            }
-
-            else return 0;
+                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+                    // Debug.WriteLine(BitConverter.ToSingle(bytes, 0));
+                    return BitConverter.ToSingle(bytes, 0);
+                    //   return 0;
+                }
+                else return 0;
         }
 
 
@@ -136,7 +122,7 @@ namespace BSC_Stand.Services
         {
             U27SerialPort = new SerialPort();
             U27SerialPort.PortName = "COM1";
-            U27SerialPort.BaudRate = 115200;
+            U27SerialPort.BaudRate = 9600;
             U27SerialPort.DataBits = 8;
             U27SerialPort.StopBits = StopBits.One;
             U27SerialPort.Open();
