@@ -100,7 +100,6 @@ namespace BSC_Stand.Services
            
                     result = await V27ModbusController.ReadInputRegistersAsync(1, 7, 2);
                     
-
                     if (result != null)
                     {
                         byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
@@ -133,7 +132,7 @@ namespace BSC_Stand.Services
         {
             if (V27ModbusController != null)
             {
-                V27ModbusController.Transport.ReadTimeout = 2000;
+               V27ModbusController.Transport.ReadTimeout = 1500;
                 V27ModbusController.Transport.WriteTimeout = 1000;
                 Debug.WriteLine("*");
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
@@ -149,7 +148,7 @@ namespace BSC_Stand.Services
             U27SerialPort = new SerialPort();
                 {
 
-               U27SerialPort.Close();
+                U27SerialPort.Close();
                 U27SerialPort.PortName = "COM1";
                 U27SerialPort.BaudRate = 9600;
                 U27SerialPort.DataBits = 8;
@@ -159,8 +158,8 @@ namespace BSC_Stand.Services
                 serialPortAdapter = new SerialPortAdapter(U27SerialPort);
             
                 V27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
-                V27ModbusController.Transport.WriteTimeout=2000;
-                V27ModbusController.Transport.ReadTimeout=1000;
+                  V27ModbusController.Transport.WriteTimeout=1000;
+                V27ModbusController.Transport.ReadTimeout=1500;
 
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {

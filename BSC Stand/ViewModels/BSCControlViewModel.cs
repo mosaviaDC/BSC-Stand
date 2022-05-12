@@ -45,7 +45,7 @@ namespace BSC_Stand.ViewModels
                 return;
             }
 
-            if (V27ConfigurationModes.Count ==0 || V100ConfigurationModes.Count == 0)
+            if (V27ConfigurationModes.Count == 0 || V100ConfigurationModes.Count == 0)
             {
                 _userDialogWindowService.ShowErrorMessage("Выбрана пустая конфигурация");
             }
@@ -54,6 +54,11 @@ namespace BSC_Stand.ViewModels
                 WriteMessage("Начало эксперимента", MessageType.Info);
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
+                if (s1.Points.Count != 0)
+                {
+                    s1.Points.Clear();
+                    GraphView.InvalidatePlot(true);
+                }
                 UpdateDataTimer?.Start();
             }
 
@@ -184,9 +189,9 @@ namespace BSC_Stand.ViewModels
         }
 
 
-        private bool _OwenConnectStatus;
+        private string  _OwenConnectStatus;
 
-        public bool OwenConnectStatus
+        public string OwenConnectStatus
         {
             get => _OwenConnectStatus;
             set => Set(ref _OwenConnectStatus, value);
@@ -250,7 +255,7 @@ namespace BSC_Stand.ViewModels
  
             GraphView.Series.Add(s1);
             UpdateDataTimer = new DispatcherTimer();
-            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(10);
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
             
@@ -260,52 +265,56 @@ namespace BSC_Stand.ViewModels
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
-          //  CheckConnectionStatusCommandExecute(null);
+            CheckConnectionStatusCommandExecute(null);
           
             #endregion
         }
 
-        private  void UpdateDataTimer_Tick(object? sender, EventArgs e)
+        private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
             ReadV27Value();
+            OwenConnectStatus = false.ToConnectionStatusString();
+            OwenConnectStatus = false.ToConnectionStatusString();
 
-
-            int numberOfVisiblePoints = 0;
-            foreach (DataPoint dataPoint in s1.Points)
-            {
-                if (s1.GetScreenRectangle().Contains(s1.Transform(dataPoint)))
-                {
-                    numberOfVisiblePoints++;
-                }
-            }
-            if (numberOfVisiblePoints <= 3000)
-            {
-                GraphView.PlotView.InvalidatePlot(true);
-            }
+            //OwenConnectStatus = false.ToConnectionStatusString();
+            //int numberOfVisiblePoints = 0;
+            //foreach (DataPoint dataPoint in s1.Points)
+            //{
+            //    if (s1.GetScreenRectangle().Contains(s1.Transform(dataPoint)))
+            //    {
+            //        numberOfVisiblePoints++;
+            //    }
+            //}
+            //if (numberOfVisiblePoints <= 3000)
+            //{
+          
+            //}
         }
 
 
         private async void ReadV27Value()
         {
-            var r = await _modBusService.Read27BusVoltage();
-            if (r == -1) //Если нет подключения к устройству
-            {
-                V27ConnectionStatus = "Нет соединения";
-                if (_realTimeStandControlService.GetExperimentStatus())
-                WriteMessage("Потеряно соединение с Е856ЭЛ", MessageType.Warning);
-            }
-            else
-            {
-                V27Value=  r.ToVoltageString();
-                V27ConnectionStatus = "Соединение установлено";
-                if (_realTimeStandControlService.GetExperimentStatus())
-                {
-                    var x = DateTime.Now - StartTime;
-                    s1.Points.Add(new DataPoint ( x.TotalSeconds, r)); 
-                }
-
             
-            }
+            var r = await _modBusService.Read27BusVoltage();
+            var x = DateTime.Now - StartTime;
+            if (r == -1) //Если нет подключения к устройству
+                {
+                    V27ConnectionStatus = "Нет соединения";
+                    if (_realTimeStandControlService.GetExperimentStatus())
+                        WriteMessage("Потеряно соединение с Е856ЭЛ", MessageType.Warning);
+                    return;
+                }
+                else
+                {
+                    V27Value = r.ToVoltageString();
+                    V27ConnectionStatus = "Соединение установлено";
+                    if (_realTimeStandControlService.GetExperimentStatus())
+                    {
+                     
+                        s1.Points.Add(new DataPoint(x.TotalSeconds, r));
+                        GraphView.PlotView.InvalidatePlot(true);
+                    }
+                }
         }
 
 

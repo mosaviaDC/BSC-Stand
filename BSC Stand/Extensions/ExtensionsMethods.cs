@@ -14,5 +14,19 @@ namespace BSC_Stand.Extensions
             return new string($"V {value}");
         }
 
+        public static string ToConnectionStatusString (this bool value)
+        {
+            
+            if (value)
+            {
+                return new string ("Соединение установлено");
+            }
+            else
+            {
+                return new string("Нет  соединения");
+            }
+            
+        }
+
     }
 }

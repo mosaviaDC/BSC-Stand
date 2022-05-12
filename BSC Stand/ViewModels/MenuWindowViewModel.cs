@@ -181,7 +181,7 @@ namespace BSC_Stand.ViewModels
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(UpdatePerformance);
             RamCounter = new PerformanceCounter("Memory", "Available Mbytes", true);
-            timer.Start();
+            //timer.Start();
             _Title = "ЭО БСК";
             _RamUsageText = $"Ram Usage: {RamCounter.NextValue()}";
 

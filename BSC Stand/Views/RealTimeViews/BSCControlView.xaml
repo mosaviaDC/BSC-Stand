@@ -30,28 +30,28 @@
 
             </Grid.RowDefinitions>
             <GridSplitter Height="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"></GridSplitter>
-            <TextBlock Height="15" VerticalAlignment="Top" HorizontalAlignment="Stretch"   Text="Статус подключения"></TextBlock>
+            <TextBlock Height="20"   VerticalAlignment="Top" HorizontalAlignment="Left"   Text="Статус подключения" FontWeight="Bold" FontSize="14"></TextBlock>
             <TreeView Grid.Row="0" Margin="0,30,0,0">
-                <TreeViewItem IsExpanded="True" Header="Овен">
-                    <TextBlock Text="{Binding OwenTemperature}"></TextBlock>
+                <TreeViewItem IsExpanded="True" Header="Owen" Background="#FFAFAFAF" FontSize="14">
+                    <TextBlock Text="Температура ЭО БСК"></TextBlock>
                     <TextBlock Text="Температура ИБХА"></TextBlock>
                     <TextBlock Text="{Binding OwenConnectStatus}"></TextBlock>
                 </TreeViewItem>
 
 
 
-                <TreeViewItem Header="Шина 27 В" IsExpanded="True">
-                    <TextBlock ToolTip="Напряжение шины 27В" Text="{Binding V27Value, Mode=TwoWay}" FontWeight="Bold"></TextBlock>
+                <TreeViewItem Header="Шина 27 В"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
+                    <TextBlock ToolTip="Напряжение шины 27В" Text="{Binding V27Value, Mode=TwoWay}"></TextBlock>
                     
                      <TextBlock Text="?"></TextBlock>
                     <TextBlock  Text="{Binding V27ConnectionStatus, Mode=TwoWay}"></TextBlock>
                 </TreeViewItem>
 
-                <TreeViewItem Header="Шина 100 В" IsExpanded="True">
+                <TreeViewItem Header="Шина 100 В"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
                  
-                    <TextBlock Text="?"></TextBlock>
-                    <TextBlock Text="?"></TextBlock>
-                    <TextBlock Text="Статус подключения"></TextBlock>
+                    <TextBlock Text="V"></TextBlock>
+                    <TextBlock Text="I"></TextBlock>
+                    <TextBlock Text="{Binding OwenConnectStatus}"></TextBlock>
                    
                 </TreeViewItem>
             </TreeView>
@@ -68,11 +68,11 @@
 
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn  Header="Value" Binding="{Binding Path=MaxValue}"   FontSize="12">
+                        <DataGridTextColumn  Header="Знач." Binding="{Binding Path=MaxValue}"   FontSize="12">
 
 
                         </DataGridTextColumn>
-                        <DataGridTextColumn  Header="Dur" Binding="{Binding Path=Duration}" FontSize="12">
+                        <DataGridTextColumn  Header="Прод." Binding="{Binding Path=Duration}" FontSize="12">
 
                         </DataGridTextColumn>
 
@@ -83,11 +83,11 @@
                 <DataGrid Grid.Column="1"   ItemsSource="{Binding V100ConfigurationModes }" SelectedIndex="{Binding V100SelectedIndex}"  IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn  Header="Value" Binding="{Binding Path=MaxValue}" FontSize="12">
+                        <DataGridTextColumn  Header="Знач." Binding="{Binding Path=MaxValue}" FontSize="12">
 
 
                         </DataGridTextColumn>
-                        <DataGridTextColumn  Header="Dur" Binding="{Binding Path=Duration}" FontSize="12">
+                        <DataGridTextColumn  Header="Прод." Binding="{Binding Path=Duration}" FontSize="12">
 
                         </DataGridTextColumn>
 
