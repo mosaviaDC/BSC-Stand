@@ -19,7 +19,11 @@ namespace BSC_Stand.Services
     {
         private  IModbusMaster owenController;
         private  TcpClient owenControllerTCPCLient;
+        private SerialPortAdapter serialPortAdapter;
         private  IModbusSerialMaster V27ModbusController;
+        private IModbusSerialMaster  I27ModbusController;
+
+
         IModbusFactory _modbusFactory;
 
         private SerialPort U27SerialPort;
@@ -28,8 +32,8 @@ namespace BSC_Stand.Services
         private SerialPort I100SerialPort;
 
         private StatusBarViewModel _statusBarViewModel;
-        
 
+        private bool ConnectStatus = false;
         private bool isBusy = false;
 
         public  ModBusService(StatusBarViewModel statusBarViewModel)
@@ -41,50 +45,39 @@ namespace BSC_Stand.Services
 
         public async Task<(string,bool)> InitConnections()
         {
-                isBusy = true;
-                _statusBarViewModel.SetNewTask(100);
-                _modbusFactory = new ModbusFactory();
-                owenControllerTCPCLient?.Dispose();
-                _statusBarViewModel.UpdateTaskProgress(25);
-                owenControllerTCPCLient = new TcpClient();
-     
-                 string ConnectionStatus = "";
-     
+            isBusy = true;
+            
+            string ConnectionStatus = "";
+            _statusBarViewModel.SetNewTask(100);
+            _modbusFactory = new ModbusFactory();
+            ConnectStatus = false;
             try
             {
-                InitSerialPorts();
                 _statusBarViewModel.UpdateTaskProgress(50);
-               // await owenControllerTCPCLient.ConnectAsync("10.0.6.10", 502);
-        
-                _statusBarViewModel.UpdateTaskProgress(75);
-               // owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
+                ConnectStatus =  InitV27BusPort() && InitI27BusPort();
                 _statusBarViewModel.UpdateTaskProgress(100);
-                isBusy = false;
-         
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
                 _statusBarViewModel.UpdateTaskProgress(100);
-                ConnectionStatus = $"{ex.Message}";
+                ConnectionStatus += $"{ex.Message}";
                 isBusy = false;
-             
-
             }
-            return (ConnectionStatus, owenControllerTCPCLient.Connected);
-
-
+            isBusy = false;
+            return (ConnectionStatus,ConnectStatus) ;
 
 
         }
 
         public async Task<ushort[]> ReadDataFromOwenController()
         {
-           
-            
-            
-
+          
             return null;
+        }
+
+        public bool GetConnectStatus()
+        {
+            return this.ConnectStatus;
         }
         public bool GetOwenConnectionStatus()
         {
@@ -98,38 +91,126 @@ namespace BSC_Stand.Services
             return isBusy;
         }
        
-        public Single Read27BusVoltage()
+        public async Task<Single> Read27BusVoltage()
         {
-                var result =  V27ModbusController.ReadInputRegisters(1, 7, 2); //Почему не работает в async&
-                if (result != null)
+                try
                 {
-                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+                    ushort[] result = new ushort[2];
+           
+                    result = await V27ModbusController.ReadInputRegistersAsync(1, 7, 2);
+                    
 
-                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+                    if (result != null)
+                    {
+                        byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
 
-                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-                    // Debug.WriteLine(BitConverter.ToSingle(bytes, 0));
-                    return BitConverter.ToSingle(bytes, 0);
-                    //   return 0;
+                        byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+                        Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+                        Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+                        Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+                 
+                        return BitConverter.ToSingle(bytes, 0);
+                    }
+                    else return -1;
                 }
-                else return 0;
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    return -1;
+                }
+
+          
+            
+          
         }
 
 
-        private void InitSerialPorts()
+        /// <summary>
+        /// Инициализация порта для преобразователя напряжения шины 27В
+        /// </summary>
+        private bool InitV27BusPort()
         {
+            if (V27ModbusController != null)
+            {
+                V27ModbusController.Transport.ReadTimeout = 100;
+                V27ModbusController.Transport.WriteTimeout = 100;
+                if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+            }
+
+            if (U27SerialPort == null) 
             U27SerialPort = new SerialPort();
+            U27SerialPort.Close();
             U27SerialPort.PortName = "COM1";
             U27SerialPort.BaudRate = 9600;
             U27SerialPort.DataBits = 8;
             U27SerialPort.StopBits = StopBits.One;
             U27SerialPort.Open();
-            SerialPortAdapter serialPortAdapter = new SerialPortAdapter(U27SerialPort);
+       
+            serialPortAdapter = new SerialPortAdapter(U27SerialPort);
+            
             V27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+            V27ModbusController.Transport.ReadTimeout = 100;
+            V27ModbusController.Transport.WriteTimeout = 100;
+            if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
+            {
+                return true;
+            }
+            else
+            {   U27SerialPort.Close();
+                U27SerialPort.Dispose();
+                return false;
+            }
+
             
         }
+
+        private bool InitI27BusPort()
+        {
+            //if (I27SerialPort == null)
+            //    I27SerialPort = new SerialPort();
+            //I27SerialPort.Close();
+            //I27SerialPort.PortName = "COM2";
+            //I27SerialPort.BaudRate = 9600;
+            //I27SerialPort.DataBits = 8;
+            //I27SerialPort.StopBits = StopBits.One;
+            //I27SerialPort.Open();
+
+            //serialPortAdapter = new SerialPortAdapter(I27SerialPort);
+
+            //I27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+            //I27ModbusController.Transport.ReadTimeout = 100;
+            //if (I27ModbusController.ReadInputRegisters(1, 7, 2) != null)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    I27SerialPort.Close();
+            //    I27SerialPort.Dispose();
+            //    return t;
+            //}
+            return true;
+
+        }
+
+
+        private async Task<bool> InitOwenController()
+        {
+            owenControllerTCPCLient?.Dispose();
+            owenControllerTCPCLient = new TcpClient();
+            await owenControllerTCPCLient.ConnectAsync("10.0.6.10", 502);
+            _statusBarViewModel.UpdateTaskProgress(75);
+            owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
+            return owenControllerTCPCLient.Connected;
+        }
+        
+
+    
+     
+
 
     }
 }

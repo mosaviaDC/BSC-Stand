@@ -30,7 +30,7 @@
 
             </Grid.RowDefinitions>
             <GridSplitter Height="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"></GridSplitter>
-            <TextBlock Height="15" VerticalAlignment="Top" HorizontalAlignment="Stretch"   Text="Статус модулей "></TextBlock>
+            <TextBlock Height="15" VerticalAlignment="Top" HorizontalAlignment="Stretch"   Text="Статус подключения"></TextBlock>
             <TreeView Grid.Row="0" Margin="0,30,0,0">
                 <TreeViewItem IsExpanded="True" Header="Овен">
                     <TextBlock Text="{Binding OwenTemperature}"></TextBlock>
@@ -41,15 +41,18 @@
 
 
                 <TreeViewItem Header="Шина 27 В" IsExpanded="True">
-                    <TextBlock Text="{Binding V27Value, Mode=TwoWay}"></TextBlock>
-                    <TextBlock Text="?"></TextBlock>
-                    <TextBlock Text="Статус подключения"></TextBlock>
+                    <TextBlock ToolTip="Напряжение шины 27В" Text="{Binding V27Value, Mode=TwoWay}" FontWeight="Bold"></TextBlock>
+                    
+                     <TextBlock Text="?"></TextBlock>
+                    <TextBlock  Text="{Binding V27ConnectionStatus, Mode=TwoWay}"></TextBlock>
                 </TreeViewItem>
 
                 <TreeViewItem Header="Шина 100 В" IsExpanded="True">
+                 
                     <TextBlock Text="?"></TextBlock>
                     <TextBlock Text="?"></TextBlock>
                     <TextBlock Text="Статус подключения"></TextBlock>
+                   
                 </TreeViewItem>
             </TreeView>
             <TextBlock Grid.Row="1" Text="Шина 27В" Height="25" VerticalAlignment="Top"  Padding="25,0,0,0"  TextAlignment="Left"></TextBlock>

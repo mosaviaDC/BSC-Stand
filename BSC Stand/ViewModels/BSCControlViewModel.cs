@@ -15,7 +15,7 @@ using System.Windows.Input;
 using BSC_Stand.Infastructure.Commands;
 using System.IO;
 using BSC_Stand.Models;
-
+using BSC_Stand.Extensions;
 namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
@@ -39,11 +39,11 @@ namespace BSC_Stand.ViewModels
                 return;
 
             }
-            //if (!_modBusService.GetOwenConnectionStatus())
-            //{
-            //    _userDialogWindowService.ShowErrorMessage("Ошибка связи");
-            //    return;
-            //}
+            if (!_modBusService.GetConnectStatus())
+            {
+                _userDialogWindowService.ShowErrorMessage("Ошибка связи");
+                return;
+            }
 
             if (V27ConfigurationModes.Count ==0 || V100ConfigurationModes.Count == 0)
             {
@@ -52,6 +52,7 @@ namespace BSC_Stand.ViewModels
             else
             {
                 WriteMessage("Начало эксперимента", MessageType.Info);
+                StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
                 UpdateDataTimer?.Start();
             }
@@ -73,6 +74,9 @@ namespace BSC_Stand.ViewModels
 
         private async void CheckConnectionStatusCommandExecute(object p)
         {
+            UpdateDataTimer.Stop();
+
+
             if (_modBusService.GetBusyStatus())
             {
                 _userDialogWindowService.ShowErrorMessage("Операция уже выполняется");
@@ -80,18 +84,25 @@ namespace BSC_Stand.ViewModels
             else
             {
                 WriteMessage("Проверка подключения", MessageType.Info);
-                var r = await _modBusService.InitConnections();
-                if (!r.Item2)
+              
+                if (!UpdateDataTimer.IsEnabled)
                 {
-                    WriteMessage(r.Item1, MessageType.Warning);
-                    WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
-               
-                }
-                else
-                {
-                    WriteMessage("Проверка подключения завершена успешно",MessageType.Info);
+                    var r = await _modBusService.InitConnections();
+                    if (!r.Item2)
+                    {
+                        WriteMessage(r.Item1, MessageType.Warning);
+                        WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
+
+
+                    }
+                    else
+                    {
+                        WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
+                        UpdateDataTimer.Start();
+                    }
                 }
             }
+          
         }
 
      
@@ -183,11 +194,18 @@ namespace BSC_Stand.ViewModels
             set => Set(ref _OwenConnectStatus, value);
         }
 
-        private float _V27Value;
-        public float V27Value
+        private string _V27Value;
+        public string V27Value
         {
             get => _V27Value;
             set=> Set(ref _V27Value, value);
+
+        }
+        private string _V27ConnectionStatus;
+        public string V27ConnectionStatus
+        {
+            get=> _V27ConnectionStatus;
+            set => Set(ref _V27ConnectionStatus, value);
 
         }
 
@@ -236,7 +254,6 @@ namespace BSC_Stand.ViewModels
             UpdateDataTimer = new DispatcherTimer();
             UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(10);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
-            UpdateDataTimer.Start();
             StartTime = DateTime.Now;
             
 
@@ -250,14 +267,47 @@ namespace BSC_Stand.ViewModels
             #endregion
         }
 
-        private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
+        private  void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-            V27Value=  _modBusService.Read27BusVoltage();
-          
-            var r = DateTime.Now - StartTime;
-            s1.Points.Add(new DataPoint(r.TotalSeconds, V27Value));
-            GraphView.InvalidatePlot(true);
+            ReadV27Value();
+
+            int numberOfVisiblePoints = 0;
+            foreach (DataPoint dataPoint in s1.Points)
+            {
+                if (s1.GetScreenRectangle().Contains(s1.Transform(dataPoint)))
+                {
+                    numberOfVisiblePoints++;
+                }
+            }
+            if (numberOfVisiblePoints <= 3000)
+            {
+                GraphView.PlotView.InvalidatePlot(true);
+            }
+
         }
+
+
+        private async void ReadV27Value()
+        {
+            var r = await _modBusService.Read27BusVoltage();
+            if (r == -1) //Если нет подключения к устройству
+            {
+                V27ConnectionStatus = "Нет соединения";
+                if (_realTimeStandControlService.GetExperimentStatus())
+                WriteMessage("Потеряно соединение с Е856ЭЛ", MessageType.Warning);
+            }
+            else
+            {
+                V27Value=  r.ToVoltageString();
+                V27ConnectionStatus = "Соединение установлено";
+                if (_realTimeStandControlService.GetExperimentStatus())
+                {
+                    var x = DateTime.Now - StartTime;
+                    s1.Points.Add(new DataPoint ( x.TotalSeconds, r)); 
+                }
+            }
+        }
+
 
         public void WriteMessage(string Message, MessageType messageType)
         {
