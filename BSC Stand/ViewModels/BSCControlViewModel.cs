@@ -63,8 +63,6 @@ namespace BSC_Stand.ViewModels
 
         private bool CanStartExpirementCommandExecuted(object p)
         {
-
-
             return true;
 
         }
@@ -98,7 +96,7 @@ namespace BSC_Stand.ViewModels
                     else
                     {
                         WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
-                        UpdateDataTimer.Start();
+                       UpdateDataTimer.Start();
                     }
                 }
             }
@@ -262,7 +260,7 @@ namespace BSC_Stand.ViewModels
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
-            CheckConnectionStatusCommandExecute(null);
+          //  CheckConnectionStatusCommandExecute(null);
           
             #endregion
         }
@@ -270,6 +268,7 @@ namespace BSC_Stand.ViewModels
         private  void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
             ReadV27Value();
+
 
             int numberOfVisiblePoints = 0;
             foreach (DataPoint dataPoint in s1.Points)
@@ -283,7 +282,6 @@ namespace BSC_Stand.ViewModels
             {
                 GraphView.PlotView.InvalidatePlot(true);
             }
-
         }
 
 
@@ -305,6 +303,8 @@ namespace BSC_Stand.ViewModels
                     var x = DateTime.Now - StartTime;
                     s1.Points.Add(new DataPoint ( x.TotalSeconds, r)); 
                 }
+
+            
             }
         }
 

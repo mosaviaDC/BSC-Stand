@@ -12,6 +12,7 @@ using System.Threading;
 using BSC_Stand.ViewModels;
 using System.IO.Ports;
 using NModbus.Serial;
+using NModbus.IO;
 
 namespace BSC_Stand.Services
 {
@@ -132,39 +133,48 @@ namespace BSC_Stand.Services
         {
             if (V27ModbusController != null)
             {
-                V27ModbusController.Transport.ReadTimeout = 100;
-                V27ModbusController.Transport.WriteTimeout = 100;
+                V27ModbusController.Transport.ReadTimeout = 2000;
+                V27ModbusController.Transport.WriteTimeout = 1000;
+                Debug.WriteLine("*");
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (U27SerialPort == null) 
             U27SerialPort = new SerialPort();
-            U27SerialPort.Close();
-            U27SerialPort.PortName = "COM1";
-            U27SerialPort.BaudRate = 9600;
-            U27SerialPort.DataBits = 8;
-            U27SerialPort.StopBits = StopBits.One;
-            U27SerialPort.Open();
-       
-            serialPortAdapter = new SerialPortAdapter(U27SerialPort);
+                {
+
+               U27SerialPort.Close();
+                U27SerialPort.PortName = "COM1";
+                U27SerialPort.BaudRate = 9600;
+                U27SerialPort.DataBits = 8;
+                U27SerialPort.StopBits = StopBits.One;
+                U27SerialPort.Open();
+
+                serialPortAdapter = new SerialPortAdapter(U27SerialPort);
             
-            V27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
-            V27ModbusController.Transport.ReadTimeout = 100;
-            V27ModbusController.Transport.WriteTimeout = 100;
-            if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
-            {
-                return true;
-            }
-            else
-            {   U27SerialPort.Close();
-                U27SerialPort.Dispose();
-                return false;
+                V27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+                V27ModbusController.Transport.WriteTimeout=2000;
+                V27ModbusController.Transport.ReadTimeout=1000;
+
+                if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    U27SerialPort.Close();
+                    U27SerialPort.Dispose();
+                    return false;
+                }
             }
 
-            
+
         }
 
         private bool InitI27BusPort()

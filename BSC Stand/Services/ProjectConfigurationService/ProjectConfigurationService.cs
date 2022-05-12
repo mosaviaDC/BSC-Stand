@@ -26,7 +26,7 @@ namespace BSC_Stand.Services
             _statusBarViewModel.SetNewTask(100);
 
             using FileStream openStream = File.OpenRead(FilePath);
-            _statusBarViewModel.UpdateTaskProgress(100);
+            _statusBarViewModel.UpdateTaskProgress(50);
             _statusBarViewModel.SetNewTask();
             return await JsonSerializer.DeserializeAsync<FileProjectConfigurationModel>(openStream);
         }

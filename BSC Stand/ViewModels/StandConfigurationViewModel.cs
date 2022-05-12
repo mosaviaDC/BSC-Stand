@@ -317,23 +317,29 @@ namespace BSC_Stand.ViewModels
             _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
         }
 
-        public void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount)
+        public  void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount)
         {
-            this.Bus100ConfigurationModes.Clear();
-            this.Bus27ConfigurationModes.Clear();
-           
-            V27BusCyclogramRepeatCount = V27BusRepeatCount;
-            V100BusCyclogramRepeatCount= V100BusRepeatCount;
+            
+                this.Bus100ConfigurationModes.Clear();
+                this.Bus27ConfigurationModes.Clear();
 
-            foreach(var p in V27BusConfig)
-            {
-                Bus27ConfigurationModes.Add(p);
-            }
-            foreach (var p in V100BusConfig)
-            {
-                Bus100ConfigurationModes.Add(p);
-            }
-            UpdateCyclograms(null);
+                V27BusCyclogramRepeatCount = V27BusRepeatCount;
+                V100BusCyclogramRepeatCount = V100BusRepeatCount;
+
+                foreach (var p in V27BusConfig)
+                {
+                    Bus27ConfigurationModes.Add(p);
+                }
+                foreach (var p in V100BusConfig)
+                {
+                    Bus100ConfigurationModes.Add(p);
+                }
+                UpdateCyclograms(null);
+
+
+            
+
+ 
         }
 
     }

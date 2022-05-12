@@ -26,6 +26,7 @@ namespace BSC_Stand.ViewModels
         private PerformanceCounter RamCounter;
         private string CurrentOpenedFileName = null;
         private readonly IWindowService _windowService;
+        private readonly StatusBarViewModel _statusBarViewModel;
         #endregion
         #region Services
         private readonly IFileDialog _fileDialogService;
@@ -79,12 +80,15 @@ namespace BSC_Stand.ViewModels
         public ICommand OpenFileCommand { get; set; }
 
 
-        private async void OpenFileCommandExecute(object p)
+        private  async void OpenFileCommandExecute(object p)
         {
+           
             CurrentOpenedFileName = _fileDialogService.OpenFileDialog();
             if (CurrentOpenedFileName != null)
             {
+             
                 var result = await _projectConfigurationService.GetProjectConfiguration(CurrentOpenedFileName);
+                _statusBarViewModel.UpdateTaskProgress(100);
                 if (result != null)
                 {
                     _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
@@ -156,7 +160,7 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion
 
-        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService, BSCControlViewModel bSCControlViewModel)
+        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService, BSCControlViewModel bSCControlViewModel, StatusBarViewModel statusBarViewModel)
         {
             #region Services
             _fileDialogService = fileDialogService;
@@ -164,6 +168,7 @@ namespace BSC_Stand.ViewModels
             _standConfigurationViewModel = standConfigurationViewModel;
             _BSCControlViewModel = bSCControlViewModel;
             _windowService = windowService;
+            _statusBarViewModel = statusBarViewModel;
             //_modbusService = modbusService;
             #endregion
             #region Commands
