@@ -62,7 +62,7 @@
 
                 <GroupBox FontSize="10" FontFamily="Arial" Grid.Row="1">
                     <ScrollViewer DataContext="{Binding BSCControlViewModel ,Source={StaticResource ViewModelLocator}}">
-                        <TextBlock Text="{Binding  DebugString, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
+                        <TextBlock Text="{Binding  DebugString, Mode=TwoWay}" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
                     </ScrollViewer>
                     
                     

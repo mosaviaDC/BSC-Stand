@@ -204,11 +204,11 @@ namespace BSC_Stand.ViewModels
             set=> Set(ref _V27Value, value);
 
         }
-        private string _V27ConnectionStatus;
-        public string V27ConnectionStatus
+        private string _I27Value;
+        public string I27Value
         {
-            get=> _V27ConnectionStatus;
-            set => Set(ref _V27ConnectionStatus, value);
+            get=> _I27Value;
+            set => Set(ref _I27Value, value);
 
         }
 
@@ -265,6 +265,11 @@ namespace BSC_Stand.ViewModels
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
+           
+            V27Value = "V Нет соединения";
+            I27Value = "I Нет соединения";
+
+
             CheckConnectionStatusCommandExecute(null);
           
             #endregion
@@ -299,7 +304,8 @@ namespace BSC_Stand.ViewModels
             var x = DateTime.Now - StartTime;
             if (r == -1) //Если нет подключения к устройству
                 {
-                    V27ConnectionStatus = "Нет соединения";
+   
+                     V27Value = "V Нет соединения";
                     if (_realTimeStandControlService.GetExperimentStatus())
                         WriteMessage("Потеряно соединение с Е856ЭЛ", MessageType.Warning);
                     return;
@@ -307,7 +313,6 @@ namespace BSC_Stand.ViewModels
                 else
                 {
                     V27Value = r.ToVoltageString();
-                    V27ConnectionStatus = "Соединение установлено";
                     if (_realTimeStandControlService.GetExperimentStatus())
                     {
                      

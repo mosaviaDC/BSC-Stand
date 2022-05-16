@@ -41,17 +41,17 @@
 
 
                 <TreeViewItem Header="Шина 27 В"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
-                    <TextBlock ToolTip="Напряжение шины 27В" Text="{Binding V27Value, Mode=TwoWay}"></TextBlock>
+                     <TextBlock Text="{Binding V27Value, Mode=TwoWay}"></TextBlock>
                     
-                     <TextBlock Text="?"></TextBlock>
-                    <TextBlock  Text="{Binding V27ConnectionStatus, Mode=TwoWay}"></TextBlock>
+                     <TextBlock Text="{Binding I27Value,Mode=TwoWay}" ></TextBlock>
+                    
                 </TreeViewItem>
 
                 <TreeViewItem Header="Шина 100 В"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
                  
                     <TextBlock Text="V"></TextBlock>
                     <TextBlock Text="I"></TextBlock>
-                    <TextBlock Text="{Binding OwenConnectStatus}"></TextBlock>
+                   
                    
                 </TreeViewItem>
             </TreeView>
