@@ -123,141 +123,124 @@ namespace BSC_Stand.ViewModels
            
         }
 
-    
-        public void Update27BusPlotModel(ObservableCollection<ConfigurationMode> configurationModes)
+
+        public void Update27BusPlotModel(ObservableCollection<ConfigurationMode> configurationModes,int repeatCount)
         {
-            if (configurationModes.Count > 0)
+
+            for (int i = 0; i <repeatCount; i++)
             {
-                s1.Points.Clear();
-                if (configurationModes.Count == 1)
+
+
+
+                if (configurationModes.Count > 0)
                 {
-
-
-                }
-
-                {
-                    s1.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
-                    s1.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
-
-                    foreach (var configurationMode in configurationModes)
+                    if (i == 0)
                     {
-                        if (configurationModes.IndexOf(configurationMode) > 0)
+                        s1.Points.Clear();
+
+                            s1.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
+                            s1.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
+
+                            foreach (var configurationMode in configurationModes)
+                            {
+                                if (configurationModes.IndexOf(configurationMode) > 0)
+                                {
+                                    s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                                    s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
+                        
+                            }
+                            }
+                        
+                       
+                    }
+                    else
+                    {
+                        s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationModes[0].MaxValue));
+                        s1.Points.Add(new DataPoint(configurationModes[0].Duration + s1.Points.Last().X, configurationModes[0].MaxValue));
+                        foreach (var configurationMode in configurationModes)
                         {
-                            s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
-                            s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
-                            
+                            if (configurationModes.IndexOf(configurationMode) > 0)
+                            {
+                                s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                                s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
+                              
+                            }
                         }
 
                     }
-
                 }
-                Bus27PlotModel.InvalidatePlot(true);
             }
+            Bus27PlotModel.InvalidatePlot(true);
+
         }
-        public void Update100BusPlotModel(ObservableCollection<ConfigurationMode> configurationModes)
+        public void Update100BusPlotModel(ObservableCollection<ConfigurationMode> configurationModes, int repeatCount)
         {
-            if (configurationModes.Count > 0)
+            for (int i = 0; i < repeatCount; i++)
             {
-                s2.Points.Clear();
-                if (configurationModes.Count == 1)
+
+
+                if (configurationModes.Count > 0)
                 {
-
-
-                }
-
-                {
-                    s2.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
-                    s2.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
-
-                    foreach (var configurationMode in configurationModes)
+                    if (i == 0)
                     {
-                        if (configurationModes.IndexOf(configurationMode) > 0)
+                        s2.Points.Clear();
+                        if (configurationModes.Count == 1)
                         {
-                            s2.Points.Add(new DataPoint(s2.Points.Last().X, configurationMode.MaxValue));
-                            s2.Points.Add(new DataPoint(configurationMode.Duration + s2.Points.Last().X, configurationMode.MaxValue));
+
+
                         }
 
-                    }
+                        {
+                            s2.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
+                            s2.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
 
+                            foreach (var configurationMode in configurationModes)
+                            {
+                                if (configurationModes.IndexOf(configurationMode) > 0)
+                                {
+                                    s2.Points.Add(new DataPoint(s2.Points.Last().X, configurationMode.MaxValue));
+                                    s2.Points.Add(new DataPoint(configurationMode.Duration + s2.Points.Last().X, configurationMode.MaxValue));
+                                }
+
+                            }
+
+                        }
+                      
+                    }
+                    else
+                    {
+                        s2.Points.Add(new DataPoint(s2.Points.Last().X, configurationModes[0].MaxValue));
+                        s2.Points.Add(new DataPoint(configurationModes[0].Duration + s2.Points.Last().X, configurationModes[0].MaxValue));
+                        foreach (var configurationMode in configurationModes)
+                        {
+                            if (configurationModes.IndexOf(configurationMode) > 0)
+                            {
+                                s2.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                                s2.Points.Add(new DataPoint(configurationMode.Duration + s2.Points.Last().X, configurationMode.MaxValue));
+
+                            }
+                        }
+                    }
                 }
-                Bus100PlotModel.InvalidatePlot(true);
+
+
             }
+            Bus100PlotModel.InvalidatePlot(true);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //ConfigurationMode[] modes = new ConfigurationMode[configurationModes.Count];
-        //s1.Points.Clear();
-        //if (configurationModes.Count > 0)
-        //{
-        //    if (configurationModes.Count == 1)
-        //    {
-        //        s1.Points.Add(new DataPoint(configurationModes[0].Duration,configurationModes[0].MaxValue));
-        //    }
-        //    for (int i = 0; i < modes.Length; i++)
-        //    {
-        //        if (i == 0)
-        //        {
-        //            modes[i] = new ConfigurationMode()
-        //            {
-        //                Discreteness = configurationModes[i].Discreteness,
-        //                MaxValue = configurationModes[i].MaxValue,
-        //                MinValue = configurationModes[i].MinValue,
-        //                ModeName = configurationModes[i].ModeName,
-        //                Duration = configurationModes[i].Duration,
-        //                ModeUnit = configurationModes[i].ModeUnit,
-
-
-        //            };
-        //            s1.Points.Add(new DataPoint(0, modes[i].MaxValue));
-        //        }
-
-        //        if (i > 0)
-        //        {
-        //            int sum = 0;
-        //            for (int j = 0; j < configurationModes.Count; j++)
-        //            {
-        //                sum += configurationModes[j].Duration;
-        //            }
-
-        //       //     Debug.WriteLine($"{sum}");
-        //            modes[i] = new ConfigurationMode()
-        //            {
-        //                Discreteness = configurationModes[i].Discreteness,
-        //                MaxValue = configurationModes[i].MaxValue,
-        //                MinValue = configurationModes[i].MinValue,
-        //                ModeName = configurationModes[i].ModeName,
-        //                Duration = sum,
-        //                ModeUnit = configurationModes[i].ModeUnit,
-
-        //            };
-        //            s1.Points.Add(new DataPoint(modes[i].Duration, modes[i].MaxValue));
-        //        }
-
-        //    }
-
-
-
-
-
-
-        //   Debug.WriteLine($"UpdateAllPlot {modes.Length}");
-        //ObservableCollection<ConfigurationMode> newConfigs = new ObservableCollection<ConfigurationMode>();
-        //newConfigs = configurationMode();
-        //    testPlotModel.InvalidatePlot(true);
-
-
 
 
         private void UpdatePlot(object sender, EventArgs e)

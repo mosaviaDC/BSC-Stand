@@ -306,18 +306,17 @@ namespace BSC_Stand.ViewModels
         }
         private void Bus27ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-                Debug.WriteLine("Collect Cnaged");
                 V27BusConfigurationStack.Push(this.Bus27ConfigurationModes);
           
         }
 
         private void UpdateCyclograms(object p )
         {
-            _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes);
-            _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes);
+            _standVizualizationViewModel.Update27BusPlotModel(this.Bus27ConfigurationModes,V27BusCyclogramRepeatCount);
+            _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes,V100BusCyclogramRepeatCount);
         }
 
-        public  void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount)
+        public  void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount, int V27RepeatCount =1, int V100RepeatCount =1)
         {
             
                 this.Bus100ConfigurationModes.Clear();
@@ -326,14 +325,16 @@ namespace BSC_Stand.ViewModels
                 V27BusCyclogramRepeatCount = V27BusRepeatCount;
                 V100BusCyclogramRepeatCount = V100BusRepeatCount;
 
-                foreach (var p in V27BusConfig)
-                {
-                    Bus27ConfigurationModes.Add(p);
-                }
                 foreach (var p in V100BusConfig)
-                {
-                    Bus100ConfigurationModes.Add(p);
-                }
+            {
+                this.Bus100ConfigurationModes.Add(p);
+            }
+                foreach(var p in V27BusConfig)
+            {
+                this.Bus27ConfigurationModes.Add(p);
+            }
+
+              
                 UpdateCyclograms(null);
 
 

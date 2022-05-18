@@ -173,10 +173,10 @@
                                     <Style TargetType="TextBox">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
-                                                <Setter Property="Text"  Value="{Binding Path= V27BusCyclogramRepeatCount}"></Setter>
+                                                <Setter Property="Text"  Value="{Binding Path= V27BusCyclogramRepeatCount, Mode=TwoWay}"></Setter>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
-                                                <Setter Property="Text"  Value="{Binding Path=V100BusCyclogramRepeatCount}"></Setter>
+                                                <Setter Property="Text"  Value="{Binding Path=V100BusCyclogramRepeatCount, Mode=TwoWay}"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

@@ -9,6 +9,7 @@ using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
 using System.IO;
 using BSC_Stand.Models;
 using BSC_Stand.ViewModels;
+using System.Diagnostics;
 
 namespace BSC_Stand.Services
 {
@@ -34,6 +35,7 @@ namespace BSC_Stand.Services
 
         public async Task SaveProjectConfiguration(string filePath,ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode>V100ConfigurationModes,int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount)
         {
+           
             _statusBarViewModel.SetNewTask(100);
             FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel (V100ConfigurationModes, V27ConfigurationModes,V27ConfigurationModesRepeatCount,V100ConfigurationModesRepeatCount);
             _statusBarViewModel.UpdateTaskProgress(25);

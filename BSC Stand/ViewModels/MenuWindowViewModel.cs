@@ -117,7 +117,7 @@ namespace BSC_Stand.ViewModels
         private async void SaveFileCommandExecute(object p)
         {
 
-          
+            Debug.WriteLine(_standConfigurationViewModel.V27BusCyclogramRepeatCount);
 
             //Если горячая клавиша и есть имя файла
             if (p != null && CurrentOpenedFileName != null)

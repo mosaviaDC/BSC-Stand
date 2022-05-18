@@ -8,7 +8,155 @@
         Title="Проверка оборудования" Height="750" Width="1000"
         Icon="ico.ico"
         >
-    <Grid>
-        
+    <Grid DataContext="{Binding  ConnectionCheckListViewModel, Source={StaticResource ViewModelLocator}}">
+        <TextBlock Text="{Binding LastDateString, Mode=TwoWay}" FontSize="18" Margin="0,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
+        <Button VerticalAlignment="top" Margin="0,75,0,0" Content="Периодическая проверка оборудования" Command="{Binding  StartCheckProcedure}" Foreground="White" FontSize="18" Cursor="Hand"></Button>
+
+
+
+        <TreeView FontSize="14" Margin="0,125,0,0">
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[0]}" IsEnabled="{Binding CurrentProgressList[0]}" Header="Датчик температуры ИБХА">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая температура совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding TemperatureBSKStatus}" Grid.Column="2"></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[1]}" IsEnabled="{Binding CurrentProgressList[1]}" Header="Датчик температуры ЭОБСК">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая температура совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding TemperatureIBXAStatus}" Grid.Column="2"></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+            
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[2]}" IsEnabled="{Binding CurrentProgressList[2]}" Header="Преобразователь напряжения шины 27В">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическое напряжение  совпадает с измеренным?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding V27Status}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[3]}" IsEnabled="{Binding CurrentProgressList[3]}" Header="Преобразователь силы тока? шины 27В">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding I27Status}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[4]}" IsEnabled="{Binding CurrentProgressList[4]}" Header="Преобразователь напряжения шины 100В">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическое напряжение  совпадает с измеренным?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding V100Status}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[5]}" IsEnabled="{Binding CurrentProgressList[5]}" Header="Преобразователь силы тока? шины 100В">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding I100Status}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[6]}" IsEnabled="{Binding CurrentProgressList[6]}" Header="Нагрузка электронная АКИП-1381">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding AkipStatus}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[7]}" IsEnabled="{Binding CurrentProgressList[7]}" Header="Нагрузка электронная IT8516C+">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding IT8516CStatus}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="{Binding CurrentProgressList[8]}" IsEnabled="{Binding CurrentProgressList[8]}" Header="Программируемый источник питания Тетрон 15016С">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <CheckBox IsChecked="{Binding TetronStatus}" Grid.Column="2" ></CheckBox>
+
+                </Grid>
+            </TreeViewItem>
+
+
+            <!--</TreeViewItem>
+            <TreeViewItem Header="Элементы шины 27В">
+                <TextBlock Text="Напряжение"></TextBlock>
+                <TextBlock Text="Сила тока"></TextBlock>
+                <TextBlock Text="Нагрузка электронная АКИП-1381"></TextBlock>
+            </TreeViewItem>
+            <TreeViewItem Header="Элементы шины 100В">
+                <TextBlock Text="Напряжение"></TextBlock>
+                <TextBlock Text="Сила тока"></TextBlock>
+                <TextBlock Text="Нагрузка электронная ITC8516C+"></TextBlock>
+            </TreeViewItem>
+            <TreeViewItem Header="Источник питания">
+                <TextBlock Text="Программируемый источник питания Тетрон 15016С"></TextBlock>
+            </TreeViewItem>-->
+
+
+        </TreeView>
+
     </Grid>
 </Window>

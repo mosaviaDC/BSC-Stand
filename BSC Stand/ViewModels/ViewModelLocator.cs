@@ -15,5 +15,7 @@ namespace BSC_Stand.ViewModels
         public BSCControlViewModel BSCControlViewModel => App.Host.Services.GetRequiredService<BSCControlViewModel>();
 
         public StatusBarViewModel StatusBarViewModel => App.Host.Services.GetRequiredService<StatusBarViewModel>();
+
+        public ConnectionCheckListViewModel ConnectionCheckListViewModel => App.Host.Services.GetRequiredService<ConnectionCheckListViewModel>();
     }
 }
