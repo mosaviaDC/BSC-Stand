@@ -49,8 +49,8 @@
 
                 <TreeViewItem Header="Шина 100 В"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
                  
-                    <TextBlock Text="V"></TextBlock>
-                    <TextBlock Text="I"></TextBlock>
+                    <TextBlock Text="V Нет соединения"></TextBlock>
+                    <TextBlock Text="I Нет соединения"></TextBlock>
                    
                    
                 </TreeViewItem>
