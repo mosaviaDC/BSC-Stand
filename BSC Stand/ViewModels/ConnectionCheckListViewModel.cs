@@ -164,6 +164,8 @@ namespace BSC_Stand.ViewModels
 
         private void StartCheckProcedureExecute(object p)
         {
+            //TODO отправить комманды проверки на электронные нагрузки и источник питания
+
             for (int i = 0; i < CurrentProgressList.Count; i++)
             {
                 CurrentProgressList[i] = false;

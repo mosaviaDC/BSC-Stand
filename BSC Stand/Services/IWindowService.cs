@@ -8,7 +8,7 @@ using System.Windows;
 namespace BSC_Stand.Services
 {
     internal interface IWindowService
-    {
+    { 
         public void ShowWindow<T>(object DataContext) where T : Window, new();
     }
 }

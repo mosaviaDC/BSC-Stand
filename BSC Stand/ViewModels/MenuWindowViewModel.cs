@@ -15,6 +15,7 @@ using NModbus.IO;
 using NModbus.Device;
 using NModbus;
 using BSC_Stand.Views.Windows;
+using System.Windows;
 
 namespace BSC_Stand.ViewModels
 {
@@ -149,7 +150,15 @@ namespace BSC_Stand.ViewModels
         public ICommand OpenPeriodStandParamsControlWindowCommand { get; set; }
         public void OpenPeriodStandParamsControlWindowCommandExecute(object p)
         {
-            _windowService.ShowWindow<StandParamsControl>(this);
+            if (Helpers.Helpers.IsWindowOpen<StandParamsControl>())
+            {
+                return;
+            }else
+            {
+                _windowService.ShowWindow<StandParamsControl>(this);
+                return;
+            }
+          
            
         }
 
@@ -184,8 +193,7 @@ namespace BSC_Stand.ViewModels
             //timer.Start();
             _Title = "ЭО БСК";
             _RamUsageText = $"Ram Usage: {RamCounter.NextValue()}";
-
-     
+           
 
         }
 

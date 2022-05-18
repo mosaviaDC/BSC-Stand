@@ -268,10 +268,19 @@ namespace BSC_Stand.ViewModels
            
             V27Value = "V Нет соединения";
             I27Value = "I Нет соединения";
+            OwenConnectStatus = "Нет соединения";
+            if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(1)) // 
+            {
+           
+                WriteMessage("Необходимо выполнить периодическую проверку оборудования", MessageType.Warning);
+            }
+
+            Task.Factory.StartNew(() =>
+            {
+                CheckConnectionStatusCommandExecute(null);
+            });
 
 
-            CheckConnectionStatusCommandExecute(null);
-          
             #endregion
         }
 
