@@ -164,8 +164,51 @@
       
 
             <GroupBox Grid.Column="0">
+                    <Grid>
+                        <ScrollViewer>
                 
-            </GroupBox>
+                    <Grid>
+                      
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <CheckBox  Grid.Row="0" Grid.Column="0"></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Температура ЭО БСК"></TextBlock>
+                        
+                        <CheckBox  Grid.Row="1" Grid.Column="0" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Температура ИБХА"></TextBlock>
+
+                        <CheckBox  Grid.Row="2" Grid.Column="0" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Напряжение шины 27В"></TextBlock>
+                        
+                        <CheckBox  Grid.Row="3" Grid.Column="0" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Сила тока 27В"></TextBlock>
+
+                       <CheckBox  Grid.Row="4" Grid.Column="0" ></CheckBox>
+                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Напряжение шины 100В"></TextBlock>
+
+                       <CheckBox  Grid.Row="5" Grid.Column="0" ></CheckBox>
+                      <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Сила тока 100В"></TextBlock>
+
+
+
+
+
+                            </Grid>
+
+                        </ScrollViewer>
+
+                    </Grid>
+                </GroupBox>
             <GroupBox Grid.Column="1">
                     <ScrollViewer>
                         <TextBlock  Text="{Binding DebugString}"></TextBlock>

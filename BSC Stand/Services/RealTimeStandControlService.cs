@@ -55,8 +55,6 @@ namespace BSC_Stand.Services
             V100expirementTimer.Interval = TimeSpan.FromMilliseconds(250);
             V100expirementTimer.Tick += V100TimerEventHandler;
 
-
-
             V27configurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100configurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             _V27MsgEvent += bSCControlViewModel.SendV27ModBusCommand;
@@ -109,8 +107,6 @@ namespace BSC_Stand.Services
                 V27ConfigIndex = 0;
                 V100ConfigIndex = 0;
                 UpdateExpiremntParams();
-                
-       
             }
             else if (isExpirementPepformed)
             {

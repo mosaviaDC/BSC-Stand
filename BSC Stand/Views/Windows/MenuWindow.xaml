@@ -8,6 +8,7 @@
         x:Class="BSC_Stand.Views.Windows.MenuWindow"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:configWindows ="clr-namespace:BSC_Stand.Views"
+     
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
@@ -44,12 +45,12 @@
                     </behaviors:EventTrigger>
                 </behaviors:Interaction.Triggers>
             </fa5:FontAwesome>
-            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_UndoAlt" x:Name="UndoIcon">
+            <!--<fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_UndoAlt" x:Name="UndoIcon">
 
             </fa5:FontAwesome>
             <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_RedoAlt" x:Name="RedoIcon">
 
-            </fa5:FontAwesome>
+            </fa5:FontAwesome>-->
             <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_Wrench"  ToolTip="Периодическая проверка" x:Name="TestIcon">
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
@@ -105,7 +106,9 @@
 
                 <configWindows:BSCControlView></configWindows:BSCControlView>
             </TabItem>
-            <TabItem Header="Анализ эксперимента"></TabItem>
+            <TabItem Header="Анализ эксперимента">
+                <configWindows:PostAnalyzeView> </configWindows:PostAnalyzeView>
+             </TabItem>
             
         </TabControl>
         

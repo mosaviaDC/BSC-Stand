@@ -79,7 +79,7 @@ namespace BSC_Stand.ViewModels
         {
             UpdateDataTimer.Stop();
 
-
+            (string, bool) result = ("", false);
             if (_modBusService.GetBusyStatus())
             {
                 _userDialogWindowService.ShowErrorMessage("Операция уже выполняется");
@@ -90,17 +90,24 @@ namespace BSC_Stand.ViewModels
               
                 if (!UpdateDataTimer.IsEnabled)
                 {
-                    var r = await _modBusService.InitConnections();
-                    if (!r.Item2)
+                
+                     await  Task.Factory.StartNew( async () =>
                     {
-                        WriteMessage(r.Item1, MessageType.Warning);
+                      result=  _modBusService.InitConnections();
+
+                    });
+
+                    
+                    if (!result.Item2)
+                    {
+                        WriteMessage(result.Item1, MessageType.Warning);
                         WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
 
 
                     }
                     else
                     {
-                        WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
+                       WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
                        UpdateDataTimer.Start();
                     }
                 }

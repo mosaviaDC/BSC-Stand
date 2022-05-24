@@ -44,7 +44,7 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task<(string,bool)> InitConnections()
+        public  (string,bool) InitConnections()
         {
             isBusy = true;
             
