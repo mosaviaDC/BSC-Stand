@@ -60,6 +60,7 @@ namespace BSC_Stand
             services.AddSingleton<IUserDialogWindowService, UserWindowDialogService>();
             services.AddSingleton<StatusBarViewModel>();
             services.AddSingleton<ConnectionCheckListViewModel>();
+            services.AddSingleton<PostAnalyzeViewModel>();
             //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
 
 

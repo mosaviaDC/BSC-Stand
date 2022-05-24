@@ -30,7 +30,7 @@
     <Grid>
 
         <Menu Height="45" VerticalAlignment="Top" Margin="0,0,0,0">
-            <fa5:FontAwesome  Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileImport" x:Name="FileImportIcon" ToolTip="Импорт конфигурации Ctrl+O">
+            <fa5:FontAwesome  Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" FontSize="23"  Icon="Solid_FileImport" x:Name="FileImportIcon" ToolTip="Импорт конфигурации Ctrl+O">
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                         <behaviors:InvokeCommandAction Command="{Binding OpenFileCommand}" ></behaviors:InvokeCommandAction>
@@ -38,7 +38,7 @@
                 </behaviors:Interaction.Triggers>
 
             </fa5:FontAwesome>
-            <fa5:FontAwesome Padding="0"  Margin="-15,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileExport" ToolTip ="Экспорт конифуграции Ctrl+S" x:Name="FileExportIcon">
+            <fa5:FontAwesome Padding="0"  Margin="-15,0,0,0"  Foreground="{StaticResource IconBrush}" FontSize="23"  Icon="Solid_FileExport" ToolTip ="Экспорт конифуграции Ctrl+S" x:Name="FileExportIcon">
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                         <behaviors:InvokeCommandAction Command="{Binding SaveFileCommand}"></behaviors:InvokeCommandAction>
@@ -51,7 +51,7 @@
             <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_RedoAlt" x:Name="RedoIcon">
 
             </fa5:FontAwesome>-->
-            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_Wrench"  ToolTip="Периодическая проверка" x:Name="TestIcon">
+            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}"  FontSize="23"  Icon="Solid_Wrench"  ToolTip="Периодическая проверка" x:Name="TestIcon">
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                         <behaviors:InvokeCommandAction Command="{Binding OpenPeriodStandParamsControlWindowCommand}"></behaviors:InvokeCommandAction>
@@ -59,7 +59,7 @@
                 </behaviors:Interaction.Triggers>
             </fa5:FontAwesome>
 
-            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_InfoCircle"  ToolTip="Информация" x:Name="InfoIcon">
+            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_Info" FontSize="23"  ToolTip="Информация" x:Name="InfoIcon">
              
             </fa5:FontAwesome>
 
