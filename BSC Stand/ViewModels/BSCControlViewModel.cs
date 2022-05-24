@@ -152,6 +152,16 @@ namespace BSC_Stand.ViewModels
             return true;
         }
 
+
+        public ICommand ShowHideOxyPlotLegendCommand { get; set; }
+
+        public void ShowHideOxyPlotLegendCommandExecute(object p )
+        {
+            GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
+        }
+
+
+
         private int index;
 
         #endregion
@@ -164,7 +174,104 @@ namespace BSC_Stand.ViewModels
         private LineSeries I27Series;
         private LineSeries V100Series;
         private LineSeries I100Series;
+        private LineSeries TIBXASeries;
+        private LineSeries TBSCSeries;
         private DateTime StartTime;
+
+
+
+
+        private bool _V100SeriesVisible;
+        public bool V100SeriesVisible
+        {
+            get
+            {
+                return _V100SeriesVisible;
+            }
+            set
+            {
+                Set(ref _V100SeriesVisible, value);
+                V100Series.IsVisible = value;
+            }
+        }
+
+        private bool _I100SeriesVisible;
+        public bool I100SeriesVisible
+        {
+            get
+            {
+                return _I100SeriesVisible;
+            }
+            set
+            {
+                Set(ref _I100SeriesVisible, value);
+                I100Series.IsVisible = value;
+            }
+        }
+
+        private bool _I27SeriesVisible;
+        public bool I27SeriesVisible
+        {
+            get
+            {
+                return _I27SeriesVisible;
+            }
+            set
+            {
+                Set(ref _I27SeriesVisible, value);
+                I27Series.IsVisible = value;
+            }
+        }
+
+
+        private bool _V27SeriesVisible;
+        public bool V27SeriesVisible
+        {
+            get
+            {
+                return _V27SeriesVisible;
+            }
+            set
+            {
+                Set(ref _V27SeriesVisible, value);
+                V27Series.IsVisible= value;
+            }
+        }
+
+
+        private bool _TIBXASeriesVisible;
+        public bool TIBXASeriesVisible
+        {
+            get
+            {
+                return _TIBXASeriesVisible;
+            }
+            set
+            {
+                Set(ref _TIBXASeriesVisible, value);
+                TIBXASeries.IsVisible = value;
+            }
+        }
+
+        private bool _TBSCSeriesVisible;
+        public bool TBSCSeriesVisible
+        {
+            get
+            {
+                return _TBSCSeriesVisible;
+            }
+            set { 
+                
+                Set(ref _TBSCSeriesVisible, value);
+                TBSCSeries.IsVisible = value;
+            }
+        }
+
+
+
+
+
+
 
         #region InfoStringProperties
         public string DebugString
@@ -215,8 +322,7 @@ namespace BSC_Stand.ViewModels
 
         }
         private string _I27Value;
-        private LineSeries TIBXASeries;
-        private LineSeries TBSCSeries;
+       
 
         public string I27Value
         {
@@ -242,7 +348,7 @@ namespace BSC_Stand.ViewModels
             V27ConfigurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100ConfigurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService);
-           _modBusService = modbusService;
+            _modBusService = modbusService;
             InitSeries();
             UpdateDataTimer = new DispatcherTimer();
             UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
@@ -256,7 +362,7 @@ namespace BSC_Stand.ViewModels
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
-           
+            ShowHideOxyPlotLegendCommand = new ActionCommand(ShowHideOxyPlotLegendCommandExecute);
             V27Value = "V Нет соединения";
             I27Value = "I Нет соединения";
             OwenConnectStatus = "Нет соединения";
@@ -308,12 +414,13 @@ namespace BSC_Stand.ViewModels
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
                 IsVisible = false
+
             };
 
 
             V100Series = new LineSeries
             {
-                Title = "V 27",
+                Title = "V 100",
                 TrackerFormatString = "{4:0} В {2:0} сек",
                 Color = OxyColors.GreenYellow,
                 MarkerFill = OxyColors.Red,
@@ -326,14 +433,13 @@ namespace BSC_Stand.ViewModels
 
             I100Series = new LineSeries
             {
-                Title = "I 27",
+                Title = "I 100",
                 TrackerFormatString = "{4:0} A {2:0} сек",
                 Color = OxyColors.OrangeRed,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
                 IsVisible = false
-
             };
 
 
@@ -352,23 +458,23 @@ namespace BSC_Stand.ViewModels
             TIBXASeries = new LineSeries
             {
                 Title = "T ИБХА",
-                TrackerFormatString = "{4:0} A {2:0} сек",
+                TrackerFormatString = "{4:0} T℃  {2:0} сек",
                 Color = OxyColors.Green,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = true
+                IsVisible = false,
             };
 
             TBSCSeries = new LineSeries
             {
                 Title = "T ЭОБСК",
-                TrackerFormatString = "{4:0} A {2:0} сек",
-                Color = OxyColors.DarkGreen,
+                TrackerFormatString = "{4:0} T℃  {2:0} сек",
+                Color = OxyColors.Green,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = true
+                IsVisible = false
             };
 
 
@@ -378,6 +484,8 @@ namespace BSC_Stand.ViewModels
             GraphView.Series.Add(TBSCSeries);
             GraphView.Series.Add(V100Series);
             GraphView.Series.Add(I100Series);
+            TIBXASeriesVisible = true;
+            TBSCSeriesVisible = true;
 
         }
 
@@ -420,8 +528,7 @@ namespace BSC_Stand.ViewModels
             TBSCSeries.Points.Add(new DataPoint(index, 12f));
             GraphView.InvalidatePlot(true);
 
-           
-            Debug.WriteLine("*");
+          
 
 
 

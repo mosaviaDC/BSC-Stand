@@ -125,14 +125,7 @@
 
                 </fa5:FontAwesome>
 
-                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
-
-                </fa5:FontAwesome>
+                
 
                 <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Ethernet" x:Name="CheckConnection" ToolTip="Принудительно проверить подключение">
                     <behaviors:Interaction.Triggers>
@@ -142,8 +135,24 @@
                     </behaviors:Interaction.Triggers>
 
                 </fa5:FontAwesome>
+               
+                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                            <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}" ></behaviors:InvokeCommandAction>
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
 
-         
+                </fa5:FontAwesome>
+                <fa5:FontAwesome Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                            <behaviors:InvokeCommandAction Command="{Binding ShowHideOxyPlotLegendCommand}" ></behaviors:InvokeCommandAction>
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </fa5:FontAwesome>
+
+
 
 
 
@@ -183,22 +192,22 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <CheckBox  Grid.Row="0" Grid.Column="0"></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т ЭО БСК"></TextBlock>
-                        
-                        <CheckBox  Grid.Row="1" Grid.Column="0" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т ИБХА"></TextBlock>
+                        <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible}"></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ЭО БСК"></TextBlock>
 
-                        <CheckBox  Grid.Row="2" Grid.Column="0" ></CheckBox>
+                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible}" ></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ИБХА"></TextBlock>
+
+                        <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible}" ></CheckBox>
                         <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
                         
-                        <CheckBox  Grid.Row="3" Grid.Column="0" ></CheckBox>
+                        <CheckBox  Grid.Row="3" Grid.Column="0" IsChecked="{Binding I27SeriesVisible}" ></CheckBox>
                         <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 27В"></TextBlock>
 
-                       <CheckBox  Grid.Row="4" Grid.Column="0" ></CheckBox>
+                       <CheckBox  Grid.Row="4" Grid.Column="0" IsChecked="{Binding V100SeriesVisible}" ></CheckBox>
                        <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины100В"></TextBlock>
 
-                       <CheckBox  Grid.Row="5" Grid.Column="0" ></CheckBox>
+                       <CheckBox  Grid.Row="5" Grid.Column="0" IsChecked="{Binding I100SeriesVisible}" ></CheckBox>
                       <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 100В"></TextBlock>
 
 
