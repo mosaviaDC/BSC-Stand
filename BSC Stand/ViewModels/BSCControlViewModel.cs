@@ -457,7 +457,7 @@ namespace BSC_Stand.ViewModels
 
             TIBXASeries = new LineSeries
             {
-                Title = "T ИБХА",
+                Title = "T℃  ИБХА",
                 TrackerFormatString = "{4:0} T℃  {2:0} сек",
                 Color = OxyColors.Green,
                 MarkerFill = OxyColors.Red,
@@ -468,7 +468,7 @@ namespace BSC_Stand.ViewModels
 
             TBSCSeries = new LineSeries
             {
-                Title = "T ЭОБСК",
+                Title = "T℃  ЭОБСК",
                 TrackerFormatString = "{4:0} T℃  {2:0} сек",
                 Color = OxyColors.Green,
                 MarkerFill = OxyColors.Red,
