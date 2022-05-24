@@ -14,7 +14,7 @@
         </StatusBar.Background>
 
         <StatusBarItem HorizontalAlignment="Left">
-            <TextBlock  Width="300"   Text="RAM">
+            <TextBlock  Width="300" Margin="15,0,0,0"  Text="{Binding  RamUsageText}" FontWeight="Normal" FontStyle="Italic" FontSize="14">
 
             </TextBlock>
         </StatusBarItem>

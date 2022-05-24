@@ -54,9 +54,9 @@ namespace BSC_Stand.ViewModels
                 WriteMessage("Начало эксперимента", MessageType.Info);
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
-                if (s1.Points.Count != 0)
+                if (V27Series.Points.Count != 0)
                 {
-                    s1.Points.Clear();
+                    V27Series.Points.Clear();
                     GraphView.InvalidatePlot(true);
                 }
                 UpdateDataTimer?.Start();
@@ -91,7 +91,7 @@ namespace BSC_Stand.ViewModels
                 if (!UpdateDataTimer.IsEnabled)
                 {
                 
-                     await  Task.Factory.StartNew( async () =>
+                     await  Task.Factory.StartNew(() =>
                     {
                       result=  _modBusService.InitConnections();
 
@@ -104,6 +104,7 @@ namespace BSC_Stand.ViewModels
                         WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
 
 
+                        UpdateDataTimer.Start();
                     }
                     else
                     {
@@ -127,10 +128,7 @@ namespace BSC_Stand.ViewModels
                 return;
 
             }
-
-
             WriteMessage("Эксперимент остановлен", MessageType.Info);
-          //  UpdateDataTimer?.Stop();
             _realTimeStandControlService.StopExpirement();
         }
 
@@ -153,17 +151,22 @@ namespace BSC_Stand.ViewModels
         {
             return true;
         }
-             
-        #endregion 
+
+        private int index;
+
+        #endregion
 
 
         #region properties
         public PlotModel GraphView { get; set; }
 
-        private TwoColorAreaSeries s1;
-        private TwoColorAreaSeries s2;
+        private LineSeries V27Series;
+        private LineSeries I27Series;
+        private LineSeries V100Series;
+        private LineSeries I100Series;
         private DateTime StartTime;
 
+        #region InfoStringProperties
         public string DebugString
         {
             get => _DebugString;
@@ -212,6 +215,9 @@ namespace BSC_Stand.ViewModels
 
         }
         private string _I27Value;
+        private LineSeries TIBXASeries;
+        private LineSeries TBSCSeries;
+
         public string I27Value
         {
             get=> _I27Value;
@@ -223,6 +229,7 @@ namespace BSC_Stand.ViewModels
         public ObservableCollection<ConfigurationMode> V27ConfigurationModes { get; set; }
         public ObservableCollection<ConfigurationMode> V100ConfigurationModes { get; set; }
 
+        #endregion
 
         #endregion
 
@@ -236,36 +243,13 @@ namespace BSC_Stand.ViewModels
             V100ConfigurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService);
            _modBusService = modbusService;
-
-            GraphView = new PlotModel()
-            {
-
-            };
-             s1 = new TwoColorAreaSeries
-            {
-                Title = "Сек",
-                TrackerFormatString = "{4:0} В {2:0} сек",
-                Color = OxyColors.Black,
-                Color2 = OxyColors.Brown,
-                MarkerFill = OxyColors.Red,
-                Fill = OxyColors.Transparent,
-                Fill2 = OxyColors.Transparent,
-                MarkerFill2 = OxyColors.Blue,
-                MarkerStroke = OxyColors.Brown,
-                MarkerStroke2 = OxyColors.Black,
-                StrokeThickness = 2,
-                Limit = 0,
-
-                MarkerType = MarkerType.Diamond,
-                MarkerSize = 1,
-            };
- 
-            GraphView.Series.Add(s1);
+            InitSeries();
             UpdateDataTimer = new DispatcherTimer();
             UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
-            
+
+         
 
             #region registerCommands
             StartExpirementCommand = new ActionCommand(StartExpirementCommandExecute, CanStartExpirementCommandExecuted);
@@ -291,26 +275,159 @@ namespace BSC_Stand.ViewModels
             #endregion
         }
 
+
+
+        private void InitSeries()
+        {
+            index = 0;
+            GraphView = new PlotModel()
+            {
+
+            };
+
+
+            V27Series = new LineSeries
+            {
+                Title = "V 27",
+                TrackerFormatString = "{4:0} В {2:0} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = false
+            };
+
+
+
+            I27Series = new LineSeries
+            {
+                Title = "I 27",
+                TrackerFormatString = "{4:0} A {2:0} сек",
+                Color = OxyColors.Green,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = false
+            };
+
+
+            V100Series = new LineSeries
+            {
+                Title = "V 27",
+                TrackerFormatString = "{4:0} В {2:0} сек",
+                Color = OxyColors.GreenYellow,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = false
+            };
+
+
+
+            I100Series = new LineSeries
+            {
+                Title = "I 27",
+                TrackerFormatString = "{4:0} A {2:0} сек",
+                Color = OxyColors.OrangeRed,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = false
+
+            };
+
+
+            GraphView.Legends.Add(new OxyPlot.Legends.Legend()
+            {
+                LegendTitle = "",
+
+                LegendTitleFontSize = 48,
+                
+
+
+
+            }) ;
+
+
+            TIBXASeries = new LineSeries
+            {
+                Title = "T ИБХА",
+                TrackerFormatString = "{4:0} A {2:0} сек",
+                Color = OxyColors.Green,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+            TBSCSeries = new LineSeries
+            {
+                Title = "T ЭОБСК",
+                TrackerFormatString = "{4:0} A {2:0} сек",
+                Color = OxyColors.DarkGreen,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+
+            GraphView.Series.Add(I27Series);
+            GraphView.Series.Add(V27Series);
+            GraphView.Series.Add(TIBXASeries);
+            GraphView.Series.Add(TBSCSeries);
+            GraphView.Series.Add(V100Series);
+            GraphView.Series.Add(I100Series);
+
+        }
+
+
+
+
+
+
+
+
+
+
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-            ReadV27Value();
-            OwenConnectStatus = false.ToConnectionStatusString();
-            OwenConnectStatus = false.ToConnectionStatusString();
+            //To Do добавить сервис записи данных в файл(лог)
+
+
+
+
+
+
+            //ReadV27Value();
 
             //OwenConnectStatus = false.ToConnectionStatusString();
-            //int numberOfVisiblePoints = 0;
-            //foreach (DataPoint dataPoint in s1.Points)
-            //{
-            //    if (s1.GetScreenRectangle().Contains(s1.Transform(dataPoint)))
-            //    {
-            //        numberOfVisiblePoints++;
-            //    }
-            //}
-            //if (numberOfVisiblePoints <= 3000)
-            //{
-          
-            //}
+
+            TestUpdateData();
         }
+
+        private async void TestUpdateData()
+        {
+
+            index++;
+            Random rnd = new Random();
+           
+            I27Series.Points.Add(new DataPoint(index, rnd.Next(26, 28)));
+            V27Series.Points.Add( new DataPoint(index, rnd.Next(23, 24)));
+            I100Series.Points.Add(new DataPoint(index, 0));
+            V100Series.Points.Add(new DataPoint(index, 3f));
+            TIBXASeries.Points.Add(new DataPoint(index, 6f));
+            TBSCSeries.Points.Add(new DataPoint(index, 12f));
+            GraphView.InvalidatePlot(true);
+
+           
+            Debug.WriteLine("*");
+
+
+
+
+        }
+
 
 
         private async void ReadV27Value()
@@ -332,7 +449,7 @@ namespace BSC_Stand.ViewModels
                     if (_realTimeStandControlService.GetExperimentStatus())
                     {
                      
-                        s1.Points.Add(new DataPoint(x.TotalSeconds, r));
+                        V27Series.Points.Add(new DataPoint(x.TotalSeconds, r));
                         GraphView.PlotView.InvalidatePlot(true);
                     }
                 }

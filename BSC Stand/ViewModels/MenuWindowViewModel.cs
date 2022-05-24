@@ -44,22 +44,7 @@ namespace BSC_Stand.ViewModels
             set => Set(ref _Title, value);
         }
 
-        private string _RamUsageText;
-
-        public string RamUsageText
-        {
-            get
-            {
-
-                return _RamUsageText;
-            }
-            set
-            {
-
-                OnPropertyChanged("RamUsageText");
-                Set(ref _RamUsageText, value);
-            }
-        }
+      
 
         private int _SelectedIndex;
         public int SelectedIndex
@@ -186,13 +171,9 @@ namespace BSC_Stand.ViewModels
             CheckFileCommand = new ActionCommand(CheckFile);
             OpenPeriodStandParamsControlWindowCommand = new ActionCommand(OpenPeriodStandParamsControlWindowCommandExecute);
             #endregion
-            var timer = new System.Windows.Threading.DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(250);
-            timer.Tick += new EventHandler(UpdatePerformance);
-            RamCounter = new PerformanceCounter("Memory", "Available Mbytes", true);
             //timer.Start();
             _Title = "ЭО БСК";
-            _RamUsageText = $"Ram Usage: {RamCounter.NextValue()}";
+       
            
 
         }
@@ -200,13 +181,7 @@ namespace BSC_Stand.ViewModels
 
 
 
-            private async void UpdatePerformance(object sender, EventArgs e)
-            { 
-
-            RamUsageText = $"Ram Usage: {RamCounter.NextValue() / 100}";
-
-            }
-         
+           
 
         }
 

@@ -59,6 +59,16 @@
                 </behaviors:Interaction.Triggers>
             </fa5:FontAwesome>
 
+            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_InfoCircle"  ToolTip="Информация" x:Name="InfoIcon">
+             
+            </fa5:FontAwesome>
+
+
+
+
+
+
+
             <TextBlock HorizontalAlignment="Center"  Margin="70,0,0,0"   Text="{Binding Title}" FontFamily="Times New Roman" FontSize="16" FontWeight="Normal" TextDecorations="{x:Null}" FontStyle="Normal"></TextBlock>
 
 

@@ -143,6 +143,8 @@
 
                 </fa5:FontAwesome>
 
+         
+
 
 
 
@@ -182,22 +184,22 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <CheckBox  Grid.Row="0" Grid.Column="0"></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Температура ЭО БСК"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т ЭО БСК"></TextBlock>
                         
                         <CheckBox  Grid.Row="1" Grid.Column="0" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Температура ИБХА"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т ИБХА"></TextBlock>
 
                         <CheckBox  Grid.Row="2" Grid.Column="0" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Напряжение шины 27В"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
                         
                         <CheckBox  Grid.Row="3" Grid.Column="0" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Сила тока 27В"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 27В"></TextBlock>
 
                        <CheckBox  Grid.Row="4" Grid.Column="0" ></CheckBox>
-                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Напряжение шины 100В"></TextBlock>
+                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины100В"></TextBlock>
 
                        <CheckBox  Grid.Row="5" Grid.Column="0" ></CheckBox>
-                      <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Сила тока 100В"></TextBlock>
+                      <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 100В"></TextBlock>
 
 
 

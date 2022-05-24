@@ -1,15 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+
 
 namespace BSC_Stand.ViewModels
 {
     internal class StatusBarViewModel: ViewModels.Base.ViewModelBase
     {
 
+        private string _RamUsageText;
 
+        public string RamUsageText
+        {
+            get
+            {
+                return _RamUsageText;
+            }
+            set
+            {
+                Set(ref _RamUsageText, value);
+            }
+        }
 
 
         private int _MaxStatusBarValue;
@@ -20,6 +36,8 @@ namespace BSC_Stand.ViewModels
 
 
         private int _CurrentProggreValue;
+        private int TotalPhysicalMemoryMb;
+
         public int CurrentProggresValue
         {
             get => _CurrentProggreValue;
@@ -51,8 +69,30 @@ namespace BSC_Stand.ViewModels
         public StatusBarViewModel()
         {
             CurrentProggresValue = 0;
+      
+          var   UpdateDataTimer = new DispatcherTimer();
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
+            UpdateDataTimer.Tick += UpdateDataTimer_Tick;
+            UpdateDataTimer.Start();
+            ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+            ManagementObjectCollection results = searcher.Get();
+
+            foreach (ManagementObject result in results)
+            {
+                TotalPhysicalMemoryMb = (int)  Convert.ToDouble(result["TotalVisibleMemorySize"]);
+                TotalPhysicalMemoryMb = TotalPhysicalMemoryMb / 1024;
+            }
+
 
         }
 
+        private void UpdateDataTimer_Tick(object? sender, EventArgs e)
+        {
+            var result = (Process.GetCurrentProcess().PrivateMemorySize64 / 1024) / 1024;
+
+            RamUsageText = $"RAM Usage {result}Mb / {TotalPhysicalMemoryMb}Mb";
+      
+        }
     }
 }
