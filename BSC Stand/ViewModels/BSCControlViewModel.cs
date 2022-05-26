@@ -16,6 +16,7 @@ using BSC_Stand.Infastructure.Commands;
 using System.IO;
 using BSC_Stand.Models;
 using BSC_Stand.Extensions;
+using NationalInstruments.Visa;
 namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
@@ -68,8 +69,8 @@ namespace BSC_Stand.ViewModels
 
         private bool CanStartExpirementCommandExecuted(object p)
         {
-            return true;
 
+            return true;
         }
 
 
@@ -158,9 +159,11 @@ namespace BSC_Stand.ViewModels
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
             GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
-            sCPIService.Write (@"SYSTEM:REM 
+            sCPIService.Write(@"SYSTEM:REM 
             Mode:Power
-            Power 5");
+            Power 25
+            Power?");
+            //  sCPIService.Write("*IDN?");
         }
 
 

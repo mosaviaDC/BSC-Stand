@@ -18,21 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <COMReference Include="{000204ef-0000-0000-c000-000000000046}">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>0</VersionMinor>
-      <VersionMajor>6</VersionMajor>
-      <Guid>000204ef-0000-0000-c000-000000000046</Guid>
-    </COMReference>
-    <COMReference Include="{ea544a21-c82d-11d1-a3e4-00a0c90aea82}">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>0</VersionMinor>
-      <VersionMajor>6</VersionMajor>
-      <Guid>ea544a21-c82d-11d1-a3e4-00a0c90aea82</Guid>
-    </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Views\Windows\ico.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -63,11 +48,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="OwenioNet">
-      <HintPath>OwenioNet.dll</HintPath>
+    <Reference Include="Ivi.Visa">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\IVI Foundation\VISA\Microsoft.NET\Framework32\v2.0.50727\VISA.NET Shared Components 5.11.0\Ivi.Visa.dll</HintPath>
+      <Private>True</Private>
+      <CopyLocal>True</CopyLocal>
     </Reference>
-    <Reference Include="OwenioNet.DataConverter">
-      <HintPath>OwenioNet.DataConverter.dll</HintPath>
+    <Reference Include="NationalInstruments.Visa">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\IVI Foundation\VISA\Microsoft.NET\Framework32\v4.0.30319\NI VISA.NET 21.5\NationalInstruments.Visa.dll</HintPath>
+      <CopyLocal>True</CopyLocal>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
   </ItemGroup>
 
