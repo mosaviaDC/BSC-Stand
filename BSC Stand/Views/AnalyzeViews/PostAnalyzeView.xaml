@@ -13,7 +13,7 @@
         <Grid.Resources>
             <SolidColorBrush x:Key="IconBrush" Color="DarkCyan"></SolidColorBrush>
         </Grid.Resources>
-        <Menu VerticalAlignment="Top" Height="50" Background="AliceBlue">
+        <Menu VerticalAlignment="Top" Height="50"       Background="AliceBlue">
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Regular_FileAlt"   ToolTip="Импорт записи экспиремента"   FontSize="21.5"></fa5:FontAwesome>
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileExcel"   ToolTip="Экспорт в XLS" FontSize="21.5"></fa5:FontAwesome>
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileCsv"     ToolTip="Экспорт в CSV"   FontSize="21.5"></fa5:FontAwesome>

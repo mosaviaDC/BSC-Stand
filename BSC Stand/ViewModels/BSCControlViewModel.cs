@@ -158,6 +158,7 @@ namespace BSC_Stand.ViewModels
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
             GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
+            sCPIService.Write(@"SYSTEM:REM\nMode:Power\nPower\s0\n");
         }
 
 
@@ -177,10 +178,7 @@ namespace BSC_Stand.ViewModels
         private LineSeries TIBXASeries;
         private LineSeries TBSCSeries;
         private DateTime StartTime;
-
-
-
-
+        private readonly SCPIService sCPIService;
         private bool _V100SeriesVisible;
         public bool V100SeriesVisible
         {
@@ -355,8 +353,8 @@ namespace BSC_Stand.ViewModels
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
 
-         
-
+            sCPIService = new SCPIService();
+            sCPIService.Init();
             #region registerCommands
             StartExpirementCommand = new ActionCommand(StartExpirementCommandExecute, CanStartExpirementCommandExecuted);
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
