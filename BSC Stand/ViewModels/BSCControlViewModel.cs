@@ -332,7 +332,7 @@ namespace BSC_Stand.ViewModels
 
         }
         private string _I27Value;
-       
+        private TimeSpan ExpTimeSpan;
 
         public string I27Value
         {
@@ -511,7 +511,7 @@ namespace BSC_Stand.ViewModels
         {
             //To Do добавить сервис записи данных в файл(лог)
 
-
+            ExpTimeSpan = DateTime.Now - StartTime;
 
 
 
@@ -550,7 +550,7 @@ namespace BSC_Stand.ViewModels
         {
             
             var r = await _modBusService.Read27BusVoltage();
-            var x = DateTime.Now - StartTime;
+         
             if (r == -1) //Если нет подключения к устройству
                 {
    
@@ -565,7 +565,7 @@ namespace BSC_Stand.ViewModels
                     if (_realTimeStandControlService.GetExperimentStatus())
                     {
                      
-                        V27Series.Points.Add(new DataPoint(x.TotalSeconds, r));
+                        V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, r));
                         GraphView.PlotView.InvalidatePlot(true);
                     }
                 }
