@@ -59,7 +59,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitV27BusPort() && InitI27BusPort() && InitAkipPort() && InitITCPort();
+                ConnectStatus = InitAkipPort() && InitITCPort() ; /*InitV27BusPort() && InitI27BusPort() &&*/ //InitITCPort();
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -218,8 +218,8 @@ namespace BSC_Stand.Services
             owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
             return owenControllerTCPCLient.Connected;
         }
-        
-    
+
+
         private bool InitITCPort()
         {
             ITCSerialPort = new SerialPort()
@@ -227,14 +227,17 @@ namespace BSC_Stand.Services
                 BaudRate = 9600,
                 PortName = "COM3",
                 StopBits = StopBits.One,
-                WriteTimeout = 2000,
-                ReadTimeout = 2000
+
 
             };
+            ITCSerialPort.Close();
+            ITCSerialPort.WriteTimeout = 2000;
+            ITCSerialPort.ReadTimeout = 2000;
             ITCSerialPort.Open();
 
             if (ReadIDN(ITCSerialPort) != null)
             {
+                Debug.WriteLine(ReadIDN(ITCSerialPort));
                 return true;
             }
             else
@@ -249,22 +252,26 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM4",
                 StopBits = StopBits.One,
-                WriteTimeout = 2000,
-                ReadTimeout = 2000
+
 
             };
+            AkipSerialPort.Close();
+            AkipSerialPort.WriteTimeout = 2000;
+            AkipSerialPort.ReadTimeout = 2000;
             AkipSerialPort.Open();
+
 
             if (ReadIDN(AkipSerialPort) != null)
             {
+                Debug.WriteLine(ReadIDN(AkipSerialPort));
                 return true;
             }
             else
             {
                 AkipSerialPort.Close();
-               AkipSerialPort.Dispose();
+                AkipSerialPort.Dispose();
                 return false;
             }
         }
@@ -279,25 +286,47 @@ namespace BSC_Stand.Services
         #region SCPI region
         private string ReadIDN(SerialPort port)
         {
-            port.WriteLine(@"*IDN?\");
+            port.WriteLine(@"*IDN?");
             return port.ReadLine();
         }
 
 
         public bool SetAKIPPowerValue(float value)
         {
-            return true;
+            if (AkipSerialPort != null)
+            {
+                string query = ($@"SYSTEM:REM
+                            Mode:Power
+                            Power {value}
+                            Power?");
+                AkipSerialPort.WriteLine(query);
+                Debug.WriteLine(AkipSerialPort.ReadLine());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool SetITCPowerValue (float value)
         {
-           string query = ($@"SYSTEM:REM
+            if (ITCSerialPort != null)
+            {
+                string query = ($@"SYSTEM:REM
                             Mode:Power
                             Power {value}
                             Power?");
-            ITCSerialPort.Write(query);
-            Debug.WriteLine(ITCSerialPort.ReadLine());
-            return true;
+    
+                ITCSerialPort.WriteLine(query);
+                Debug.WriteLine(ITCSerialPort.ReadLine());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        
         }
 
         #endregion

@@ -222,7 +222,7 @@
                 </GroupBox>
             <GroupBox Grid.Column="1">
                     <ScrollViewer>
-                        <TextBlock  Text="{Binding DebugString}"></TextBlock>
+                        <TextBlock   Text="{Binding DebugString}"></TextBlock>
                     </ScrollViewer>
                 </GroupBox>
             <GridSplitter Width="3" VerticalAlignment="Stretch" ></GridSplitter>

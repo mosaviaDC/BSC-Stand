@@ -58,6 +58,12 @@ namespace BSC_Stand.ViewModels
                 if (V27Series.Points.Count != 0)
                 {
                     V27Series.Points.Clear();
+                    I27Series.Points.Clear();
+                    TIBXASeries.Points.Clear();
+                    TBSCSeries.Points.Clear();
+                    I100Series.Points.Clear();
+                    V100Series.Points.Clear();
+                   
                     GraphView.InvalidatePlot(true);
                 }
                 UpdateDataTimer?.Start();
@@ -105,12 +111,12 @@ namespace BSC_Stand.ViewModels
                         WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
 
 
-                        UpdateDataTimer.Start();
+                        //UpdateDataTimer.Start();
                     }
                     else
                     {
                        WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
-                       UpdateDataTimer.Start();
+                    
                     }
                 }
             }
@@ -131,6 +137,7 @@ namespace BSC_Stand.ViewModels
             }
             WriteMessage("Эксперимент остановлен", MessageType.Info);
             _realTimeStandControlService.StopExpirement();
+            UpdateDataTimer.Stop();
         }
 
 
@@ -159,8 +166,11 @@ namespace BSC_Stand.ViewModels
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
             GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
-            //sCPIService.Write(
-            //  sCPIService.Write("*IDN?");
+       //     sCPIService.Write(@"*IDN?");
+         //   sCPIService.Write("*IDN?");
+            
+            //_modBusService.SetAKIPPowerValue(2);
+           
         }
 
 
@@ -355,8 +365,7 @@ namespace BSC_Stand.ViewModels
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
 
-            sCPIService = new SCPIService();
-            sCPIService.Init();
+           
             #region registerCommands
             StartExpirementCommand = new ActionCommand(StartExpirementCommandExecute, CanStartExpirementCommandExecuted);
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
@@ -576,6 +585,7 @@ namespace BSC_Stand.ViewModels
                 return;
             }
             V27SelectedIndex = commandParams.SelectedIndex;
+            _modBusService.SetAKIPPowerValue(commandParams.configurationMode.MaxValue);
             WriteMessage($"Отправлена команда на шину 27B: стабилизация мощности {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
         }
         public void SendV100ModBusCommand(CommandParams commandParams)
@@ -586,6 +596,7 @@ namespace BSC_Stand.ViewModels
                 return;
             }
             V100SelectedIndex = commandParams.SelectedIndex;
+            _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
             WriteMessage($"Отправлена команда на шину 100B: стабилизация мощности {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
         }
       

@@ -13,24 +13,24 @@ namespace BSC_Stand.Services
     class SCPIService
     {
         private SerialPort serialPort;
-       
+
 
         public void Init()
         {
-           
-            
-                serialPort = new SerialPort();
-                {
-                    serialPort.BaudRate = 9600;
-                    serialPort.Parity = Parity.None;
-                    serialPort.StopBits = StopBits.One;
-                    serialPort.PortName = "COM3";
-                    serialPort.Open();
-                    serialPort.WriteTimeout = 2000;
-                    serialPort.ReadTimeout = 2000;
 
-                }
-            
+
+            serialPort = new SerialPort();
+            {
+                serialPort.BaudRate = 9600;
+                serialPort.Parity = Parity.None;
+                serialPort.StopBits = StopBits.One;
+                serialPort.PortName = "COM3";
+                serialPort.Open();
+                serialPort.WriteTimeout = 2000;
+                serialPort.ReadTimeout = 2000;
+
+            }
+
 
 
 

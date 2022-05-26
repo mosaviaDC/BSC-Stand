@@ -16,5 +16,8 @@ namespace BSC_Stand.Services
         public bool GetConnectStatus();
         public bool GetBusyStatus();
         public Task<Single> Read27BusVoltage();
+
+        public bool SetAKIPPowerValue(float value);
+        public bool SetITCPowerValue(float value);
     }
 }
