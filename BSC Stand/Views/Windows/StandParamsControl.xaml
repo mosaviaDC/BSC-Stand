@@ -91,8 +91,8 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
-                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <TextBlock Grid.Column="0" Text="Установленый режим CW, значение W"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="10?" FontWeight="Bold"></TextBlock>
                     <CheckBox IsChecked="{Binding I100Status}" Grid.Column="2" ></CheckBox>
 
                 </Grid>
@@ -104,8 +104,8 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
-                    <TextBlock Grid.Column="1" Text="23,456" FontWeight="Bold"></TextBlock>
+                    <TextBlock Grid.Column="0" Text="Установленный режим CW, значение W"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="10?" FontWeight="Bold"></TextBlock>
                     <CheckBox IsChecked="{Binding AkipStatus}" Grid.Column="2" ></CheckBox>
 
                 </Grid>

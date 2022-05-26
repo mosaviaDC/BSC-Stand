@@ -375,7 +375,7 @@ namespace BSC_Stand.ViewModels
             V27Value = "V Нет соединения";
             I27Value = "I Нет соединения";
             OwenConnectStatus = "Нет соединения";
-            if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(1)) // 
+            if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(5)) // 
             {
            
                 WriteMessage("Необходимо выполнить периодическую проверку оборудования", MessageType.Warning);

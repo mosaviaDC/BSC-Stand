@@ -74,6 +74,9 @@ namespace BSC_Stand.Services
 
         }
 
+     
+
+
         public async Task<ushort[]> ReadDataFromOwenController()
         {
           

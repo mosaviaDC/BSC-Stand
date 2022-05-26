@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Configuration;
 using System.Xml;
 using System.Windows;
+using BSC_Stand.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BSC_Stand.ViewModels
 {
@@ -159,27 +161,39 @@ namespace BSC_Stand.ViewModels
             }
         }
 
+        private readonly IUserDialogWindowService _userDialogWindowService;
+        private readonly IModbusService _modBusService;
 
         public ICommand StartCheckProcedure { get; set; }
 
         private void StartCheckProcedureExecute(object p)
         {
             //TODO отправить комманды проверки на электронные нагрузки и источник питания
-
-            for (int i = 0; i < CurrentProgressList.Count; i++)
+            if (_modBusService.GetConnectStatus())
             {
-                CurrentProgressList[i] = false;
+                _modBusService.SetAKIPPowerValue(5);
+                _modBusService.SetITCPowerValue(10);
+
+                for (int i = 0; i < CurrentProgressList.Count; i++)
+                {
+                    CurrentProgressList[i] = false;
+                }
+                TemperatureBSKStatus = false;
+                TemperatureIBXAStatus = false;
+                AkipStatus = false;
+                V27Status = false;
+                I27Status = false;
+                V100Status = false;
+                I100Status = false;
+                IT8516CStatus = false;
+                TetronStatus = false;
+                CurrentProgressList[0] = true;
             }
-            TemperatureBSKStatus = false;
-            TemperatureIBXAStatus = false;
-            AkipStatus = false;
-            V27Status = false;
-            I27Status = false;
-            V100Status = false;
-            I100Status = false;
-            IT8516CStatus = false;
-            TetronStatus = false;
-            CurrentProgressList[0] = true;
+            else
+            {
+                _userDialogWindowService.ShowErrorMessage("Для выполнения периодической проверки необходимо подключение ко всем устройствам");
+            }
+
         }
         private bool CanStartCheckProcedureExecuted(object p)
         {
@@ -187,10 +201,11 @@ namespace BSC_Stand.ViewModels
         }
         
 
-        public ConnectionCheckListViewModel()
+        public ConnectionCheckListViewModel(IModbusService modbusService, IUserDialogWindowService userDialogWindowService)
         {
-
-            StartCheckProcedure = new ActionCommand(StartCheckProcedureExecute, CanStartCheckProcedureExecuted);
+            _userDialogWindowService = userDialogWindowService;
+            _modBusService = modbusService;
+              StartCheckProcedure = new ActionCommand(StartCheckProcedureExecute, CanStartCheckProcedureExecuted);
 
             CurrentProgressList = new ObservableCollection<bool>
           {
