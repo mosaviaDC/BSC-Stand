@@ -32,6 +32,11 @@ namespace BSC_Stand.Services
         private SerialPort U100SerialPort;
         private SerialPort I100SerialPort;
 
+        private SerialPort AkipSerialPort;
+
+        private SerialPort ITCSerialPort;
+
+
         private StatusBarViewModel _statusBarViewModel;
 
         private bool ConnectStatus = false;
@@ -42,7 +47,6 @@ namespace BSC_Stand.Services
             _statusBarViewModel = statusBarViewModel;
           
         }
-
 
         public  (string,bool) InitConnections()
         {
@@ -55,7 +59,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus =  InitV27BusPort() && InitI27BusPort();
+                ConnectStatus = InitV27BusPort() && InitI27BusPort() && InitAkipPort() && InitITCPort();
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -205,7 +209,6 @@ namespace BSC_Stand.Services
 
         }
 
-
         private async Task<bool> InitOwenController()
         {
             owenControllerTCPCLient?.Dispose();
@@ -216,10 +219,88 @@ namespace BSC_Stand.Services
             return owenControllerTCPCLient.Connected;
         }
         
-
     
-     
+        private bool InitITCPort()
+        {
+            ITCSerialPort = new SerialPort()
+            {
+                BaudRate = 9600,
+                PortName = "COM3",
+                StopBits = StopBits.One,
+                WriteTimeout = 2000,
+                ReadTimeout = 2000
 
+            };
+            ITCSerialPort.Open();
+
+            if (ReadIDN(ITCSerialPort) != null)
+            {
+                return true;
+            }
+            else
+            {
+                ITCSerialPort.Close();
+                ITCSerialPort.Dispose();
+                return false;
+            }
+        }
+        private bool InitAkipPort()
+        {
+            AkipSerialPort = new SerialPort()
+            {
+                BaudRate = 9600,
+                PortName = "COM3",
+                StopBits = StopBits.One,
+                WriteTimeout = 2000,
+                ReadTimeout = 2000
+
+            };
+            AkipSerialPort.Open();
+
+            if (ReadIDN(AkipSerialPort) != null)
+            {
+                return true;
+            }
+            else
+            {
+                AkipSerialPort.Close();
+               AkipSerialPort.Dispose();
+                return false;
+            }
+        }
+
+
+
+
+
+
+
+
+        #region SCPI region
+        private string ReadIDN(SerialPort port)
+        {
+            port.WriteLine(@"*IDN?\");
+            return port.ReadLine();
+        }
+
+
+        public bool SetAKIPPowerValue(float value)
+        {
+            return true;
+        }
+
+        public bool SetITCPowerValue (float value)
+        {
+           string query = ($@"SYSTEM:REM
+                            Mode:Power
+                            Power {value}
+                            Power?");
+            ITCSerialPort.Write(query);
+            Debug.WriteLine(ITCSerialPort.ReadLine());
+            return true;
+        }
+
+        #endregion
 
     }
 }

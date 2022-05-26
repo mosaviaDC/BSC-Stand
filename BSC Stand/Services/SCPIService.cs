@@ -5,9 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NationalInstruments.Visa;
 
-using Ivi;
 namespace BSC_Stand.Services
 {
 
@@ -15,7 +13,7 @@ namespace BSC_Stand.Services
     class SCPIService
     {
         private SerialPort serialPort;
-        private MessageBasedSession mbSession;
+       
 
         public void Init()
         {

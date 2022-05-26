@@ -16,7 +16,7 @@ using BSC_Stand.Infastructure.Commands;
 using System.IO;
 using BSC_Stand.Models;
 using BSC_Stand.Extensions;
-using NationalInstruments.Visa;
+
 namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
@@ -159,10 +159,7 @@ namespace BSC_Stand.ViewModels
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
             GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
-            sCPIService.Write(@"SYSTEM:REM 
-            Mode:Power
-            Power 25
-            Power?");
+            //sCPIService.Write(
             //  sCPIService.Write("*IDN?");
         }
 
