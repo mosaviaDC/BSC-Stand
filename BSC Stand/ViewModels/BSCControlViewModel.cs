@@ -158,7 +158,9 @@ namespace BSC_Stand.ViewModels
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
             GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
-            sCPIService.Write(@"SYSTEM:REM\nMode:Power\nPower\s0\n");
+            sCPIService.Write (@"SYSTEM:REM 
+            Mode:Power
+            Power 5");
         }
 
 

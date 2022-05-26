@@ -31,7 +31,7 @@ namespace BSC_Stand.Services
         public void Write(string str)
         {
             byte[] bytes = System.Text.ASCIIEncoding.ASCII.GetBytes(str);
-            serialPort.Write(bytes, 0, bytes.Length);
+            serialPort.WriteLine(str);
             serialPort.DataReceived += SerialPort_DataReceived;
             serialPort.ErrorReceived += SerialPort_ErrorReceived;
 
