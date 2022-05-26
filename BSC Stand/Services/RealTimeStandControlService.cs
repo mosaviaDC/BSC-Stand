@@ -117,6 +117,8 @@ namespace BSC_Stand.Services
         public void StopExpirement()
         {
             isExpirementPepformed = false;
+            V27expirementTimer.Stop();
+            V100expirementTimer.Stop();
         }
 
 

@@ -225,6 +225,10 @@ namespace BSC_Stand.Services
 
         private bool InitITCPort()
         {
+            if (ITCSerialPort != null)
+            {
+                ITCSerialPort.Close();
+            }
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
@@ -252,6 +256,11 @@ namespace BSC_Stand.Services
         }
         private bool InitAkipPort()
         {
+            if (AkipSerialPort != null)
+            {
+                AkipSerialPort.Close();
+            }
+
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
@@ -289,12 +298,14 @@ namespace BSC_Stand.Services
         #region SCPI region
         private string ReadIDN(SerialPort port)
         {
-            port.WriteLine(@"*IDN?");
+            port.WriteLine(@"
+                *CLS
+                *IDN?");
             return port.ReadLine();
         }
 
 
-        public bool SetAKIPPowerValue(float value)
+        public bool SetAKIPPowerValue(double value)
         {
             if (AkipSerialPort != null)
             {
@@ -312,13 +323,15 @@ namespace BSC_Stand.Services
             }
         }
 
-        public bool SetITCPowerValue (float value)
+        public bool SetITCPowerValue (double value)
         {
             if (ITCSerialPort != null)
             {
+                
                 string query = ($@"SYSTEM:REM
                             Mode:Power
                             Power {value}
+                            INPut 1
                             Power?");
     
                 ITCSerialPort.WriteLine(query);

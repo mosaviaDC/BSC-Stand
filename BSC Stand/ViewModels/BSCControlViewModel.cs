@@ -52,6 +52,7 @@ namespace BSC_Stand.ViewModels
             }
             else
             {
+                index = 0;
                 WriteMessage("Начало эксперимента", MessageType.Info);
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
@@ -63,7 +64,6 @@ namespace BSC_Stand.ViewModels
                     TBSCSeries.Points.Clear();
                     I100Series.Points.Clear();
                     V100Series.Points.Clear();
-                   
                     GraphView.InvalidatePlot(true);
                 }
                 UpdateDataTimer?.Start();
@@ -84,41 +84,47 @@ namespace BSC_Stand.ViewModels
 
         private async void CheckConnectionStatusCommandExecute(object p)
         {
-            UpdateDataTimer.Stop();
-
-            (string, bool) result = ("", false);
-            if (_modBusService.GetBusyStatus())
+            if (!_realTimeStandControlService.GetExperimentStatus())
             {
-                _userDialogWindowService.ShowErrorMessage("Операция уже выполняется");
+
+                (string, bool) result = ("", false);
+                if (_modBusService.GetBusyStatus())
+                {
+                    _userDialogWindowService.ShowErrorMessage("Операция уже выполняется");
+                }
+                else
+                {
+                    WriteMessage("Проверка подключения", MessageType.Info);
+
+                    if (!UpdateDataTimer.IsEnabled)
+                    {
+
+                        await Task.Factory.StartNew(() =>
+                      {
+                          result = _modBusService.InitConnections();
+
+                      });
+
+
+                        if (!result.Item2)
+                        {
+                            WriteMessage(result.Item1, MessageType.Warning);
+                            WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
+
+
+                            //UpdateDataTimer.Start();
+                        }
+                        else
+                        {
+                            WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
+
+                        }
+                    }
+                }
             }
             else
             {
-                WriteMessage("Проверка подключения", MessageType.Info);
-              
-                if (!UpdateDataTimer.IsEnabled)
-                {
-                
-                     await  Task.Factory.StartNew(() =>
-                    {
-                      result=  _modBusService.InitConnections();
-
-                    });
-
-                    
-                    if (!result.Item2)
-                    {
-                        WriteMessage(result.Item1, MessageType.Warning);
-                        WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
-
-
-                        //UpdateDataTimer.Start();
-                    }
-                    else
-                    {
-                       WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
-                    
-                    }
-                }
+                _userDialogWindowService.ShowErrorMessage("Для проведения проверки, эксперимент должен быть остановлен");
             }
           
         }
@@ -166,6 +172,7 @@ namespace BSC_Stand.ViewModels
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
             GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
+            GraphView.InvalidatePlot(true);
        //     sCPIService.Write(@"*IDN?");
          //   sCPIService.Write("*IDN?");
             
@@ -202,6 +209,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _V100SeriesVisible, value);
                 V100Series.IsVisible = value;
+                GraphView.InvalidatePlot(true);
             }
         }
 
@@ -216,6 +224,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _I100SeriesVisible, value);
                 I100Series.IsVisible = value;
+                GraphView.InvalidatePlot(true);
             }
         }
 
@@ -230,6 +239,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _I27SeriesVisible, value);
                 I27Series.IsVisible = value;
+                GraphView.InvalidatePlot(true);
             }
         }
 
@@ -245,6 +255,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _V27SeriesVisible, value);
                 V27Series.IsVisible= value;
+                GraphView.InvalidatePlot(true);
             }
         }
 
@@ -260,6 +271,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _TIBXASeriesVisible, value);
                 TIBXASeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
             }
         }
 
@@ -274,6 +286,7 @@ namespace BSC_Stand.ViewModels
                 
                 Set(ref _TBSCSeriesVisible, value);
                 TBSCSeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
             }
         }
 
@@ -586,7 +599,7 @@ namespace BSC_Stand.ViewModels
             }
             V27SelectedIndex = commandParams.SelectedIndex;
             _modBusService.SetAKIPPowerValue(commandParams.configurationMode.MaxValue);
-            WriteMessage($"Отправлена команда на шину 27B: стабилизация мощности {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
+            WriteMessage($"Отправлена команда на шину 27B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
         }
         public void SendV100ModBusCommand(CommandParams commandParams)
         {
@@ -597,7 +610,7 @@ namespace BSC_Stand.ViewModels
             }
             V100SelectedIndex = commandParams.SelectedIndex;
             _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
-            WriteMessage($"Отправлена команда на шину 100B: стабилизация мощности {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
+            WriteMessage($"Отправлена команда на шину 100B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
         }
       
     }
