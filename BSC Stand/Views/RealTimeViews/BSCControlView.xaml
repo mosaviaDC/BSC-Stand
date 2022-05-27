@@ -129,7 +129,7 @@
                 <RowDefinition Height="0.85*" ></RowDefinition>
                 <RowDefinition Height="0.15*"></RowDefinition>
             </Grid.RowDefinitions>
-
+            
             <Menu Grid.Row="0" VerticalAlignment="Top" Height="35" Background="AliceBlue"  HorizontalAlignment="Stretch">
                 <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент">
                     <behaviors:Interaction.Triggers>
@@ -182,10 +182,19 @@
 
 
             </Menu>
+            <TabControl Margin="0,35,0,0">
+                <TabItem Header="Вид 1">
+                    <oxy:PlotView  Grid.Row="0" Margin="0,0,0,0" Grid.Column="1" Model="{Binding  GraphView1}"></oxy:PlotView>
+                </TabItem>
+                <TabItem Header="Вид 2">
+                    <oxy:PlotView  Grid.Row="0" Margin="0,0,0,0" Grid.Column="1" Model="{Binding  GraphView2}"></oxy:PlotView>
+                </TabItem>
 
-            <oxy:PlotView  Grid.Row="0" Margin="0,25,0,0" Grid.Column="1" Model="{Binding  GraphView}">
+            </TabControl>
+            
 
-        </oxy:PlotView>
+      
+
 
         <Grid Grid.Column="1"  Grid.Row="1" MinHeight="75" Background="AliceBlue">
                 

@@ -70,7 +70,8 @@ namespace BSC_Stand.ViewModels
                     ITCWSeries.Points.Clear();
                     ITCVSeries.Points.Clear();
                     ITCASeries.Points.Clear();
-                    GraphView.InvalidatePlot(true);
+                    GraphView1.InvalidatePlot(true);
+                    GraphView2.InvalidatePlot(true);
                 }
                 UpdateDataTimer?.Start();
             }
@@ -165,8 +166,10 @@ namespace BSC_Stand.ViewModels
 
         private void ResetPlotScaleCommandExecute (object p)
         {
-            GraphView.ResetAllAxes();
-            GraphView.InvalidatePlot(true);
+            GraphView1.ResetAllAxes();
+            GraphView1.InvalidatePlot(true);
+            GraphView2.ResetAllAxes();
+            GraphView2.InvalidatePlot(true);
 
         }
         private bool CanResetPlotScaleCommandExecute (object p)
@@ -179,13 +182,15 @@ namespace BSC_Stand.ViewModels
 
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
-            GraphView.IsLegendVisible = !GraphView.IsLegendVisible;
-            GraphView.InvalidatePlot(true);
-       //     sCPIService.Write(@"*IDN?");
-         //   sCPIService.Write("*IDN?");
-            
+            GraphView2.IsLegendVisible = !GraphView2.IsLegendVisible;
+            GraphView1.IsLegendVisible = !GraphView1.IsLegendVisible;
+            GraphView1.InvalidatePlot(true);
+            GraphView2.InvalidatePlot(true);
+            //     sCPIService.Write(@"*IDN?");
+            //   sCPIService.Write("*IDN?");
+
             //_modBusService.SetAKIPPowerValue(2);
-           
+
         }
 
 
@@ -196,8 +201,8 @@ namespace BSC_Stand.ViewModels
 
 
         #region properties
-        public PlotModel GraphView { get; set; }
-
+        public PlotModel GraphView1 { get; set; }
+        public PlotModel GraphView2 { get; set; }
         private LineSeries V27Series;
         private LineSeries I27Series;
         private LineSeries V100Series;
@@ -229,7 +234,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _AKIPVSeriesVisible, value);
                 AKIPVSeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -244,7 +249,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _AKIPASeriesVisible, value);
                 AKIPASeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -259,7 +264,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _AKIPWSeriesVisible, value);
                 AKIPWSeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -274,7 +279,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _ITCVSeriesVisible, value);
                 ITCVSeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -289,7 +294,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _ITCASeriesVisible, value);
                 ITCASeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
         private bool _ITCWSeriesVisible;
@@ -303,7 +308,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _ITCWSeriesVisible, value);
                 ITCWSeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -331,7 +336,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _V100SeriesVisible, value);
                 V100Series.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -346,7 +351,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _I100SeriesVisible, value);
                 I100Series.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -361,7 +366,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _I27SeriesVisible, value);
                 I27Series.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -377,7 +382,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _V27SeriesVisible, value);
                 V27Series.IsVisible= value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -393,7 +398,7 @@ namespace BSC_Stand.ViewModels
             {
                 Set(ref _TIBXASeriesVisible, value);
                 TIBXASeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -408,7 +413,7 @@ namespace BSC_Stand.ViewModels
                 
                 Set(ref _TBSCSeriesVisible, value);
                 TBSCSeries.IsVisible = value;
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
             }
         }
 
@@ -605,10 +610,11 @@ namespace BSC_Stand.ViewModels
         private void InitSeries()
         {
             index = 0;
-            GraphView = new PlotModel()
+            GraphView1 = new PlotModel()
             {
 
             };
+            GraphView2 = new PlotModel();
 
 
             V27Series = new LineSeries
@@ -662,7 +668,7 @@ namespace BSC_Stand.ViewModels
             };
 
 
-            GraphView.Legends.Add(new OxyPlot.Legends.Legend()
+            GraphView1.Legends.Add(new OxyPlot.Legends.Legend()
             {
                 LegendTitle = "",
 
@@ -672,6 +678,18 @@ namespace BSC_Stand.ViewModels
 
 
             }) ;
+
+
+            GraphView2.Legends.Add(new OxyPlot.Legends.Legend()
+            {
+                LegendTitle = "",
+
+                LegendTitleFontSize = 48,
+
+
+
+
+            });
 
 
             TIBXASeries = new LineSeries
@@ -766,18 +784,18 @@ namespace BSC_Stand.ViewModels
             };
 
 
-            GraphView.Series.Add(I27Series);
-            GraphView.Series.Add(V27Series);
-            GraphView.Series.Add(TIBXASeries);
-            GraphView.Series.Add(TBSCSeries);
-            GraphView.Series.Add(V100Series);
-            GraphView.Series.Add(I100Series);
-            GraphView.Series.Add(ITCVSeries);
-            GraphView.Series.Add(ITCASeries);
-            GraphView.Series.Add(ITCWSeries);
-            GraphView.Series.Add(AKIPVSeries);
-            GraphView.Series.Add(AKIPASeries);
-            GraphView.Series.Add(AKIPWSeries);
+            GraphView1.Series.Add(I27Series);
+            GraphView1.Series.Add(V27Series);
+            GraphView1.Series.Add(TIBXASeries);
+            GraphView1.Series.Add(TBSCSeries);
+            GraphView1.Series.Add(V100Series);
+            GraphView1.Series.Add(I100Series);
+            GraphView1.Series.Add(ITCVSeries);
+            GraphView1.Series.Add(ITCASeries);
+            GraphView1.Series.Add(ITCWSeries);
+            GraphView1.Series.Add(AKIPVSeries);
+            GraphView1.Series.Add(AKIPASeries);
+            GraphView1.Series.Add(AKIPWSeries);
             TIBXASeriesVisible = true;
             TBSCSeriesVisible = true;
             I27SeriesVisible = true;
@@ -790,6 +808,12 @@ namespace BSC_Stand.ViewModels
             ITCWSeriesVisible = true;
             V100SeriesVisible = true;
             I100SeriesVisible = true;
+            GraphView2.Series.Add(new LineSeries()
+            {
+
+            });
+         
+
 
 
         }
@@ -847,7 +871,8 @@ namespace BSC_Stand.ViewModels
 
 
 
-                GraphView.InvalidatePlot(true);
+                GraphView1.InvalidatePlot(true);
+                GraphView2.InvalidatePlot(true);
                 Debug.WriteLine($"W{result[3]}  A{result[4]} V{result[5]}");
             }
            
@@ -866,9 +891,9 @@ namespace BSC_Stand.ViewModels
             V100Series.Points.Add(new DataPoint(index, 3f));
             TIBXASeries.Points.Add(new DataPoint(index, 6f));
             TBSCSeries.Points.Add(new DataPoint(index, 12f));
-            GraphView.InvalidatePlot(true);
+            GraphView1.InvalidatePlot(true);
+            GraphView2.InvalidatePlot(true);
 
-          
 
 
 
@@ -897,8 +922,9 @@ namespace BSC_Stand.ViewModels
                     {
                      
                         V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, r));
-                        GraphView.PlotView.InvalidatePlot(true);
-                    }
+                        GraphView1.PlotView.InvalidatePlot(true);
+                       GraphView2.PlotView.InvalidatePlot(true);
+                }
                 }
         }
 
