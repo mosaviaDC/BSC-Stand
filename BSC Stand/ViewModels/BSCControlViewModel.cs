@@ -142,7 +142,9 @@ namespace BSC_Stand.ViewModels
 
             }
             WriteMessage("Эксперимент остановлен", MessageType.Info);
+            _modBusService.ExitCommand();
             _realTimeStandControlService.StopExpirement();
+
             UpdateDataTimer.Stop();
         }
 

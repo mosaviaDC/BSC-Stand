@@ -19,5 +19,8 @@ namespace BSC_Stand.Services
 
         public bool SetAKIPPowerValue(double value);
         public bool SetITCPowerValue(double value);
+
+        public void ExitCommand();
+        }
     }
-}
+

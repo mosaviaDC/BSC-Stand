@@ -13,16 +13,17 @@ using BSC_Stand.ViewModels;
 using System.IO.Ports;
 using NModbus.Serial;
 using NModbus.IO;
+using System.Globalization;
 
 namespace BSC_Stand.Services
 {
-    internal class ModBusService: IModbusService
+    internal class ModBusService : IModbusService
     {
-        private  IModbusMaster owenController;
-        private  TcpClient owenControllerTCPCLient;
+        private IModbusMaster owenController;
+        private TcpClient owenControllerTCPCLient;
         private SerialPortAdapter serialPortAdapter;
-        private  IModbusSerialMaster V27ModbusController;
-        private IModbusSerialMaster  I27ModbusController;
+        private IModbusSerialMaster V27ModbusController;
+        private IModbusSerialMaster I27ModbusController;
 
 
         IModbusFactory _modbusFactory;
@@ -38,20 +39,20 @@ namespace BSC_Stand.Services
 
 
         private StatusBarViewModel _statusBarViewModel;
-
+        private readonly CultureInfo culture;
         private bool ConnectStatus = false;
         private bool isBusy = false;
 
-        public  ModBusService(StatusBarViewModel statusBarViewModel)
+        public ModBusService(StatusBarViewModel statusBarViewModel)
         {
             _statusBarViewModel = statusBarViewModel;
-          
+            culture = new CultureInfo("en-Us");
         }
 
-        public  (string,bool) InitConnections()
+        public (string, bool) InitConnections()
         {
             isBusy = true;
-            
+
             string ConnectionStatus = "";
             _statusBarViewModel.SetNewTask(100);
             _modbusFactory = new ModbusFactory();
@@ -59,7 +60,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort() ; /*InitV27BusPort() && InitI27BusPort() &&*/ //InitITCPort();
+                ConnectStatus = InitAkipPort() && InitITCPort(); /*InitV27BusPort() && InitI27BusPort() &&*/ //InitITCPort();
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -69,17 +70,17 @@ namespace BSC_Stand.Services
                 isBusy = false;
             }
             isBusy = false;
-            return (ConnectionStatus,ConnectStatus) ;
+            return (ConnectionStatus, ConnectStatus);
 
 
         }
 
-     
+
 
 
         public async Task<ushort[]> ReadDataFromOwenController()
         {
-          
+
             return null;
         }
 
@@ -90,45 +91,45 @@ namespace BSC_Stand.Services
         public bool GetOwenConnectionStatus()
         {
             if (owenControllerTCPCLient != null)
-            return owenControllerTCPCLient.Connected;
-          else return false;
+                return owenControllerTCPCLient.Connected;
+            else return false;
         }
 
         public bool GetBusyStatus()
         {
             return isBusy;
         }
-       
+
         public async Task<Single> Read27BusVoltage()
         {
-                try
-                {
-                    ushort[] result = new ushort[2];
-           
-                    result = await V27ModbusController.ReadInputRegistersAsync(1, 7, 2);
-                    
-                    if (result != null)
-                    {
-                        byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+            try
+            {
+                ushort[] result = new ushort[2];
 
-                        byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                        Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
-                        Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                        Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-                 
-                        return BitConverter.ToSingle(bytes, 0);
-                    }
-                    else return -1;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    return -1;
-                }
+                result = await V27ModbusController.ReadInputRegistersAsync(1, 7, 2);
 
-          
-            
-          
+                if (result != null)
+                {
+                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+
+                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+
+                    return BitConverter.ToSingle(bytes, 0);
+                }
+                else return -1;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return -1;
+            }
+
+
+
+
         }
 
 
@@ -139,7 +140,7 @@ namespace BSC_Stand.Services
         {
             if (V27ModbusController != null)
             {
-               V27ModbusController.Transport.ReadTimeout = 1500;
+                V27ModbusController.Transport.ReadTimeout = 1500;
                 V27ModbusController.Transport.WriteTimeout = 1000;
                 Debug.WriteLine("*");
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
@@ -153,7 +154,7 @@ namespace BSC_Stand.Services
             }
 
             U27SerialPort = new SerialPort();
-                {
+            {
 
                 U27SerialPort.Close();
                 U27SerialPort.PortName = "COM1";
@@ -163,10 +164,10 @@ namespace BSC_Stand.Services
                 U27SerialPort.Open();
 
                 serialPortAdapter = new SerialPortAdapter(U27SerialPort);
-            
+
                 V27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
-                  V27ModbusController.Transport.WriteTimeout=1000;
-                V27ModbusController.Transport.ReadTimeout=1500;
+                V27ModbusController.Transport.WriteTimeout = 1000;
+                V27ModbusController.Transport.ReadTimeout = 1500;
 
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -277,7 +278,7 @@ namespace BSC_Stand.Services
 
             if (ReadIDN(AkipSerialPort) != null)
             {
-                Debug.WriteLine(ReadIDN(AkipSerialPort));
+              
                 return true;
             }
             else
@@ -296,6 +297,18 @@ namespace BSC_Stand.Services
 
 
         #region SCPI region
+
+        public void ExitCommand()
+        {
+            AkipSerialPort.WriteLine($@"Power 0
+                                        INPUT 0
+                                        SYST:LOC
+                                        ");
+            ITCSerialPort.WriteLine($@"Power 0
+                                       INPUT 0
+                                       SYST:LOC");
+        }
+       
         private string ReadIDN(SerialPort port)
         {
             port.WriteLine(@"
@@ -309,9 +322,11 @@ namespace BSC_Stand.Services
         {
             if (AkipSerialPort != null)
             {
+                
                 string query = ($@"SYSTEM:REM
-                            Mode:Power
-                            Power {value}
+                            Mode Power
+                            INPUT 1
+                            Power {value.ToString("G2",culture)}
                             Power?");
                 AkipSerialPort.WriteLine(query);
                 Debug.WriteLine(AkipSerialPort.ReadLine());
@@ -327,11 +342,12 @@ namespace BSC_Stand.Services
         {
             if (ITCSerialPort != null)
             {
-                
+             
+                Debug.WriteLine(value.ToString("G4",culture));
                 string query = ($@"SYSTEM:REM
-                            Mode:Power
-                            Power {value}
+                            Mode Power
                             INPut 1
+                            Power {value.ToString("G2",culture)}
                             Power?");
     
                 ITCSerialPort.WriteLine(query);

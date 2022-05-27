@@ -39,7 +39,7 @@ namespace BSC_Stand
             base.OnExit(e);
             var host = Host;
             await host.StopAsync().ConfigureAwait(false);
-
+            App.Host.Services.GetRequiredService<IModbusService>().ExitCommand();
             host.Dispose();
             _Host = null;
         }
