@@ -702,7 +702,7 @@ namespace BSC_Stand.ViewModels
             {
                 Title = "V IT8516C+",
                 TrackerFormatString = "{4:0.###} В {2:0.##} сек",
-                Color = OxyColors.DarkGray,
+                Color = OxyColors.Brown,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -713,7 +713,7 @@ namespace BSC_Stand.ViewModels
             {
                 Title = "A IT8516C+",
                 TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.DimGray,
+                Color = OxyColors.RosyBrown,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -724,7 +724,7 @@ namespace BSC_Stand.ViewModels
             {
                 Title = "W IT8516C+",
                 TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.SlateGray,
+                Color = OxyColors.SandyBrown,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -756,7 +756,7 @@ namespace BSC_Stand.ViewModels
 
             AKIPWSeries = new LineSeries
             {
-                Title = "WАКИП",
+                Title = "W АКИП",
                 TrackerFormatString = "{4:0.###} W {2:0.##} сек",
                 Color = OxyColors.DarkViolet,
                 MarkerFill = OxyColors.Red,
