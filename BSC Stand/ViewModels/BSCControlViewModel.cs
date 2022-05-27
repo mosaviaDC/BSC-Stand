@@ -205,8 +205,121 @@ namespace BSC_Stand.ViewModels
         private LineSeries TIBXASeries;
         private LineSeries TBSCSeries;
         private LineSeries ITCVSeries;
+        private TimeSpan ExpTimeSpan;
+        private LineSeries ITCASeries;
+        private LineSeries ITCWSeries;
+        private LineSeries AKIPVSeries;
+        private LineSeries AKIPASeries;
+        private LineSeries AKIPWSeries;
         private DateTime StartTime;
-        private readonly SCPIService sCPIService;
+     
+
+
+
+
+
+        private bool _AKIPVSeriesVisible;
+        public bool AKIPVSeriesVisible
+        {
+            get
+            {
+                return _AKIPVSeriesVisible;
+            }
+            set
+            {
+                Set(ref _AKIPVSeriesVisible, value);
+                AKIPVSeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
+            }
+        }
+
+        private bool _AKIPASeriesVisible;
+        public bool AKIPASeriesVisible
+        {
+            get
+            {
+                return _AKIPASeriesVisible;
+            }
+            set
+            {
+                Set(ref _AKIPASeriesVisible, value);
+                AKIPASeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
+            }
+        }
+
+        private bool _AKIPWSeriesVisible;
+        public bool AKIPWSeriesVisible
+        {
+            get
+            {
+                return _AKIPWSeriesVisible;
+            }
+            set
+            {
+                Set(ref _AKIPWSeriesVisible, value);
+                AKIPWSeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
+            }
+        }
+
+        private bool _ITCVSeriesVisible;
+        public bool ITCVSeriesVisible
+        {
+            get
+            {
+                return _ITCVSeriesVisible;
+            }
+            set
+            {
+                Set(ref _ITCVSeriesVisible, value);
+                ITCVSeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
+            }
+        }
+
+        private bool _ITCASeriesVisible;
+        public bool ITCASeriesVisible
+        {
+            get
+            {
+                return _ITCASeriesVisible;
+            }
+            set
+            {
+                Set(ref _ITCASeriesVisible, value);
+                ITCASeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
+            }
+        }
+        private bool _ITCWSeriesVisible;
+        public bool ITCWSeriesVisible
+        {
+            get
+            {
+                return _ITCWSeriesVisible;
+            }
+            set
+            {
+                Set(ref _ITCWSeriesVisible, value);
+                ITCWSeries.IsVisible = value;
+                GraphView.InvalidatePlot(true);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private bool _V100SeriesVisible;
         public bool V100SeriesVisible
         {
@@ -353,20 +466,79 @@ namespace BSC_Stand.ViewModels
             set=> Set(ref _V27Value, value);
 
         }
+      
+        
         private string _I27Value;
-        private TimeSpan ExpTimeSpan;
-        private LineSeries ITCASeries;
-        private LineSeries ITCWSeries;
-        private LineSeries AKIPVSeries;
-        private LineSeries AKIPASeries;
-        private LineSeries AKIPWSeries;
-
         public string I27Value
         {
             get=> _I27Value;
             set => Set(ref _I27Value, value);
 
         }
+
+        private string _I100Value;
+        public string I100Value
+        {
+            get => _I100Value;
+            set => Set(ref _I100Value, value);
+
+        }
+        private string _V100Value;
+        public string V100Value
+        {
+            get => _V100Value;
+            set => Set(ref _V100Value, value);
+
+        }
+
+        private string _AKIPVValue;
+        public string AKIPVValue
+        {
+            get => _AKIPVValue;
+            set => Set(ref _AKIPVValue, value);
+
+        }
+
+        private string _AKIPAValue;
+        public string AKIPAValue
+        {
+            get => _AKIPAValue;
+            set => Set(ref _AKIPAValue, value);
+
+        }
+
+        private string _AKIPWValue;
+        public string AKIPWValue
+        {
+            get => _AKIPWValue;
+            set => Set(ref _AKIPWValue, value);
+
+        }
+
+        private string _ITCVValue;
+        public string ITCVValue
+        {
+            get => _ITCVValue;
+            set => Set(ref _ITCVValue, value);
+
+        }
+
+        private string _ITCAValue;
+        public string ITCAValue
+        {
+            get => _ITCAValue;
+            set => Set(ref _ITCAValue, value);
+
+        }
+        private string _ITCWValue;
+        public string ITCWValue
+        {
+            get => _ITCWValue;
+            set => Set(ref _ITCWValue, value);
+
+        }
+
+
 
 
         public ObservableCollection<ConfigurationMode> V27ConfigurationModes { get; set; }
@@ -399,9 +571,20 @@ namespace BSC_Stand.ViewModels
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
             ShowHideOxyPlotLegendCommand = new ActionCommand(ShowHideOxyPlotLegendCommandExecute);
-            V27Value = "V Нет соединения";
-            I27Value = "I Нет соединения";
+            V27Value = "V Нет данных";
+            I27Value = "I Нет данных";
             OwenConnectStatus = "Нет соединения";
+            
+            AKIPVValue = "V Нет данных";
+            AKIPAValue = "A Нет данных";
+            AKIPWValue = "W Нет данных";
+
+            ITCVValue = "V Нет данных";
+            ITCAValue = "A Нет данных";
+            ITCWValue = "W Нет данных";
+
+            V100Value = "V Нет данных";
+            I100Value = "I Нет данных";
             if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(5)) // 
             {
            
@@ -432,7 +615,7 @@ namespace BSC_Stand.ViewModels
             {
                 Title = "V 27",
                 TrackerFormatString = "{4:0.###} В {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.Blue,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -445,8 +628,8 @@ namespace BSC_Stand.ViewModels
             {
                 Title = "I 27",
                 TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.Green,
-                MarkerFill = OxyColors.Red,
+                Color = OxyColors.BlueViolet,
+                MarkerFill = OxyColors.DarkBlue,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
                 IsVisible = true
@@ -458,11 +641,11 @@ namespace BSC_Stand.ViewModels
             {
                 Title = "V 100",
                 TrackerFormatString = "{4:0} В {2:0} сек",
-                Color = OxyColors.GreenYellow,
+                Color = OxyColors.DarkOrange,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = false
+                IsVisible = true,
             };
 
 
@@ -475,7 +658,7 @@ namespace BSC_Stand.ViewModels
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = false
+                IsVisible = true,
             };
 
 
@@ -499,27 +682,27 @@ namespace BSC_Stand.ViewModels
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = false,
+                IsVisible = true,
             };
 
             TBSCSeries = new LineSeries
             {
                 Title = "T℃  ЭОБСК",
                 TrackerFormatString = "{4:0} T℃  {2:0} сек",
-                Color = OxyColors.Green,
+                Color = OxyColors.ForestGreen,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = false
+                IsVisible = true,
             };
 
 
 
             ITCVSeries = new LineSeries
             {
-                Title = "ITC8516C+ V",
+                Title = "V IT8516C+",
                 TrackerFormatString = "{4:0.###} В {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.DarkGray,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -528,9 +711,9 @@ namespace BSC_Stand.ViewModels
 
             ITCASeries = new LineSeries
             {
-                Title = "ITC8516C+ A",
+                Title = "A IT8516C+",
                 TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.DimGray,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -539,9 +722,9 @@ namespace BSC_Stand.ViewModels
 
             ITCWSeries = new LineSeries
             {
-                Title = "ITC8516C+ W",
+                Title = "W IT8516C+",
                 TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.SlateGray,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -551,9 +734,9 @@ namespace BSC_Stand.ViewModels
 
             AKIPVSeries = new LineSeries
             {
-                Title = "АКИП V",
+                Title = "V АКИП",
                 TrackerFormatString = "{4:0.###} В {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.Violet,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -562,9 +745,9 @@ namespace BSC_Stand.ViewModels
 
             AKIPASeries = new LineSeries
             {
-                Title = "АКИП A",
+                Title = "A АКИП",
                 TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.BlueViolet,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -573,9 +756,9 @@ namespace BSC_Stand.ViewModels
 
             AKIPWSeries = new LineSeries
             {
-                Title = "АКИП W",
+                Title = "WАКИП",
                 TrackerFormatString = "{4:0.###} W {2:0.##} сек",
-                Color = OxyColors.Black,
+                Color = OxyColors.DarkViolet,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
@@ -597,6 +780,17 @@ namespace BSC_Stand.ViewModels
             GraphView.Series.Add(AKIPWSeries);
             TIBXASeriesVisible = true;
             TBSCSeriesVisible = true;
+            I27SeriesVisible = true;
+            V27SeriesVisible = true;
+            AKIPASeriesVisible = true;
+            AKIPVSeriesVisible = true;
+            AKIPWSeriesVisible = true;
+            ITCASeriesVisible = true;
+            ITCVSeriesVisible = true;
+            ITCWSeriesVisible = true;
+            V100SeriesVisible = true;
+            I100SeriesVisible = true;
+
 
         }
 
@@ -624,11 +818,35 @@ namespace BSC_Stand.ViewModels
             var result =  await  _modBusService.ReadElectroninLoadParams();
             if (result != null)
             {
+                ITCVValue = result[0].ToVoltageString();
+                ITCAValue = result[1].ToAmperageString();
+                ITCWValue = result[2].ToPowerString();
+
+
+
+
+
+
+
+
                 AKIPWSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[3]));
+                AKIPWValue = result[3].ToPowerString();
                 AKIPASeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[4]));
-                I27Value = result[4].ToAmperageString();
+                AKIPAValue  = result[4].ToAmperageString();
                 AKIPVSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[5]));
-                V27Value = result[5].ToVoltageString();
+                AKIPVValue = result[5].ToVoltageString();
+
+
+
+
+
+
+
+
+
+
+
+
                 GraphView.InvalidatePlot(true);
                 Debug.WriteLine($"W{result[3]}  A{result[4]} V{result[5]}");
             }

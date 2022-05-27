@@ -302,13 +302,20 @@ namespace BSC_Stand.Services
 
         public void ExitCommand()
         {
-            AkipSerialPort.WriteLine($@"Power 0
+            try
+            {
+                AkipSerialPort.WriteLine($@"Power 0
                                         INPUT 0
                                         SYST:LOC
                                         ");
-            ITCSerialPort.WriteLine($@"Power 0
+                ITCSerialPort.WriteLine($@"Power 0
                                        INPUT 0
                                        SYST:LOC");
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
        
         private string ReadIDN(SerialPort port)

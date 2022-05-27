@@ -47,13 +47,36 @@
                     
                 </TreeViewItem>
 
+                <TreeViewItem Header="АКИП 1381"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
+                <TextBlock Text="{Binding AKIPVValue, Mode=TwoWay}"></TextBlock>
+
+                <TextBlock Text="{Binding AKIPAValue,Mode=TwoWay}" ></TextBlock>
+                    
+                 <TextBlock Text="{Binding AKIPWValue,Mode=TwoWay}" ></TextBlock>
+
+                </TreeViewItem>
+                
+                
+
                 <TreeViewItem Header="Шина 100 В"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
                  
-                    <TextBlock Text="V Нет соединения"></TextBlock>
-                    <TextBlock Text="I Нет соединения"></TextBlock>
+                    <TextBlock Text="{Binding V100Value,Mode=TwoWay}"></TextBlock>
+                    <TextBlock Text="{Binding I100Value,Mode=TwoWay}"></TextBlock>
                    
                    
                 </TreeViewItem>
+
+                <TreeViewItem Header="IT8516C+"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
+                    <TextBlock Text="{Binding ITCVValue, Mode=TwoWay}"></TextBlock>
+
+                    <TextBlock Text="{Binding ITCAValue,Mode=TwoWay}" ></TextBlock>
+
+                    <TextBlock Text="{Binding ITCWValue,Mode=TwoWay}" ></TextBlock>
+
+                </TreeViewItem>
+
+
+
             </TreeView>
             <TextBlock Grid.Row="1" Text="Шина 27В" Height="25" VerticalAlignment="Top"  Padding="25,0,0,0"  TextAlignment="Left"></TextBlock>
             <TextBlock Grid.Row="1" Text="Шина 100В" Height="25" VerticalAlignment="Top"  Padding="0,0,25,0" TextAlignment="Right"></TextBlock>
@@ -191,7 +214,13 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
                         <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible}"></CheckBox>
                                 <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ЭО БСК"></TextBlock>
 
@@ -205,13 +234,28 @@
                         <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 27В"></TextBlock>
 
                        <CheckBox  Grid.Row="4" Grid.Column="0" IsChecked="{Binding V100SeriesVisible}" ></CheckBox>
-                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины100В"></TextBlock>
+                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 100В"></TextBlock>
 
                        <CheckBox  Grid.Row="5" Grid.Column="0" IsChecked="{Binding I100SeriesVisible}" ></CheckBox>
                       <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 100В"></TextBlock>
 
+                       <CheckBox  Grid.Row="6" Grid.Column="0" IsChecked="{Binding AKIPVSeriesVisible}" ></CheckBox>
+                       <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V АКИП"></TextBlock>
+                        
+                        <CheckBox  Grid.Row="7" Grid.Column="0" IsChecked="{Binding AKIPASeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I АКИП"></TextBlock>
 
+                        <CheckBox  Grid.Row="8" Grid.Column="0" IsChecked="{Binding AKIPWSeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W АКИП"></TextBlock>
 
+                        <CheckBox  Grid.Row="9" Grid.Column="0" IsChecked="{Binding ITCVSeriesVisible}" ></CheckBox>
+                         <TextBlock Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V IT8516C+"></TextBlock>
+
+                        <CheckBox  Grid.Row="10" Grid.Column="0" IsChecked="{Binding ITCASeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="A ITC851C6+"></TextBlock>
+
+                        <CheckBox  Grid.Row="11" Grid.Column="0" IsChecked="{Binding ITCWSeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W IT851C6+"></TextBlock>
 
 
                             </Grid>

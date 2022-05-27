@@ -17,6 +17,10 @@ namespace BSC_Stand.Extensions
         {
             return new string($"A {value}");
         }
+        public static string ToPowerString(this float value)
+        {
+            return new string($"W {value}");
+        }
 
         public static string ToConnectionStatusString (this bool value)
         {
