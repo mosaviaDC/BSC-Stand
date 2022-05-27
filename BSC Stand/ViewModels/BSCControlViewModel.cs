@@ -56,8 +56,7 @@ namespace BSC_Stand.ViewModels
                 WriteMessage("Начало эксперимента", MessageType.Info);
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
-                if (V27Series.Points.Count != 0)
-                {
+               
                     V27Series.Points.Clear();
                     I27Series.Points.Clear();
                     TIBXASeries.Points.Clear();
@@ -71,8 +70,7 @@ namespace BSC_Stand.ViewModels
                     ITCVSeries.Points.Clear();
                     ITCASeries.Points.Clear();
                     GraphView1.InvalidatePlot(true);
-                    GraphView2.InvalidatePlot(true);
-                }
+                 
                 UpdateDataTimer?.Start();
             }
 
@@ -695,7 +693,7 @@ namespace BSC_Stand.ViewModels
             TIBXASeries = new LineSeries
             {
                 Title = "T℃  ИБХА",
-                TrackerFormatString = "{4:0} T℃  {2:0} сек",
+                TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
                 Color = OxyColors.Green,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -706,7 +704,7 @@ namespace BSC_Stand.ViewModels
             TBSCSeries = new LineSeries
             {
                 Title = "T℃  ЭОБСК",
-                TrackerFormatString = "{4:0} T℃  {2:0} сек",
+                TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
                 Color = OxyColors.ForestGreen,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -719,7 +717,7 @@ namespace BSC_Stand.ViewModels
             ITCVSeries = new LineSeries
             {
                 Title = "V IT8516C+",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
                 Color = OxyColors.Brown,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -730,7 +728,7 @@ namespace BSC_Stand.ViewModels
             ITCASeries = new LineSeries
             {
                 Title = "A IT8516C+",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
                 Color = OxyColors.RosyBrown,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -741,7 +739,7 @@ namespace BSC_Stand.ViewModels
             ITCWSeries = new LineSeries
             {
                 Title = "W IT8516C+",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
                 Color = OxyColors.SandyBrown,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -753,7 +751,7 @@ namespace BSC_Stand.ViewModels
             AKIPVSeries = new LineSeries
             {
                 Title = "V АКИП",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
                 Color = OxyColors.Violet,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -764,7 +762,7 @@ namespace BSC_Stand.ViewModels
             AKIPASeries = new LineSeries
             {
                 Title = "A АКИП",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
                 Color = OxyColors.BlueViolet,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -775,7 +773,7 @@ namespace BSC_Stand.ViewModels
             AKIPWSeries = new LineSeries
             {
                 Title = "W АКИП",
-                TrackerFormatString = "{4:0.###} W {2:0.##} сек",
+                TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
                 Color = OxyColors.DarkViolet,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
@@ -842,12 +840,13 @@ namespace BSC_Stand.ViewModels
             var result =  await  _modBusService.ReadElectroninLoadParams();
             if (result != null)
             {
-                ITCVValue = result[0].ToVoltageString();
-                ITCAValue = result[1].ToAmperageString();
+                ITCAValue = result[0].ToAmperageString();
+                ITCVValue = result[1].ToVoltageString();
                 ITCWValue = result[2].ToPowerString();
 
-
-
+                ITCASeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[0]));
+                ITCVSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[1]));
+                ITCWSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[2]));
 
 
 
