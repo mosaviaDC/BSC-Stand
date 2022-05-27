@@ -61,6 +61,8 @@ namespace BSC_Stand
             services.AddSingleton<StatusBarViewModel>();
             services.AddSingleton<ConnectionCheckListViewModel>();
             services.AddSingleton<PostAnalyzeViewModel>();
+            services.AddSingleton<RealTimeGraphsViewModel>();
+            services.AddSingleton<RealTimeGraphsLegendViewModel>();
             //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
 
 

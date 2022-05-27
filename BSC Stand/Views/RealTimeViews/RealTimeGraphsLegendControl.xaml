@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="BSC_Stand.Views.RealTimeGraphsLegendControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BSC_Stand.Views"
+             mc:Ignorable="d" 
+             DataContext="{Binding  RealTimeGraphsLegendViewModel,Source={StaticResource ViewModelLocator}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="AliceBlue">
+        <TabControl  DataContext="{Binding  RealTimeGraphsViewModel,Source={StaticResource ViewModelLocator}}"   SelectedIndex="{Binding SelectedGraphIndex}">
+            <TabItem Header="Вид1">
+                <Grid Background="AliceBlue">
+                        <ScrollViewer>
+                
+                    <Grid>
+                      
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                        <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible}"></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ЭО БСК"></TextBlock>
+
+                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible}" ></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ИБХА"></TextBlock>
+
+                        <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
+                        
+                        <CheckBox  Grid.Row="3" Grid.Column="0" IsChecked="{Binding I27SeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 27В"></TextBlock>
+
+                       <CheckBox  Grid.Row="4" Grid.Column="0" IsChecked="{Binding V100SeriesVisible}" ></CheckBox>
+                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 100В"></TextBlock>
+
+                       <CheckBox  Grid.Row="5" Grid.Column="0" IsChecked="{Binding I100SeriesVisible}" ></CheckBox>
+                      <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 100В"></TextBlock>
+
+                       <CheckBox  Grid.Row="6" Grid.Column="0" IsChecked="{Binding AKIPVSeriesVisible}" ></CheckBox>
+                       <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V АКИП"></TextBlock>
+                        
+                        <CheckBox  Grid.Row="7" Grid.Column="0" IsChecked="{Binding AKIPASeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I АКИП"></TextBlock>
+
+                        <CheckBox  Grid.Row="8" Grid.Column="0" IsChecked="{Binding AKIPWSeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W АКИП"></TextBlock>
+
+                        <CheckBox  Grid.Row="9" Grid.Column="0" IsChecked="{Binding ITCVSeriesVisible}" ></CheckBox>
+                         <TextBlock Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V IT8516C+"></TextBlock>
+
+                        <CheckBox  Grid.Row="10" Grid.Column="0" IsChecked="{Binding ITCASeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="A ITC851C6+"></TextBlock>
+
+                        <CheckBox  Grid.Row="11" Grid.Column="0" IsChecked="{Binding ITCWSeriesVisible}" ></CheckBox>
+                        <TextBlock Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W IT851C6+"></TextBlock>
+
+
+                            </Grid>
+
+                        </ScrollViewer>
+
+                    </Grid>
+
+            </TabItem>
+            <TabItem Header="Вид2"></TabItem>
+            <TabItem Header="Вид3"></TabItem>
+        </TabControl>    
+        
+        
+        
+    </Grid>
+</UserControl>

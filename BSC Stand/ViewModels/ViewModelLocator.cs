@@ -16,6 +16,8 @@ namespace BSC_Stand.ViewModels
         public StatusBarViewModel StatusBarViewModel => App.Host.Services.GetRequiredService<StatusBarViewModel>();
         public ConnectionCheckListViewModel ConnectionCheckListViewModel => App.Host.Services.GetRequiredService<ConnectionCheckListViewModel>();
 
+        public RealTimeGraphsViewModel RealTimeGraphsViewModel => App.Host.Services.GetRequiredService<RealTimeGraphsViewModel>();
+        public RealTimeGraphsLegendViewModel RealTimeGraphsLegendViewModel => App.Host.Services.GetRequiredService<RealTimeGraphsLegendViewModel>();
         public PostAnalyzeViewModel PostAnalyzeViewModel => App.Host.Services.GetRequiredService<PostAnalyzeViewModel>();
     }
 }

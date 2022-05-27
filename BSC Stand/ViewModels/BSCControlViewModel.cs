@@ -21,6 +21,7 @@ namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
     {
+        private readonly RealTimeGraphsViewModel _realTimeGraphsViewModel;
         private readonly IUserDialogWindowService _userDialogWindowService;
         #region services
         private StandConfigurationViewModel _standConfigurationViewModel;
@@ -57,19 +58,9 @@ namespace BSC_Stand.ViewModels
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
                
-                    V27Series.Points.Clear();
-                    I27Series.Points.Clear();
-                    TIBXASeries.Points.Clear();
-                    TBSCSeries.Points.Clear();
-                    I100Series.Points.Clear();
-                    V100Series.Points.Clear();
-                    AKIPWSeries.Points.Clear();
-                    AKIPVSeries.Points.Clear();
-                    AKIPASeries.Points.Clear();
-                    ITCWSeries.Points.Clear();
-                    ITCVSeries.Points.Clear();
-                    ITCASeries.Points.Clear();
-                    GraphView1.InvalidatePlot(true);
+                 //   V27Series.Points.Clear();
+                  
+                   // GraphView1.InvalidatePlot(true);
                  
                 UpdateDataTimer?.Start();
             }
@@ -164,10 +155,8 @@ namespace BSC_Stand.ViewModels
 
         private void ResetPlotScaleCommandExecute (object p)
         {
-            GraphView1.ResetAllAxes();
-            GraphView1.InvalidatePlot(true);
-            GraphView2.ResetAllAxes();
-            GraphView2.InvalidatePlot(true);
+            _realTimeGraphsViewModel.PlotModel1.ResetAllAxes();
+            _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
 
         }
         private bool CanResetPlotScaleCommandExecute (object p)
@@ -180,247 +169,19 @@ namespace BSC_Stand.ViewModels
 
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
-            GraphView2.IsLegendVisible = !GraphView2.IsLegendVisible;
-            GraphView1.IsLegendVisible = !GraphView1.IsLegendVisible;
-            GraphView1.InvalidatePlot(true);
-            GraphView2.InvalidatePlot(true);
-            //     sCPIService.Write(@"*IDN?");
-            //   sCPIService.Write("*IDN?");
-
-            //_modBusService.SetAKIPPowerValue(2);
-
+            _realTimeGraphsViewModel.PlotModel1.IsLegendVisible = !_realTimeGraphsViewModel.PlotModel1.IsLegendVisible;
+            _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
         }
 
 
-
-        private int index;
 
         #endregion
 
-
         #region properties
-        public PlotModel GraphView1 { get; set; }
-        public PlotModel GraphView2 { get; set; }
-        private LineSeries V27Series;
-        private LineSeries I27Series;
-        private LineSeries V100Series;
-        private LineSeries I100Series;
-        private LineSeries TIBXASeries;
-        private LineSeries TBSCSeries;
-        private LineSeries ITCVSeries;
+      
         private TimeSpan ExpTimeSpan;
-        private LineSeries ITCASeries;
-        private LineSeries ITCWSeries;
-        private LineSeries AKIPVSeries;
-        private LineSeries AKIPASeries;
-        private LineSeries AKIPWSeries;
+        
         private DateTime StartTime;
-     
-
-
-
-
-
-        private bool _AKIPVSeriesVisible;
-        public bool AKIPVSeriesVisible
-        {
-            get
-            {
-                return _AKIPVSeriesVisible;
-            }
-            set
-            {
-                Set(ref _AKIPVSeriesVisible, value);
-                AKIPVSeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _AKIPASeriesVisible;
-        public bool AKIPASeriesVisible
-        {
-            get
-            {
-                return _AKIPASeriesVisible;
-            }
-            set
-            {
-                Set(ref _AKIPASeriesVisible, value);
-                AKIPASeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _AKIPWSeriesVisible;
-        public bool AKIPWSeriesVisible
-        {
-            get
-            {
-                return _AKIPWSeriesVisible;
-            }
-            set
-            {
-                Set(ref _AKIPWSeriesVisible, value);
-                AKIPWSeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _ITCVSeriesVisible;
-        public bool ITCVSeriesVisible
-        {
-            get
-            {
-                return _ITCVSeriesVisible;
-            }
-            set
-            {
-                Set(ref _ITCVSeriesVisible, value);
-                ITCVSeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _ITCASeriesVisible;
-        public bool ITCASeriesVisible
-        {
-            get
-            {
-                return _ITCASeriesVisible;
-            }
-            set
-            {
-                Set(ref _ITCASeriesVisible, value);
-                ITCASeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-        private bool _ITCWSeriesVisible;
-        public bool ITCWSeriesVisible
-        {
-            get
-            {
-                return _ITCWSeriesVisible;
-            }
-            set
-            {
-                Set(ref _ITCWSeriesVisible, value);
-                ITCWSeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private bool _V100SeriesVisible;
-        public bool V100SeriesVisible
-        {
-            get
-            {
-                return _V100SeriesVisible;
-            }
-            set
-            {
-                Set(ref _V100SeriesVisible, value);
-                V100Series.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _I100SeriesVisible;
-        public bool I100SeriesVisible
-        {
-            get
-            {
-                return _I100SeriesVisible;
-            }
-            set
-            {
-                Set(ref _I100SeriesVisible, value);
-                I100Series.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _I27SeriesVisible;
-        public bool I27SeriesVisible
-        {
-            get
-            {
-                return _I27SeriesVisible;
-            }
-            set
-            {
-                Set(ref _I27SeriesVisible, value);
-                I27Series.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-
-        private bool _V27SeriesVisible;
-        public bool V27SeriesVisible
-        {
-            get
-            {
-                return _V27SeriesVisible;
-            }
-            set
-            {
-                Set(ref _V27SeriesVisible, value);
-                V27Series.IsVisible= value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-
-        private bool _TIBXASeriesVisible;
-        public bool TIBXASeriesVisible
-        {
-            get
-            {
-                return _TIBXASeriesVisible;
-            }
-            set
-            {
-                Set(ref _TIBXASeriesVisible, value);
-                TIBXASeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-        private bool _TBSCSeriesVisible;
-        public bool TBSCSeriesVisible
-        {
-            get
-            {
-                return _TBSCSeriesVisible;
-            }
-            set { 
-                
-                Set(ref _TBSCSeriesVisible, value);
-                TBSCSeries.IsVisible = value;
-                GraphView1.InvalidatePlot(true);
-            }
-        }
-
-
-
-
-
-
-
         #region InfoStringProperties
         public string DebugString
         {
@@ -551,17 +312,16 @@ namespace BSC_Stand.ViewModels
 
         #endregion
 
-
-        public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService)
+        public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService, RealTimeGraphsViewModel realTimeGraphsViewModel)
         {
-      
+            _realTimeGraphsViewModel = realTimeGraphsViewModel;
             _userDialogWindowService = userDialogWindowService;
             _standConfigurationViewModel = standConfigurationViewModel;
             V27ConfigurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100ConfigurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService);
             _modBusService = modbusService;
-            InitSeries();
+   
             UpdateDataTimer = new DispatcherTimer();
             UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
@@ -603,228 +363,6 @@ namespace BSC_Stand.ViewModels
             #endregion
         }
 
-
-
-        private void InitSeries()
-        {
-            index = 0;
-            GraphView1 = new PlotModel()
-            {
-
-            };
-            GraphView2 = new PlotModel();
-
-
-            V27Series = new LineSeries
-            {
-                Title = "V 27",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
-                Color = OxyColors.Blue,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-
-
-            I27Series = new LineSeries
-            {
-                Title = "I 27",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.BlueViolet,
-                MarkerFill = OxyColors.DarkBlue,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-
-            };
-
-
-            V100Series = new LineSeries
-            {
-                Title = "V 100",
-                TrackerFormatString = "{4:0} В {2:0} сек",
-                Color = OxyColors.DarkOrange,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
-
-
-
-            I100Series = new LineSeries
-            {
-                Title = "I 100",
-                TrackerFormatString = "{4:0} A {2:0} сек",
-                Color = OxyColors.OrangeRed,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
-
-
-            GraphView1.Legends.Add(new OxyPlot.Legends.Legend()
-            {
-                LegendTitle = "",
-
-                LegendTitleFontSize = 48,
-                
-
-
-
-            }) ;
-
-
-            GraphView2.Legends.Add(new OxyPlot.Legends.Legend()
-            {
-                LegendTitle = "",
-
-                LegendTitleFontSize = 48,
-
-
-
-
-            });
-
-
-            TIBXASeries = new LineSeries
-            {
-                Title = "T℃  ИБХА",
-                TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
-                Color = OxyColors.Green,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
-
-            TBSCSeries = new LineSeries
-            {
-                Title = "T℃  ЭОБСК",
-                TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
-                Color = OxyColors.ForestGreen,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
-
-
-
-            ITCVSeries = new LineSeries
-            {
-                Title = "V IT8516C+",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
-                Color = OxyColors.Brown,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-            ITCASeries = new LineSeries
-            {
-                Title = "A IT8516C+",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
-                Color = OxyColors.RosyBrown,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-            ITCWSeries = new LineSeries
-            {
-                Title = "W IT8516C+",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
-                Color = OxyColors.SandyBrown,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-
-            AKIPVSeries = new LineSeries
-            {
-                Title = "V АКИП",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
-                Color = OxyColors.Violet,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-            AKIPASeries = new LineSeries
-            {
-                Title = "A АКИП",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
-                Color = OxyColors.BlueViolet,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-            AKIPWSeries = new LineSeries
-            {
-                Title = "W АКИП",
-                TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
-                Color = OxyColors.DarkViolet,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-
-            GraphView1.Series.Add(I27Series);
-            GraphView1.Series.Add(V27Series);
-            GraphView1.Series.Add(TIBXASeries);
-            GraphView1.Series.Add(TBSCSeries);
-            GraphView1.Series.Add(V100Series);
-            GraphView1.Series.Add(I100Series);
-            GraphView1.Series.Add(ITCVSeries);
-            GraphView1.Series.Add(ITCASeries);
-            GraphView1.Series.Add(ITCWSeries);
-            GraphView1.Series.Add(AKIPVSeries);
-            GraphView1.Series.Add(AKIPASeries);
-            GraphView1.Series.Add(AKIPWSeries);
-            TIBXASeriesVisible = true;
-            TBSCSeriesVisible = true;
-            I27SeriesVisible = true;
-            V27SeriesVisible = true;
-            AKIPASeriesVisible = true;
-            AKIPVSeriesVisible = true;
-            AKIPWSeriesVisible = true;
-            ITCASeriesVisible = true;
-            ITCVSeriesVisible = true;
-            ITCWSeriesVisible = true;
-            V100SeriesVisible = true;
-            I100SeriesVisible = true;
-            GraphView2.Series.Add(new LineSeries()
-            {
-
-            });
-         
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
             //To Do добавить сервис записи данных в файл(лог)
@@ -844,62 +382,25 @@ namespace BSC_Stand.ViewModels
                 ITCVValue = result[1].ToVoltageString();
                 ITCWValue = result[2].ToPowerString();
 
-                ITCASeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[0]));
-                ITCVSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[1]));
-                ITCWSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[2]));
-
-
-
-
-
-                AKIPWSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[3]));
                 AKIPWValue = result[3].ToPowerString();
-                AKIPASeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[4]));
                 AKIPAValue  = result[4].ToAmperageString();
-                AKIPVSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[5]));
                 AKIPVValue = result[5].ToVoltageString();
+                //Todo перенести в разные потоки АКИП И ITC, не забыть добавлять в series
 
 
 
 
 
 
+              
 
 
 
-
-
-
-                GraphView1.InvalidatePlot(true);
-                GraphView2.InvalidatePlot(true);
-                Debug.WriteLine($"W{result[3]}  A{result[4]} V{result[5]}");
+;
             }
            
            // TestUpdateData();
         }
-
-        private async void TestUpdateData()
-        {
-
-            index++;
-            Random rnd = new Random();
-           
-            I27Series.Points.Add(new DataPoint(index, rnd.Next(26, 28)));
-            V27Series.Points.Add( new DataPoint(index, rnd.Next(23, 24)));
-            I100Series.Points.Add(new DataPoint(index, 0));
-            V100Series.Points.Add(new DataPoint(index, 3f));
-            TIBXASeries.Points.Add(new DataPoint(index, 6f));
-            TBSCSeries.Points.Add(new DataPoint(index, 12f));
-            GraphView1.InvalidatePlot(true);
-            GraphView2.InvalidatePlot(true);
-
-
-
-
-
-        }
-
-
 
         private async void ReadV27Value()
         {
@@ -920,9 +421,9 @@ namespace BSC_Stand.ViewModels
                     if (_realTimeStandControlService.GetExperimentStatus())
                     {
                      
-                        V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, r));
-                        GraphView1.PlotView.InvalidatePlot(true);
-                       GraphView2.PlotView.InvalidatePlot(true);
+                       // V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, r));
+                       // GraphView1.PlotView.InvalidatePlot(true);
+                       //GraphView2.PlotView.InvalidatePlot(true);
                 }
                 }
         }
