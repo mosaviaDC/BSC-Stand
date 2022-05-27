@@ -143,6 +143,8 @@ namespace BSC_Stand.Services
                 V27ModbusController.Transport.ReadTimeout = 1500;
                 V27ModbusController.Transport.WriteTimeout = 1000;
                 Debug.WriteLine("*");
+
+
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
                     return true;
@@ -338,12 +340,52 @@ namespace BSC_Stand.Services
             }
         }
 
+        public async Task<float[]> ReadElectroninLoadParams()
+        {
+            float[] results = new float[6];
+            await Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    ITCSerialPort.WriteLine($@"MEASURE:CURRENT?"); 
+                    results[0]= Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Voltage
+
+                    ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                    results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
+                    
+                    ITCSerialPort.WriteLine("MEASURE:POWER?");
+                    results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+
+                    Debug.WriteLine($"ITC {results[0]} W:{results[1]} A:{results[2]}");
+
+                    AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                    results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Amperage
+
+                    AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                    results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Power
+
+                    AkipSerialPort.WriteLine("MEASURE:POWER?");
+                    results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
+
+                    Debug.WriteLine($"AKIP A:{results[3]} V:{results[4]} W:{results[5]}");
+
+                }
+                catch
+                {
+
+                }
+            });
+            return null;
+
+        }
+
+
         public bool SetITCPowerValue (double value)
         {
             if (ITCSerialPort != null)
             {
              
-                Debug.WriteLine(value.ToString("G4",culture));
+              
                 string query = ($@"SYSTEM:REM
                             Mode Power
                             INPut 1
@@ -351,7 +393,7 @@ namespace BSC_Stand.Services
                             Power?");
     
                 ITCSerialPort.WriteLine(query);
-                Debug.WriteLine(ITCSerialPort.ReadLine());
+             
                 return true;
             }
             else

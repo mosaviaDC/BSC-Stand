@@ -534,7 +534,7 @@ namespace BSC_Stand.ViewModels
             //ReadV27Value();
 
             //OwenConnectStatus = false.ToConnectionStatusString();
-
+         await   _modBusService.ReadElectroninLoadParams();
             TestUpdateData();
         }
 
