@@ -343,39 +343,52 @@ namespace BSC_Stand.Services
         public async Task<float[]> ReadElectroninLoadParams()
         {
             float[] results = new float[6];
-            await Task.Factory.StartNew(() =>
+          return  await Task.Factory.StartNew(() =>
             {
+                bool succes = false;
                 try
                 {
-                    ITCSerialPort.WriteLine($@"MEASURE:CURRENT?"); 
-                    results[0]= Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Voltage
+                    ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                    results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Voltage
 
                     ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
                     results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
-                    
+
                     ITCSerialPort.WriteLine("MEASURE:POWER?");
                     results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
 
-                    Debug.WriteLine($"ITC {results[0]} W:{results[1]} A:{results[2]}");
+                   // Debug.WriteLine($"ITC V:{results[0]} W:{results[1]} A:{results[2]}");
 
                     AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                    results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Amperage
+                    results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
 
                     AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                    results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Power
+                    results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
 
                     AkipSerialPort.WriteLine("MEASURE:POWER?");
-                    results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
+                    results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
 
-                    Debug.WriteLine($"AKIP A:{results[3]} V:{results[4]} W:{results[5]}");
-
+                    Debug.WriteLine($"{DateTime.Now}");
+                    succes = true;
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    Debug.WriteLine("*****"+ex.Message);
+                    succes = false;
                 }
+                if (succes)
+                {
+                    return results;
+                }
+                else
+                {
+                    return null;
+                }
+
+               
+              
             });
-            return null;
+           
 
         }
 

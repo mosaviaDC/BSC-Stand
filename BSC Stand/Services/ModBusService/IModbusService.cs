@@ -19,6 +19,17 @@ namespace BSC_Stand.Services
 
         public bool SetAKIPPowerValue(double value);
         public bool SetITCPowerValue(double value);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>
+        /// [0] = ITC Voltage (V)
+        /// [1] = ITC Power (W)
+        /// [2] = ITC Amperage (A)
+        /// [3] = Akip Power (W)
+        /// [4] = Akip Amperage (A)
+        /// [5] = Akip Voltage (V)
+        /// </returns>
         public Task<float[]> ReadElectroninLoadParams();
         public void ExitCommand();
         }

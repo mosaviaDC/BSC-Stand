@@ -419,12 +419,12 @@ namespace BSC_Stand.ViewModels
             V27Series = new LineSeries
             {
                 Title = "V 27",
-                TrackerFormatString = "{4:0} В {2:0} сек",
+                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
                 Color = OxyColors.Black,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = false
+                IsVisible = true
             };
 
 
@@ -432,12 +432,12 @@ namespace BSC_Stand.ViewModels
             I27Series = new LineSeries
             {
                 Title = "I 27",
-                TrackerFormatString = "{4:0} A {2:0} сек",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
                 Color = OxyColors.Green,
                 MarkerFill = OxyColors.Red,
                 MarkerType = MarkerType.Cross,
                 MarkerSize = 1,
-                IsVisible = false
+                IsVisible = true
 
             };
 
@@ -534,8 +534,14 @@ namespace BSC_Stand.ViewModels
             //ReadV27Value();
 
             //OwenConnectStatus = false.ToConnectionStatusString();
-         await   _modBusService.ReadElectroninLoadParams();
-            TestUpdateData();
+            var result =  await  _modBusService.ReadElectroninLoadParams();
+            if (result != null)
+            {
+                I27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[4]));
+                V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[5]));
+            }
+
+           // TestUpdateData();
         }
 
         private async void TestUpdateData()
