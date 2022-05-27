@@ -52,7 +52,7 @@ namespace BSC_Stand.ViewModels
             }
             else
             {
-                index = 0;
+           
                 WriteMessage("Начало эксперимента", MessageType.Info);
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
@@ -64,6 +64,12 @@ namespace BSC_Stand.ViewModels
                     TBSCSeries.Points.Clear();
                     I100Series.Points.Clear();
                     V100Series.Points.Clear();
+                    AKIPWSeries.Points.Clear();
+                    AKIPVSeries.Points.Clear();
+                    AKIPASeries.Points.Clear();
+                    ITCWSeries.Points.Clear();
+                    ITCVSeries.Points.Clear();
+                    ITCASeries.Points.Clear();
                     GraphView.InvalidatePlot(true);
                 }
                 UpdateDataTimer?.Start();
@@ -198,6 +204,7 @@ namespace BSC_Stand.ViewModels
         private LineSeries I100Series;
         private LineSeries TIBXASeries;
         private LineSeries TBSCSeries;
+        private LineSeries ITCVSeries;
         private DateTime StartTime;
         private readonly SCPIService sCPIService;
         private bool _V100SeriesVisible;
@@ -348,6 +355,11 @@ namespace BSC_Stand.ViewModels
         }
         private string _I27Value;
         private TimeSpan ExpTimeSpan;
+        private LineSeries ITCASeries;
+        private LineSeries ITCWSeries;
+        private LineSeries AKIPVSeries;
+        private LineSeries AKIPASeries;
+        private LineSeries AKIPWSeries;
 
         public string I27Value
         {
@@ -502,12 +514,87 @@ namespace BSC_Stand.ViewModels
             };
 
 
+
+            ITCVSeries = new LineSeries
+            {
+                Title = "ITC8516C+ V",
+                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+            ITCASeries = new LineSeries
+            {
+                Title = "ITC8516C+ A",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+            ITCWSeries = new LineSeries
+            {
+                Title = "ITC8516C+ W",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+
+            AKIPVSeries = new LineSeries
+            {
+                Title = "АКИП V",
+                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+            AKIPASeries = new LineSeries
+            {
+                Title = "АКИП A",
+                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+            AKIPWSeries = new LineSeries
+            {
+                Title = "АКИП W",
+                TrackerFormatString = "{4:0.###} W {2:0.##} сек",
+                Color = OxyColors.Black,
+                MarkerFill = OxyColors.Red,
+                MarkerType = MarkerType.Cross,
+                MarkerSize = 1,
+                IsVisible = true
+            };
+
+
             GraphView.Series.Add(I27Series);
             GraphView.Series.Add(V27Series);
             GraphView.Series.Add(TIBXASeries);
             GraphView.Series.Add(TBSCSeries);
             GraphView.Series.Add(V100Series);
             GraphView.Series.Add(I100Series);
+            GraphView.Series.Add(ITCVSeries);
+            GraphView.Series.Add(ITCASeries);
+            GraphView.Series.Add(ITCWSeries);
+            GraphView.Series.Add(AKIPVSeries);
+            GraphView.Series.Add(AKIPASeries);
+            GraphView.Series.Add(AKIPWSeries);
             TIBXASeriesVisible = true;
             TBSCSeriesVisible = true;
 
@@ -537,10 +624,15 @@ namespace BSC_Stand.ViewModels
             var result =  await  _modBusService.ReadElectroninLoadParams();
             if (result != null)
             {
-                I27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[4]));
-                V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[5]));
+                AKIPWSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[3]));
+                AKIPASeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[4]));
+                I27Value = result[4].ToAmperageString();
+                AKIPVSeries.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, result[5]));
+                V27Value = result[5].ToVoltageString();
+                GraphView.InvalidatePlot(true);
+                Debug.WriteLine($"W{result[3]}  A{result[4]} V{result[5]}");
             }
-
+           
            // TestUpdateData();
         }
 
