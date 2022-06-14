@@ -375,7 +375,7 @@ namespace BSC_Stand.ViewModels
             ExpTimeSpan = DateTime.Now - StartTime;
 
             //Параметры эл нагрузок;
-
+            _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
 
             var result =  await  _modBusService.ReadElectronicLoadParams();
             if (result != null)

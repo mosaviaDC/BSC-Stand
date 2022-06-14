@@ -26,6 +26,8 @@ namespace BSC_Stand.Models
         public float IBXATemperature;
         public float BSCTemperature;
 
+        public float ExpTime;
 
+      
     }
 }

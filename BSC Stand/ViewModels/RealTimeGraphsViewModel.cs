@@ -233,8 +233,25 @@ namespace BSC_Stand.ViewModels
 
         public void UpdateGraphsSeries(ReadingParams readingParams)
         {
-            ///
+            //Обновление серий
+            ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
+            ITCASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
+            ITCWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
 
+            AKIPASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
+            AKIPVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
+            AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
+
+            V27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
+            I27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
+
+            V100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
+            I100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
+
+            TIBXASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
+            TBSCSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+
+            PlotModel1.InvalidatePlot(true);
 
         }
 
