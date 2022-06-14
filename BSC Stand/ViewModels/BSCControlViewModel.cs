@@ -21,6 +21,7 @@ namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
     {
+        private readonly ReadingParams _readingParams;
         private readonly RealTimeGraphsViewModel _realTimeGraphsViewModel;
         private readonly IUserDialogWindowService _userDialogWindowService;
         #region services
@@ -192,13 +193,22 @@ namespace BSC_Stand.ViewModels
         private string _DebugString;
 
 
-        private float _OwenTemperature;
+        private string _IBXATemperature;
 
-        public float OwenTemperature
+        public string IBXATemperature
         {
-            get => _OwenTemperature;
-            set => Set(ref _OwenTemperature, value);
+            get => _IBXATemperature;
+            set => Set(ref _IBXATemperature, value);
         }
+
+        private string _BSCTemperature;
+
+        public string BSCTemperature
+        {
+            get => _BSCTemperature;
+            set => Set(ref _BSCTemperature, value);
+        }
+
 
         private int _V27SelectedIndex;
         public int V27SelectedIndex 
@@ -215,13 +225,6 @@ namespace BSC_Stand.ViewModels
         }
 
 
-        private string  _OwenConnectStatus;
-
-        public string OwenConnectStatus
-        {
-            get => _OwenConnectStatus;
-            set => Set(ref _OwenConnectStatus, value);
-        }
 
         private string _V27Value;
         public string V27Value
@@ -314,6 +317,7 @@ namespace BSC_Stand.ViewModels
 
         public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService, RealTimeGraphsViewModel realTimeGraphsViewModel)
         {
+            _readingParams = new ReadingParams();
             _realTimeGraphsViewModel = realTimeGraphsViewModel;
             _userDialogWindowService = userDialogWindowService;
             _standConfigurationViewModel = standConfigurationViewModel;
@@ -336,8 +340,9 @@ namespace BSC_Stand.ViewModels
             ShowHideOxyPlotLegendCommand = new ActionCommand(ShowHideOxyPlotLegendCommandExecute);
             V27Value = "V Нет данных";
             I27Value = "I Нет данных";
-            OwenConnectStatus = "Нет соединения";
-            
+            //  OwenConnectStatus = "Нет соединения";
+            IBXATemperature = "Температура ИБХА - Нет данных";
+            BSCTemperature = "Температура ЭО БСК - Нет данных";
             AKIPVValue = "V Нет данных";
             AKIPAValue = "A Нет данных";
             AKIPWValue = "W Нет данных";
@@ -365,19 +370,17 @@ namespace BSC_Stand.ViewModels
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-            //To Do добавить сервис записи данных в файл(лог)
+            //To Do добавить сервис записи данных в файл(лог), выполняя проверку на статус эксперимента
 
             ExpTimeSpan = DateTime.Now - StartTime;
 
+            //Параметры эл нагрузок;
 
 
-
-            //ReadV27Value();
-
-            //OwenConnectStatus = false.ToConnectionStatusString();
             var result =  await  _modBusService.ReadElectronicLoadParams();
             if (result != null)
             {
+                
                 ITCAValue = result[0].ToAmperageString();
                 ITCVValue = result[1].ToVoltageString();
                 ITCWValue = result[2].ToPowerString();
@@ -385,19 +388,38 @@ namespace BSC_Stand.ViewModels
                 AKIPWValue = result[3].ToPowerString();
                 AKIPAValue  = result[4].ToAmperageString();
                 AKIPVValue = result[5].ToVoltageString();
-            
 
+                _readingParams.ITCAValue = result[0];
+                _readingParams.ITCVValue = result[1];
+                _readingParams.ITCWValue = result[2];
 
-
-
-
-
-              
-
-
-
-;
+                _readingParams.AKIPWValue= result[3];
+                _readingParams.AKIPAValue= result[4];
+                _readingParams.AKIPVValue= result[5];
             }
+            // Параметры с преобразователей
+
+
+           V27Value = AKIPVValue;
+           I27Value = AKIPAValue;
+
+            _readingParams.V27Value = _readingParams.AKIPVValue;
+            _readingParams.I27Value = _readingParams.AKIPAValue;
+
+            _readingParams.V100Value = _readingParams.ITCVValue;
+            _readingParams.I100Value = _readingParams.ITCAValue;
+           
+            V100Value = ITCVValue;
+            I100Value = ITCAValue;
+
+            _readingParams.IBXATemperature = 0;
+            _readingParams.BSCTemperature = 0;
+            //Параметры с Owen
+           IBXATemperature = 0f.ToIBXATemperatureString();
+           BSCTemperature = 0f.ToBSCTemperatureString();
+
+            _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+
            
            // TestUpdateData();
         }

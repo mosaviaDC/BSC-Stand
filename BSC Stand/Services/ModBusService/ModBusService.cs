@@ -129,9 +129,6 @@ namespace BSC_Stand.Services
                 return -1;
             }
 
-
-
-
         }
 
 
@@ -293,13 +290,6 @@ namespace BSC_Stand.Services
             }
         }
 
-
-
-
-
-
-
-
         #region SCPI region
 
         public void ExitCommand()
@@ -319,41 +309,11 @@ namespace BSC_Stand.Services
 
             }
         }
-       
-        private string ReadIDN(SerialPort port)
-        {
-            port.WriteLine(@"
-                *CLS
-                *IDN?");
-            return port.ReadLine();
-        }
-
-
-        public bool SetAKIPPowerValue(double value)
-        {
-            if (AkipSerialPort != null)
-            {
-                
-                string query = ($@"SYSTEM:REM
-                            Mode Power
-                            INPUT 1
-                            Power {value.ToString("G2",culture)}
-                            Power?");
-                AkipSerialPort.WriteLine(query);
-                Debug.WriteLine(AkipSerialPort.ReadLine());
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public async Task<float[]> ReadElectronicLoadParams()
         {
             float[] results = new float[6];
 
-             await  Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 lock (results)
                 {
@@ -368,7 +328,7 @@ namespace BSC_Stand.Services
                         ITCSerialPort.WriteLine("MEASURE:POWER?");
                         results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
 
-                         Debug.WriteLine($"ITC A:{results[0]} V:{results[1]} W:{results[2]}");
+                        Debug.WriteLine($"ITC A:{results[0]} V:{results[1]} W:{results[2]}");
 
                         AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
                         results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
@@ -391,8 +351,32 @@ namespace BSC_Stand.Services
 
 
         }
-
-
+        private string ReadIDN(SerialPort port)
+        {
+            port.WriteLine(@"
+                *CLS
+                *IDN?");
+            return port.ReadLine();
+        }
+        public bool SetAKIPPowerValue(double value)
+        {
+            if (AkipSerialPort != null)
+            {
+                
+                string query = ($@"SYSTEM:REM
+                            Mode Power
+                            INPUT 1
+                            Power {value.ToString("G2",culture)}
+                            Power?");
+                AkipSerialPort.WriteLine(query);
+                Debug.WriteLine(AkipSerialPort.ReadLine());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public bool SetITCPowerValue (double value)
         {
             if (ITCSerialPort != null)

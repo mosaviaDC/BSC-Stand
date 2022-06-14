@@ -34,9 +34,9 @@
             <TextBlock Height="20"   VerticalAlignment="Top" HorizontalAlignment="Left"   Text="Статус подключения" FontWeight="Bold" FontSize="14"></TextBlock>
             <TreeView Grid.Row="0" Margin="0,30,0,0">
                 <TreeViewItem IsExpanded="True" Header="Owen" Background="#FFAFAFAF" FontSize="14">
-                    <TextBlock Text="Температура ЭО БСК"></TextBlock>
-                    <TextBlock Text="Температура ИБХА"></TextBlock>
-                    <TextBlock Text="{Binding OwenConnectStatus}"></TextBlock>
+                    <TextBlock Text="{Binding BSCTemperature}"></TextBlock>
+                    <TextBlock Text="{Binding IBXATemperature}"></TextBlock>
+                 
                 </TreeViewItem>
 
 

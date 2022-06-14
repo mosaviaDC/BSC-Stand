@@ -44,19 +44,36 @@ namespace BSC_Stand.Extensions
                 return new string($"W Нет соединения");
         }
 
-        public static string ToConnectionStatusString (this bool value)
+        public static string ToIBXATemperatureString (this float value)
         {
             
-            if (value)
+            if (value !=-1)
             {
-                return new string ("Соединение установлено");
+                return new string ($"Температура ИБХА {value} ℃");
             }
             else
             {
-                return new string("Нет  соединения");
+                return new string("Температура ИБХА - Нет данных");
             }
             
         }
+
+        public static string ToBSCTemperatureString(this float value)
+        {
+
+            if (value != -1)
+            {
+                return new string($"Температура ЭО БСК {value} ℃");
+            }
+            else
+            {
+                return new string("Температура ЭО БСК - Нет данных");
+            }
+
+        }
+
+        //IBXATemperature = "Температура ИБХА - Нет данных";
+        //    BSCTemperature = "Температура ЭО БСК - Нет данных";
 
     }
 }

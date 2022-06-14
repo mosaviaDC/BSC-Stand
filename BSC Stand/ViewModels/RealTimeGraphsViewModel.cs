@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BSC_Stand.Models;
 using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Wpf;
@@ -226,6 +227,15 @@ namespace BSC_Stand.ViewModels
         public RealTimeGraphsViewModel()
         {
             InitGraphSeries();
+        }
+
+
+
+        public void UpdateGraphsSeries(ReadingParams readingParams)
+        {
+            ///
+
+
         }
 
 
