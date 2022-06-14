@@ -254,11 +254,6 @@ namespace BSC_Stand.ViewModels
             PlotModel1.InvalidatePlot(true);
 
         }
-
-
-
-
-
         private void InitGraphSeries()
         {
             PlotModel1 = new PlotModel();
