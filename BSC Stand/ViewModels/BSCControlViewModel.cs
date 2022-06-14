@@ -375,7 +375,7 @@ namespace BSC_Stand.ViewModels
             //ReadV27Value();
 
             //OwenConnectStatus = false.ToConnectionStatusString();
-            var result =  await  _modBusService.ReadElectroninLoadParams();
+            var result =  await  _modBusService.ReadElectronicLoadParams();
             if (result != null)
             {
                 ITCAValue = result[0].ToAmperageString();
@@ -385,7 +385,7 @@ namespace BSC_Stand.ViewModels
                 AKIPWValue = result[3].ToPowerString();
                 AKIPAValue  = result[4].ToAmperageString();
                 AKIPVValue = result[5].ToVoltageString();
-                //Todo перенести в разные потоки АКИП И ITC, не забыть добавлять в series
+            
 
 
 

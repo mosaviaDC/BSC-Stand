@@ -27,7 +27,9 @@ namespace BSC_Stand.Services
 
 
         IModbusFactory _modbusFactory;
-
+        /// <summary>
+        /// Преобразователь напряжения шины 27В
+        /// </summary>
         private SerialPort U27SerialPort;
         private SerialPort I27SerialPort;
         private SerialPort U100SerialPort;
@@ -60,7 +62,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort(); /*InitV27BusPort() && InitI27BusPort() &&*/ //InitITCPort();
+                ConnectStatus = InitAkipPort() && InitITCPort(); /*InitV27BusPort() && InitI27BusPort()*/;
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -347,57 +349,88 @@ namespace BSC_Stand.Services
             }
         }
 
-        public async Task<float[]> ReadElectroninLoadParams()
+        public async Task<float[]> ReadElectronicLoadParams()
         {
             float[] results = new float[6];
-          return  await Task.Factory.StartNew(() =>
+
+             await  Task.Factory.StartNew(() =>
             {
-                lock (this)
+                lock (results)
                 {
-                    bool succes = false;
-                    try
-                    {
-                        ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                        results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
+                    ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                    results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
 
-                        ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                        results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
+                    ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                    results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
 
-                        ITCSerialPort.WriteLine("MEASURE:POWER?");
-                        results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+                    ITCSerialPort.WriteLine("MEASURE:POWER?");
+                    results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
 
-                        // Debug.WriteLine($"ITC V:{results[0]} W:{results[1]} A:{results[2]}");
+                    // Debug.WriteLine($"ITC V:{results[0]} W:{results[1]} A:{results[2]}");
 
-                        AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                        results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
+                    AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                    results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
 
-                        AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                        results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
+                    AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                    results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
 
-                        AkipSerialPort.WriteLine("MEASURE:POWER?");
-                        results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
+                    AkipSerialPort.WriteLine("MEASURE:POWER?");
+                    results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
 
-                        Debug.WriteLine($"{DateTime.Now}");
-                        succes = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("*****" + ex.Message);
-                        succes = false;
-                    }
-                    if (succes)
-                    {
-                        return results;
-                    }
-                    else
-                    {
-                        return null;
-                    }
                 }
+
+
+            });
+            return results;
+
+          //return  await Task.Factory.StartNew(() =>
+          //  {
+          //      lock (this)
+          //      {
+          //          bool succes = false;
+          //          try
+          //          {
+          //              ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
+          //              results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
+
+          //              ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
+          //              results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
+
+          //              ITCSerialPort.WriteLine("MEASURE:POWER?");
+          //              results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+
+          //              // Debug.WriteLine($"ITC V:{results[0]} W:{results[1]} A:{results[2]}");
+
+          //              AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
+          //              results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
+
+          //              AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
+          //              results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
+
+          //              AkipSerialPort.WriteLine("MEASURE:POWER?");
+          //              results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
+
+          //              Debug.WriteLine($"{DateTime.Now}");
+          //              succes = true;
+          //          }
+          //          catch (Exception ex)
+          //          {
+          //              Debug.WriteLine("*****" + ex.Message);
+          //              succes = false;
+          //          }
+          //          if (succes)
+          //          {
+          //              return results;
+          //          }
+          //          else
+          //          {
+          //              return null;
+          //          }
+          //      }
 
                
               
-            });
+          //  });
            
 
         }

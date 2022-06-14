@@ -11,15 +11,37 @@ namespace BSC_Stand.Extensions
 
         public static string ToVoltageString(this  float value)
         {
-            return new string($"V {value}");
+            if (value != -1)
+            {
+                return new string($"V {value}");
+            }
+            else
+            {
+                return new string($"V Нет соединения");
+            }
+
+        
         }
         public static string ToAmperageString(this float value)
         {
-            return new string($"A {value}");
+            if (value != -1)
+            {
+                return new string($"A {value}");
+            }
+            else
+            {
+                return new string($"A Нет соединения");
+            }
+         
         }
         public static string ToPowerString(this float value)
         {
-            return new string($"W {value}");
+            if (value != -1)
+            {
+                return new string($"W {value}");
+            }
+            else 
+                return new string($"W Нет соединения");
         }
 
         public static string ToConnectionStatusString (this bool value)

@@ -168,7 +168,7 @@ namespace BSC_Stand.ViewModels
 
         private void StartCheckProcedureExecute(object p)
         {
-            //TODO отправить комманды проверки на электронные нагрузки и источник питания
+            //TODO отправить комманды проверки на источник питания
             if (_modBusService.GetConnectStatus())
             {
                 _modBusService.SetAKIPPowerValue(5);
