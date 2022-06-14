@@ -357,81 +357,38 @@ namespace BSC_Stand.Services
             {
                 lock (results)
                 {
-                    ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                    results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
+                    try
+                    {
+                        ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                        results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
 
-                    ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                    results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
+                        ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                        results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
 
-                    ITCSerialPort.WriteLine("MEASURE:POWER?");
-                    results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+                        ITCSerialPort.WriteLine("MEASURE:POWER?");
+                        results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
 
-                    // Debug.WriteLine($"ITC V:{results[0]} W:{results[1]} A:{results[2]}");
+                         Debug.WriteLine($"ITC A:{results[0]} V:{results[1]} W:{results[2]}");
 
-                    AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                    results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
+                        AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                        results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
 
-                    AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                    results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
+                        AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                        results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
 
-                    AkipSerialPort.WriteLine("MEASURE:POWER?");
-                    results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
-
+                        AkipSerialPort.WriteLine("MEASURE:POWER?");
+                        results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                 }
 
 
             });
             return results;
 
-          //return  await Task.Factory.StartNew(() =>
-          //  {
-          //      lock (this)
-          //      {
-          //          bool succes = false;
-          //          try
-          //          {
-          //              ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
-          //              results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
-
-          //              ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
-          //              results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
-
-          //              ITCSerialPort.WriteLine("MEASURE:POWER?");
-          //              results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
-
-          //              // Debug.WriteLine($"ITC V:{results[0]} W:{results[1]} A:{results[2]}");
-
-          //              AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-          //              results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
-
-          //              AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-          //              results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
-
-          //              AkipSerialPort.WriteLine("MEASURE:POWER?");
-          //              results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
-
-          //              Debug.WriteLine($"{DateTime.Now}");
-          //              succes = true;
-          //          }
-          //          catch (Exception ex)
-          //          {
-          //              Debug.WriteLine("*****" + ex.Message);
-          //              succes = false;
-          //          }
-          //          if (succes)
-          //          {
-          //              return results;
-          //          }
-          //          else
-          //          {
-          //              return null;
-          //          }
-          //      }
-
-               
-              
-          //  });
-           
 
         }
 
