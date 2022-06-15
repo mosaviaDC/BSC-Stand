@@ -74,6 +74,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Update="Файлы пользователя\Записи экспериментов\132997750934437088.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Файлы пользователя\Записи экспериментов\sample.csv">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>sample.cs</LastGenOutput>
