@@ -9,7 +9,7 @@ using OxyPlot.Series;
 using OxyPlot.Wpf;
 namespace BSC_Stand.ViewModels
 {
-    internal class RealTimeGraphsViewModel:ViewModels.Base.ViewModelBase
+    internal class RealTimeGraphsViewModel : ViewModels.Base.ViewModelBase
     {
         public PlotModel PlotModel1 { get; set; }
         public PlotModel PlotModel2 { get; set; }
@@ -19,24 +19,62 @@ namespace BSC_Stand.ViewModels
         public int _SelectedGraphIndex;
         public int SelectedGraphIndex {
             get => _SelectedGraphIndex;
-            set=> Set(ref _SelectedGraphIndex, value);
+            set => Set(ref _SelectedGraphIndex, value);
         }
-        #region LineSeries
-        public LineSeries V27Series { get;  set; }
-        public LineSeries I27Series { get;  set; }
-        public LineSeries V100Series { get;  set; }
-        public LineSeries I100Series { get;  set; }
-        public LineSeries TIBXASeries { get;  set; }
+        #region LineSeries1
+        public LineSeries V27Series { get; set; }
+        public LineSeries I27Series { get; set; }
+        public LineSeries V100Series { get; set; }
+        public LineSeries I100Series { get; set; }
+        public LineSeries TIBXASeries { get; set; }
         public LineSeries TBSCSeries { get; set; }
-        public LineSeries ITCVSeries { get;  set; }
+        public LineSeries ITCVSeries { get; set; }
         public LineSeries ITCASeries { get; set; }
-        public LineSeries ITCWSeries { get;  set; }
-        public LineSeries AKIPVSeries { get;  set; }
-        public LineSeries AKIPASeries { get;  set; }
-        public LineSeries AKIPWSeries { get;  set; }
+        public LineSeries ITCWSeries { get; set; }
+        public LineSeries AKIPVSeries { get; set; }
+        public LineSeries AKIPASeries { get; set; }
+        public LineSeries AKIPWSeries { get; set; }
         #endregion
-        #region GraphVisible
 
+        #region LineSeries2
+        public LineSeries V27Series2 { get; set; }
+        public LineSeries I27Series2 { get; set; }
+        public LineSeries V100Series2 { get; set; }
+        public LineSeries I100Series2 { get; set; }
+        public LineSeries TIBXASeries2 { get; set; }
+        public LineSeries TBSCSeries2 { get; set; }
+        public LineSeries ITCVSeries2 { get; set; }
+        public LineSeries ITCASeries2 { get; set; }
+        public LineSeries ITCWSeries2 { get; set; }
+        public LineSeries AKIPVSeries2 { get; set; }
+        public LineSeries AKIPASeries2 { get; set; }
+        public LineSeries AKIPWSeries2 { get; set; }
+        #endregion
+
+        #region LineSeries3
+        public LineSeries V27Series3 { get; set; }
+        public LineSeries I27Series3 { get; set; }
+        public LineSeries V100Series3 { get; set; }
+        public LineSeries I100Series3 { get; set; }
+        public LineSeries TIBXASeries3 { get; set; }
+        public LineSeries TBSCSeries3 { get; set; }
+        public LineSeries ITCVSeries3 { get; set; }
+        public LineSeries ITCASeries3 { get; set; }
+        public LineSeries ITCWSeries3 { get; set; }
+        public LineSeries AKIPVSeries3 { get; set; }
+        public LineSeries AKIPASeries3 { get; set; }
+        public LineSeries AKIPWSeries3 { get; set; }
+        #endregion
+
+
+
+
+
+
+
+
+        #region GraphVisible
+        #region Series1
         private bool _AKIPVSeriesVisible;
         public bool AKIPVSeriesVisible
         {
@@ -219,6 +257,376 @@ namespace BSC_Stand.ViewModels
                 PlotModel1.InvalidatePlot(true);
             }
         }
+        #endregion
+        #region Series2
+        private bool _AKIPVSeriesVisible2;
+        public bool AKIPVSeriesVisible2
+        {
+            get
+            {
+                return _AKIPVSeriesVisible2;
+            }
+            set
+            {
+                Set(ref _AKIPVSeriesVisible2, value);
+                AKIPVSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _AKIPASeriesVisible2;
+        public bool AKIPASeriesVisible2
+        {
+            get
+            {
+                return _AKIPASeriesVisible2;
+            }
+            set
+            {
+                Set(ref _AKIPASeriesVisible2, value);
+                AKIPASeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _AKIPWSeriesVisible2;
+        public bool AKIPWSeriesVisible2
+        {
+            get
+            {
+                return _AKIPWSeriesVisible2;
+            }
+            set
+            {
+                Set(ref _AKIPWSeriesVisible2, value);
+                AKIPWSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _ITCVSeriesVisible2;
+        public bool ITCVSeriesVisible2
+        {
+            get
+            {
+                return _ITCVSeriesVisible2;
+            }
+            set
+            {
+                Set(ref _ITCVSeriesVisible2, value);
+                ITCVSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _ITCASeriesVisible2;
+        public bool ITCASeriesVisible2
+        {
+            get
+            {
+                return _ITCASeriesVisible2;
+            }
+            set
+            {
+                Set(ref _ITCASeriesVisible2, value);
+                ITCASeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+        private bool _ITCWSeriesVisible2;
+        public bool ITCWSeriesVisible2
+        {
+            get
+            {
+                return _ITCWSeriesVisible2;
+            }
+            set
+            {
+                Set(ref _ITCWSeriesVisible2, value);
+                ITCWSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+
+        private bool _V100SeriesVisible2;
+        public bool V100SeriesVisible2
+        {
+            get
+            {
+                return _V100SeriesVisible2;
+            }
+            set
+            {
+                Set(ref _V100SeriesVisible2, value);
+                V100Series2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _I100SeriesVisible2;
+        public bool I100SeriesVisible2
+        {
+            get
+            {
+                return _I100SeriesVisible2;
+            }
+            set
+            {
+                Set(ref _I100SeriesVisible2, value);
+                I100Series2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _I27SeriesVisible2;
+        public bool I27SeriesVisible2
+        {
+            get
+            {
+                return _I27SeriesVisible2;
+            }
+            set
+            {
+                Set(ref _I27SeriesVisible2, value);
+                I27Series2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+
+        private bool _V27SeriesVisible2;
+        public bool V27SeriesVisible2
+        {
+            get
+            {
+                return _V27SeriesVisible2;
+            }
+            set
+            {
+                Set(ref _V27SeriesVisible2, value);
+                V27Series2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+
+        private bool _TIBXASeriesVisible2;
+        public bool TIBXASeriesVisible2
+        {
+            get
+            {
+                return _TIBXASeriesVisible2;
+            }
+            set
+            {
+                Set(ref _TIBXASeriesVisible2, value);
+                TIBXASeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TBSCSeriesVisible2;
+        public bool TBSCSeriesVisible2
+        {
+            get
+            {
+                return _TBSCSeriesVisible2;
+            }
+            set
+            {
+
+                Set(ref _TBSCSeriesVisible2, value);
+                TBSCSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+        #endregion
+
+        #region Series3
+        private bool _AKIPVSeriesVisible3;
+        public bool AKIPVSeriesVisible3
+        {
+            get
+            {
+                return _AKIPVSeriesVisible3;
+            }
+            set
+            {
+                Set(ref _AKIPVSeriesVisible3, value);
+                AKIPVSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _AKIPASeriesVisible3;
+        public bool AKIPASeriesVisible3
+        {
+            get
+            {
+                return _AKIPASeriesVisible3;
+            }
+            set
+            {
+                Set(ref _AKIPASeriesVisible3, value);
+                AKIPASeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _AKIPWSeriesVisible3;
+        public bool AKIPWSeriesVisible3
+        {
+            get
+            {
+                return _AKIPWSeriesVisible3;
+            }
+            set
+            {
+                Set(ref _AKIPWSeriesVisible3, value);
+                AKIPWSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _ITCVSeriesVisible3;
+        public bool ITCVSeriesVisible3
+        {
+            get
+            {
+                return _ITCVSeriesVisible3;
+            }
+            set
+            {
+                Set(ref _ITCVSeriesVisible3, value);
+                ITCVSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _ITCASeriesVisible3;
+        public bool ITCASeriesVisible3
+        {
+            get
+            {
+                return _ITCASeriesVisible3;
+            }
+            set
+            {
+                Set(ref _ITCASeriesVisible3, value);
+                ITCASeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+        private bool _ITCWSeriesVisible3;
+        public bool ITCWSeriesVisible3
+        {
+            get
+            {
+                return _ITCWSeriesVisible3;
+            }
+            set
+            {
+                Set(ref _ITCWSeriesVisible3, value);
+                ITCWSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+
+        private bool _V100SeriesVisible3;
+        public bool V100SeriesVisible3
+        {
+            get
+            {
+                return _V100SeriesVisible3;
+            }
+            set
+            {
+                Set(ref _V100SeriesVisible3, value);
+                V100Series3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _I100SeriesVisible3;
+        public bool I100SeriesVisible3
+        {
+            get
+            {
+                return _I100SeriesVisible3;
+            }
+            set
+            {
+                Set(ref _I100SeriesVisible3, value);
+                I100Series3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _I27SeriesVisible3;
+        public bool I27SeriesVisible3
+        {
+            get
+            {
+                return _I27SeriesVisible3;
+            }
+            set
+            {
+                Set(ref _I27SeriesVisible3, value);
+                I27Series3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+
+        private bool _V27SeriesVisible3;
+        public bool V27SeriesVisible3
+        {
+            get
+            {
+                return _V27SeriesVisible3;
+            }
+            set
+            {
+                Set(ref _V27SeriesVisible3, value);
+                V27Series3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+
+        private bool _TIBXASeriesVisible3;
+        public bool TIBXASeriesVisible3
+        {
+            get
+            {
+                return _TIBXASeriesVisible3;
+            }
+            set
+            {
+                Set(ref _TIBXASeriesVisible3, value);
+                TIBXASeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TBSCSeriesVisible3;
+        public bool TBSCSeriesVisible3
+        {
+            get
+            {
+                return _TBSCSeriesVisible3;
+            }
+            set
+            {
+
+                Set(ref _TBSCSeriesVisible3, value);
+                TBSCSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+        #endregion
 
 
 
@@ -234,24 +642,68 @@ namespace BSC_Stand.ViewModels
         public void UpdateGraphsSeries(ReadingParams readingParams)
         {
             //Обновление серий
-            ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
-            ITCASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
-            ITCWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
+            {
+                ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
+                ITCASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
+                ITCWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
 
-            AKIPASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
-            AKIPVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
-            AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
+                AKIPASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
+                AKIPVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
+                AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
 
-            V27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
-            I27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
+                V27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
+                I27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
 
-            V100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
-            I100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
+                V100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
+                I100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
 
-            TIBXASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
-            TBSCSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+                TIBXASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
+                TBSCSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
 
+                ITCVSeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
+                ITCASeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
+                ITCWSeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
+
+                AKIPASeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
+                AKIPVSeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
+                AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
+
+                V27Series2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
+                I27Series2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
+
+                V100Series2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
+                I100Series2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
+
+                TIBXASeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
+                TBSCSeries2.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+
+
+                ITCVSeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
+                ITCASeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
+                ITCWSeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
+
+                AKIPASeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
+                AKIPVSeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
+                AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
+
+                V27Series3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
+                I27Series3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
+
+                V100Series3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
+                I100Series3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
+
+                TIBXASeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
+                TBSCSeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+            }
+            //
+
+
+
+
+
+            PlotModel2.InvalidatePlot(true);
             PlotModel1.InvalidatePlot(true);
+            PlotModel3.InvalidatePlot(true);
 
         }
         private void InitGraphSeries()
@@ -273,165 +725,509 @@ namespace BSC_Stand.ViewModels
             {
 
             });
-
-            V27Series = new LineSeries
+            #region InitSeries
             {
-                Title = "V 27",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек",
-                Color = OxyColors.Blue,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
+
+                V27Series = new LineSeries
+                {
+                    Title = "V 27",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    Color = OxyColors.Blue,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
 
 
 
-            I27Series = new LineSeries
+                I27Series = new LineSeries
+                {
+                    Title = "I 27",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.DarkBlue,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+
+                };
+
+
+                V100Series = new LineSeries
+                {
+                    Title = "V 100",
+                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    Color = OxyColors.DarkOrange,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                I100Series = new LineSeries
+                {
+                    Title = "I 100",
+                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    Color = OxyColors.OrangeRed,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+                TIBXASeries = new LineSeries
+                {
+                    Title = "T℃  ИБХА",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.Green,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+                TBSCSeries = new LineSeries
+                {
+                    Title = "T℃  ЭОБСК",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.ForestGreen,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                ITCVSeries = new LineSeries
+                {
+                    Title = "V IT8516C+",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Brown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCASeries = new LineSeries
+                {
+                    Title = "A IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.RosyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCWSeries = new LineSeries
+                {
+                    Title = "W IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.SandyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+
+                AKIPVSeries = new LineSeries
+                {
+                    Title = "V АКИП",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Violet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPASeries = new LineSeries
+                {
+                    Title = "A АКИП",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPWSeries = new LineSeries
+                {
+                    Title = "W АКИП",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+            }
+            ///Series 2
             {
-                Title = "I 27",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек",
-                Color = OxyColors.BlueViolet,
-                MarkerFill = OxyColors.DarkBlue,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
 
-            };
+                V27Series2 = new LineSeries
+                {
+                    Title = "V 27",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    Color = OxyColors.Blue,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
 
 
-            V100Series = new LineSeries
+
+                I27Series2 = new LineSeries
+                {
+                    Title = "I 27",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.DarkBlue,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+
+                };
+
+
+                V100Series2 = new LineSeries
+                {
+                    Title = "V 100",
+                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    Color = OxyColors.DarkOrange,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                I100Series2 = new LineSeries
+                {
+                    Title = "I 100",
+                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    Color = OxyColors.OrangeRed,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+                TIBXASeries2 = new LineSeries
+                {
+                    Title = "T℃  ИБХА",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.Green,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+                TBSCSeries2 = new LineSeries
+                {
+                    Title = "T℃  ЭОБСК",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.ForestGreen,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                ITCVSeries2 = new LineSeries
+                {
+                    Title = "V IT8516C+",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Brown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCASeries2 = new LineSeries
+                {
+                    Title = "A IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.RosyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCWSeries2 = new LineSeries
+                {
+                    Title = "W IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.SandyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+
+                AKIPVSeries2 = new LineSeries
+                {
+                    Title = "V АКИП",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Violet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPASeries2 = new LineSeries
+                {
+                    Title = "A АКИП",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPWSeries2 = new LineSeries
+                {
+                    Title = "W АКИП",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+            }
+            //Series3
             {
-                Title = "V 100",
-                TrackerFormatString = "{4:0} В {2:0} сек",
-                Color = OxyColors.DarkOrange,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
+                V27Series3 = new LineSeries
+                {
+                    Title = "V 27",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    Color = OxyColors.Blue,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
 
 
 
-            I100Series = new LineSeries
+                I27Series3 = new LineSeries
+                {
+                    Title = "I 27",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.DarkBlue,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+
+                };
+
+
+                V100Series3 = new LineSeries
+                {
+                    Title = "V 100",
+                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    Color = OxyColors.DarkOrange,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                I100Series3 = new LineSeries
+                {
+                    Title = "I 100",
+                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    Color = OxyColors.OrangeRed,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+                TIBXASeries3 = new LineSeries
+                {
+                    Title = "T℃  ИБХА",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.Green,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+                TBSCSeries3 = new LineSeries
+                {
+                    Title = "T℃  ЭОБСК",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.ForestGreen,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                ITCVSeries3 = new LineSeries
+                {
+                    Title = "V IT8516C+",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Brown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCASeries3 = new LineSeries
+                {
+                    Title = "A IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.RosyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCWSeries3 = new LineSeries
+                {
+                    Title = "W IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.SandyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+
+                AKIPVSeries3 = new LineSeries
+                {
+                    Title = "V АКИП",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Violet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPASeries3 = new LineSeries
+                {
+                    Title = "A АКИП",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPWSeries3 = new LineSeries
+                {
+                    Title = "W АКИП",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+            }
+
+            #endregion
+
+            #region AddSerieToPlot
+            //Add Series to Plot Models (Порядок в легенде меняется тут)
             {
-                Title = "I 100",
-                TrackerFormatString = "{4:0} A {2:0} сек",
-                Color = OxyColors.OrangeRed,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
+                PlotModel1.Series.Add(TIBXASeries);
+                PlotModel1.Series.Add(TBSCSeries);
 
+                PlotModel1.Series.Add(V27Series);
+                PlotModel1.Series.Add(I27Series);
 
-            TIBXASeries = new LineSeries
+                PlotModel1.Series.Add(V100Series);
+                PlotModel1.Series.Add(I100Series);
+
+                PlotModel1.Series.Add(ITCVSeries);
+                PlotModel1.Series.Add(ITCASeries);
+                PlotModel1.Series.Add(ITCWSeries);
+
+                PlotModel1.Series.Add(AKIPVSeries);
+                PlotModel1.Series.Add(AKIPASeries);
+                PlotModel1.Series.Add(AKIPWSeries);
+            }
             {
-                Title = "T℃  ИБХА",
-                TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
-                Color = OxyColors.Green,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
+                PlotModel2.Series.Add(TIBXASeries2);
+                PlotModel2.Series.Add(TBSCSeries2);
 
-            TBSCSeries = new LineSeries
+                PlotModel2.Series.Add(V27Series2);
+                PlotModel2.Series.Add(I27Series2);
+
+                PlotModel2.Series.Add(V100Series2);
+                PlotModel2.Series.Add(I100Series2);
+
+                PlotModel2.Series.Add(ITCVSeries2);
+                PlotModel2.Series.Add(ITCASeries2);
+                PlotModel2.Series.Add(ITCWSeries2);
+
+                PlotModel2.Series.Add(AKIPVSeries2);
+                PlotModel2.Series.Add(AKIPASeries2);
+                PlotModel2.Series.Add(AKIPWSeries2);
+            }
+
             {
-                Title = "T℃  ЭОБСК",
-                TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
-                Color = OxyColors.ForestGreen,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true,
-            };
+                PlotModel3.Series.Add(TIBXASeries3);
+                PlotModel3.Series.Add(TBSCSeries3);
+
+                PlotModel3.Series.Add(V27Series3);
+                PlotModel3.Series.Add(I27Series3);
+
+                PlotModel3.Series.Add(V100Series3);
+                PlotModel3.Series.Add(I100Series3);
+
+                PlotModel3.Series.Add(ITCVSeries3);
+                PlotModel3.Series.Add(ITCASeries3);
+                PlotModel3.Series.Add(ITCWSeries3);
+
+                PlotModel3.Series.Add(AKIPVSeries3);
+                PlotModel3.Series.Add(AKIPASeries3);
+                PlotModel3.Series.Add(AKIPWSeries3);
+            }
 
 
 
-            ITCVSeries = new LineSeries
-            {
-                Title = "V IT8516C+",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
-                Color = OxyColors.Brown,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
 
-            ITCASeries = new LineSeries
-            {
-                Title = "A IT8516C+",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
-                Color = OxyColors.RosyBrown,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-            ITCWSeries = new LineSeries
-            {
-                Title = "W IT8516C+",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
-                Color = OxyColors.SandyBrown,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
+            #endregion
 
 
-            AKIPVSeries = new LineSeries
-            {
-                Title = "V АКИП",
-                TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
-                Color = OxyColors.Violet,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
 
-            AKIPASeries = new LineSeries
-            {
-                Title = "A АКИП",
-                TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
-                Color = OxyColors.BlueViolet,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
 
-            AKIPWSeries = new LineSeries
-            {
-                Title = "W АКИП",
-                TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
-                Color = OxyColors.DarkViolet,
-                MarkerFill = OxyColors.Red,
-                MarkerType = MarkerType.Cross,
-                MarkerSize = 1,
-                IsVisible = true
-            };
-
-            PlotModel1.Series.Add(TIBXASeries);
-            PlotModel1.Series.Add(TBSCSeries);
-
-            PlotModel1.Series.Add(V27Series);
-            PlotModel1.Series.Add(I27Series);
-        
-            PlotModel1.Series.Add(V100Series);
-            PlotModel1.Series.Add(I100Series);
-
-            PlotModel1.Series.Add(ITCVSeries);
-            PlotModel1.Series.Add(ITCASeries);
-            PlotModel1.Series.Add(ITCWSeries);
-
-            PlotModel1.Series.Add(AKIPVSeries);
-            PlotModel1.Series.Add(AKIPASeries);
-            PlotModel1.Series.Add(AKIPWSeries);
 
 
             PlotModel1.Legends.Add(new OxyPlot.Legends.Legend()
@@ -439,6 +1235,22 @@ namespace BSC_Stand.ViewModels
                 LegendTitle = "",
                 LegendFontSize = 14
             });
+
+
+            PlotModel2.Legends.Add(new OxyPlot.Legends.Legend()
+            {
+                LegendTitle = "",
+                LegendFontSize = 14
+            });
+
+            PlotModel3.Legends.Add(new OxyPlot.Legends.Legend()
+            {
+                LegendTitle = "",
+                LegendFontSize = 14
+            });
+
+
+
             TIBXASeriesVisible = true;
             TBSCSeriesVisible = true;
             I27SeriesVisible = true;
@@ -451,6 +1263,33 @@ namespace BSC_Stand.ViewModels
             ITCWSeriesVisible = true;
             V100SeriesVisible = true;
             I100SeriesVisible = true;
+
+
+            TIBXASeriesVisible2 = true;
+            TBSCSeriesVisible2 = true;
+            I27SeriesVisible2 = true;
+            V27SeriesVisible2 = true;
+            AKIPASeriesVisible2 = true;
+            AKIPVSeriesVisible2 = true;
+            AKIPWSeriesVisible2 = true;
+            ITCASeriesVisible2 = true;
+            ITCVSeriesVisible2 = true;
+            ITCWSeriesVisible2 = true;
+            V100SeriesVisible2 = true;
+            I100SeriesVisible2 = true;
+
+            TIBXASeriesVisible3 = true;
+            TBSCSeriesVisible3 = true;
+            I27SeriesVisible3 = true;
+            V27SeriesVisible3 = true;
+            AKIPASeriesVisible3 = true;
+            AKIPVSeriesVisible3 = true;
+            AKIPWSeriesVisible3 = true;
+            ITCASeriesVisible3 = true;
+            ITCVSeriesVisible3 = true;
+            ITCWSeriesVisible3 = true;
+            V100SeriesVisible3 = true;
+            I100SeriesVisible3 = true;
 
 
 
