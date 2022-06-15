@@ -10,10 +10,6 @@
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding StandVizualizationViewModel, Source={StaticResource ViewModelLocator}}"
              >
-   
-
-  
-   
     <Grid >
         
         <Grid.Background>
@@ -36,27 +32,22 @@
                     <RowDefinition Height="0.2*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <GroupBox  Grid.Row="0" Background="White" SnapsToDevicePixels="False"  Padding="0">
-                    
-                            <Grid ShowGridLines="True">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.5*" MaxHeight="700"></RowDefinition>
-                                    <RowDefinition Height="0.5*" MaxHeight="700"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <oxy:PlotView Grid.Row="0" Model="{Binding Bus27PlotModel}">
 
-                                </oxy:PlotView>
-                                <oxy:PlotView Grid.Row="1" Model="{Binding Bus100PlotModel}">
-                                    
-                                </oxy:PlotView>
+                    <Grid ShowGridLines="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*" MaxHeight="700"></RowDefinition>
+                            <RowDefinition Height="0.5*" MaxHeight="700"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <oxy:PlotView Grid.Row="0" Model="{Binding Bus27PlotModel}">
+
+                        </oxy:PlotView>
+                        <oxy:PlotView Grid.Row="1" Model="{Binding Bus100PlotModel}">
+
+                        </oxy:PlotView>
 
 
-                                <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="2.5"></GridSplitter>
-                            </Grid>
-
-                     
-                        
-                  
-                   
+                        <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="2.5"></GridSplitter>
+                    </Grid>
 
                 </GroupBox>
 

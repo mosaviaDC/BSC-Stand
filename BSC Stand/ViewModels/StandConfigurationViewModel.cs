@@ -171,7 +171,7 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion Services
 
-        public StandConfigurationViewModel(IFileLogger fileLogger,StandVizualizationViewModel standVizualizationViewModel)
+        public StandConfigurationViewModel(StandVizualizationViewModel standVizualizationViewModel)
         {
             _standVizualizationViewModel = standVizualizationViewModel;
           

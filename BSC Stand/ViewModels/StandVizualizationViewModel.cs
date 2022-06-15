@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using BSC_Stand.Services.FileLoggingService;
 using System.IO;
 using BSC_Stand.Services;
 using System.Diagnostics;
@@ -53,10 +52,11 @@ namespace BSC_Stand.ViewModels
  
         List<DataPoint> dataPoints { get; set; }
 
-        public StandVizualizationViewModel(IFileLogger fileLogger, IGraphService graphService)
+        public StandVizualizationViewModel( IGraphService graphService)
 
         {
-            
+            FileLoggerService fileLoggerService = new FileLoggerService();
+            fileLoggerService.CreateFile();
             _graphService = graphService;
 
             for (int i = 0; i < 150; i++)
