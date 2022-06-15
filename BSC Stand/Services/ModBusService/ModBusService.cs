@@ -363,14 +363,14 @@ namespace BSC_Stand.Services
             if (AkipSerialPort != null)
             {
                 
-                string query = ($@"SYSTEM:REM
+                    string query = ($@"SYSTEM:REM
                             Mode Power
                             INPUT 1
-                            Power {value.ToString("G2",culture)}
+                            Power {value.ToString("G2", culture)}
                             Power?");
-                AkipSerialPort.WriteLine(query);
-                Debug.WriteLine(AkipSerialPort.ReadLine());
-                return true;
+                    AkipSerialPort.WriteLine(query);
+                    return true;
+                
             }
             else
             {
@@ -381,17 +381,17 @@ namespace BSC_Stand.Services
         {
             if (ITCSerialPort != null)
             {
-             
-              
-                string query = ($@"SYSTEM:REM
+
+                
+                    string query = ($@"SYSTEM:REM
                             Mode Power
                             INPut 1
-                            Power {value.ToString("G2",culture)}
+                            Power {value.ToString("G2", culture)}
                             Power?");
-    
-                ITCSerialPort.WriteLine(query);
-             
-                return true;
+
+                    ITCSerialPort.WriteLine(query);
+                    return true;
+                
             }
             else
             {
