@@ -21,6 +21,7 @@ namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
     {
+        private readonly IFileLoggerService _fileLoggerService;
         private readonly ReadingParams _readingParams;
         private readonly RealTimeGraphsViewModel _realTimeGraphsViewModel;
         private readonly IUserDialogWindowService _userDialogWindowService;
@@ -59,6 +60,7 @@ namespace BSC_Stand.ViewModels
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
                 _realTimeGraphsViewModel.ClearAllPoints();
+                _fileLoggerService.CreateFile();
                 UpdateDataTimer?.Start();
             }
 
@@ -346,8 +348,9 @@ namespace BSC_Stand.ViewModels
 
         #endregion
 
-        public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService, RealTimeGraphsViewModel realTimeGraphsViewModel)
+        public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService, RealTimeGraphsViewModel realTimeGraphsViewModel, IFileLoggerService fileLoggerService)
         {
+            _fileLoggerService = fileLoggerService;
             _readingParams = new ReadingParams();
             _realTimeGraphsViewModel = realTimeGraphsViewModel;
             _userDialogWindowService = userDialogWindowService;
@@ -452,6 +455,7 @@ namespace BSC_Stand.ViewModels
             if (_realTimeStandControlService.GetExperimentStatus())
             {
                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+                _fileLoggerService.WriteLog(_readingParams);
             }
 
 

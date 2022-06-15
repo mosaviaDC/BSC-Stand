@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace BSC_Stand.Models
 {
-    internal class ReadingParams
+    public class ReadingParams
     {
-        public  float ITCAValue;
-        public float ITCVValue;
-        public float ITCWValue;
+        public float ITCAValue { get; set; }
+        public float ITCVValue { get; set; }
+        public float ITCWValue { get; set; }
 
-        public float AKIPWValue;
-        public float AKIPAValue;
-        public float AKIPVValue;
+        public float AKIPWValue { get; set; }
+        public float AKIPAValue { get; set; }
+        public float AKIPVValue { get; set; }
 
-        public float V27Value;
-        public float I27Value;
+        public float V27Value { get; set; }
+        public float I27Value { get; set; }
 
-        public float V100Value;
-        public float I100Value;
+        public float V100Value { get; set; }
+        public float I100Value { get; set; }
 
         //Параметры с Owen
-        public float IBXATemperature;
-        public float BSCTemperature;
+        public float IBXATemperature { get; set; }
+        public float BSCTemperature { get; set; }
 
-        public float ExpTime;
+        public float ExpTime { get; set; }
 
-      
+
     }
 }

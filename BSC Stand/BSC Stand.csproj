@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infastructure\Owen\**" />
+    <EmbeddedResource Remove="Infastructure\Owen\**" />
+    <None Remove="Infastructure\Owen\**" />
+    <Page Remove="Infastructure\Owen\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Windows\ico.ico" />
     <None Remove="Файлы пользователя\Конифгурация экспериментов\sample.json" />
   </ItemGroup>
@@ -49,15 +56,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infastructure\Owen\" />
-    <Folder Include="Файлы пользователя\Записи экспериментов\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Файлы пользователя\Записи экспериментов\sample.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>sample.csv</DependentUpon>
     </Compile>
   </ItemGroup>
 

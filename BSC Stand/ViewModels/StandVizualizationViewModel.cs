@@ -55,8 +55,7 @@ namespace BSC_Stand.ViewModels
         public StandVizualizationViewModel( IGraphService graphService)
 
         {
-            FileLoggerService fileLoggerService = new FileLoggerService();
-            fileLoggerService.CreateFile();
+            
             _graphService = graphService;
 
             for (int i = 0; i < 150; i++)
