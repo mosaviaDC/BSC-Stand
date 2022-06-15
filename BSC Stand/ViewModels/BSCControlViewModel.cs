@@ -110,7 +110,7 @@ namespace BSC_Stand.ViewModels
                         else
                         {
                             WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
-
+                            UpdateDataTimer.Start();
                         }
                     }
                 }
@@ -449,7 +449,13 @@ namespace BSC_Stand.ViewModels
            IBXATemperature = 0f.ToIBXATemperatureString();
            BSCTemperature = 0f.ToBSCTemperatureString();
 
-            _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+            if (_realTimeStandControlService.GetExperimentStatus())
+            {
+                _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+            }
+
+
+            
 
            
            // TestUpdateData();
