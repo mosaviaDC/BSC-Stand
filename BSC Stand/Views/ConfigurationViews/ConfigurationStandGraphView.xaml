@@ -46,7 +46,7 @@
 
                                 </oxy:PlotView>
                                 <oxy:PlotView Grid.Row="1" Model="{Binding Bus100PlotModel}">
-
+                                    
                                 </oxy:PlotView>
 
 
@@ -106,7 +106,7 @@
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <TextBlock Margin="5"   Grid.Row="0" Grid.Column ="0" MinWidth="50" Text="{Binding V100Value}"></TextBlock>
-                        <TextBlock  Margin="5" Grid.Row="1" Grid.Column ="0" MinWidth="50" Text="{Binding I100Value}"></TextBlock>
+                        <TextBlock  Margin="5" Grid.Row="1" Grid.Column ="0" MinWidth="50"  Text="{Binding I100Value}"></TextBlock>
                     </Grid>
 
 
