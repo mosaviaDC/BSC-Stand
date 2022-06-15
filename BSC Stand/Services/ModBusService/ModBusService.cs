@@ -311,47 +311,50 @@ namespace BSC_Stand.Services
         }
         public async Task<float[]> ReadElectronicLoadParams()
         {
-            float[] results = new float[6];
+        
+                float[] results = new float[6];
 
-            await Task.Factory.StartNew(() =>
-            {
-                
+                await Task.Factory.StartNew(() =>
+                {
+
                     try
                     {
-                    lock (ITCSerialPort)
-                    {
-                        ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                        results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
 
-                        ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                        results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
+                        lock (ITCSerialPort)
+                        {
+                            ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                            results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
 
-                        ITCSerialPort.WriteLine("MEASURE:POWER?");
-                        results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+                            ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                            results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Power
+
+                            ITCSerialPort.WriteLine("MEASURE:POWER?");
+                            results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+                        }
+
+                        lock (AkipSerialPort)
+                        {
+                            AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                            results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
+
+                            AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                            results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
+
+                            AkipSerialPort.WriteLine("MEASURE:POWER?");
+                            results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
+                        }
                     }
 
-                    lock (AkipSerialPort)
-                    {
-
-                        AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                        results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
-
-                        AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                        results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Amperage
-
-                        AkipSerialPort.WriteLine("MEASURE:POWER?");
-                        results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
-                    }
-                    }
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
                     }
-                
 
 
-            });
-            return results;
+
+                });
+                return results;
+            
 
 
         }
@@ -364,9 +367,12 @@ namespace BSC_Stand.Services
         }
         public bool SetAKIPPowerValue(double value)
         {
-            if (AkipSerialPort != null)
-            {
-                
+          
+
+                if (AkipSerialPort != null)
+                {
+                lock (AkipSerialPort)
+                {
                     string query = ($@"SYSTEM:REM
                             Mode Power
                             INPUT 1
@@ -374,19 +380,25 @@ namespace BSC_Stand.Services
                             Power?");
                     AkipSerialPort.WriteLine(query);
                     return true;
-                
-            }
-            else
-            {
-                return false;
-            }
+
+                }
+                }
+                else
+                {
+                    return false;
+                }
+            
         }
         public bool SetITCPowerValue (double value)
         {
-            if (ITCSerialPort != null)
-            {
+            
 
-                
+
+                if (ITCSerialPort != null)
+                {
+                lock (ITCSerialPort)
+                {
+
                     string query = ($@"SYSTEM:REM
                             Mode Power
                             INPut 1
@@ -395,12 +407,13 @@ namespace BSC_Stand.Services
 
                     ITCSerialPort.WriteLine(query);
                     return true;
-                
-            }
-            else
-            {
-                return false;
-            }
+                }
+                }
+                else
+                {
+                    return false;
+                }
+            
         
         }
 
