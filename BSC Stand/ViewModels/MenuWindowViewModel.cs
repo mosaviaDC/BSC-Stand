@@ -28,6 +28,7 @@ namespace BSC_Stand.ViewModels
         private string CurrentOpenedFileName = null;
         private readonly IWindowService _windowService;
         private readonly StatusBarViewModel _statusBarViewModel;
+        private readonly IFileLoggerService _fileLoggerService;
         #endregion
         #region Services
         private readonly IFileDialog _fileDialogService;
@@ -72,14 +73,28 @@ namespace BSC_Stand.ViewModels
             CurrentOpenedFileName = _fileDialogService.OpenFileDialog();
             if (CurrentOpenedFileName != null)
             {
-             
-                var result = await _projectConfigurationService.GetProjectConfiguration(CurrentOpenedFileName);
-                _statusBarViewModel.UpdateTaskProgress(100);
-                if (result != null)
+
+                if (CurrentOpenedFileName.EndsWith(".json"))
                 {
-                    _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
-                    Title = $"{CurrentOpenedFileName} - ЭО БСК";
+                    var result = await _projectConfigurationService.GetProjectConfiguration(CurrentOpenedFileName);
+                    _statusBarViewModel.UpdateTaskProgress(100);
+                    if (result != null)
+                    {
+                        _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
+                        Title = $"{CurrentOpenedFileName} - ЭО БСК";
+                    }
                 }
+
+                else if (CurrentOpenedFileName.EndsWith(".csv"))
+                {
+                  var r= await  _fileLoggerService.ReadLogs(CurrentOpenedFileName);
+
+                  
+
+                };
+
+             
+              
             }
 
         }
@@ -154,9 +169,10 @@ namespace BSC_Stand.ViewModels
         #region Services
         #endregion
 
-        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService, BSCControlViewModel bSCControlViewModel, StatusBarViewModel statusBarViewModel)
+        public MenuWindowViewModel(IFileDialog fileDialogService, IProjectConfigurationService projectConfigurationService, StandConfigurationViewModel standConfigurationViewModel, IWindowService windowService, BSCControlViewModel bSCControlViewModel, StatusBarViewModel statusBarViewModel,IFileLoggerService fileLoggerService)
         {
             #region Services
+            _fileLoggerService = fileLoggerService;
             _fileDialogService = fileDialogService;
             _projectConfigurationService = projectConfigurationService;
             _standConfigurationViewModel = standConfigurationViewModel;

@@ -9,6 +9,7 @@ using BSC_Stand.Models;
 using System.Globalization;
 using System.Diagnostics;
 using CsvHelper.Configuration;
+using System.Linq;
 
 namespace BSC_Stand.Services
 {
@@ -49,6 +50,27 @@ namespace BSC_Stand.Services
                 }
               
 
+        }
+
+        public async Task<List<ReadingParams>> ReadLogs(string _FilePath)
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+            };
+           return await Task.Run(() =>
+            {
+
+                using (var reader = new StreamReader(_FilePath))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    //    var records = await csv.GetRecordsAsync<ReadingParams>();
+                    var a = csv.GetRecords<ReadingParams>();
+                    return a.ToList();
+                }
+            });
+
+          
         }
 
     }

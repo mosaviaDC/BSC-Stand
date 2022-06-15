@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BSC_Stand.Views"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              DataContext="{Binding PostAnalyzeViewModel,Source={StaticResource ViewModelLocator}}"
@@ -14,7 +15,19 @@
             <SolidColorBrush x:Key="IconBrush" Color="DarkCyan"></SolidColorBrush>
         </Grid.Resources>
         <Menu VerticalAlignment="Top" Height="50"       Background="AliceBlue">
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Regular_FileAlt"   ToolTip="Импорт записи экспиремента"   FontSize="21.5"></fa5:FontAwesome>
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Regular_FileAlt"   ToolTip="Импорт записи экспиремента"   FontSize="21.5">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ImportLogFileCommand}"></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                
+                
+                
+                
+                
+                
+            </fa5:FontAwesome>
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileExcel"   ToolTip="Экспорт в XLS" FontSize="21.5"></fa5:FontAwesome>
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileCsv"     ToolTip="Экспорт в CSV"   FontSize="21.5"></fa5:FontAwesome>
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FilePdf"     ToolTip="Экспорт в PDF"    FontSize="21.5"></fa5:FontAwesome>

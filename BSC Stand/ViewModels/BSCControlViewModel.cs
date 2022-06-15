@@ -133,6 +133,7 @@ namespace BSC_Stand.ViewModels
             if (!_realTimeStandControlService.GetExperimentStatus())
             {
                 _userDialogWindowService.ShowErrorMessage("Нет активного эксперимента");
+                
                 return;
 
             }

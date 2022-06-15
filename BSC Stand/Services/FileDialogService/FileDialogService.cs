@@ -13,7 +13,7 @@ namespace BSC_Stand.Services
             string filePath = null;
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Filter = ("(*.json)|*.json"),
+                Filter = ("(*.json) (*.csv)|*.json;*.csv"),
                 InitialDirectory = Environment.CurrentDirectory + "Файлы пользователя" + "Конфигурация экспериментов",
                 Title = Title
 

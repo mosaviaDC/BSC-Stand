@@ -16,5 +16,6 @@ namespace BSC_Stand.Services
         public void CreateFile();
 
         public void WriteLog(ReadingParams readingParams);
+        public Task<List<ReadingParams>> ReadLogs(string _FilePath);
     }
 }
