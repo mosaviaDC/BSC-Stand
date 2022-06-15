@@ -38,6 +38,8 @@ namespace BSC_Stand.ViewModels
 
         public PlotModel Bus27PlotModel { get; set; }
         public PlotModel Bus100PlotModel { get; set; }
+
+        private readonly BSCControlViewModel _bSCControlViewModel;
         private IGraphService _graphService;
         public TwoColorAreaSeries s1 { get; set; }
         public TwoColorAreaSeries s2 { get; set; }
@@ -54,6 +56,7 @@ namespace BSC_Stand.ViewModels
         public StandVizualizationViewModel(IFileLogger fileLogger, IGraphService graphService)
 
         {
+            
             _graphService = graphService;
 
             for (int i = 0; i < 150; i++)

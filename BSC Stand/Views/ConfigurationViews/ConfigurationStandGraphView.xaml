@@ -77,7 +77,7 @@
         </GroupBox>
 
         <GroupBox   Header="Параметры"  FontSize="12" FontFamily="Arial" Padding="0" Grid.Column="1">
-            <TreeView>
+            <TreeView DataContext="{Binding BSCControlViewModel, Source={StaticResource ViewModelLocator}}">
                 <TreeViewItem Header="Шина 27В">
                     <Grid >
                         <Grid.RowDefinitions>
@@ -88,10 +88,9 @@
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="0" MinWidth="50">Ток</TextBlock>
-                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="1" MinWidth="50" Text=""></TextBlock>
-                        <TextBlock Margin="5"   Grid.Row="1" Grid.Column ="0" MinWidth="50">Напряжение</TextBlock>
-                        <TextBlock  Margin="5" Grid.Row="1" Grid.Column ="1" MinWidth="50" Text=""></TextBlock>
+                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="0" MinWidth="50" Text="{Binding V27Value}"></TextBlock>
+                        <TextBlock Margin="5"  Grid.Row="1" Grid.Column ="0" MinWidth="50" Text="{Binding I27Value}"></TextBlock>
+                        
                     </Grid>
 
 
@@ -106,10 +105,8 @@
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Margin="5"   Grid.Row="0" Grid.Column ="0" MinWidth="50">Ток</TextBlock>
-                        <TextBlock Margin="5"  Grid.Row="0" Grid.Column ="1" MinWidth="50" Text=" "></TextBlock>
-                        <TextBlock  Margin="5"  Grid.Row="1" Grid.Column ="0" MinWidth="50">Напряжение</TextBlock>
-                        <TextBlock Margin="5"  Grid.Row="1" Grid.Column ="1" MinWidth="50" Text=" "></TextBlock>
+                        <TextBlock Margin="5"   Grid.Row="0" Grid.Column ="0" MinWidth="50" Text="{Binding V100Value}"></TextBlock>
+                        <TextBlock  Margin="5" Grid.Row="1" Grid.Column ="0" MinWidth="50" Text="{Binding I100Value}"></TextBlock>
                     </Grid>
 
 
