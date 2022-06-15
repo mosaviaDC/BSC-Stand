@@ -12,7 +12,7 @@
         <TabControl SelectedIndex="{Binding SelectedGraphIndex,Mode=TwoWay}">
         
         <TabItem Header="Вид 1">
-        <oxy:PlotView Model="{Binding PlotModel1,Mode=TwoWay}"></oxy:PlotView>
+        <oxy:PlotView Model="{Binding PlotModel1}"></oxy:PlotView>
         </TabItem>
         <TabItem Header="Вид 2">
                 <oxy:PlotView Model="{Binding PlotModel2}"></oxy:PlotView>

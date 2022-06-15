@@ -54,15 +54,11 @@ namespace BSC_Stand.ViewModels
             }
             else
             {
-           
+
                 WriteMessage("Начало эксперимента", MessageType.Info);
                 StartTime = DateTime.Now;
                 _realTimeStandControlService.StartExpirent();
-               
-                 //   V27Series.Points.Clear();
-                  
-                   // GraphView1.InvalidatePlot(true);
-                 
+                _realTimeGraphsViewModel.ClearAllPoints();
                 UpdateDataTimer?.Start();
             }
 
@@ -156,8 +152,28 @@ namespace BSC_Stand.ViewModels
 
         private void ResetPlotScaleCommandExecute (object p)
         {
-            _realTimeGraphsViewModel.PlotModel1.ResetAllAxes();
-            _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
+            switch (_realTimeGraphsViewModel.SelectedGraphIndex)
+            {
+                
+
+                case 1:
+                    _realTimeGraphsViewModel.PlotModel2.ResetAllAxes();
+                    _realTimeGraphsViewModel.PlotModel2.InvalidatePlot(true);
+                    break;
+                case 2:
+                    _realTimeGraphsViewModel.PlotModel3.ResetAllAxes();
+                    _realTimeGraphsViewModel.PlotModel3.InvalidatePlot(true);
+                    break;
+                default:
+                    _realTimeGraphsViewModel.PlotModel1.ResetAllAxes();
+                    _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
+                    break;
+
+            }
+
+
+
+    
 
         }
         private bool CanResetPlotScaleCommandExecute (object p)
@@ -170,8 +186,23 @@ namespace BSC_Stand.ViewModels
 
         public void ShowHideOxyPlotLegendCommandExecute(object p )
         {
-            _realTimeGraphsViewModel.PlotModel1.IsLegendVisible = !_realTimeGraphsViewModel.PlotModel1.IsLegendVisible;
-            _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
+
+            switch (_realTimeGraphsViewModel.SelectedGraphIndex)
+            {
+              
+                case 1:
+                    _realTimeGraphsViewModel.PlotModel2.IsLegendVisible = !_realTimeGraphsViewModel.PlotModel2.IsLegendVisible;
+                    _realTimeGraphsViewModel.PlotModel2.InvalidatePlot(true);
+                    break;
+                case 2:
+                    _realTimeGraphsViewModel.PlotModel3.IsLegendVisible = !_realTimeGraphsViewModel.PlotModel3.IsLegendVisible;
+                    _realTimeGraphsViewModel.PlotModel3.InvalidatePlot(true);
+                    break;
+                default:
+                    _realTimeGraphsViewModel.PlotModel1.IsLegendVisible = !_realTimeGraphsViewModel.PlotModel1.IsLegendVisible;
+                    _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
+                    break;
+            }
         }
 
 

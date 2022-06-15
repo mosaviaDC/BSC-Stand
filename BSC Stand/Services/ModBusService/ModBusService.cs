@@ -315,9 +315,10 @@ namespace BSC_Stand.Services
 
             await Task.Factory.StartNew(() =>
             {
-                lock (results)
-                {
+                
                     try
+                    {
+                    lock (ITCSerialPort)
                     {
                         ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
                         results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);//Current Amprage
@@ -327,8 +328,10 @@ namespace BSC_Stand.Services
 
                         ITCSerialPort.WriteLine("MEASURE:POWER?");
                         results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture); //Current Amperage
+                    }
 
-                        Debug.WriteLine($"ITC A:{results[0]} V:{results[1]} W:{results[2]}");
+                    lock (AkipSerialPort)
+                    {
 
                         AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
                         results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);//Current Power
@@ -339,11 +342,12 @@ namespace BSC_Stand.Services
                         AkipSerialPort.WriteLine("MEASURE:POWER?");
                         results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //Current Voltage
                     }
+                    }
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
                     }
-                }
+                
 
 
             });

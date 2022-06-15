@@ -11,9 +11,11 @@ namespace BSC_Stand.ViewModels
 {
     internal class RealTimeGraphsViewModel : ViewModels.Base.ViewModelBase
     {
-        public PlotModel PlotModel1 { get; set; }
+
         public PlotModel PlotModel2 { get; set; }
         public PlotModel PlotModel3 { get; set; }
+
+        public PlotModel PlotModel1 { get; set; }
 
 
         public int _SelectedGraphIndex;
@@ -1293,8 +1295,59 @@ namespace BSC_Stand.ViewModels
 
 
 
+          
+        }
+
+
+
+        public void ClearAllPoints()
+        {
+            V27Series.Points.Clear();
+            I27Series.Points.Clear();
+            V100Series.Points.Clear();
+            I100Series.Points.Clear();
+            TIBXASeries.Points.Clear();
+            TBSCSeries.Points.Clear(); 
+            ITCVSeries.Points.Clear();
+            ITCASeries.Points.Clear();
+            ITCWSeries.Points.Clear();
+            AKIPVSeries.Points.Clear();
+            AKIPASeries.Points.Clear();
+            AKIPWSeries.Points.Clear();
+
+            V27Series2.Points.Clear();
+            I27Series2.Points.Clear();
+            V100Series2.Points.Clear();
+            I100Series2.Points.Clear();
+            TIBXASeries2.Points.Clear();
+            TBSCSeries2.Points.Clear();
+            ITCVSeries2.Points.Clear();
+            ITCASeries2.Points.Clear();
+            ITCWSeries2.Points.Clear();
+            AKIPVSeries2.Points.Clear();
+            AKIPASeries2.Points.Clear();
+            AKIPWSeries2.Points.Clear();
+
+            V27Series3.Points.Clear();
+            I27Series3.Points.Clear();
+            V100Series3.Points.Clear();
+            I100Series3.Points.Clear();
+            TIBXASeries3.Points.Clear();
+            TBSCSeries3.Points.Clear();
+            ITCVSeries3.Points.Clear();
+            ITCASeries3.Points.Clear();
+            ITCWSeries3.Points.Clear();
+            AKIPVSeries3.Points.Clear();
+            AKIPASeries3.Points.Clear();
+            AKIPWSeries3.Points.Clear();
+
+
 
         }
+
+
+
+
 
 
     }

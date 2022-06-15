@@ -163,7 +163,7 @@
                 <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}" ></behaviors:InvokeCommandAction>
+                            <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}"  ></behaviors:InvokeCommandAction>
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
 
