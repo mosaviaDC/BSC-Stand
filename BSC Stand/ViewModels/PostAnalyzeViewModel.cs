@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using BSC_Stand.Infastructure.Commands;
 using BSC_Stand.Services;
 using OxyPlot;
 using OxyPlot.Series;
-
+using OxyPlot.SkiaSharp;
 namespace BSC_Stand.ViewModels
 {
     class PostAnalyzeViewModel:ViewModels.Base.ViewModelBase
@@ -46,15 +47,19 @@ namespace BSC_Stand.ViewModels
                         Debug.WriteLine(lineSeries.Points.Count);
                         model.InvalidatePlot(true);
                     });
-                   
-                 
+
+
+                    using (var stream = File.Create("hello.pdf"))
+                    {
+                        var pdfExporter = new OxyPlot.SkiaSharp.PdfExporter() { Width = 620, Height = 877 };
+             
+                        pdfExporter.Export(model, stream);
+                    }
                 }
                 else
                 {
                     _userDialogWindowService.ShowErrorMessage("Файлы журналов имеют формат .csv"); 
                 }
-
-
 
             }
         }
