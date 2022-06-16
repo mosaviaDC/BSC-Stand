@@ -75,8 +75,6 @@ namespace BSC_Stand.Services
                     return a.ToList();
                 }
             });
-
-          
         }
 
     }
