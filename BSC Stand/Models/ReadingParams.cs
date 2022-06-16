@@ -33,6 +33,7 @@ namespace BSC_Stand.Models
         [Name("Сила тока 27В")]
         public float I27Value { get; set; }
 
+
         [Name("Напряжение шины 100В")]
         public float V100Value { get; set; }
 
@@ -47,6 +48,7 @@ namespace BSC_Stand.Models
 
         [Name("Секунда эксперимента")]
         public float ExpTime { get; set; }
+
         [Name("Время фиксации значения(Unix TimeStamp UTC +3")]
         public long TimeStamp { get; set; }
 

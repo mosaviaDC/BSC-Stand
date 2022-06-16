@@ -33,7 +33,8 @@ namespace BSC_Stand.Services
 
             var format = new ExcelTextFormat();
             format.Delimiter = ',';
-            format.EOL = "\r";            
+            format.EOL = "\r";
+            format.Encoding = Encoding.UTF8;
                                             
 
             using (ExcelPackage package = new ExcelPackage(new FileInfo(excelFileName)))

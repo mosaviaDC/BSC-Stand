@@ -19,7 +19,7 @@ namespace BSC_Stand.Services
 
         public void CreateFile()
         {
-            FilePath = $@"{Environment.CurrentDirectory}/Файлы пользователя/Отчеты/CSV/{DateTime.Now.ToFileTime()}.csv";
+            FilePath = $@"{Environment.CurrentDirectory}/Файлы пользователя/Отчеты/CSV/{DateTime.Now.Date}{DateTime.Now.Hour}{DateTime.Now.Minute}.csv";
             File.CreateText(FilePath).Close();
             using (var stream = File.Open(FilePath, FileMode.Append))
             using (var writer = new StreamWriter(stream))
