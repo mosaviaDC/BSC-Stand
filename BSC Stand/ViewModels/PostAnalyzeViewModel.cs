@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BSC_Stand.Infastructure.Commands;
@@ -15,17 +16,29 @@ namespace BSC_Stand.ViewModels
 {
     class PostAnalyzeViewModel:ViewModels.Base.ViewModelBase
     {
+        private readonly StatusBarViewModel _statusBarViewModel;
         private readonly IFileDialog _fileDialogService;
         private readonly IFileLoggerService _fileLoggerService;
         private readonly IUserDialogWindowService _userDialogWindowService;
-        private readonly LineSeries lineSeries;
 
-        public PlotModel model { get; set; }
+        public LineSeries V27Series { get; set; }
+        public LineSeries I27Series { get; set; }
+        public LineSeries V100Series { get; set; }
+        public LineSeries I100Series { get; set; }
+        public LineSeries TIBXASeries { get; set; }
+        public LineSeries TBSCSeries { get; set; }
+        public LineSeries ITCVSeries { get; set; }
+        public LineSeries ITCASeries { get; set; }
+        public LineSeries ITCWSeries { get; set; }
+        public LineSeries AKIPVSeries { get; set; }
+        public LineSeries AKIPASeries { get; set; }
+        public LineSeries AKIPWSeries { get; set; }
+        public PlotModel PlotModel1 { get; set; }
 
 
       public ICommand ImportLogFileCommand { get; set; }
 
-     public async void ImportLogFileCommandExecute(object p)
+     public void ImportLogFileCommandExecute(object p)
         {
           string CurrentOpenedFileName=  _fileDialogService.OpenFileDialog("Открыть файл");
 
@@ -34,27 +47,19 @@ namespace BSC_Stand.ViewModels
 
                 if (CurrentOpenedFileName.EndsWith(".csv"))
                 {
-                    var r = await _fileLoggerService.ReadLogs(CurrentOpenedFileName);
-                    int i = 0;
-                    lineSeries.Points.Clear();
-                   await Task.Factory.StartNew(() =>
-                    {
-                        foreach (var log in r)
-                        {
-                            lineSeries.Points.Add(new DataPoint(log.ExpTime, log.AKIPAValue));
-                            i++;
-                        }
-                        Debug.WriteLine(lineSeries.Points.Count);
-                        model.InvalidatePlot(true);
-                    });
+                    
+                    Thread thread = new Thread(ImportLogs);
+                    thread.IsBackground = true;
+                    thread.Start(CurrentOpenedFileName);
 
 
-                    using (var stream = File.Create("hello.pdf"))
-                    {
-                        var pdfExporter = new OxyPlot.SkiaSharp.PdfExporter() { Width = 620, Height = 877 };
+
+                    //using (var stream = File.Create("hello.pdf"))
+                    //{
+                    //    var pdfExporter = new OxyPlot.SkiaSharp.PdfExporter() { Width = 620, Height = 877 };
              
-                        pdfExporter.Export(model, stream);
-                    }
+                    //    pdfExporter.Export(model, stream);
+                    //}
                 }
                 else
                 {
@@ -64,18 +69,253 @@ namespace BSC_Stand.ViewModels
             }
         }
 
-        public PostAnalyzeViewModel(IFileDialog fileDialogService, IFileLoggerService fileLoggerService, IUserDialogWindowService userDialogWindowService)
+        public PostAnalyzeViewModel(IFileDialog fileDialogService, IFileLoggerService fileLoggerService, IUserDialogWindowService userDialogWindowService, StatusBarViewModel statusBarViewModel)
         {
+            _statusBarViewModel = statusBarViewModel;
             _fileDialogService = fileDialogService;
             _fileLoggerService = fileLoggerService;
-            _userDialogWindowService = userDialogWindowService;
-
-            lineSeries = new LineSeries();
-            lineSeries.Points.Add(new DataPoint(0, 0));
-            model = new PlotModel();
-            model.Series.Add(lineSeries);
+            _userDialogWindowService = userDialogWindowService;           
+            InitGraphSeries();
             ImportLogFileCommand = new ActionCommand(ImportLogFileCommandExecute);
             
+        }
+
+
+
+        private async void ImportLogs(object? CurrentOpenedFileName)
+        {
+           
+            var r = await _fileLoggerService.ReadLogs((string)CurrentOpenedFileName);
+            ClearGraphSerires();
+            int i = 0;
+            _statusBarViewModel.SetNewTask(r.Count);
+            foreach (var readingParams in r)
+            {
+                //  dataPoints.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
+
+                ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
+                ITCASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
+                ITCWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
+
+                AKIPASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
+                AKIPVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
+                AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
+
+                V27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
+                I27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
+
+                V100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
+                I100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
+
+                TIBXASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
+                TBSCSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+                i++;
+                _statusBarViewModel.UpdateTaskProgress(i);
+            }
+        }
+
+
+
+
+
+
+
+        private void InitGraphSeries()
+        {
+
+            PlotModel1 = new PlotModel();
+
+            {
+
+                V27Series = new LineSeries
+                {
+                    Title = "V 27",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    Color = OxyColors.Blue,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+
+
+                I27Series = new LineSeries
+                {
+                    Title = "I 27",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.DarkBlue,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+
+                };
+
+
+                V100Series = new LineSeries
+                {
+                    Title = "V 100",
+                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    Color = OxyColors.DarkOrange,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                I100Series = new LineSeries
+                {
+                    Title = "I 100",
+                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    Color = OxyColors.OrangeRed,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+                TIBXASeries = new LineSeries
+                {
+                    Title = "T℃  ИБХА",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.Green,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+                TBSCSeries = new LineSeries
+                {
+                    Title = "T℃  ЭОБСК",
+                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Color = OxyColors.ForestGreen,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+
+
+                ITCVSeries = new LineSeries
+                {
+                    Title = "V IT8516C+",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Brown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCASeries = new LineSeries
+                {
+                    Title = "A IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.RosyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                ITCWSeries = new LineSeries
+                {
+                    Title = "W IT8516C+",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.SandyBrown,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+
+                AKIPVSeries = new LineSeries
+                {
+                    Title = "V АКИП",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.Violet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPASeries = new LineSeries
+                {
+                    Title = "A АКИП",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                AKIPWSeries = new LineSeries
+                {
+                    Title = "W АКИП",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+            }
+
+
+
+            PlotModel1.Series.Add(TIBXASeries);
+            PlotModel1.Series.Add(TBSCSeries);
+
+            PlotModel1.Series.Add(V27Series);
+            PlotModel1.Series.Add(I27Series);
+
+            PlotModel1.Series.Add(V100Series);
+            PlotModel1.Series.Add(I100Series);
+
+            PlotModel1.Series.Add(ITCVSeries);
+            PlotModel1.Series.Add(ITCASeries);
+            PlotModel1.Series.Add(ITCWSeries);
+
+            PlotModel1.Series.Add(AKIPVSeries);
+            PlotModel1.Series.Add(AKIPASeries);
+            PlotModel1.Series.Add(AKIPWSeries);
+
+
+            PlotModel1.Legends.Add(new OxyPlot.Legends.Legend()
+            {
+                LegendTitle = "",
+                LegendFontSize = 14
+            });
+
+
+        }
+
+
+        private void ClearGraphSerires()
+        {
+            V27Series.Points.Clear();
+            I27Series.Points.Clear();
+            V100Series.Points.Clear();
+            I100Series.Points.Clear();
+            TIBXASeries.Points.Clear();
+            TBSCSeries.Points.Clear();
+            ITCVSeries.Points.Clear();
+            ITCASeries.Points.Clear();
+            ITCWSeries.Points.Clear();
+            AKIPVSeries.Points.Clear();
+            AKIPASeries.Points.Clear();
+            AKIPWSeries.Points.Clear();
+
+            PlotModel1.InvalidatePlot(true);
         }
 
       

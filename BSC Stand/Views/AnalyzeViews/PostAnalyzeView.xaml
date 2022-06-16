@@ -33,7 +33,7 @@
             <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FilePdf"     ToolTip="Экспорт в PDF"    FontSize="21.5"></fa5:FontAwesome>
         </Menu>
 
-        <oxy:PlotView Margin="0,50,0,0"  Model="{Binding  model}" >
+        <oxy:PlotView Margin="0,50,0,0"  Model="{Binding  PlotModel1}" >
 
         </oxy:PlotView>
     </Grid>

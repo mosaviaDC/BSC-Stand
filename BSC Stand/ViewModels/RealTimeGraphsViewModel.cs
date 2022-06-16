@@ -614,6 +614,8 @@ namespace BSC_Stand.ViewModels
         }
 
         private bool _TBSCSeriesVisible3;
+        private readonly StatusBarViewModel _statusBarViewModel;
+
         public bool TBSCSeriesVisible3
         {
             get
@@ -636,6 +638,7 @@ namespace BSC_Stand.ViewModels
         #endregion
         public RealTimeGraphsViewModel()
         {
+          
             InitGraphSeries();
         }
 
