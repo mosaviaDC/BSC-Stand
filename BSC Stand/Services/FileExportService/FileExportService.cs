@@ -41,7 +41,8 @@ namespace BSC_Stand.Services
                 var pdfExporter = new OxyPlot.SkiaSharp.PdfExporter() { Width = 620, Height = 877 };
                 pdfExporter.Export(PlotModel1, stream);
                 pdfExporter.Export(PlotModel1, stream);
-                
+
+
                 
 
             }
@@ -56,7 +57,7 @@ namespace BSC_Stand.Services
  
 
 
-
+            
 
 
 

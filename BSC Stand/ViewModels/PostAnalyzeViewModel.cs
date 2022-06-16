@@ -11,6 +11,7 @@ using BSC_Stand.Infastructure.Commands;
 using BSC_Stand.Models;
 using BSC_Stand.Services;
 using OxyPlot;
+using iTextSharp;
 using OxyPlot.Series;
 namespace BSC_Stand.ViewModels
 {
