@@ -15,17 +15,24 @@ namespace BSC_Stand.Services
 {
     public class FileLoggerService : IFileLoggerService
     {
-
-        private string FilePath;
-        private StreamWriter StreamWriter;
+        public string FilePath { get; private set; }
 
         public void CreateFile()
         {
-            FilePath = $@"{Environment.CurrentDirectory}/Файлы пользователя/Записи экспериментов/{DateTime.Now.ToFileTime()}.csv";
+            FilePath = $@"{Environment.CurrentDirectory}/Файлы пользователя/Отчеты/CSV/{DateTime.Now.ToFileTime()}.csv";
             File.CreateText(FilePath).Close();
+            using (var stream = File.Open(FilePath, FileMode.Append))
+            using (var writer = new StreamWriter(stream))
+            using (var csv = new CsvWriter(writer,CultureInfo.InvariantCulture))
+            {
+
+                csv.WriteHeader<ReadingParams>();
+
+                // StreamWriter.Flush();
+            }
             //StreamWriter.Close();
-         
-            
+
+
         }
 
         public void WriteLog(ReadingParams readingParams)
@@ -34,7 +41,7 @@ namespace BSC_Stand.Services
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 // Don't write the header again
-                HasHeaderRecord = false,
+                HasHeaderRecord = true
             };
 
 
@@ -64,7 +71,6 @@ namespace BSC_Stand.Services
                 using (var reader = new StreamReader(_FilePath))
                 using (var csv = new CsvReader(reader, config))
                 {
-                    //    var records = await csv.GetRecordsAsync<ReadingParams>();
                     var a = csv.GetRecords<ReadingParams>();
                     return a.ToList();
                 }

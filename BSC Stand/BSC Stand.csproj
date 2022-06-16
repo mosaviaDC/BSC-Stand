@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="27.2.1" />
+    <PackageReference Include="EPPlus" Version="6.0.5" />
     <PackageReference Include="FontAwesome5" Version="2.1.6" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -62,7 +63,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Update="Файлы пользователя\Записи экспериментов\sample.cs">
+    <Compile Update="Файлы пользователя\Отчеты\CSV\sample.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>sample.csv</DependentUpon>
@@ -75,12 +76,18 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="Файлы пользователя\Записи экспериментов\132997750934437088.csv">
+    <None Update="Файлы пользователя\Отчеты\CSV\132997750934437088.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Файлы пользователя\Записи экспериментов\sample.csv">
+    <None Update="Файлы пользователя\Отчеты\CSV\sample.csv">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>sample.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Файлы пользователя\Отчеты\PDF\Новый текстовый документ.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Файлы пользователя\Отчеты\XLSX\f.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

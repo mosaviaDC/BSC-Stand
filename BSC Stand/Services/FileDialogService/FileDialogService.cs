@@ -13,8 +13,8 @@ namespace BSC_Stand.Services
             string filePath = null;
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Filter = ("(*.json) (*.csv)|*.json;*.csv"),
-                InitialDirectory = Environment.CurrentDirectory + "Файлы пользователя" + "Конфигурация экспериментов",
+                Filter = ("(*.json) |*.json"),
+                InitialDirectory = $@"{Environment.CurrentDirectory}\Файлы пользователя\Конфигурация экспериментов",
                 Title = Title
 
 
@@ -30,13 +30,52 @@ namespace BSC_Stand.Services
 
 
         }
+
+
+        public string OpenCSVFileDialog(string Title = "Открыть файл")
+        {
+            string filePath = null;
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = ("(*.csv)|*.csv"),
+                InitialDirectory = @$"{Environment.CurrentDirectory}\Файлы пользователя\Отчеты\CSV",
+                Title = Title
+
+
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+
+                filePath = openFileDialog.FileName;
+
+            }
+            return filePath;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public string SaveFileDialog(string Title="Сохранить файл")
         {
             string filePath = null;
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
-                InitialDirectory = Environment.CurrentDirectory + "Файлы пользователя" + "Конфигурация экспериментов",
+                InitialDirectory = @$"{Environment.CurrentDirectory}\Файлы пользователя\Конфигурация экспериментов",
                 Filter = "(*.json) |*.json"
             };
             if (saveFileDialog.ShowDialog() == true)
@@ -46,5 +85,40 @@ namespace BSC_Stand.Services
             return filePath;
         }
 
+
+        public string SavePDFFileDialog(string Title = "Сохранить файл")
+        {
+            string filePath = null;
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Title = Title,
+                InitialDirectory = @$"{Environment.CurrentDirectory}\Файлы пользователя\Отчеты\PDF",
+                Filter = "(*.pdf) |*.pdf"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                filePath = saveFileDialog.FileName;
+            }
+            return filePath;
+
+
+        }
+
+        public string SaveXLSXileDialog(string Title = "Сохранить файл")
+        {
+            string filePath = null;
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Title = Title,
+                InitialDirectory = @$"{Environment.CurrentDirectory}\Файлы пользователя\Отчеты\XLSX",
+                Filter = "(*.XLSX) |*.XLSX"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                filePath = saveFileDialog.FileName;
+            }
+            return filePath;
+
+        }
     }
 }

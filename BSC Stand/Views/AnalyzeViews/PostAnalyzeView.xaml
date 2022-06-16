@@ -28,9 +28,46 @@
                 
                 
             </fa5:FontAwesome>
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileExcel"   ToolTip="Экспорт в XLS" FontSize="21.5"></fa5:FontAwesome>
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileCsv"     ToolTip="Экспорт в CSV"   FontSize="21.5"></fa5:FontAwesome>
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FilePdf"     ToolTip="Экспорт в PDF"    FontSize="21.5"></fa5:FontAwesome>
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileExcel"   ToolTip="Экспорт в XLSX" FontSize="21.5">
+
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ExportFileToXLSXCommand}"></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+
+
+
+
+
+
+
+            </fa5:FontAwesome>
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileCsv"     ToolTip="Экспорт в CSV"   FontSize="21.5">
+
+             
+
+
+
+
+
+
+
+            </fa5:FontAwesome>
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FilePdf"     ToolTip="Экспорт в PDF"    FontSize="21.5">
+
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ExportFileToPDFCommand}"></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+
+
+
+
+
+
+            </fa5:FontAwesome>
         </Menu>
 
         <oxy:PlotView Margin="0,50,0,0"  Model="{Binding  PlotModel1}" >

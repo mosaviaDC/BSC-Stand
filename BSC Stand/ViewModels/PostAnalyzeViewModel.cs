@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BSC_Stand.Infastructure.Commands;
+using BSC_Stand.Models;
 using BSC_Stand.Services;
 using OxyPlot;
 using OxyPlot.Series;
@@ -19,7 +20,10 @@ namespace BSC_Stand.ViewModels
         private readonly StatusBarViewModel _statusBarViewModel;
         private readonly IFileDialog _fileDialogService;
         private readonly IFileLoggerService _fileLoggerService;
+        private readonly IFileExportService _fileExportService;
         private readonly IUserDialogWindowService _userDialogWindowService;
+        private List<ReadingParams> importResult;
+        private string CurrentOpenedFileName;
 
         public LineSeries V27Series { get; set; }
         public LineSeries I27Series { get; set; }
@@ -38,46 +42,94 @@ namespace BSC_Stand.ViewModels
 
       public ICommand ImportLogFileCommand { get; set; }
 
-     public void ImportLogFileCommandExecute(object p)
+      public ICommand ExportFileToXLSXCommand { get; set; }
+      public ICommand ExportFileToPDFCommand { get; set; }
+
+
+      public void ImportLogFileCommandExecute(object p)
         {
-          string CurrentOpenedFileName=  _fileDialogService.OpenFileDialog("Открыть файл");
+           CurrentOpenedFileName = null;
+           CurrentOpenedFileName = _fileDialogService.OpenCSVFileDialog();
 
             if (CurrentOpenedFileName != null)
             {
 
                 if (CurrentOpenedFileName.EndsWith(".csv"))
                 {
-                    
+                  
                     Thread thread = new Thread(ImportLogs);
                     thread.IsBackground = true;
                     thread.Start(CurrentOpenedFileName);
-
-
-
-                    //using (var stream = File.Create("hello.pdf"))
-                    //{
-                    //    var pdfExporter = new OxyPlot.SkiaSharp.PdfExporter() { Width = 620, Height = 877 };
-             
-                    //    pdfExporter.Export(model, stream);
-                    //}
+                   
                 }
                 else
                 {
-                    _userDialogWindowService.ShowErrorMessage("Файлы журналов имеют формат .csv"); 
+                    _userDialogWindowService.ShowErrorMessage("Файлы журналов имеют формат .csv");
                 }
 
             }
         }
 
-        public PostAnalyzeViewModel(IFileDialog fileDialogService, IFileLoggerService fileLoggerService, IUserDialogWindowService userDialogWindowService, StatusBarViewModel statusBarViewModel)
+
+    public void ExportFileToXLSXCommandExecute(object p)
+        {
+            string FileName = _fileDialogService.SaveXLSXileDialog();
+
+            if (FileName != null)
+            {
+                _fileExportService.ExportToXLSX(CurrentOpenedFileName, FileName);
+
+            }
+            else
+            {
+                _userDialogWindowService.ShowErrorMessage("Необходимо указать путь к файлу");
+            }
+
+        }
+
+
+     public void ExportFileToPDFCommandExecute(object p)
+        {
+            string FileName = _fileDialogService.SavePDFFileDialog();
+
+            
+
+            if(FileName != null)
+            {
+                _fileExportService.ExportToPDF(FileName, this.PlotModel1);
+
+            }
+            else
+            {
+                _userDialogWindowService.ShowErrorMessage("Необходимо указать путь к файлу");
+            }
+        }
+
+    public bool CanExportFileToPDFCommandExecuted(object p)
+        {
+
+            if (importResult!=null &&  importResult.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                _userDialogWindowService.ShowErrorMessage("Для экспорта отчета необходимо выбрать файл");
+                return false;
+            }
+        }
+
+        public PostAnalyzeViewModel(IFileDialog fileDialogService, IFileLoggerService fileLoggerService, IUserDialogWindowService userDialogWindowService, StatusBarViewModel statusBarViewModel, IFileExportService fileExportService)
         {
             _statusBarViewModel = statusBarViewModel;
             _fileDialogService = fileDialogService;
             _fileLoggerService = fileLoggerService;
+            _fileExportService = fileExportService;
             _userDialogWindowService = userDialogWindowService;           
             InitGraphSeries();
             ImportLogFileCommand = new ActionCommand(ImportLogFileCommandExecute);
-            
+            ExportFileToPDFCommand = new ActionCommand(ExportFileToPDFCommandExecute,CanExportFileToPDFCommandExecuted);
+            ExportFileToXLSXCommand = new ActionCommand(ExportFileToXLSXCommandExecute);
         }
 
 
@@ -85,13 +137,12 @@ namespace BSC_Stand.ViewModels
         private async void ImportLogs(object? CurrentOpenedFileName)
         {
            
-            var r = await _fileLoggerService.ReadLogs((string)CurrentOpenedFileName);
+            importResult = await _fileLoggerService.ReadLogs((string)CurrentOpenedFileName);
             ClearGraphSerires();
             int i = 0;
-            _statusBarViewModel.SetNewTask(r.Count);
-            foreach (var readingParams in r)
+            _statusBarViewModel.SetNewTask(importResult.Count);
+            foreach (var readingParams in importResult)
             {
-                //  dataPoints.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
 
                 ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
                 ITCASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
@@ -112,6 +163,7 @@ namespace BSC_Stand.ViewModels
                 i++;
                 _statusBarViewModel.UpdateTaskProgress(i);
             }
+            return;
         }
 
 

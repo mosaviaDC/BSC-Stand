@@ -57,6 +57,7 @@ namespace BSC_Stand
             services.AddSingleton<IModbusService, ModBusService>();
             services.AddSingleton<IUserDialogWindowService, UserWindowDialogService>();
             services.AddSingleton<IFileLoggerService, FileLoggerService>();
+            services.AddSingleton<IFileExportService, FileExportService>();
             services.AddSingleton<StatusBarViewModel>();
             services.AddSingleton<ConnectionCheckListViewModel>();
             services.AddSingleton<PostAnalyzeViewModel>();
