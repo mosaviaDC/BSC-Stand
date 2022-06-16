@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 using PdfSharp;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
-
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
 namespace BSC_Stand.Services
 {
     public class FileExportService : IFileExportService
@@ -41,7 +42,7 @@ namespace BSC_Stand.Services
                 pdfExporter.Export(PlotModel1, stream);
                 pdfExporter.Export(PlotModel1, stream);
                 
-           
+                
 
             }
 
@@ -49,13 +50,10 @@ namespace BSC_Stand.Services
 
             var newPage = document.InsertPage(0);
 
-        
 
 
-
-
-
-
+           //Section section = document.AddPage()
+ 
 
 
 
