@@ -459,11 +459,6 @@ namespace BSC_Stand.ViewModels
                 _readingParams.TimeStamp=((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
                 _fileLoggerService.WriteLog(_readingParams);
             }
-
-
-            
-
-           
            // TestUpdateData();
         }
 
