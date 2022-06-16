@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using BSC_Stand.Services;
-
+using System.Text;
 
 namespace BSC_Stand
 {
@@ -65,7 +65,7 @@ namespace BSC_Stand
             services.AddSingleton<RealTimeGraphsLegendViewModel>();
             //  services.AddSingleton<IRealTimeStandControlService, RealTimeStandControlService>();
 
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
         private void BundledTheme_ColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color> e)

@@ -12,7 +12,6 @@ using BSC_Stand.Models;
 using BSC_Stand.Services;
 using OxyPlot;
 using OxyPlot.Series;
-using OxyPlot.SkiaSharp;
 namespace BSC_Stand.ViewModels
 {
     class PostAnalyzeViewModel:ViewModels.Base.ViewModelBase
@@ -96,7 +95,7 @@ namespace BSC_Stand.ViewModels
 
             if(FileName != null)
             {
-                _fileExportService.ExportToPDF(FileName, this.PlotModel1);
+                _fileExportService.ExportToPDF(FileName, this.PlotModel1,CurrentOpenedFileName);
 
             }
             else
