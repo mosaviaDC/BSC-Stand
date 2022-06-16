@@ -27,7 +27,7 @@ namespace BSC_Stand.Services
             {
 
                 csv.WriteHeader<ReadingParams>();
-
+                csv.NextRecord();
                 // StreamWriter.Flush();
             }
             //StreamWriter.Close();
@@ -63,7 +63,7 @@ namespace BSC_Stand.Services
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                HasHeaderRecord = false,
+                HasHeaderRecord = true
             };
            return await Task.Run(() =>
             {
