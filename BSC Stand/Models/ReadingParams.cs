@@ -28,6 +28,8 @@ namespace BSC_Stand.Models
 
         public float ExpTime { get; set; }
 
+        public long TimeStamp { get; set; }
+
 
     }
 }

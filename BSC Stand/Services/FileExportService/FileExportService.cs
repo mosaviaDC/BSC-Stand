@@ -27,17 +27,14 @@ namespace BSC_Stand.Services
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-
-    
-
             string worksheetsName = $"{DateTime.Now.ToFileTime()}";
 
             bool firstRowIsHeader = true;
 
             var format = new ExcelTextFormat();
             format.Delimiter = ',';
-            format.EOL = "\r";              // DEFAULT IS "\r\n";
-                                            // format.TextQualifier = '"';
+            format.EOL = "\r";            
+                                            
 
             using (ExcelPackage package = new ExcelPackage(new FileInfo(excelFileName)))
             {
@@ -45,29 +42,6 @@ namespace BSC_Stand.Services
                 worksheet.Cells["A1"].LoadFromText(new FileInfo(csvFileName), format, OfficeOpenXml.Table.TableStyles.Medium27, firstRowIsHeader);
                 package.Save();
             }
-
-
-
-
-
-
-
-
-
-            //var sheet = package.Workbook.Worksheets.Add("My Sheet");
-            //var format = new ExcelTextFormat();
-            //format.TextQualifier = '"';
-            //format.SkipLinesBeginning = 2;
-            //format.SkipLinesEnd = 1;
-
-            //var range = sheet.Cells["A1"].LoadFromText(new FileInfo(@$"{csvFileName}"), format, TableStyles.Medium27, true);
-
-
-            //Debug.WriteLine("Hello");
-
-            //package.Save();
-
-
 
 
 

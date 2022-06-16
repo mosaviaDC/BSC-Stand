@@ -456,6 +456,7 @@ namespace BSC_Stand.ViewModels
             if (_realTimeStandControlService.GetExperimentStatus())
             {
                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+                _readingParams.TimeStamp=((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
                 _fileLoggerService.WriteLog(_readingParams);
             }
 
