@@ -453,6 +453,8 @@ namespace BSC_Stand.ViewModels
            IBXATemperature = 0f.ToIBXATemperatureString();
            BSCTemperature = 0f.ToBSCTemperatureString();
 
+            ReadV27Value();
+
             if (_realTimeStandControlService.GetExperimentStatus())
             {
                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);

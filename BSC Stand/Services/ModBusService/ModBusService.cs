@@ -62,7 +62,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort(); /*InitV27BusPort() && InitI27BusPort()*/;
+                ConnectStatus = InitAkipPort() && InitITCPort() && InitV27BusPort() && InitI27BusPort() ; /*InitV27BusPort() && InitI27BusPort()*/;
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -158,7 +158,7 @@ namespace BSC_Stand.Services
             {
 
                 U27SerialPort.Close();
-                U27SerialPort.PortName = "COM1";
+                U27SerialPort.PortName = "COM13";
                 U27SerialPort.BaudRate = 9600;
                 U27SerialPort.DataBits = 8;
                 U27SerialPort.StopBits = StopBits.One;
@@ -187,30 +187,50 @@ namespace BSC_Stand.Services
 
         private bool InitI27BusPort()
         {
-            //if (I27SerialPort == null)
-            //    I27SerialPort = new SerialPort();
-            //I27SerialPort.Close();
-            //I27SerialPort.PortName = "COM2";
-            //I27SerialPort.BaudRate = 9600;
-            //I27SerialPort.DataBits = 8;
-            //I27SerialPort.StopBits = StopBits.One;
-            //I27SerialPort.Open();
+            if (I27ModbusController != null)
+            {
+                I27ModbusController.Transport.ReadTimeout = 1500;
+                I27ModbusController.Transport.WriteTimeout = 1000;
+                Debug.WriteLine("*");
 
-            //serialPortAdapter = new SerialPortAdapter(I27SerialPort);
 
-            //I27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
-            //I27ModbusController.Transport.ReadTimeout = 100;
-            //if (I27ModbusController.ReadInputRegisters(1, 7, 2) != null)
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    I27SerialPort.Close();
-            //    I27SerialPort.Dispose();
-            //    return t;
-            //}
-            return true;
+                if (I27ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            I27SerialPort = new SerialPort();
+            {
+
+                I27SerialPort.Close();
+                I27SerialPort.PortName = "COM11";
+                I27SerialPort.BaudRate = 9600;
+                I27SerialPort.DataBits = 8;
+                I27SerialPort.StopBits = StopBits.One;
+                I27SerialPort.Open();
+
+                serialPortAdapter = new SerialPortAdapter(I27SerialPort);
+
+                I27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+                I27ModbusController.Transport.WriteTimeout = 1000;
+                I27ModbusController.Transport.ReadTimeout = 1500;
+
+                if (I27ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    I27SerialPort.Close();
+                    I27SerialPort.Dispose();
+                    return false;
+                }
+            }
 
         }
 
