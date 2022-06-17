@@ -434,8 +434,8 @@ namespace BSC_Stand.ViewModels
             }
             // Параметры с преобразователей
 
-            //_readingParams.V27Value = await _modBusService.Read27BusVoltage();
-            //V27Value = _readingParams.V27Value.ToVoltageString();
+            _readingParams.V27Value = await _modBusService.Read27BusVoltage();
+            V27Value = _readingParams.V27Value.ToVoltageString();
 
 
             _readingParams.I27Value = await _modBusService.Read27BusAmperage();
