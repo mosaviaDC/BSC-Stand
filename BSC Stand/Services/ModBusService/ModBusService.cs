@@ -64,7 +64,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort() && InitV27BusPort() && InitI27BusPort() && InitI100BusPort() && InitV100BusPort();
+                ConnectStatus = InitAkipPort() && InitITCPort() && InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitOwenController();/* InitV27BusPort();*/
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -371,7 +371,7 @@ namespace BSC_Stand.Services
                 U100SerialPort.StopBits = StopBits.One;
                 U100SerialPort.Open();
 
-                serialPortAdapter = new SerialPortAdapter(U27SerialPort);
+                serialPortAdapter = new SerialPortAdapter(U100SerialPort);
 
                 V100ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
                 V100ModbusController.Transport.WriteTimeout = 1000;
@@ -470,11 +470,11 @@ namespace BSC_Stand.Services
 
 
 
-        private async Task<bool> InitOwenController()
+        private bool InitOwenController()
         {
             owenControllerTCPCLient?.Dispose();
             owenControllerTCPCLient = new TcpClient();
-            await owenControllerTCPCLient.ConnectAsync("10.0.6.10", 502);
+             owenControllerTCPCLient.Connect("192.168.0.15", 502);
             _statusBarViewModel.UpdateTaskProgress(75);
             owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
             return owenControllerTCPCLient.Connected;

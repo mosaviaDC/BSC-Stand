@@ -434,21 +434,21 @@ namespace BSC_Stand.ViewModels
             }
             // Параметры с преобразователей
 
-           _readingParams.V27Value = await _modBusService.Read27BusVoltage();
-            V27Value = _readingParams.V27Value.ToVoltageString();
+            //_readingParams.V27Value = await _modBusService.Read27BusVoltage();
+            //V27Value = _readingParams.V27Value.ToVoltageString();
 
-         
-           _readingParams.I27Value = await _modBusService.Read27BusAmperage();
-            I27Value = _readingParams.I27Value.ToAmperageString();
 
-        
-           _readingParams.V100Value = await _modBusService.Read100BusVoltage();
+            //_readingParams.I27Value = await _modBusService.Read27BusAmperage();
+            //I27Value = _readingParams.I27Value.ToAmperageString();
+
+
+            _readingParams.V100Value = await _modBusService.Read100BusVoltage();
             V100Value = _readingParams.V100Value.ToVoltageString();
 
-            
+
             _readingParams.I100Value = await _modBusService.Read100BusAmperage();
             I100Value = _readingParams.I100Value.ToAmperageString();
-           
+
             _readingParams.IBXATemperature = 0;
             _readingParams.BSCTemperature = 0;
             //Параметры с Owen
