@@ -434,26 +434,27 @@ namespace BSC_Stand.ViewModels
             }
             // Параметры с преобразователей
 
+           var r = await _modBusService.Read27BusVoltage();
+           _readingParams.V27Value = r;
+           V27Value = r.ToVoltageString();
 
-           V27Value = AKIPVValue;
-           I27Value = AKIPAValue;
+           r = await _modBusService.Read27BusAmperage();
+           _readingParams.I27Value = r;
+           I27Value = r.ToAmperageString();
 
-            _readingParams.V27Value = _readingParams.AKIPVValue;
-            _readingParams.I27Value = _readingParams.AKIPAValue;
+           r = await _modBusService.Read100BusVoltage();
+           _readingParams.V100Value = r;
+           V100Value = r.ToVoltageString();
 
-            _readingParams.V100Value = _readingParams.ITCVValue;
-            _readingParams.I100Value = _readingParams.ITCAValue;
+            r = await _modBusService.Read100BusAmperage();
+            _readingParams.I100Value = r;
+            I100Value = r.ToAmperageString();
            
-            V100Value = ITCVValue;
-            I100Value = ITCAValue;
-
             _readingParams.IBXATemperature = 0;
             _readingParams.BSCTemperature = 0;
             //Параметры с Owen
            IBXATemperature = 0f.ToIBXATemperatureString();
            BSCTemperature = 0f.ToBSCTemperatureString();
-
-            ReadV27Value();
 
             if (_realTimeStandControlService.GetExperimentStatus())
             {
@@ -461,35 +462,8 @@ namespace BSC_Stand.ViewModels
                 _readingParams.TimeStamp=((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
                 _fileLoggerService.WriteLog(_readingParams);
             }
-           // TestUpdateData();
+      
         }
-
-        private async void ReadV27Value()
-        {
-            
-            var r = await _modBusService.Read27BusVoltage();
-         
-            if (r == -1) //Если нет подключения к устройству
-                {
-   
-                     V27Value = "V Нет соединения";
-                    if (_realTimeStandControlService.GetExperimentStatus())
-                        WriteMessage("Потеряно соединение с Е856ЭЛ", MessageType.Warning);
-                    return;
-                }
-                else
-                {
-                    V27Value = r.ToVoltageString();
-                    if (_realTimeStandControlService.GetExperimentStatus())
-                    {
-                     
-                       // V27Series.Points.Add(new DataPoint(ExpTimeSpan.TotalSeconds, r));
-                       // GraphView1.PlotView.InvalidatePlot(true);
-                       //GraphView2.PlotView.InvalidatePlot(true);
-                }
-                }
-        }
-
 
         public void WriteMessage(string Message, MessageType messageType)
         {

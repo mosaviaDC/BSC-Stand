@@ -25,6 +25,8 @@ namespace BSC_Stand.Services
         private IModbusSerialMaster V27ModbusController;
         private IModbusSerialMaster I27ModbusController;
 
+        private IModbusSerialMaster V100ModbusController;
+        private IModbusSerialMaster I100ModbusController;
 
         IModbusFactory _modbusFactory;
         /// <summary>
@@ -62,7 +64,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort() && InitV27BusPort() && InitI27BusPort() ; /*InitV27BusPort() && InitI27BusPort()*/;
+                ConnectStatus = InitAkipPort() && InitITCPort() && InitV27BusPort() && InitI27BusPort() && InitI100BusPort() && InitV100BusPort() ; /*InitV27BusPort() && InitI27BusPort()*/;
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -132,9 +134,116 @@ namespace BSC_Stand.Services
         }
 
 
-        /// <summary>
-        /// Инициализация порта для преобразователя напряжения шины 27В
-        /// </summary>
+        public async Task<Single> Read27BusAmperage()
+        {
+            try
+            {
+                ushort[] result = new ushort[2];
+
+                result = await I27ModbusController.ReadInputRegistersAsync(1, 7, 2);
+
+                if (result != null)
+                {
+                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+
+                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+
+                    return BitConverter.ToSingle(bytes, 0);
+                }
+                else return -1;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return -1;
+            }
+
+        }
+
+
+        public async Task<Single> Read100BusVoltage()
+        {
+            try
+            {
+                ushort[] result = new ushort[2];
+
+                result = await V100ModbusController.ReadInputRegistersAsync(1, 7, 2);
+
+                if (result != null)
+                {
+                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+
+                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+
+                    return BitConverter.ToSingle(bytes, 0);
+                }
+                else return -1;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return -1;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<Single> Read100BusAmperage()
+        {
+            try
+            {
+                ushort[] result = new ushort[2];
+
+                result = await I100ModbusController.ReadInputRegistersAsync(1, 7, 2);
+
+                if (result != null)
+                {
+                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+
+                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+
+                    return BitConverter.ToSingle(bytes, 0);
+                }
+                else return -1;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return -1;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        #region InitUSRVirtualPorts
         private bool InitV27BusPort()
         {
             if (V27ModbusController != null)
@@ -233,6 +342,134 @@ namespace BSC_Stand.Services
             }
 
         }
+
+        private bool InitV100BusPort()
+        {
+            if (V100ModbusController != null)
+            {
+                V100ModbusController.Transport.ReadTimeout = 1500;
+                V100ModbusController.Transport.WriteTimeout = 1000;
+                Debug.WriteLine("*");
+
+
+                if (V100ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            U100SerialPort = new SerialPort();
+            {
+
+                U100SerialPort.Close();
+                U100SerialPort.PortName = "COM13";
+                U100SerialPort.BaudRate = 9600;
+                U100SerialPort.DataBits = 8;
+                U100SerialPort.StopBits = StopBits.One;
+                U100SerialPort.Open();
+
+                serialPortAdapter = new SerialPortAdapter(U27SerialPort);
+
+                V100ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+                V100ModbusController.Transport.WriteTimeout = 1000;
+                V100ModbusController.Transport.ReadTimeout = 1500;
+
+                if (V100ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    U100SerialPort.Close();
+                    U100SerialPort.Dispose();
+                    return false;
+                }
+            }
+
+
+
+
+        }
+        private bool InitI100BusPort()
+        {
+            if (I100ModbusController != null)
+            {
+                I100ModbusController.Transport.ReadTimeout = 1500;
+                I100ModbusController.Transport.WriteTimeout = 1000;
+                Debug.WriteLine("*");
+
+
+                if (I100ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            I100SerialPort = new SerialPort();
+            {
+
+                I100SerialPort.Close();
+                I100SerialPort.PortName = "COM11";
+                I100SerialPort.BaudRate = 9600;
+                I100SerialPort.DataBits = 8;
+                I100SerialPort.StopBits = StopBits.One;
+                I100SerialPort.Open();
+
+                serialPortAdapter = new SerialPortAdapter(I100SerialPort);
+
+                I100ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+                I100ModbusController.Transport.WriteTimeout = 1000;
+                I100ModbusController.Transport.ReadTimeout = 1500;
+
+                if (I100ModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    I100SerialPort.Close();
+                    I100SerialPort.Dispose();
+                    return false;
+                }
+            }
+        }
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private async Task<bool> InitOwenController()
         {
