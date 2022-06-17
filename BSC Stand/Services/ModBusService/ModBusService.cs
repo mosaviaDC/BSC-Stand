@@ -64,7 +64,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort() && InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitOwenController();/* InitV27BusPort();*/
+                ConnectStatus = InitAkipPort() && InitITCPort() && InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitOwenController() && InitV27BusPort();
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
