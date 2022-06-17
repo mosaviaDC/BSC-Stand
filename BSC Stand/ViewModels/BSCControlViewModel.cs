@@ -434,21 +434,20 @@ namespace BSC_Stand.ViewModels
             }
             // Параметры с преобразователей
 
-           var r = await _modBusService.Read27BusVoltage();
-           _readingParams.V27Value = r;
-           V27Value = r.ToVoltageString();
+           _readingParams.V27Value = await _modBusService.Read27BusVoltage();
+            V27Value = _readingParams.V27Value.ToVoltageString();
 
-           r = await _modBusService.Read27BusAmperage();
-           _readingParams.I27Value = r;
-           I27Value = r.ToAmperageString();
+         
+           _readingParams.I27Value = await _modBusService.Read27BusAmperage();
+            I27Value = _readingParams.I27Value.ToAmperageString();
 
-           r = await _modBusService.Read100BusVoltage();
-           _readingParams.V100Value = r;
-           V100Value = r.ToVoltageString();
+        
+           _readingParams.V100Value = await _modBusService.Read100BusVoltage();
+            V100Value = _readingParams.V100Value.ToVoltageString();
 
-            r = await _modBusService.Read100BusAmperage();
-            _readingParams.I100Value = r;
-            I100Value = r.ToAmperageString();
+            
+            _readingParams.I100Value = await _modBusService.Read100BusAmperage();
+            I100Value = _readingParams.I100Value.ToAmperageString();
            
             _readingParams.IBXATemperature = 0;
             _readingParams.BSCTemperature = 0;
