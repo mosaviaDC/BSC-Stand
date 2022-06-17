@@ -30,8 +30,6 @@ namespace BSC_Stand.Services
                 csv.NextRecord();
                 // StreamWriter.Flush();
             }
-            //StreamWriter.Close();
-
 
         }
 

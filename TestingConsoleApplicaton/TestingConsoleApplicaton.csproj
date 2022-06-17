@@ -6,4 +6,8 @@
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="OxyPlot.SkiaSharp" Version="2.1.0" />
+  </ItemGroup>
+
 </Project>
