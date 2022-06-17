@@ -438,8 +438,8 @@ namespace BSC_Stand.ViewModels
             //V27Value = _readingParams.V27Value.ToVoltageString();
 
 
-            //_readingParams.I27Value = await _modBusService.Read27BusAmperage();
-            //I27Value = _readingParams.I27Value.ToAmperageString();
+            _readingParams.I27Value = await _modBusService.Read27BusAmperage();
+            I27Value = _readingParams.I27Value.ToAmperageString();
 
 
             _readingParams.V100Value = await _modBusService.Read100BusVoltage();
