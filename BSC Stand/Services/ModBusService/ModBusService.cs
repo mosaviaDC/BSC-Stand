@@ -349,8 +349,7 @@ namespace BSC_Stand.Services
             {
                 V100ModbusController.Transport.ReadTimeout = 1500;
                 V100ModbusController.Transport.WriteTimeout = 1000;
-                Debug.WriteLine("*");
-
+               
 
                 if (V100ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -366,7 +365,7 @@ namespace BSC_Stand.Services
             {
 
                 U100SerialPort.Close();
-                U100SerialPort.PortName = "COM13";
+                U100SerialPort.PortName = "COM12";
                 U100SerialPort.BaudRate = 9600;
                 U100SerialPort.DataBits = 8;
                 U100SerialPort.StopBits = StopBits.One;
@@ -417,7 +416,7 @@ namespace BSC_Stand.Services
             {
 
                 I100SerialPort.Close();
-                I100SerialPort.PortName = "COM11";
+                I100SerialPort.PortName = "COM10";
                 I100SerialPort.BaudRate = 9600;
                 I100SerialPort.DataBits = 8;
                 I100SerialPort.StopBits = StopBits.One;
