@@ -284,6 +284,7 @@ namespace BSC_Stand.ViewModels
             };
              _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
              _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
+            _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
             V27BusCyclogramRepeatCount = 1;
             V100BusCyclogramRepeatCount = 1;
            
@@ -294,7 +295,7 @@ namespace BSC_Stand.ViewModels
             programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
             programmablePowerSupplyModules.Add(_AKIP1311);
             programmablePowerSupplyModules.Add(_AKIP1311_4);
-
+            programmablePowerSupplyModules.Add(_Tetron15016C);
 
         
         }
