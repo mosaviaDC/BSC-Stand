@@ -56,6 +56,8 @@
             
             
         </GroupBox>
+
+     
         <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
             <StackPanel>
                 <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
@@ -117,8 +119,14 @@
                           
                         
                     </TreeViewItem>
+
+                   
+
                     <TreeViewItem Header="Циклограмма">
-                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}"   IsReadOnly="False" AutoGenerateColumns="False"  MaxHeight="500">
+                        
+                        
+                        
+                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}"   IsReadOnly="False" AutoGenerateColumns="True"  MaxHeight="500">
                             <DataGrid.Style>
                                 <Style TargetType="DataGrid">
                                     <Style.Triggers>
@@ -150,9 +158,9 @@
                               
 
 
-                            <DataGrid.Columns>
+                            <!--<DataGrid.Columns>
                                 
-                                <DataGridTextColumn  Header="Зад. Значение" Binding="{Binding Path=MaxValue}">
+                                <DataGridTextColumn x:Name="test"  Header="Зад. Значение" Binding="{Binding Path=MaxValue}">
                                     
                                     
                                 </DataGridTextColumn>
@@ -161,7 +169,7 @@
                                 </DataGridTextColumn>
                                 
 
-                            </DataGrid.Columns>
+                            </DataGrid.Columns>-->
 
 
                             

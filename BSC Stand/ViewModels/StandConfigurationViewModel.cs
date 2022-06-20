@@ -90,7 +90,7 @@ namespace BSC_Stand.ViewModels
             var parametres = (object[])p;
             var programmablePowerSupplyModule = (ProgrammablePowerSupplyModule)parametres[0];
             var configMode = (ConfigurationMode)parametres[1];
-            Debug.WriteLine(configMode.ModeName);
+            Debug.WriteLine(configMode.ModeName + programmablePowerSupplyModule.ModuleName);
             if (configMode != null && programmablePowerSupplyModule !=null)
             {
                 
@@ -111,6 +111,12 @@ namespace BSC_Stand.ViewModels
                 else if    (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 100В)")
                 {
                     Bus100ConfigurationModes.Add(configurationMode);
+                }
+                else if (programmablePowerSupplyModule.ModuleName == "Источник питания")
+                {
+                    Debug.WriteLine(configMode.ModeName);
+
+
                 }
                 UpdateCyclograms(null);
             }
