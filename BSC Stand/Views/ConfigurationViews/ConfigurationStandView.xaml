@@ -6,7 +6,7 @@
              xmlns:convertes="clr-namespace:BSC_Stand.Infastructure"
              xmlns:local="clr-namespace:BSC_Stand.Views"
              xmlns:vm="clr-namespace:BSC_Stand.ViewModels"
-             xmlns:nullValue="clr-namespace:BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels"
+             xmlns:nullValue="clr-namespace:BSC_Stand.Models.StandConfigurationModels"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              DataContext="{Binding StandConfigurationViewModel ,Source={StaticResource ViewModelLocator}}"
@@ -99,18 +99,26 @@
 
 
 
-                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Заданное Значение</TextBlock>
+                                <!--<TextBlock Grid.Row="0" Grid.Column="1" Margin="10">Заданное Значение</TextBlock>
                                
-                                <TextBlock Grid.Row="0"  Grid.Column="2" Margin="10">Продолжительность</TextBlock>
-                                  
-                                <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedConfigMode.MaxValue}"  Cursor="IBeam"  ></TextBox>
-                                <TextBox Grid.Row="1" Grid.Column="2" Margin="10" Text="{Binding SelectedConfigMode.Duration}" Cursor="IBeam"></TextBox>
+                                <TextBlock Grid.Row="0"  Grid.Column="2" Margin="10">Продолжительность</TextBlock>-->
+
+
+                                <DataGrid   ItemsSource="{Binding SelectedItem, ElementName=configurationModesList}" AutoGenerateColumns="True">
+                                    
+                                    
+                                    
+                                    
+                                </DataGrid>
+                                
+                                <!--<TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding SelectedItem.MaxValue, ElementName=configurationModesList}"  Cursor="IBeam"  ></TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="2" Margin="10" Text="{Binding SelectedConfigMode}" Cursor="IBeam"></TextBox>-->
                             </Grid>
                             <Button  Command="{Binding AddConfigToCyclogram}" Cursor="Hand" Content="Добавить в циклограмму">
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                         <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>
-                                        <Binding Path="SelectedConfigMode"  ></Binding>
+                                        <Binding Path="SelectedItem" ElementName="configurationModesList"  ></Binding>
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>
@@ -123,10 +131,10 @@
                    
 
                     <TreeViewItem Header="Циклограмма">
-                        
-                        
-                        
-                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedConfigMode}"   IsReadOnly="False" AutoGenerateColumns="True"  MaxHeight="500">
+
+
+
+                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList}"   IsReadOnly="False" AutoGenerateColumns="True"  MaxHeight="500">
                             <DataGrid.Style>
                                 <Style TargetType="DataGrid">
                                     <Style.Triggers>

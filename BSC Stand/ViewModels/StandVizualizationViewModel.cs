@@ -11,8 +11,9 @@ using System.IO;
 using BSC_Stand.Services;
 using System.Diagnostics;
 using System.Threading;
-using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+
 using System.Collections.ObjectModel;
+using BSC_Stand.Models.StandConfigurationModels;
 
 namespace BSC_Stand.ViewModels
 {
@@ -126,7 +127,7 @@ namespace BSC_Stand.ViewModels
         }
 
 
-        public void Update27BusPlotModel(ObservableCollection<ConfigurationMode> configurationModes,int repeatCount)
+        public void Update27BusPlotModel(ObservableCollection<ConfigMode> configurationModes,int repeatCount)
         {
 
             for (int i = 0; i <repeatCount; i++)
@@ -175,7 +176,7 @@ namespace BSC_Stand.ViewModels
             Bus27PlotModel.InvalidatePlot(true);
 
         }
-        public void Update100BusPlotModel(ObservableCollection<ConfigurationMode> configurationModes, int repeatCount)
+        public void Update100BusPlotModel(ObservableCollection<ConfigMode> configurationModes, int repeatCount)
         {
             for (int i = 0; i < repeatCount; i++)
             {

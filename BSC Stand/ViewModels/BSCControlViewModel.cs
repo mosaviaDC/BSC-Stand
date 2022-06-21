@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BSC_Stand.Services;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
-using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+using BSC_Stand.Models.StandConfigurationModels;
 using System.Windows.Threading;
 using OxyPlot;
 using OxyPlot.Series;
@@ -16,6 +16,7 @@ using BSC_Stand.Infastructure.Commands;
 using System.IO;
 using BSC_Stand.Models;
 using BSC_Stand.Extensions;
+using BSC_Stand.Models.StandConfigurationModels;
 
 namespace BSC_Stand.ViewModels
 {
@@ -342,8 +343,8 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public ObservableCollection<ConfigurationMode> V27ConfigurationModes { get; set; }
-        public ObservableCollection<ConfigurationMode> V100ConfigurationModes { get; set; }
+        public ObservableCollection<ConfigMode> V27ConfigurationModes { get; set; }
+        public ObservableCollection<ConfigMode> V100ConfigurationModes { get; set; }
 
         #endregion
 

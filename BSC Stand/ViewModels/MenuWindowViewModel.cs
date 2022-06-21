@@ -80,7 +80,7 @@ namespace BSC_Stand.ViewModels
                     _statusBarViewModel.UpdateTaskProgress(100);
                     if (result != null)
                     {
-                        _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
+                     //   _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
                         Title = $"{CurrentOpenedFileName} - ЭО БСК";
                     }
                 }

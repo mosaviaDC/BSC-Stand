@@ -1,4 +1,4 @@
-﻿using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+﻿using BSC_Stand.Models.StandConfigurationModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +9,14 @@ namespace BSC_Stand.Models
 {
     class CommandParams
     {
-        public CommandParams (ConfigurationMode configurationMode, int index, bool LastCommand)
+        public CommandParams (ConfigMode configurationMode, int index, bool LastCommand)
         {
             this.configurationMode = configurationMode;
             this.SelectedIndex = index;
             this.LastCommand = LastCommand;
         }
 
-        public ConfigurationMode configurationMode;
+        public ConfigMode configurationMode;
         public int SelectedIndex;
         public bool LastCommand;
     }

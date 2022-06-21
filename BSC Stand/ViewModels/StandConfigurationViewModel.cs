@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using BSC_Stand.Infastructure.Commands;
 using BSC_Stand.Models.StandConfigurationModels;
-using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+using BSC_Stand.Models.StandConfigurationModels;
 using Microsoft.Extensions.Logging;
 using BSC_Stand.Services;
 using System.IO;
@@ -19,10 +19,10 @@ namespace BSC_Stand.ViewModels
     class StandConfigurationViewModel:ViewModels.Base.ViewModelBase
     {
 
-      public ConfigurationMode SelectedConfigMode { get; set; }
 
 
-        private Stack<ObservableCollection<ConfigurationMode>> V27BusConfigurationStack = new Stack<ObservableCollection<ConfigurationMode>>();
+
+      
 
         private bool UndoRedoCommandExecuted = false;
         private int _V27BusCyclogramRepeatCount;
@@ -45,8 +45,8 @@ namespace BSC_Stand.ViewModels
 
 
         #region Properties
-        private ProgrammablePowerSupplyModule _AKIP1311;
-       public ProgrammablePowerSupplyModule AKIP1311
+        private ElectronicLoad _AKIP1311;
+       public ElectronicLoad AKIP1311
         {
             get => _AKIP1311;
             set
@@ -56,16 +56,16 @@ namespace BSC_Stand.ViewModels
             }
         }
 
-        private ProgrammablePowerSupplyModule _Tetron15016C;
-        public ProgrammablePowerSupplyModule Tetron15016C
+        private ElectronicLoad _Tetron15016C;
+        public ElectronicLoad Tetron15016C
         {
             get => _Tetron15016C;
             set => Set(ref _Tetron15016C, value);
         }
 
 
-        private ProgrammablePowerSupplyModule _AKIP1311_4;
-        public ProgrammablePowerSupplyModule AKIP1311_4
+        private ElectronicLoad _AKIP1311_4;
+        public ElectronicLoad AKIP1311_4
         {
             get => _AKIP1311_4;
             set
@@ -74,9 +74,9 @@ namespace BSC_Stand.ViewModels
                 Set(ref _AKIP1311_4, value);
             }
         }
-        public ObservableCollection<ConfigurationMode> Bus27ConfigurationModes { get; set; }
-        public ObservableCollection<ConfigurationMode> Bus100ConfigurationModes { get; set; }
-        public ObservableCollection<ProgrammablePowerSupplyModule> programmablePowerSupplyModules { get; set; }
+        public ObservableCollection<ConfigMode> Bus27ConfigurationModes { get; set; }
+        public ObservableCollection<ConfigMode> Bus100ConfigurationModes { get; set; }
+        public ObservableCollection<ElectronicLoad> programmablePowerSupplyModules { get; set; }
 
         private readonly StandVizualizationViewModel _standVizualizationViewModel;
 
@@ -88,20 +88,20 @@ namespace BSC_Stand.ViewModels
         public void AddConfigToCyclogramExecuted(object p)
         {
             var parametres = (object[])p;
-            var programmablePowerSupplyModule = (ProgrammablePowerSupplyModule)parametres[0];
-            var configMode = (ConfigurationMode)parametres[1];
-            Debug.WriteLine(configMode.ModeName + programmablePowerSupplyModule.ModuleName);
-            if (configMode != null && programmablePowerSupplyModule !=null)
+            var programmablePowerSupplyModule = (ElectronicLoad)parametres[0];
+            var ElectronicConfigMode = (ElectronicConfigMode)parametres[1];
+            Debug.WriteLine(ElectronicConfigMode.ModeName + programmablePowerSupplyModule.ModuleName);
+            if (ElectronicConfigMode != null && programmablePowerSupplyModule !=null)
             {
                 
-                ConfigurationMode configurationMode = new ConfigurationMode()
+                ConfigMode configurationMode = new ElectronicConfigMode()
                 {
-                    Discreteness = configMode.Discreteness,
-                    Duration = configMode.Duration,
-                    MaxValue = configMode.MaxValue,
-                    ModeName = configMode.ModeName,
-                    MinValue = configMode.MinValue,
-                    ModeUnit = configMode.ModeUnit,
+                    Discreteness = ElectronicConfigMode.Discreteness,
+                    Duration = ElectronicConfigMode.Duration,
+                    MaxValue = ElectronicConfigMode.MaxValue,
+                    ModeName = ElectronicConfigMode.ModeName,
+                    MinValue = ElectronicConfigMode.MinValue,
+                    ModeUnit = ElectronicConfigMode.ModeUnit,
                 };
                
                 if (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 27В)")
@@ -114,7 +114,7 @@ namespace BSC_Stand.ViewModels
                 }
                 else if (programmablePowerSupplyModule.ModuleName == "Источник питания")
                 {
-                    Debug.WriteLine(configMode.ModeName);
+                    Debug.WriteLine(ElectronicConfigMode.ModeName);
 
 
                 }
@@ -134,11 +134,11 @@ namespace BSC_Stand.ViewModels
         {
 
             
-            Debug.WriteLine("UndoCommand");
-            var lastConfig = V27BusConfigurationStack.Pop();
-            this.Bus27ConfigurationModes = lastConfig;
+         //   Debug.WriteLine("UndoCommand");
+         ////   var lastConfig = V27BusConfigurationStack.Pop();
+         //   this.Bus27ConfigurationModes = lastConfig;
             
-            this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
+         //   this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
         
 
             ////this.Bus27ConfigurationModes.CollectionChanged -= Bus27ConfigurationModes_CollectionChanged;
@@ -161,11 +161,8 @@ namespace BSC_Stand.ViewModels
 
         public bool CanUndoDataGridCommandExecuted(object p)
         {
-            if (V27BusConfigurationStack.Count > 0)
-            {
-                return true;
-            }
-            else return false;
+            return true;
+            
         }
 
 
@@ -189,13 +186,8 @@ namespace BSC_Stand.ViewModels
             #region Services
             #endregion
 
-            SelectedConfigMode = new ConfigurationMode()
-            {
-                Duration = 15,
-                MaxValue = 600,
-                MinValue = 600
-            };
-            List<ConfigurationMode> Akip1311_Config = new List<ConfigurationMode>()
+           
+            List<ElectronicConfigMode> Akip1311_Config = new List<ElectronicConfigMode>()
             {
             //     new ConfigurationMode()
             //{
@@ -213,7 +205,7 @@ namespace BSC_Stand.ViewModels
             //    MaxValue = 25,
             //    ModeUnit = "A"
             //},
-                 new ConfigurationMode()
+                 new ElectronicConfigMode()
                 {
                 ModeName = "Cтабилизация мощности",
                 Discreteness = 0.5f,
@@ -223,9 +215,9 @@ namespace BSC_Stand.ViewModels
                 Duration = 15
                  }
             };
-            List<ConfigurationMode> Tetron15016CConfig = new List<ConfigurationMode>()
+            List<ElectronicConfigMode> Tetron15016CConfig = new List<ElectronicConfigMode>()
             {
-                 new ConfigurationMode()
+                 new ElectronicConfigMode()
             {
                 ModeName = "Ограничение по силе тока",
                 Discreteness = 0.5f,
@@ -233,7 +225,7 @@ namespace BSC_Stand.ViewModels
                 MaxValue = 16,
                 ModeUnit = "А"
             },
-               new ConfigurationMode()
+               new ElectronicConfigMode()
             {
                 ModeName = "Ограничение по напряжению",
                 Discreteness = 0.5f,
@@ -241,7 +233,7 @@ namespace BSC_Stand.ViewModels
                 MaxValue = 160,
                 ModeUnit = "В"
             },
-             new ConfigurationMode()
+             new ElectronicConfigMode()
             {
                 ModeName = "Удержание напряжения",
                 Discreteness = 0.5f,
@@ -249,7 +241,7 @@ namespace BSC_Stand.ViewModels
                 MaxValue = 160,
                 ModeUnit = "В"
             },
-                new ConfigurationMode()
+                new ElectronicConfigMode()
             {
                 ModeName = "Удержание силы тока",
                 Discreteness = 0.5f,
@@ -260,7 +252,7 @@ namespace BSC_Stand.ViewModels
 
 
             };
-            List<ConfigurationMode> Akip1311_4Config = new List<ConfigurationMode>()
+            List<ElectronicConfigMode> Akip1311_4Config = new List<ElectronicConfigMode>()
             {
             //     new ConfigurationMode()
             //{
@@ -278,7 +270,7 @@ namespace BSC_Stand.ViewModels
             //    MaxValue = 25,
             //    ModeUnit = "A"
             //},
-                 new ConfigurationMode()
+                 new ElectronicConfigMode()
             {
                 ModeName = "Cтабилизация мощности",
                 Discreteness = 0.5f,
@@ -288,17 +280,17 @@ namespace BSC_Stand.ViewModels
                 Duration = 15
                  }
             };
-             _AKIP1311 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 27В)",Akip1311_Config);
-             _AKIP1311_4 = new ProgrammablePowerSupplyModule("Нагрузка электронная (шина 100В)",Akip1311_4Config);
-            _Tetron15016C = new ProgrammablePowerSupplyModule("Источник питания", Tetron15016CConfig);
+             _AKIP1311 = new ElectronicLoad("Нагрузка электронная (шина 27В)",Akip1311_Config);
+             _AKIP1311_4 = new ElectronicLoad("Нагрузка электронная (шина 100В)",Akip1311_4Config);
+            _Tetron15016C = new ElectronicLoad("Источник питания", Tetron15016CConfig);
             V27BusCyclogramRepeatCount = 1;
             V100BusCyclogramRepeatCount = 1;
-           
-            Bus27ConfigurationModes = new ObservableCollection<ConfigurationMode>();
-            Bus100ConfigurationModes = new ObservableCollection<ConfigurationMode>();
+
+            Bus27ConfigurationModes = new ObservableCollection<ConfigMode>();
+            Bus100ConfigurationModes = new ObservableCollection<ConfigMode>();
             Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
             Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
-            programmablePowerSupplyModules = new ObservableCollection<ProgrammablePowerSupplyModule>();
+            programmablePowerSupplyModules = new ObservableCollection<ElectronicLoad>();
             programmablePowerSupplyModules.Add(_AKIP1311);
             programmablePowerSupplyModules.Add(_AKIP1311_4);
             programmablePowerSupplyModules.Add(_Tetron15016C);
@@ -313,7 +305,7 @@ namespace BSC_Stand.ViewModels
         }
         private void Bus27ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-                V27BusConfigurationStack.Push(this.Bus27ConfigurationModes);
+               
           
         }
 
@@ -323,7 +315,7 @@ namespace BSC_Stand.ViewModels
             _standVizualizationViewModel.Update100BusPlotModel(this.Bus100ConfigurationModes,V100BusCyclogramRepeatCount);
         }
 
-        public  void UpdateConfigurationModes(ObservableCollection<ConfigurationMode> V27BusConfig, ObservableCollection<ConfigurationMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount, int V27RepeatCount =1, int V100RepeatCount =1)
+        public  void UpdateConfigurationModes(ObservableCollection<ElectronicConfigMode> V27BusConfig, ObservableCollection<ElectronicConfigMode> V100BusConfig, int V27BusRepeatCount, int V100BusRepeatCount, int V27RepeatCount =1, int V100RepeatCount =1)
         {
             
                 this.Bus100ConfigurationModes.Clear();

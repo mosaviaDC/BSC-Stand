@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Collections.ObjectModel;
-using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+using BSC_Stand.Models.StandConfigurationModels;
 using System.IO;
 using BSC_Stand.Models;
 using BSC_Stand.ViewModels;
@@ -33,11 +33,30 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task SaveProjectConfiguration(string filePath,ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode>V100ConfigurationModes,int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount)
-        {
+        //public async Task SaveProjectConfiguration(string filePath,ObservableCollection<ConfigMode> V27ConfigurationModes, ObservableCollection<ConfigMode>V100ConfigurationModes,int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount)
+        //{
            
+        //    _statusBarViewModel.SetNewTask(100);
+        //    FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel (V100ConfigurationModes, V27ConfigurationModes,V27ConfigurationModesRepeatCount,V100ConfigurationModesRepeatCount);
+        //    _statusBarViewModel.UpdateTaskProgress(25);
+
+        //    JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+        //    {
+        //        WriteIndented = true
+        //    };
+        //    _statusBarViewModel.UpdateTaskProgress(50);
+        //    using FileStream createStream = File.Create(filePath);
+
+        //    await JsonSerializer.SerializeAsync(createStream, projectConfiguration,jsonSerializerOptions);
+        //    await createStream.DisposeAsync();
+        //    _statusBarViewModel.UpdateTaskProgress(100);
+        //    _statusBarViewModel.SetNewTask();
+        //}
+
+        public async Task SaveProjectConfiguration(string filePath, ObservableCollection<ConfigMode> V27ConfigurationModes, ObservableCollection<ConfigMode> V100ConfigurationModes, int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount)
+        {
             _statusBarViewModel.SetNewTask(100);
-            FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel (V100ConfigurationModes, V27ConfigurationModes,V27ConfigurationModesRepeatCount,V100ConfigurationModesRepeatCount);
+            FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel(V100ConfigurationModes, V27ConfigurationModes, V27ConfigurationModesRepeatCount, V100ConfigurationModesRepeatCount);
             _statusBarViewModel.UpdateTaskProgress(25);
 
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
@@ -47,7 +66,7 @@ namespace BSC_Stand.Services
             _statusBarViewModel.UpdateTaskProgress(50);
             using FileStream createStream = File.Create(filePath);
 
-            await JsonSerializer.SerializeAsync(createStream, projectConfiguration,jsonSerializerOptions);
+            await JsonSerializer.SerializeAsync(createStream, projectConfiguration, jsonSerializerOptions);
             await createStream.DisposeAsync();
             _statusBarViewModel.UpdateTaskProgress(100);
             _statusBarViewModel.SetNewTask();
