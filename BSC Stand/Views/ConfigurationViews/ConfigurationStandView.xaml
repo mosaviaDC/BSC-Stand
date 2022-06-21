@@ -20,6 +20,7 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="27VBusCyclogram" Source="{Binding Bus27ConfigurationModes}"/>
         <CollectionViewSource x:Key="100VbusCyclogram" Source="{Binding Bus100ConfigurationModes}"/>
+        <CollectionViewSource x:Key="PowerSupplyConfigurationModes" Source="{Binding PowerSupplyConfigurationModes}"/>
         
         <convertes:AddConfigModeContverter x:Key="AddConfigModeConverter"></convertes:AddConfigModeContverter>
     </UserControl.Resources>
@@ -249,7 +250,7 @@
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                         <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>
-                                        <Binding Path="SelectedElectronicConfigMode"  ></Binding>
+                                        <Binding Path="SelectedPowerSupplyConfigMode"  ></Binding>
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>
@@ -293,7 +294,7 @@
 
 
 
-                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList, Mode=TwoWay }" IsReadOnly="False"   >
+                        <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList, Mode=TwoWay }" IsReadOnly="False" AutoGenerateColumns="False"   >
                             <DataGrid.Style>
                                 <Style TargetType="DataGrid">
                                     <Style.Triggers>
@@ -303,6 +304,11 @@
                                         <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
                                             <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource 100VbusCyclogram}}" ></Setter>
                                            
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                    
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -328,7 +334,7 @@
 
                             <DataGrid.Columns>
                                 
-                                <DataGridTextColumn   Header="Зад. Значение" Binding="{Binding Path=MaxValue}">
+                                <DataGridTextColumn  Header="Зад. значение" Binding="{Binding Path=MaxValue}">
                                     
                                     
                                 </DataGridTextColumn>
@@ -342,6 +348,71 @@
 
                             
                         </DataGrid>
+
+                        <DataGrid   x:Name="DataGrid1" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList, Mode=TwoWay }"  IsReadOnly="False" AutoGenerateColumns="False"   >
+                            <DataGrid.Style>
+                                <Style TargetType="DataGrid">
+                                    <Style.Triggers>
+                                    
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                            <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource PowerSupplyConfigurationModes}}" ></Setter>
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 27В)">
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
+
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Style>
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="QueryCursor" >
+                                    <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="CellEditEnding">
+                                    <behaviors:InvokeCommandAction Command="{Binding  Source={StaticResource ViewModelLocator}, Path= MenuWindowViewModel.CheckFileCommand}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="SizeChanged">
+                                    <behaviors:InvokeCommandAction Command="{Binding  Source={StaticResource ViewModelLocator}, Path= MenuWindowViewModel.CheckFileCommand}"></behaviors:InvokeCommandAction>
+                                </behaviors:EventTrigger>
+
+
+
+                            </behaviors:Interaction.Triggers>
+
+
+
+
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn  Header="Предельное. значение A" Binding="{Binding Path=MaxValue}">
+
+
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn  Header="Зад. значение V" Binding="{Binding Path=MaxValue}">
+
+
+                                </DataGridTextColumn>
+                                <DataGridTextColumn  Header="Продолжительность" Binding="{Binding Path=Duration}">
+
+                                </DataGridTextColumn>
+
+
+                            </DataGrid.Columns>
+
+
+
+                        </DataGrid>
+
+
+
                         <Grid MinWidth="300">
                             <TextBlock Width="150" Text="Количество повторений" HorizontalAlignment="Left" ></TextBlock>
                             <TextBox Width="20">
@@ -354,6 +425,10 @@
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
                                                 <Setter Property="Text"  Value="{Binding Path=V100BusCyclogramRepeatCount, Mode=TwoWay}"></Setter>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
+                                                <Setter Property="Text"  Value="{Binding Path=PowerSupplyCyclogramRepeatCount, Mode=TwoWay}"></Setter>
+                                            </DataTrigger>
+                                          
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>

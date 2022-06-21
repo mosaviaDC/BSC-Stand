@@ -39,24 +39,27 @@ namespace BSC_Stand.ViewModels
         public PlotModel Bus27PlotModel { get; set; }
         public PlotModel Bus100PlotModel { get; set; }
 
+        public PlotModel PowerSupplyPlotModel { get; set; }
+
         private readonly BSCControlViewModel _bSCControlViewModel;
         private IGraphService _graphService;
         public TwoColorAreaSeries s1 { get; set; }
         public TwoColorAreaSeries s2 { get; set; }
 
+        public TwoColorAreaSeries s3 { get; set; }
         #endregion
 
 
 
 
 
- 
+
         List<DataPoint> dataPoints { get; set; }
 
-        public StandVizualizationViewModel( IGraphService graphService)
+        public StandVizualizationViewModel(IGraphService graphService)
 
         {
-            
+
             _graphService = graphService;
 
             for (int i = 0; i < 150; i++)
@@ -71,6 +74,10 @@ namespace BSC_Stand.ViewModels
             Bus100PlotModel = new PlotModel
             {
                 Title = "100B"
+            };
+            PowerSupplyPlotModel = new PlotModel()
+            {
+                Title = "Источник питания"
             };
             s1 = new TwoColorAreaSeries
             {
@@ -111,12 +118,35 @@ namespace BSC_Stand.ViewModels
 
             };
 
+            s3 = new TwoColorAreaSeries()
+            {
+
+                Title = "Мощность ",
+                TrackerFormatString = "{4:0} Вт {2:0} сек",
+                Color = OxyColors.Black,
+                Color2 = OxyColors.Brown,
+                MarkerFill = OxyColors.Red,
+                Fill = OxyColors.Transparent,
+                Fill2 = OxyColors.Transparent,
+                MarkerFill2 = OxyColors.Blue,
+                MarkerStroke = OxyColors.Brown,
+                MarkerStroke2 = OxyColors.Black,
+                StrokeThickness = 2,
+                Limit = 0,
+
+                MarkerType = MarkerType.Diamond,
+                MarkerSize = 1,
+            };
+
             Bus27PlotModel.Series.Add(s1);
             Bus27PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Unit = "Вт", ExtraGridlines = new[] { 0.0 } });
             Bus27PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Unit = "сек", ExtraGridlines = new[] { 0.0 } });
             Bus100PlotModel.Series.Add(s2);
             Bus100PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Unit = "Вт", ExtraGridlines = new[] { 0.0 } });
             Bus100PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Unit = "сек", ExtraGridlines = new[] { 0.0 } });
+            PowerSupplyPlotModel.Series.Add(s3);
+            PowerSupplyPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Unit = "Вт", ExtraGridlines = new[] { 0.0 } });
+            PowerSupplyPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Unit = "сек", ExtraGridlines = new[] { 0.0 } });
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(UpdatePlot);
@@ -176,6 +206,69 @@ namespace BSC_Stand.ViewModels
             Bus27PlotModel.InvalidatePlot(true);
 
         }
+
+        public void UpdatePowerSupplyPlotModel(ObservableCollection<ConfigMode> configurationModes, int repeatCount)
+        {
+
+            for (int i = 0; i < repeatCount; i++)
+            {
+
+
+
+                if (configurationModes.Count > 0)
+                {
+                    if (i == 0)
+                    {
+                        s3.Points.Clear();
+
+                        s3.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
+                        s3.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
+
+                        foreach (var configurationMode in configurationModes)
+                        {
+                            if (configurationModes.IndexOf(configurationMode) > 0)
+                            {
+                                s3.Points.Add(new DataPoint(s3.Points.Last().X, configurationMode.MaxValue));
+                                s3.Points.Add(new DataPoint(configurationMode.Duration + s3.Points.Last().X, configurationMode.MaxValue));
+
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        s3.Points.Add(new DataPoint(s1.Points.Last().X, configurationModes[0].MaxValue));
+                        s3.Points.Add(new DataPoint(configurationModes[0].Duration + s3.Points.Last().X, configurationModes[0].MaxValue));
+                        foreach (var configurationMode in configurationModes)
+                        {
+                            if (configurationModes.IndexOf(configurationMode) > 0)
+                            {
+                                s3.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                                s3.Points.Add(new DataPoint(configurationMode.Duration + s3.Points.Last().X, configurationMode.MaxValue));
+
+                            }
+                        }
+
+                    }
+                }
+            }
+            PowerSupplyPlotModel.InvalidatePlot(true);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void Update100BusPlotModel(ObservableCollection<ConfigMode> configurationModes, int repeatCount)
         {
             for (int i = 0; i < repeatCount; i++)
