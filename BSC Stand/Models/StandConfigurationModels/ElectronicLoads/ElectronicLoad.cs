@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BSC_Stand.Models.StandConfigurationModels
 {
-    internal class ElectronicLoad
+    internal class ElectronicLoad:ProggramebleModule
     {
         public List<ElectronicConfigMode> Modes { get; }
         public ConfigMode CurrentConfigMode { get; set; }

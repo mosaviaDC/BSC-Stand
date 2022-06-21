@@ -56,8 +56,8 @@ namespace BSC_Stand.ViewModels
             }
         }
 
-        private ElectronicLoad _Tetron15016C;
-        public ElectronicLoad Tetron15016C
+        private PowerSupply _Tetron15016C;
+        public PowerSupply Tetron15016C
         {
             get => _Tetron15016C;
             set => Set(ref _Tetron15016C, value);
@@ -76,7 +76,7 @@ namespace BSC_Stand.ViewModels
         }
         public ObservableCollection<ConfigMode> Bus27ConfigurationModes { get; set; }
         public ObservableCollection<ConfigMode> Bus100ConfigurationModes { get; set; }
-        public ObservableCollection<ElectronicLoad> programmablePowerSupplyModules { get; set; }
+        public ObservableCollection<ProggramebleModule> programmablePowerSupplyModules { get; set; }
 
         private readonly StandVizualizationViewModel _standVizualizationViewModel;
 
@@ -215,39 +215,43 @@ namespace BSC_Stand.ViewModels
                 Duration = 15
                  }
             };
-            List<ElectronicConfigMode> Tetron15016CConfig = new List<ElectronicConfigMode>()
+            List<PowerSupplyConfigMode> Tetron15016CConfig = new List<PowerSupplyConfigMode>()
             {
-                 new ElectronicConfigMode()
+                 new PowerSupplyConfigMode()
             {
                 ModeName = "Ограничение по силе тока",
                 Discreteness = 0.5f,
                 MinValue = 0,
                 MaxValue = 16,
-                ModeUnit = "А"
+                ModeUnit = "А",
+                Test =0,
             },
-               new ElectronicConfigMode()
+               new PowerSupplyConfigMode()
             {
                 ModeName = "Ограничение по напряжению",
                 Discreteness = 0.5f,
                 MinValue = 0,
                 MaxValue = 160,
-                ModeUnit = "В"
+                ModeUnit = "В",
+                Test =1,
             },
-             new ElectronicConfigMode()
+             new PowerSupplyConfigMode()
             {
                 ModeName = "Удержание напряжения",
                 Discreteness = 0.5f,
                 MinValue = 150,
                 MaxValue = 160,
-                ModeUnit = "В"
+                ModeUnit = "В",
+                Test =2
             },
-                new ElectronicConfigMode()
+                new PowerSupplyConfigMode()
             {
                 ModeName = "Удержание силы тока",
                 Discreteness = 0.5f,
                 MinValue = 10,
                 MaxValue = 11,
-                ModeUnit = "А"
+                ModeUnit = "А",
+                Test =3
             },
 
 
@@ -282,7 +286,7 @@ namespace BSC_Stand.ViewModels
             };
              _AKIP1311 = new ElectronicLoad("Нагрузка электронная (шина 27В)",Akip1311_Config);
              _AKIP1311_4 = new ElectronicLoad("Нагрузка электронная (шина 100В)",Akip1311_4Config);
-            _Tetron15016C = new ElectronicLoad("Источник питания", Tetron15016CConfig);
+            _Tetron15016C = new PowerSupply("Источник питания", Tetron15016CConfig);
             V27BusCyclogramRepeatCount = 1;
             V100BusCyclogramRepeatCount = 1;
 
@@ -290,7 +294,7 @@ namespace BSC_Stand.ViewModels
             Bus100ConfigurationModes = new ObservableCollection<ConfigMode>();
             Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
             Bus100ConfigurationModes.CollectionChanged += Bus100ConfigurationModes_CollectionChanged;
-            programmablePowerSupplyModules = new ObservableCollection<ElectronicLoad>();
+            programmablePowerSupplyModules = new ObservableCollection<ProggramebleModule>();
             programmablePowerSupplyModules.Add(_AKIP1311);
             programmablePowerSupplyModules.Add(_AKIP1311_4);
             programmablePowerSupplyModules.Add(_Tetron15016C);
