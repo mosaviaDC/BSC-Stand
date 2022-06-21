@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BSC_Stand.Models.StandConfigurationModels
 {
-    public abstract class ConfigMode:IEnumerator,IEnumerable
+    public abstract class ConfigMode
     {
         [DisplayName("Column Name 1")]
         public float MinValue { get; set; }
@@ -32,36 +32,15 @@ namespace BSC_Stand.Models.StandConfigurationModels
         /// </summary>
         public string ModeUnit { get; set; }
 
-        public object Current => this;
-
-        private bool test = true;
-        public IEnumerator GetEnumerator()
+        public object Current
         {
-            Debug.WriteLine($"*{this.MaxValue}");
-            return this;
-            
-        }
-        public bool MoveNext()
-        {
-            if (test)
+            get
             {
-                
-                Debug.WriteLine($"**{this.MaxValue}");
-                test = false;
-                return true;
+                return this;
             }
-            else
-            {
-                Debug.WriteLine($"***{this.MaxValue}");
-              
-                return false;
-            }
-           
+          
         }
 
-        public void Reset()
-        {
-            test = true;
-        }
+    
     }
 }

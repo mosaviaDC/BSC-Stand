@@ -36,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="27.2.1" />
     <PackageReference Include="EPPlus" Version="6.0.5" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
     <PackageReference Include="FontAwesome5" Version="2.1.6" />
     <PackageReference Include="iTextSharp.LGPLv2.Core.StrongName" Version="1.6.71" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />

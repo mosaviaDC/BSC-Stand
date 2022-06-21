@@ -51,7 +51,7 @@ namespace BSC_Stand.ViewModels
             get => _AKIP1311;
             set
             {
-                Debug.WriteLine("Set");
+             
                 Set(ref _AKIP1311, value);
             }
         }
@@ -74,6 +74,28 @@ namespace BSC_Stand.ViewModels
                 Set(ref _AKIP1311_4, value);
             }
         }
+
+        private ElectronicLoad _ITC;
+        public ElectronicLoad ITC
+        {
+            get => _ITC;
+            set
+            {
+
+                Set(ref _ITC, value);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
         public ObservableCollection<ConfigMode> Bus27ConfigurationModes { get; set; }
         public ObservableCollection<ConfigMode> Bus100ConfigurationModes { get; set; }
         public ObservableCollection<ProggramebleModule> programmablePowerSupplyModules { get; set; }
@@ -129,6 +151,8 @@ namespace BSC_Stand.ViewModels
         }
 
         public ICommand UndoDataGridCommand { get; set; }
+        public ElectronicConfigMode SelectedElectronicConfigMode { get; set; }
+        public PowerSupplyConfigMode SelectedPowerSupplyConfigMode { get; set; }
 
         public void UndoDataGridCommandExecuted(object p)
         {
@@ -186,7 +210,27 @@ namespace BSC_Stand.ViewModels
             #region Services
             #endregion
 
-           
+
+
+            SelectedElectronicConfigMode = new ElectronicConfigMode()
+            {
+
+                Duration=15,
+                MaxValue=1
+
+
+            };
+
+            SelectedPowerSupplyConfigMode = new PowerSupplyConfigMode()
+            {
+
+                Duration = 15,
+                MaxValue = 1
+
+
+            };
+
+
             List<ElectronicConfigMode> Akip1311_Config = new List<ElectronicConfigMode>()
             {
             //     new ConfigurationMode()
@@ -219,40 +263,14 @@ namespace BSC_Stand.ViewModels
             {
                  new PowerSupplyConfigMode()
             {
-                ModeName = "Ограничение по силе тока",
+                ModeName = "Установка заданного значения напряжения и тока.",
                 Discreteness = 0.5f,
                 MinValue = 0,
                 MaxValue = 16,
                 ModeUnit = "А",
-                Test =0,
-            },
-               new PowerSupplyConfigMode()
-            {
-                ModeName = "Ограничение по напряжению",
-                Discreteness = 0.5f,
-                MinValue = 0,
-                MaxValue = 160,
-                ModeUnit = "В",
-                Test =1,
-            },
-             new PowerSupplyConfigMode()
-            {
-                ModeName = "Удержание напряжения",
-                Discreteness = 0.5f,
-                MinValue = 150,
-                MaxValue = 160,
-                ModeUnit = "В",
-                Test =2
-            },
-                new PowerSupplyConfigMode()
-            {
-                ModeName = "Удержание силы тока",
-                Discreteness = 0.5f,
-                MinValue = 10,
-                MaxValue = 11,
-                ModeUnit = "А",
-                Test =3
-            },
+              
+            }
+          
 
 
             };
@@ -287,6 +305,7 @@ namespace BSC_Stand.ViewModels
              _AKIP1311 = new ElectronicLoad("Нагрузка электронная (шина 27В)",Akip1311_Config);
              _AKIP1311_4 = new ElectronicLoad("Нагрузка электронная (шина 100В)",Akip1311_4Config);
             _Tetron15016C = new PowerSupply("Источник питания", Tetron15016CConfig);
+            _ITC = new ElectronicLoad("АЛАл", Akip1311_Config);
             V27BusCyclogramRepeatCount = 1;
             V100BusCyclogramRepeatCount = 1;
 
