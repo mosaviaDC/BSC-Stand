@@ -20,6 +20,8 @@ namespace BSC_Stand.Services
 
         private static DispatcherTimer V27expirementTimer { get; set; }
         private static DispatcherTimer V100expirementTimer { get; set; }
+
+        private static DispatcherTimer PowerSupplyExpirementTimer { get; set; }
         private DateTime StartTime { get;set; }
 
         private DateTime V27NextConfigTime { get; set; }
@@ -30,11 +32,19 @@ namespace BSC_Stand.Services
 
         private int V100ConfigIndex = 0;
 
+        private DateTime PowerSupplyNextConfigTime { get; set; }
+
+        private int PowerSupplyConfigIndex = 0;
+
         private int ExperimentDurationCount;
 
         private ObservableCollection<ElectronicConfigMode> V27configurationModes;
 
         private ObservableCollection<ElectronicConfigMode> V100configurationModes;
+
+        private ObservableCollection<PowerSupplyConfigMode> PowerSupplyConfigModes;
+
+
         private readonly IUserDialogWindowService _userDialogWindowService;
         private bool isExpirementPepformed;
 
@@ -43,6 +53,10 @@ namespace BSC_Stand.Services
 
         public delegate void V100Msg(CommandParams commandParamse);
         public event V100Msg _V100MsgEvent;
+
+
+        public delegate void PowerSupplyMsg(CommandParams commandParamse);
+        public event PowerSupplyMsg _PowerSupplyMsgEvent;
 
         public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel, IUserDialogWindowService userDialogWindowService)
         {
@@ -56,10 +70,17 @@ namespace BSC_Stand.Services
             V100expirementTimer.Interval = TimeSpan.FromMilliseconds(250);
             V100expirementTimer.Tick += V100TimerEventHandler;
 
+            PowerSupplyExpirementTimer = new DispatcherTimer();
+            PowerSupplyExpirementTimer.Interval = TimeSpan.FromMilliseconds(250);
+            PowerSupplyExpirementTimer.Tick += PowerSupplyEventHandler;
+
+
             V27configurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100configurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
+            PowerSupplyConfigModes = standConfigurationViewModel.PowerSupplyConfigurationModes;
             _V27MsgEvent += bSCControlViewModel.SendV27ModBusCommand;
             _V100MsgEvent += bSCControlViewModel.SendV100ModBusCommand;
+            _PowerSupplyMsgEvent += bSCControlViewModel.SendPowerSupplyCommand;
    
           
 
@@ -70,18 +91,27 @@ namespace BSC_Stand.Services
         public void UpdateExpiremntParams()
         {
 
-            if (V100configurationModes.Count > 0 || V27configurationModes.Count > 0)
+            if (V100configurationModes.Count > 0 || V27configurationModes.Count > 0 || PowerSupplyConfigModes.Count >0)
             {
 
                 StartTime = DateTime.Now;
+
                 V27NextConfigTime = StartTime;
                 V27NextConfigTime = V27NextConfigTime.AddSeconds(V27configurationModes[V27ConfigIndex].Duration);
                 V27ConfigIndex++;
+
                 V100NextConfigTime = StartTime;
                 V100NextConfigTime = V100NextConfigTime.AddSeconds(V100configurationModes[V100ConfigIndex].Duration);
                 V100ConfigIndex++;
+
+                PowerSupplyNextConfigTime = StartTime;
+                PowerSupplyNextConfigTime = PowerSupplyNextConfigTime.AddSeconds(PowerSupplyConfigModes[PowerSupplyConfigIndex].Duration);
+                PowerSupplyConfigIndex++;
+
                 _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0,false));
                 _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0,false));
+                _PowerSupplyMsgEvent?.Equals(new CommandParams(PowerSupplyConfigModes[0], 0, false));
+                //TO DO расчитать для трех
                 if (V100configurationModes.Count>= V27configurationModes.Count)
                 {
                     ExperimentDurationCount = V100configurationModes.Count;
@@ -93,6 +123,7 @@ namespace BSC_Stand.Services
                 }
                 V27expirementTimer.Start();
                 V100expirementTimer.Start();
+                PowerSupplyExpirementTimer.Start();
             }
             else
             {
@@ -107,6 +138,7 @@ namespace BSC_Stand.Services
                 isExpirementPepformed = true;
                 V27ConfigIndex = 0;
                 V100ConfigIndex = 0;
+                PowerSupplyConfigIndex=0;
                 UpdateExpiremntParams();
             }
             else if (isExpirementPepformed)
@@ -120,6 +152,7 @@ namespace BSC_Stand.Services
             isExpirementPepformed = false;
             V27expirementTimer.Stop();
             V100expirementTimer.Stop();
+            PowerSupplyExpirementTimer.Stop();
         }
 
 
@@ -179,7 +212,42 @@ namespace BSC_Stand.Services
 
         }
 
-        
+
+        public void PowerSupplyEventHandler(object sender, EventArgs e)
+        {
+
+            if (DateTime.Now - PowerSupplyNextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - PowerSupplyNextConfigTime <= TimeSpan.FromMilliseconds(500)))
+            {
+
+                if (PowerSupplyConfigIndex == PowerSupplyConfigModes.Count)
+                {
+                    PowerSupplyExpirementTimer.Stop();
+                    if (PowerSupplyConfigIndex == ExperimentDurationCount)
+                    {
+                        _PowerSupplyMsgEvent?.Invoke(new(PowerSupplyConfigModes[PowerSupplyConfigIndex - 1], PowerSupplyConfigIndex, true));
+
+                    }
+                    Debug.WriteLine($"Power Supply expirement Stop {DateTime.Now}");
+                    return;
+                }
+
+                {
+                    _PowerSupplyMsgEvent?.Invoke(new(PowerSupplyConfigModes[PowerSupplyConfigIndex], PowerSupplyConfigIndex,false));
+                
+                    PowerSupplyNextConfigTime = PowerSupplyNextConfigTime.AddSeconds(PowerSupplyConfigModes[PowerSupplyConfigIndex].Duration);
+                    PowerSupplyConfigIndex++;
+                }
+            }
+
+        }
+
+
+
+
+
+
+
+
         public double GetCurrentSecond()
         {
             var r = DateTime.Now.Day;

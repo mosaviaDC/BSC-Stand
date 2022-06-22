@@ -259,6 +259,13 @@ namespace BSC_Stand.ViewModels
             set => Set(ref _V100SelectedIndex, value);
         }
 
+        private int _PowerSupplySelectedIndex;
+        public int PowerSupplySelectedIndex
+        {
+            get => _PowerSupplySelectedIndex;
+            set => Set(ref _PowerSupplySelectedIndex, value);
+        }
+
 
 
         private string _V27Value;
@@ -346,6 +353,8 @@ namespace BSC_Stand.ViewModels
         public ObservableCollection<ElectronicConfigMode> V27ConfigurationModes { get; set; }
         public ObservableCollection<ElectronicConfigMode> V100ConfigurationModes { get; set; }
 
+        public ObservableCollection<PowerSupplyConfigMode> PowerSupplyConfigurationModes { get; set; }
+
         #endregion
 
         #endregion
@@ -359,6 +368,7 @@ namespace BSC_Stand.ViewModels
             _standConfigurationViewModel = standConfigurationViewModel;
             V27ConfigurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100ConfigurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
+            PowerSupplyConfigurationModes = standConfigurationViewModel.PowerSupplyConfigurationModes;
             _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService);
             _modBusService = modbusService;
    
@@ -491,6 +501,21 @@ namespace BSC_Stand.ViewModels
             V100SelectedIndex = commandParams.SelectedIndex;
             _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
             WriteMessage($"Отправлена команда на шину 100B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
+        }
+        public void SendPowerSupplyCommand(CommandParams commandParams)
+        {
+
+            if (commandParams.LastCommand)
+            {
+                StopExpirementCommandExecute(null);
+                return;
+            }
+            PowerSupplySelectedIndex = commandParams.SelectedIndex;
+            _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
+            WriteMessage($"Отправлена команда на источник питания: { ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} {((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Info);
+
+
+
         }
       
     }

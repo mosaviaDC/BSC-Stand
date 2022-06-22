@@ -87,12 +87,14 @@
                     </ColumnDefinition>
                     <ColumnDefinition>
                     </ColumnDefinition>
+                    <ColumnDefinition>
+                    </ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <DataGrid Grid.Column="0" ItemsSource="{Binding  V27ConfigurationModes}"  SelectedIndex="{Binding V27SelectedIndex}" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
 
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn  Header="Знач." Binding="{Binding Path=MaxValue}"   FontSize="12">
+                        <DataGridTextColumn  Header="Зад. W" Binding="{Binding Path=MaxValue}"   FontSize="12">
 
 
                         </DataGridTextColumn>
@@ -107,7 +109,7 @@
                 <DataGrid Grid.Column="1"   ItemsSource="{Binding V100ConfigurationModes }" SelectedIndex="{Binding V100SelectedIndex}"  IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn  Header="Знач." Binding="{Binding Path=MaxValue}" FontSize="12">
+                        <DataGridTextColumn  Header="Зад. W" Binding="{Binding Path=MaxValue}" FontSize="12">
 
 
                         </DataGridTextColumn>
@@ -121,6 +123,31 @@
 
 
                 </DataGrid>
+
+                <DataGrid Grid.Column="2"   ItemsSource="{Binding PowerSupplyConfigurationModes }" SelectedIndex="{Binding PowerSupplySelectedIndex}"  IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn  Header="Пред. А" Binding="{Binding Path=MaxValue}" FontSize="12">
+
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn  Header="Зад. V" Binding="{Binding Path=MaxValue1}" FontSize="12">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn  Header="Прод." Binding="{Binding Path=Duration}" FontSize="12">
+
+                        </DataGridTextColumn>
+
+
+                    </DataGrid.Columns>
+
+
+
+                </DataGrid>
+
+
+
             </Grid>
         </Grid>
         <GridSplitter Width="3" ></GridSplitter>
