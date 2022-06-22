@@ -111,7 +111,7 @@ namespace BSC_Stand.ViewModels
             {
                 var programmablePowerSupplyModule = (ElectronicLoad)parametres[0];
                 var ElectronicConfigMode = (ElectronicConfigMode)parametres[1];
-                Debug.WriteLine(ElectronicConfigMode.ModeName + programmablePowerSupplyModule.ModuleName);
+           //     Debug.WriteLine(ElectronicConfigMode.ModeName + programmablePowerSupplyModule.ModuleName);
 
 
                 if (ElectronicConfigMode != null && programmablePowerSupplyModule != null)

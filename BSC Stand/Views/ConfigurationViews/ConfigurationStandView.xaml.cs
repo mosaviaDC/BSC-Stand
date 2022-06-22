@@ -30,7 +30,19 @@ namespace BSC_Stand.Views
         
         private void StandConfigModules_Initialized_1(object sender, EventArgs e)
         {
-           
+         
+            foreach (var p in StandConfigModules.Items)
+            {
+                StandConfigModules.SelectedItem = p;
+            }
+            
+
+
+        }
+
+        private void StandConfigModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Debug.WriteLine("Selection Changed");
         }
     }
 }
