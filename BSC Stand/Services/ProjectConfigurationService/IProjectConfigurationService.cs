@@ -1,5 +1,5 @@
 ﻿using BSC_Stand.Models;
-using BSC_Stand.Models.StandConfigurationModels.ElectronicLoadModels;
+using BSC_Stand.Models.StandConfigurationModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +11,7 @@ namespace BSC_Stand.Services
 {
     internal interface IProjectConfigurationService
     {
-        Task SaveProjectConfiguration(string filePath, ObservableCollection<ConfigurationMode> V27ConfigurationModes, ObservableCollection<ConfigurationMode> V100ConfigurationModes, int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount);
+        Task SaveProjectConfiguration(string filePath, ObservableCollection<ElectronicConfigMode> V27ConfigurationModes, ObservableCollection<ElectronicConfigMode> V100ConfigurationModes, ObservableCollection<PowerSupplyConfigMode> powerSupplyConfigModes, int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount, int PowerSupplyRepeatCount);
 
         Task<FileProjectConfigurationModel> GetProjectConfiguration(string FilePath);
 

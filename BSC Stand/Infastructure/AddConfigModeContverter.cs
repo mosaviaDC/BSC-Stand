@@ -13,8 +13,10 @@ namespace BSC_Stand.Infastructure
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            //Debug.WriteLine("***");
             Debug.WriteLine(values[0]);
             Debug.WriteLine(values[1]);
+
             return values.Clone();
             
         }

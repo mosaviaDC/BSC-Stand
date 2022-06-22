@@ -24,7 +24,7 @@ namespace BSC_Stand.ViewModels
 
 
         #region Properties
-        private PerformanceCounter RamCounter;
+        
         private string CurrentOpenedFileName = null;
         private readonly IWindowService _windowService;
         private readonly StatusBarViewModel _statusBarViewModel;
@@ -35,7 +35,7 @@ namespace BSC_Stand.ViewModels
         private readonly IProjectConfigurationService _projectConfigurationService;
         private readonly StandConfigurationViewModel _standConfigurationViewModel;
         private readonly BSCControlViewModel _BSCControlViewModel;
-        private readonly IModbusService _modbusService;
+        
 
         #endregion
         private string _Title;
@@ -80,7 +80,7 @@ namespace BSC_Stand.ViewModels
                     _statusBarViewModel.UpdateTaskProgress(100);
                     if (result != null)
                     {
-                        _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount);
+                        _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes,  result.PowerSupplyConfigModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount, result.PowerSupplyCyclogramRepeatCount);
                         Title = $"{CurrentOpenedFileName} - ЭО БСК";
                     }
                 }
@@ -118,12 +118,12 @@ namespace BSC_Stand.ViewModels
         private async void SaveFileCommandExecute(object p)
         {
 
-            Debug.WriteLine(_standConfigurationViewModel.V27BusCyclogramRepeatCount);
+           
 
             //Если горячая клавиша и есть имя файла
             if (p != null && CurrentOpenedFileName != null)
             {
-                await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount);
+                await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.PowerSupplyConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount, _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount);
 
                 Title = $"{CurrentOpenedFileName} - ЭО БСК";
 
@@ -134,7 +134,7 @@ namespace BSC_Stand.ViewModels
                 CurrentOpenedFileName = _fileDialogService.SaveFileDialog();
                 if (CurrentOpenedFileName != null)
 
-                    await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount);
+                    await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.PowerSupplyConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount, _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount);
                 Title = $"{CurrentOpenedFileName} - ЭО БСК";
             }
 

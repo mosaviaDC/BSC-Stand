@@ -26,6 +26,14 @@ namespace BSC_Stand.Views
             InitializeComponent();
         }
 
-       
+      
+        private void StandConfigModules_Loaded(object sender, RoutedEventArgs e)
+        {
+           
+            foreach (var p in StandConfigModules.Items)
+            {
+                StandConfigModules.SelectedItem = p;
+            }
+        }
     }
 }

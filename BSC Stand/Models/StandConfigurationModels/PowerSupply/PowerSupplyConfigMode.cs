@@ -8,7 +8,11 @@ namespace BSC_Stand.Models.StandConfigurationModels
 {
     internal class PowerSupplyConfigMode:ConfigMode
     {
-        public int MaxValue1 { get; set; }
+        public float MaxValue1 { get; set; }
+
+        public float Power {
+            get => MaxValue1 * MaxValue;
+        }
 
     }
 }

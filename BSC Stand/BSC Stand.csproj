@@ -12,6 +12,18 @@
     <AutoGenerateBindingRedirects>False</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Infastructure\Owen\**" />
     <EmbeddedResource Remove="Infastructure\Owen\**" />
@@ -21,14 +33,10 @@
 
   <ItemGroup>
     <None Remove="Views\Windows\ico.ico" />
-    <None Remove="Файлы пользователя\Конифгурация экспериментов\sample.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Views\Windows\ico.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Файлы пользователя\Конифгурация экспериментов\sample.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -36,6 +44,7 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="27.2.1" />
     <PackageReference Include="EPPlus" Version="6.0.5" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
     <PackageReference Include="FontAwesome5" Version="2.1.6" />
     <PackageReference Include="iTextSharp.LGPLv2.Core.StrongName" Version="1.6.71" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
@@ -96,6 +105,10 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Файлы пользователя\Конифгурация экспериментов\" />
   </ItemGroup>
 
 </Project>
