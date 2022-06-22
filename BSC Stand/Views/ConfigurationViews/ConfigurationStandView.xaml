@@ -301,7 +301,7 @@
                             </ScrollViewer.Style>
 
 
-                            <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList}" IsReadOnly="False" AutoGenerateColumns="False"   >
+                            <DataGrid   x:Name="DataGrid" IsReadOnly="False" AutoGenerateColumns="False"   >
                                 <DataGrid.Style>
                                     <Style TargetType="DataGrid">
                                         <Style.Triggers>
@@ -389,7 +389,7 @@
 
 
 
-                            <DataGrid   x:Name="DataGrid1" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList }"  IsReadOnly="False"   >
+                            <DataGrid   x:Name="DataGrid1"   IsReadOnly="False" AutoGenerateColumns="False"   >
                                 <DataGrid.Style>
                                     <Style TargetType="DataGrid">
                                         <Style.Triggers>
