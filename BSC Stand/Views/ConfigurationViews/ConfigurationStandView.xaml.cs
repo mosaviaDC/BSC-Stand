@@ -24,6 +24,13 @@ namespace BSC_Stand.Views
         public ConfigurationStandView()
         {
             InitializeComponent();
+            
+        }
+
+        
+        private void StandConfigModules_Initialized_1(object sender, EventArgs e)
+        {
+           
         }
     }
 }

@@ -343,8 +343,8 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public ObservableCollection<ConfigMode> V27ConfigurationModes { get; set; }
-        public ObservableCollection<ConfigMode> V100ConfigurationModes { get; set; }
+        public ObservableCollection<ElectronicConfigMode> V27ConfigurationModes { get; set; }
+        public ObservableCollection<ElectronicConfigMode> V100ConfigurationModes { get; set; }
 
         #endregion
 

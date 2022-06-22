@@ -32,9 +32,9 @@ namespace BSC_Stand.Services
 
         private int ExperimentDurationCount;
 
-        private ObservableCollection<ConfigMode> V27configurationModes;
+        private ObservableCollection<ElectronicConfigMode> V27configurationModes;
 
-        private ObservableCollection<ConfigMode> V100configurationModes;
+        private ObservableCollection<ElectronicConfigMode> V100configurationModes;
         private readonly IUserDialogWindowService _userDialogWindowService;
         private bool isExpirementPepformed;
 

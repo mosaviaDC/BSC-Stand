@@ -10,17 +10,22 @@ namespace BSC_Stand.Models
 {
     internal class FileProjectConfigurationModel
     {
-       public  FileProjectConfigurationModel(ObservableCollection<ConfigMode> V100BusConfigurationModes, ObservableCollection<ConfigMode> V27BusConfigurationModes, int V27BusCyclogramRepeatCount,int V100BusCyclogramRepeatCount)
+        public FileProjectConfigurationModel(ObservableCollection<ElectronicConfigMode> V100BusConfigurationModes, ObservableCollection<ElectronicConfigMode> V27BusConfigurationModes, ObservableCollection<PowerSupplyConfigMode> PowerSupplyConfigModes, int V27BusCyclogramRepeatCount, int V100BusCyclogramRepeatCount, int PowerSupplyCyclogramRepeatCount)
         {
 
             this.V100BusConfigurationModes = V100BusConfigurationModes;
             this.V27BusCyclogramRepeatCount = V27BusCyclogramRepeatCount;
+            this.PowerSupplyConfigModes = PowerSupplyConfigModes;
             this.V27BusConfigurationModes = V27BusConfigurationModes;
             this.V100BusCyclogramRepeatCount = V100BusCyclogramRepeatCount;
+            this.PowerSupplyCyclogramRepeatCount = PowerSupplyCyclogramRepeatCount;
         }
-       public ObservableCollection<ConfigMode> V100BusConfigurationModes { get; set; }
-       public ObservableCollection<ConfigMode> V27BusConfigurationModes { get; set; }
+        public ObservableCollection<ElectronicConfigMode> V100BusConfigurationModes { get; set; }
+        public ObservableCollection<ElectronicConfigMode> V27BusConfigurationModes { get; set; }
+
+        public ObservableCollection<PowerSupplyConfigMode> PowerSupplyConfigModes { get; set; }
        public int V27BusCyclogramRepeatCount { get; set; }
        public int V100BusCyclogramRepeatCount { get; set; }
+        public int PowerSupplyCyclogramRepeatCount { get; set; }
     }
 }

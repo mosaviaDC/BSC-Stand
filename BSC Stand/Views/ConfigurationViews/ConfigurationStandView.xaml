@@ -37,7 +37,24 @@
 
         <GroupBox Grid.Column="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
             <Grid> 
-                <ListBox  x:Name="StandConfigModules" ItemsSource="{Binding programmablePowerSupplyModules, Mode=OneWay}">
+                <ListBox  x:Name="StandConfigModules"   ItemsSource="{Binding programmablePowerSupplyModules}" Initialized="StandConfigModules_Initialized_1">
+                    <ListBox.Style>
+                        <Style TargetType="ListBox">
+                            <Style.Triggers>
+                                
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.Style>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate >
                             <StackPanel >
@@ -77,12 +94,12 @@
                         </ListBox>
                     </TreeViewItem>
 
-                    <TreeViewItem Header="{Binding SelectedItem.ModeName, ElementName=configurationModesList}" HorizontalAlignment="Stretch">
+                    <TreeViewItem Header="{Binding SelectedItem.ModeName, ElementName=configurationModesList}" HorizontalAlignment="Stretch" IsExpanded="True">
                         <StackPanel x:Name="ElectronicConfigModeEditPanel" HorizontalAlignment="Stretch">
                             <StackPanel.Style>
                                 <Style TargetType="StackPanel">
                                     <Style.Triggers>
-                                    <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                    <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Источник питания">
                                             <Setter Property="Visibility"  Value="Hidden"></Setter>
                                             <Setter   Property="IsEnabled"  Value="False"></Setter>
                                             <Setter   Property="Margin"  Value="0,-150,0,0"></Setter>
@@ -169,19 +186,21 @@
                             <StackPanel.Style>
                                 <Style TargetType="StackPanel">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
+                                        
+
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Нагрузка электронная (шина 100В)">
                                             <Setter Property="Visibility"  Value="Hidden"></Setter>
                                             <Setter Property="Margin"  Value="0,-150,0,0"></Setter>
                                         </DataTrigger>
 
 
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 27В)">
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Нагрузка электронная (шина 27В)">
 
                                             <Setter Property="Visibility"  Value="Hidden"></Setter>
                                             <Setter Property="Margin"  Value="0,-150,0,0"></Setter>
                                         </DataTrigger>
                                         
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Нагрузка электронная (шина 100В)">
                                             <Setter Property="Visibility"  Value="Hidden"></Setter>
                                             <Setter Property="Margin"  Value="0,-150,0,0"></Setter>
                                         </DataTrigger>
@@ -254,24 +273,6 @@
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </StackPanel>
 
 
@@ -281,16 +282,16 @@
 
                     </TreeViewItem>
 
-                   
 
-                    <TreeViewItem Header="Циклограмма">
+
+                    <TreeViewItem Header="Циклограмма" IsExpanded="True">
 
                         <ScrollViewer MaxHeight="450">
                             <ScrollViewer.Style>
                                 <Style TargetType="ScrollViewer">
                                     <Style.Triggers>
-
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                        
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Источник питания">
 
                                             <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
@@ -300,19 +301,22 @@
                             </ScrollViewer.Style>
 
 
-                            <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList, Mode=TwoWay }" IsReadOnly="False" AutoGenerateColumns="False"   >
+                            <DataGrid   x:Name="DataGrid" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList}" IsReadOnly="False" AutoGenerateColumns="False"   >
                                 <DataGrid.Style>
                                     <Style TargetType="DataGrid">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 27В)">
+                                           
+
+
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Нагрузка электронная (шина 27В)">
                                                 <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource 27VBusCyclogram}}" ></Setter>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Нагрузка электронная (шина 100В)">
                                                 <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource 100VbusCyclogram}}" ></Setter>
 
                                             </DataTrigger>
 
-                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=False}" Value="Источник питания">
 
                                                 <Setter Property="Visibility" Value="Hidden"></Setter>
                                             </DataTrigger>
@@ -357,50 +361,53 @@
 
                         </ScrollViewer>
 
-                        <ScrollViewer MaxHeight="450" HorizontalAlignment="Right">
+                        <ScrollViewer MaxHeight="450" >
                             <ScrollViewer.Style>
                                 <Style TargetType="ScrollViewer">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                        
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Источник питания">
 
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 27В)">
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
                                             <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
+                                        <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
                                             <Setter Property="Visibility" Value="Hidden"></Setter>
 
                                         </DataTrigger>
+                                       
 
                                     </Style.Triggers>
 
                                 </Style>
                             </ScrollViewer.Style>
-                            
-                            
-                            
-                            
-                            
-                            <DataGrid   x:Name="DataGrid1" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList, Mode=TwoWay }"  IsReadOnly="False" AutoGenerateColumns="False"   >
+
+
+
+
+
+                            <DataGrid   x:Name="DataGrid1" SelectedItem="{Binding SelectedItem, ElementName=configurationModesList }"  IsReadOnly="False"   >
                                 <DataGrid.Style>
                                     <Style TargetType="DataGrid">
                                         <Style.Triggers>
+                                            
 
-                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Источник питания">
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Источник питания">
                                                 <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource PowerSupplyConfigurationModes}}" ></Setter>
                                                 <Setter Property="Visibility" Value="Visible"></Setter>
                                             </DataTrigger>
 
-                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 27В)">
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
                                                 <Setter Property="Visibility" Value="Hidden"></Setter>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules, NotifyOnTargetUpdated=True}" Value="Нагрузка электронная (шина 100В)">
+                                            <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
                                                 <Setter Property="Visibility" Value="Hidden"></Setter>
 
                                             </DataTrigger>
-
+                                           
                                         </Style.Triggers>
                                     </Style>
                                 </DataGrid.Style>
@@ -430,7 +437,7 @@
 
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn  Header="Зад. значение V" Binding="{Binding Path=MaxValue}">
+                                    <DataGridTextColumn  Header="Зад. значение V" Binding="{Binding Path=MaxValue1}">
 
 
                                     </DataGridTextColumn>
@@ -453,16 +460,20 @@
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
                                         <Style.Triggers>
+                                            
+
+
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
-                                                <Setter Property="Text"  Value="{Binding Path= V27BusCyclogramRepeatCount, Mode=TwoWay}"></Setter>
+                                                <Setter Property="Text"  Value="{Binding Path= V27BusCyclogramRepeatCount}"></Setter>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 100В)">
-                                                <Setter Property="Text"  Value="{Binding Path=V100BusCyclogramRepeatCount, Mode=TwoWay}"></Setter>
+                                                <Setter Property="Text"  Value="{Binding Path=V100BusCyclogramRepeatCount}"></Setter>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Источник питания">
-                                                <Setter Property="Text"  Value="{Binding Path=PowerSupplyCyclogramRepeatCount, Mode=TwoWay}"></Setter>
+                                                <Setter Property="Text"  Value="{Binding Path=PowerSupplyCyclogramRepeatCount}"></Setter>
                                             </DataTrigger>
-                                          
+
+
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -470,14 +481,9 @@
 
 
                         </Grid>
-                       
+
 
                     </TreeViewItem>
-                    
-                    
-                    
-                    
-
                 </TreeView>
                
 

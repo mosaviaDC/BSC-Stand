@@ -29,7 +29,12 @@ namespace BSC_Stand.Services
             using FileStream openStream = File.OpenRead(FilePath);
             _statusBarViewModel.UpdateTaskProgress(50);
             _statusBarViewModel.SetNewTask();
-            return await JsonSerializer.DeserializeAsync<FileProjectConfigurationModel>(openStream);
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+            {
+               
+                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+            };
+            return await JsonSerializer.DeserializeAsync<FileProjectConfigurationModel>(openStream,jsonSerializerOptions);
         }
 
 
@@ -53,15 +58,16 @@ namespace BSC_Stand.Services
         //    _statusBarViewModel.SetNewTask();
         //}
 
-        public async Task SaveProjectConfiguration(string filePath, ObservableCollection<ConfigMode> V27ConfigurationModes, ObservableCollection<ConfigMode> V100ConfigurationModes, int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount)
+        public async Task SaveProjectConfiguration(string filePath, ObservableCollection<ElectronicConfigMode> V27ConfigurationModes, ObservableCollection<ElectronicConfigMode> V100ConfigurationModes, ObservableCollection<PowerSupplyConfigMode> powerSupplyConfigModes,   int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount, int PowerSupplyRepeatCount)
         {
             _statusBarViewModel.SetNewTask(100);
-            FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel(V100ConfigurationModes, V27ConfigurationModes, V27ConfigurationModesRepeatCount, V100ConfigurationModesRepeatCount);
+            FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel(V100ConfigurationModes, V27ConfigurationModes, powerSupplyConfigModes, V27ConfigurationModesRepeatCount, V100ConfigurationModesRepeatCount,PowerSupplyRepeatCount);
             _statusBarViewModel.UpdateTaskProgress(25);
 
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
             {
-                WriteIndented = true
+                WriteIndented = true,
+                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
             };
             _statusBarViewModel.UpdateTaskProgress(50);
             using FileStream createStream = File.Create(filePath);

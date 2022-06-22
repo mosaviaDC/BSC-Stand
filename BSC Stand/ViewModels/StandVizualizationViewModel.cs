@@ -157,7 +157,7 @@ namespace BSC_Stand.ViewModels
         }
 
 
-        public void Update27BusPlotModel(ObservableCollection<ConfigMode> configurationModes,int repeatCount)
+        public void Update27BusPlotModel(ObservableCollection<ElectronicConfigMode> configurationModes,int repeatCount)
         {
 
             for (int i = 0; i <repeatCount; i++)
@@ -207,7 +207,7 @@ namespace BSC_Stand.ViewModels
 
         }
 
-        public void UpdatePowerSupplyPlotModel(ObservableCollection<ConfigMode> configurationModes, int repeatCount)
+        public void UpdatePowerSupplyPlotModel(ObservableCollection<PowerSupplyConfigMode> configurationModes, int repeatCount)
         {
 
             for (int i = 0; i < repeatCount; i++)
@@ -221,15 +221,15 @@ namespace BSC_Stand.ViewModels
                     {
                         s3.Points.Clear();
 
-                        s3.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
-                        s3.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
+                        s3.Points.Add(new DataPoint(0, configurationModes[0].Power));
+                        s3.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].Power));
 
                         foreach (var configurationMode in configurationModes)
                         {
                             if (configurationModes.IndexOf(configurationMode) > 0)
                             {
-                                s3.Points.Add(new DataPoint(s3.Points.Last().X, configurationMode.MaxValue));
-                                s3.Points.Add(new DataPoint(configurationMode.Duration + s3.Points.Last().X, configurationMode.MaxValue));
+                                s3.Points.Add(new DataPoint(s3.Points.Last().X, configurationMode.Power));
+                                s3.Points.Add(new DataPoint(configurationMode.Duration + s3.Points.Last().X, configurationMode.Power));
 
                             }
                         }
@@ -238,14 +238,14 @@ namespace BSC_Stand.ViewModels
                     }
                     else
                     {
-                        s3.Points.Add(new DataPoint(s1.Points.Last().X, configurationModes[0].MaxValue));
-                        s3.Points.Add(new DataPoint(configurationModes[0].Duration + s3.Points.Last().X, configurationModes[0].MaxValue));
+                        s3.Points.Add(new DataPoint(s3.Points.Last().X, configurationModes[0].Power));
+                        s3.Points.Add(new DataPoint(configurationModes[0].Duration + s3.Points.Last().X, configurationModes[0].Power));
                         foreach (var configurationMode in configurationModes)
                         {
                             if (configurationModes.IndexOf(configurationMode) > 0)
                             {
-                                s3.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
-                                s3.Points.Add(new DataPoint(configurationMode.Duration + s3.Points.Last().X, configurationMode.MaxValue));
+                                s3.Points.Add(new DataPoint(s3.Points.Last().X, configurationMode.Power));
+                                s3.Points.Add(new DataPoint(configurationMode.Duration + s3.Points.Last().X, configurationMode.Power));
 
                             }
                         }
@@ -269,7 +269,7 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public void Update100BusPlotModel(ObservableCollection<ConfigMode> configurationModes, int repeatCount)
+        public void Update100BusPlotModel(ObservableCollection<ElectronicConfigMode> configurationModes, int repeatCount)
         {
             for (int i = 0; i < repeatCount; i++)
             {
