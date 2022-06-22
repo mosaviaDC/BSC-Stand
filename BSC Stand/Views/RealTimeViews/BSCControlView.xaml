@@ -78,10 +78,12 @@
 
 
             </TreeView>
+         
             <TextBlock Grid.Row="1" Text="Шина 27В" Height="25" VerticalAlignment="Top"  Padding="25,0,0,0"  TextAlignment="Left"></TextBlock>
             <TextBlock Grid.Row="1" Text="Шина 100В" Height="25" VerticalAlignment="Top"  Padding="0,0,15,0" TextAlignment="Center"></TextBlock>
             <TextBlock Grid.Row="1" Text="Источник питания" Height="25" VerticalAlignment="Top"  Padding="0,0,25,0" TextAlignment="Right"></TextBlock>
-            <Grid Grid.Row="1" Margin="0,25,0,0">
+            
+            <Grid  Grid.Row="1" Margin="0,25,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition>
                     </ColumnDefinition>
@@ -146,9 +148,10 @@
 
                 </DataGrid>
 
+            
 
-
-            </Grid>
+        </Grid>
+           
         </Grid>
         <GridSplitter Width="3" ></GridSplitter>
         
