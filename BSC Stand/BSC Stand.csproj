@@ -74,11 +74,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Update="Файлы пользователя\Отчеты\CSV\sample.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>sample.csv</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -86,14 +81,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="Файлы пользователя\Отчеты\CSV\132997750934437088.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Файлы пользователя\Отчеты\CSV\sample.csv">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>sample.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Файлы пользователя\Отчеты\PDF\Новый текстовый документ.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -109,6 +96,7 @@
 
   <ItemGroup>
     <Folder Include="Файлы пользователя\Конифгурация экспериментов\" />
+    <Folder Include="Файлы пользователя\Отчеты\CSV\" />
   </ItemGroup>
 
 </Project>
