@@ -33,14 +33,10 @@
 
   <ItemGroup>
     <None Remove="Views\Windows\ico.ico" />
-    <None Remove="Файлы пользователя\Конифгурация экспериментов\sample.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Views\Windows\ico.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Файлы пользователя\Конифгурация экспериментов\sample.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -109,6 +105,10 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Файлы пользователя\Конифгурация экспериментов\" />
   </ItemGroup>
 
 </Project>

@@ -381,10 +381,10 @@ namespace BSC_Stand.ViewModels
 
             this.Bus100ConfigurationModes.Clear();
             this.Bus27ConfigurationModes.Clear();
-       //     this.PowerSupplyConfigurationModes.Clear();
+            this.PowerSupplyConfigurationModes.Clear();
             this.V27BusCyclogramRepeatCount = V27BusRepeatCount;
             this.V100BusCyclogramRepeatCount = V100BusRepeatCount;
-            //this.PowerSupplyCyclogramRepeatCount = PowerSupplyRepeatCount;
+            this.PowerSupplyCyclogramRepeatCount = PowerSupplyRepeatCount;
 
 
             //    Debug.WriteLine($"{V27BusRepeatCount} {V100RepeatCount} {PowerSupplyCyclogramRepeatCount}");
@@ -407,13 +407,13 @@ namespace BSC_Stand.ViewModels
                 this.Bus27ConfigurationModes.Add(p);
             }
 
-            //foreach (var p in powerSupplyConfigModes)
-            //{
-            //    this.PowerSupplyConfigurationModes.Add(p);
-            //}
+            foreach (var p in powerSupplyConfigModes)
+            {
+                this.PowerSupplyConfigurationModes.Add(p);
+            }
 
 
-                  UpdateCyclograms(null);
+            UpdateCyclograms(null);
 
 
 
