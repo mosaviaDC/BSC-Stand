@@ -37,7 +37,7 @@
 
         <GroupBox Grid.Column="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
             <Grid> 
-                <ListBox  x:Name="StandConfigModules"   ItemsSource="{Binding programmablePowerSupplyModules}" Initialized="StandConfigModules_Initialized_1" SelectionChanged="StandConfigModules_SelectionChanged">
+                <ListBox  x:Name="StandConfigModules"   ItemsSource="{Binding programmablePowerSupplyModules}" Loaded="StandConfigModules_Loaded">
                     <ListBox.Style>
                         <Style TargetType="ListBox">
                             <Style.Triggers>

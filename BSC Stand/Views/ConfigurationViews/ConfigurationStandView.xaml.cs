@@ -24,25 +24,16 @@ namespace BSC_Stand.Views
         public ConfigurationStandView()
         {
             InitializeComponent();
-            
         }
 
-        
-        private void StandConfigModules_Initialized_1(object sender, EventArgs e)
+      
+        private void StandConfigModules_Loaded(object sender, RoutedEventArgs e)
         {
-         
+           
             foreach (var p in StandConfigModules.Items)
             {
                 StandConfigModules.SelectedItem = p;
             }
-            
-
-
-        }
-
-        private void StandConfigModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Debug.WriteLine("Selection Changed");
         }
     }
 }
