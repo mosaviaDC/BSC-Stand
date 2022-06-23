@@ -96,7 +96,7 @@ namespace BSC_Stand.ViewModels
 
             if(FileName != null)
             {
-                _fileExportService.ExportToPDF(FileName, this.PlotModel1,CurrentOpenedFileName);
+                _fileExportService.ExportToPDF(FileName, this.PlotModel1,CurrentOpenedFileName,importResult);
 
             }
             else
