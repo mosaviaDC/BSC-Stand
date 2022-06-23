@@ -25,60 +25,94 @@ namespace BSC_Stand.Services
 
             // Calculating Max and Min
             int k = 0;
-            float V27max = 0;
-            float V27min = 0;
-            float I27max = 0;
-            float I27min = 0;
-            float ExpTimeVMax = 0;
-            float ExpTimeVMin = 0;
-            long TimeStampVMax = 0;
-            long TimeStampVMin = 0;
-            float ExpTimeIMax = 0;
-            float ExpTimeIMin = 0;
-            long TimeStampIMax = 0;
-            long TimeStampIMin = 0;
+
+
+            float[] comparingParams = new float[12];
+            float[] maxParams = new float[12];
+            float[] minParams = new float[12];
+            float[] ExpTimeMax = new float[12];
+            float[] ExpTimeMin = new float[12];
+            long[] TimeStampMax = new long[12];
+            long[] TimeStampMin = new long[12];
 
             {
                 var param = readingParams[0];
-                V27max = param.V27Value;
-                V27min = param.V27Value;
-                I27max = param.I27Value;
-                I27min = param.I27Value;
-                ExpTimeVMax = param.ExpTime;
-                ExpTimeVMin = param.ExpTime;
-                TimeStampVMax = param.TimeStamp;
-                TimeStampVMin = param.TimeStamp;
-                ExpTimeIMax = param.ExpTime;
-                ExpTimeIMin = param.ExpTime;
-                TimeStampIMax = param.TimeStamp;
-                TimeStampIMin = param.TimeStamp;
+                maxParams[0] = param.ITCAValue;
+                maxParams[1] = param.ITCVValue;
+                maxParams[2] = param.ITCWValue;
+
+                maxParams[3] = param.AKIPAValue;
+                maxParams[4] = param.AKIPVValue;
+                maxParams[5] = param.AKIPWValue;
+
+                maxParams[6] = param.V27Value;
+                maxParams[7] = param.I27Value;
+
+                maxParams[8] = param.V100Value;
+                maxParams[9] = param.I100Value;
+
+                maxParams[10] = param.IBXATemperature;
+                maxParams[11] = param.BSCTemperature;
+
+                minParams[0] = param.ITCAValue;
+                minParams[1] = param.ITCVValue;
+                minParams[2] = param.ITCWValue;
+
+                minParams[3] = param.AKIPAValue;
+                minParams[4] = param.AKIPVValue;
+                minParams[5] = param.AKIPWValue;
+
+                minParams[6] = param.V27Value;
+                minParams[7] = param.I27Value;
+
+                minParams[8] = param.V100Value;
+                minParams[9] = param.I100Value;
+
+                minParams[10] = param.IBXATemperature;
+                minParams[11] = param.BSCTemperature;
+
+                for (int i = 0; i < 12; i++)
+                {
+                    ExpTimeMax[i] = param.ExpTime;
+                    ExpTimeMin[i] = param.ExpTime;
+                    TimeStampMax[i] = param.TimeStamp;
+                    TimeStampMin[i] = param.TimeStamp;
+                }
             }
 
             foreach (var param in readingParams)
             {
-                if (param.V27Value >= V27max)
+                comparingParams[0] = param.ITCAValue;
+                comparingParams[1] = param.ITCVValue;
+                comparingParams[2] = param.ITCWValue;
+
+                comparingParams[3] = param.AKIPAValue;
+                comparingParams[4] = param.AKIPVValue;
+                comparingParams[5] = param.AKIPWValue;
+
+                comparingParams[6] = param.V27Value;
+                comparingParams[7] = param.I27Value;
+
+                comparingParams[8] = param.V100Value;
+                comparingParams[9] = param.I100Value;
+
+                comparingParams[10] = param.IBXATemperature;
+                comparingParams[11] = param.BSCTemperature;
+
+                for (int i = 0; i < 12; i++)
                 {
-                    V27max = param.V27Value;
-                    ExpTimeVMax = param.ExpTime;
-                    TimeStampVMax = param.TimeStamp;
-                }
-                if (param.V27Value <= V27min)
-                {
-                    V27min = param.V27Value;
-                    ExpTimeVMin = param.ExpTime;
-                    TimeStampVMin = param.TimeStamp;
-                }
-                if (param.I27Value >= I27max)
-                {
-                    I27max = param.I27Value;
-                    ExpTimeIMax = param.ExpTime;
-                    TimeStampIMax = param.TimeStamp;
-                }
-                if (param.I27Value <= I27min)
-                {
-                    I27min = param.I27Value;
-                    ExpTimeIMin = param.ExpTime;
-                    TimeStampIMin = param.TimeStamp;
+                    if (comparingParams[i] >= maxParams[i])
+                    {
+                        maxParams[i] = comparingParams[i];
+                        ExpTimeMax[i] = param.ExpTime;
+                        TimeStampMax[i] = param.TimeStamp;
+                    }
+                    if (comparingParams[i] <= minParams[i])
+                    {
+                        minParams[i] = comparingParams[i];
+                        ExpTimeMin[i] = param.ExpTime;
+                        TimeStampMin[i] = param.TimeStamp;
+                    }
                 }
             }
 
@@ -166,42 +200,67 @@ namespace BSC_Stand.Services
             // Init to draw TABLE
             font = new XFont("Times New Roman", 10, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
             XPen pen = new XPen(XColors.Black, 1);
-            string[,] lines = {
+            string[,,] lines = {
+                { //Page 1
                 {"", "Напряжение шины 27В","Сила тока шины 27В"},
-                {"Минимальное значение", Convert.ToString(V27min), Convert.ToString(I27min)},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeVMin), Convert.ToString(ExpTimeIMin)},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampVMin), Convert.ToString(TimeStampIMin)},
-                {"Максимальное значение", Convert.ToString(V27max), Convert.ToString(I27max)},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeVMax), Convert.ToString(ExpTimeIMax)},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampVMax), Convert.ToString(TimeStampIMax)},
+                {"Минимальное значение", Convert.ToString(minParams[6]), Convert.ToString(minParams[7])},
+                {"Секунда эксперимента", Convert.ToString(ExpTimeMin[6]), Convert.ToString(ExpTimeMin[7])},
+                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMin[6]), Convert.ToString(TimeStampMin[7])},
+                {"Максимальное значение", Convert.ToString(maxParams[6]), Convert.ToString(maxParams[7])},
+                {"Секунда эксперимента", Convert.ToString(ExpTimeMax[6]), Convert.ToString(ExpTimeMax[7])},
+                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMax[6]), Convert.ToString(TimeStampMax[7])}
+                },
+                { //Page 2
+                {"", "Напряжение шины 27В","Сила тока шины 27В"},
+                {"Минимальное значение", Convert.ToString(minParams[6]), Convert.ToString(minParams[7])},
+                {"Секунда эксперимента", Convert.ToString(ExpTimeMin[6]), Convert.ToString(ExpTimeMin[7])},
+                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMin[6]), Convert.ToString(TimeStampMin[7])},
+                {"Максимальное значение", Convert.ToString(maxParams[6]), Convert.ToString(maxParams[7])},
+                {"Секунда эксперимента", Convert.ToString(ExpTimeMax[6]), Convert.ToString(ExpTimeMax[7])},
+                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMax[6]), Convert.ToString(TimeStampMax[7])}
+                },
+                { //Page 3
+                {"", "Напряжение шины 27В","Сила тока шины 27В"},
+                {"Минимальное значение", Convert.ToString(minParams[6]), Convert.ToString(minParams[7])},
+                {"Секунда эксперимента", Convert.ToString(ExpTimeMin[6]), Convert.ToString(ExpTimeMin[7])},
+                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMin[6]), Convert.ToString(TimeStampMin[7])},
+                {"Максимальное значение", Convert.ToString(maxParams[6]), Convert.ToString(maxParams[7])},
+                {"Секунда эксперимента", Convert.ToString(ExpTimeMax[6]), Convert.ToString(ExpTimeMax[7])},
+                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMax[6]), Convert.ToString(TimeStampMax[7])}
+                },
             };
 
-            // Draw the TABLE
-            var x = 30;
-            
-            for (int col = 0; col < 3; col++)
+
+            for (int page = 0; page < 3; page++)
             {
-                var max_col_width = 0;
-                for (int row = 0; row < 7; row++)
+                // Draw the TABLE
+                var x = 30;
+
+                for (int col = 0; col < 3; col++)
                 {
-                    var line = lines[row, col];
-                    var line_width = line.Length * 6 + 15;
-                    if (line_width > max_col_width)
+                    var max_col_width = 0;
+                    for (int row = 0; row < 7; row++)
                     {
-                        max_col_width = line_width;
+                        var line = lines[page, row, col];
+                        var line_width = line.Length * 6 + 15;
+                        if (line_width > max_col_width)
+                        {
+                            max_col_width = line_width;
+                        }
                     }
+
+                    var y = TABLE_TOP;
+                    gfxs[page].DrawRectangle(XBrushes.LightGray, new XRect(x, TABLE_TOP + PAGE_HEIGHT / 2 - 15, max_col_width, 30));
+                    for (int row = 0; row < 7; row++)
+                    {
+                        var line = lines[page, row, col];
+                        gfxs[page].DrawRectangle(pen, new XRect(x, TABLE_TOP + PAGE_HEIGHT / 2 - 15, max_col_width, 30 * (row + 1)));
+                        gfxs[page].DrawString(line, font, XBrushes.Black, new XRect(x + 10, y, max_col_width, PAGE_HEIGHT), XStringFormats.CenterLeft);
+                        y += 30;
+                    }
+                    x += max_col_width;
                 }
-                
-                var y = TABLE_TOP;
-                gfxs[0].DrawRectangle(XBrushes.LightGray, new XRect(x, TABLE_TOP + PAGE_HEIGHT / 2 - 15, max_col_width, 30));
-                for (int row = 0; row < 7; row++)
-                {
-                    var line = lines[row, col];
-                    gfxs[0].DrawRectangle(pen, new XRect(x, TABLE_TOP + PAGE_HEIGHT / 2 - 15, max_col_width, 30 * (row + 1)));
-                    gfxs[0].DrawString(line, font, XBrushes.Black, new XRect(x + 10, y, max_col_width, PAGE_HEIGHT), XStringFormats.CenterLeft);
-                    y += 30;
-                }
-                x += max_col_width;
+
             }
 
 
