@@ -140,7 +140,7 @@ namespace BSC_Stand.Services
 
             // CONSTS
             const int IMG_WIDTH = 600;
-            const int IMG_HEIGHT = 550;
+            const int IMG_HEIGHT = 650;
             double PAGE_WIDTH = pages[0].Width;
             double PAGE_HEIGHT = pages[0].Height;
             var TABLE_TOP = IMG_HEIGHT - (PAGE_HEIGHT / 2) + 70;
@@ -198,51 +198,54 @@ namespace BSC_Stand.Services
             gfxs[2].DrawString("Данные", font, XBrushes.Black, new XRect(0, TABLE_TOP - 30, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
 
             // Init to draw TABLE
-            font = new XFont("Times New Roman", 10, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
+            font = new XFont("Consolas", 10, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
             XPen pen = new XPen(XColors.Black, 1);
+
             string[,,] lines = {
-                { //Page 1
-                {"", "Напряжение шины 27В","Сила тока шины 27В"},
-                {"Минимальное значение", Convert.ToString(minParams[6]), Convert.ToString(minParams[7])},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeMin[6]), Convert.ToString(ExpTimeMin[7])},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMin[6]), Convert.ToString(TimeStampMin[7])},
-                {"Максимальное значение", Convert.ToString(maxParams[6]), Convert.ToString(maxParams[7])},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeMax[6]), Convert.ToString(ExpTimeMax[7])},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMax[6]), Convert.ToString(TimeStampMax[7])}
+                {   //Page 1
+                    {"Параметр", "Max", "Секунда", "Время", "Min", "Секунда", "Время"},
+                    {"Напряжение шины 27В", Convert.ToString(maxParams[6]),
+                                            Convert.ToString(ExpTimeMax[6]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMax[6])),
+                                            Convert.ToString(minParams[6]),
+                                            Convert.ToString(ExpTimeMin[6]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMin[6]))},
+                    {"Напряжение шины 27В", Convert.ToString(maxParams[7]),
+                                            Convert.ToString(ExpTimeMax[7]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMax[7])),
+                                            Convert.ToString(minParams[7]),
+                                            Convert.ToString(ExpTimeMin[7]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMin[7]))}
                 },
-                { //Page 2
-                {"", "Напряжение шины 27В","Сила тока шины 27В"},
-                {"Минимальное значение", Convert.ToString(minParams[6]), Convert.ToString(minParams[7])},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeMin[6]), Convert.ToString(ExpTimeMin[7])},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMin[6]), Convert.ToString(TimeStampMin[7])},
-                {"Максимальное значение", Convert.ToString(maxParams[6]), Convert.ToString(maxParams[7])},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeMax[6]), Convert.ToString(ExpTimeMax[7])},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMax[6]), Convert.ToString(TimeStampMax[7])}
-                },
-                { //Page 3
-                {"", "Напряжение шины 27В","Сила тока шины 27В"},
-                {"Минимальное значение", Convert.ToString(minParams[6]), Convert.ToString(minParams[7])},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeMin[6]), Convert.ToString(ExpTimeMin[7])},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMin[6]), Convert.ToString(TimeStampMin[7])},
-                {"Максимальное значение", Convert.ToString(maxParams[6]), Convert.ToString(maxParams[7])},
-                {"Секунда эксперимента", Convert.ToString(ExpTimeMax[6]), Convert.ToString(ExpTimeMax[7])},
-                {"Время фиксации значения(Unix TimeStamp UTC +3)", Convert.ToString(TimeStampMax[6]), Convert.ToString(TimeStampMax[7])}
-                },
+                {   //Page 2
+                    {"Параметр", "Max", "Секунда", "Время", "Min", "Секунда", "Время"},
+                    {"Напряжение шины 100В", Convert.ToString(maxParams[8]),
+                                            Convert.ToString(ExpTimeMax[8]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMax[8])),
+                                            Convert.ToString(minParams[8]),
+                                            Convert.ToString(ExpTimeMin[8]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMin[8]))},
+                    {"Напряжение шины 100В", Convert.ToString(maxParams[9]),
+                                            Convert.ToString(ExpTimeMax[9]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMax[9])),
+                                            Convert.ToString(minParams[9]),
+                                            Convert.ToString(ExpTimeMin[9]),
+                                            Convert.ToString(UnixTimeStampToDateTime(TimeStampMin[9]))}
+                }
             };
 
-
-            for (int page = 0; page < 3; page++)
+            for (int page = 0; page < 2; page++)
             {
                 // Draw the TABLE
                 var x = 30;
 
-                for (int col = 0; col < 3; col++)
+                for (int col = 0; col < 7; col++)
                 {
                     var max_col_width = 0;
-                    for (int row = 0; row < 7; row++)
+                    for (int row = 0; row < 3; row++)
                     {
                         var line = lines[page, row, col];
-                        var line_width = line.Length * 6 + 15;
+                        var line_width = (int) (line.Length * 5.5) + 7;
                         if (line_width > max_col_width)
                         {
                             max_col_width = line_width;
@@ -251,11 +254,11 @@ namespace BSC_Stand.Services
 
                     var y = TABLE_TOP;
                     gfxs[page].DrawRectangle(XBrushes.LightGray, new XRect(x, TABLE_TOP + PAGE_HEIGHT / 2 - 15, max_col_width, 30));
-                    for (int row = 0; row < 7; row++)
+                    for (int row = 0; row < 3; row++)
                     {
                         var line = lines[page, row, col];
                         gfxs[page].DrawRectangle(pen, new XRect(x, TABLE_TOP + PAGE_HEIGHT / 2 - 15, max_col_width, 30 * (row + 1)));
-                        gfxs[page].DrawString(line, font, XBrushes.Black, new XRect(x + 10, y, max_col_width, PAGE_HEIGHT), XStringFormats.CenterLeft);
+                        gfxs[page].DrawString(line, font, XBrushes.Black, new XRect(x + 3, y, max_col_width, PAGE_HEIGHT), XStringFormats.CenterLeft);
                         y += 30;
                     }
                     x += max_col_width;
@@ -268,9 +271,17 @@ namespace BSC_Stand.Services
 
         }
 
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dateTime;
+        }
 
 
-            public void ExportToXLSX(string csvFileName, string excelFileName)
+
+        public void ExportToXLSX(string csvFileName, string excelFileName)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
