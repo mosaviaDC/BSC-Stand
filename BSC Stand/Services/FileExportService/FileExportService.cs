@@ -22,6 +22,9 @@ namespace BSC_Stand.Services
     {
         public void ExportToPDF(string FileName, OxyPlot.PlotModel PlotModel1, string CSVFileName, List<ReadingParams> readingParams)
         {
+            const int IMG_WIDTH = 600;
+            const int IMG_HEIGHT = 650;
+
             // Calculating Max and Min
             int i = 0;
             float V27max = 0;
@@ -79,42 +82,61 @@ namespace BSC_Stand.Services
                     }
                 }
             }
-            
+
             PdfDocument document = new PdfDocument(FileName);
-            PdfPage page1 = document.InsertPage(0);
+            PdfPage[] pages = {
+                document.AddPage(),
+                document.AddPage(),
+                document.AddPage()
+            };
             document.Close();
             document.Save(FileName);
 
             // Export to PNG
             var stream = new MemoryStream();
-            var pngExporter = new PngExporter { Width = 600, Height = 700, Dpi = 110 };
+            var pngExporter = new PngExporter { Width = IMG_WIDTH, Height = IMG_HEIGHT, Dpi = 75 };
             pngExporter.Export(PlotModel1, stream);
 
             // Вставка PNG в PDF
             document = PdfSharp.Pdf.IO.PdfReader.Open(FileName);
-            page1 = document.Pages[0];
+            pages[0] = document.Pages[0];
             // Section section = document.AddPage()
             // Get an XGraphics object for drawing
-            XGraphics gfx = XGraphics.FromPdfPage(page1);
+            XGraphics gfx = XGraphics.FromPdfPage(pages[0]);
 
             XImage image = XImage.FromStream(stream);
-            gfx.DrawImage(image, 0, 0, 600, 700);
+            gfx.DrawImage(image, 0, 30, IMG_WIDTH, IMG_HEIGHT);
 
             //Draw Table
 
             // Create a font
-            XFont font = new XFont("Times New Roman", 10, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
+            XFont font = new XFont("Times New Roman", 20, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
 
-            // Draw the text
-            var y = 350;
-            foreach (string line in System.IO.File.ReadLines($@"{CSVFileName}"))
+            //Draw Title
+            gfx.DrawString("График для шины 27В", font, XBrushes.Black, new XRect(0, -400, pages[0].Width, pages[0].Height), XStringFormats.Center);
+            gfx.DrawString("Данные для шины 27В", font, XBrushes.Black, new XRect(0, 280, pages[0].Width, pages[0].Height), XStringFormats.Center);
+
+            // Draw the TABLE text
+            font = new XFont("Times New Roman", 10, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
+            XPen pen = new XPen(XColors.Black, 1);
+            string[] lines = {
+                "                        Напряжение шины 27В    Сила тока шины 27В  Секунда эксперимента    Время фиксации значения(Unix TimeStamp UTC +3)",
+                "Минимум " + Convert.ToString(V27min),
+                "Максимум" + Convert.ToString(V27max)
+            };
+
+            // Draw the TABLE lines
+            var y = 310;
+            foreach (string line in lines)
             {
-                gfx.DrawString($"Напряжение шины 27В    Сила тока шины 27В  Секунда эксперимента    Время фиксации значения(Unix TimeStamp UTC +3)", font, XBrushes.Black,
-                    new XRect(0, y, page1.Width, page1.Height),
-                    XStringFormats.Center);
-
+                gfx.DrawLine(pen, 30, pages[0].Height / 2 + y - 15, pages[0].Width - 30, pages[0].Height / 2 + y - 15);
+                gfx.DrawLine(pen, 30, pages[0].Height / 2 + y - 15, 30, pages[0].Height / 2 + y + 15);
+                gfx.DrawLine(pen, pages[0].Width - 30, pages[0].Height / 2 + y - 15, pages[0].Width - 30, pages[0].Height / 2 + y + 15);
+                gfx.DrawString(line, font, XBrushes.Black, new XRect(40, y, pages[0].Width - 80, pages[0].Height), XStringFormats.CenterLeft);
                 y += 30;
             }
+            gfx.DrawLine(pen, 30, pages[0].Height / 2 + y - 15, pages[0].Width - 30, pages[0].Height / 2 + y - 15);
+
 
             document.Save(FileName);
 
