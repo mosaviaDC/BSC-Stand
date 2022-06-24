@@ -416,9 +416,10 @@ namespace BSC_Stand.ViewModels
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
-            //To Do добавить сервис записи данных в файл(лог), выполняя проверку на статус эксперимента
 
-            ExpTimeSpan = DateTime.Now - StartTime;
+            var logTime = DateTime.Now;
+
+            ExpTimeSpan = logTime - StartTime;
 
             //Параметры эл нагрузок;
             _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
@@ -468,8 +469,9 @@ namespace BSC_Stand.ViewModels
 
             if (_realTimeStandControlService.GetExperimentStatus())
             {
+                Debug.WriteLine(logTime);
+                _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
-                _readingParams.TimeStamp=((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
                 _fileLoggerService.WriteLog(_readingParams);
             }
       
