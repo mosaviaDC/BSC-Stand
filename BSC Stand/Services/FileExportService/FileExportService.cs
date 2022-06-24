@@ -32,7 +32,6 @@ namespace BSC_Stand.Services
             Bus100PlotModel.ResetAllAxes();
             Bus100PlotModel.InvalidatePlot(true);
 
-            GenericPlotModel.Ser
 
             // Calculating Max and Min
             float[] comparingParams = new float[12];

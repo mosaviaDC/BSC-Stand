@@ -63,13 +63,13 @@ namespace BSC_Stand.Services
             string ConnectionStatus = "";
             _statusBarViewModel.SetNewTask(100);
             _modbusFactory = new ModbusFactory();
-            ConnectStatus = true;
+            ConnectStatus = false;
 
             //Charger
             _statusBarViewModel.UpdateTaskProgress(12);
             try
             {
-                ConnectStatus = ConnectStatus && InitICharger();
+                ConnectStatus = true; //InitICharger();
             } 
             catch (Exception ex)
             {
