@@ -64,6 +64,7 @@ namespace BSC_Stand.ViewModels
                 _fileLoggerService.CreateFile();
                 GC.Collect();
                 WriteMessage("Начало эксперимента", MessageType.Info);
+                
                 StartTime = DateTime.Now;
                 //   UpdateDataTimer?.Start();
             }
@@ -118,6 +119,7 @@ namespace BSC_Stand.ViewModels
                             WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
                            
                             StartTime = DateTime.Now;
+                            UpdateDataTimer.Start();
                         }
                     }
                 }
@@ -380,7 +382,7 @@ namespace BSC_Stand.ViewModels
             UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
-
+            
            
             #region registerCommands
             StartExpirementCommand = new ActionCommand(StartExpirementCommandExecute, CanStartExpirementCommandExecuted);
@@ -408,14 +410,15 @@ namespace BSC_Stand.ViewModels
            
                 WriteMessage("Необходимо выполнить периодическую проверку оборудования", MessageType.Warning);
             }
-
+            #endregion
             Task.Factory.StartNew(() =>
             {
                 CheckConnectionStatusCommandExecute(null);
             });
 
+           
 
-            #endregion
+
         }
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
@@ -518,7 +521,11 @@ namespace BSC_Stand.ViewModels
             }
             PowerSupplySelectedIndex = commandParams.SelectedIndex;
             _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
-            WriteMessage($"Отправлена команда на источник питания: { ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} {((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Info);
+            WriteMessage($"Отправлена команда на источник питания: A:{ ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} V:{((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Info);
+            if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
+            {
+                WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Info);
+            }
 
 
 
