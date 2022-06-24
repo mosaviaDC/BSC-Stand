@@ -110,17 +110,30 @@ namespace BSC_Stand.Services
 
                 _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0,false));
                 _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0,false));
-                _PowerSupplyMsgEvent?.Equals(new CommandParams(PowerSupplyConfigModes[0], 0, false));
+                _PowerSupplyMsgEvent?.Invoke(new CommandParams(PowerSupplyConfigModes[0], 0, false));
                 //TO DO расчитать для трех
-                if (V100configurationModes.Count>= V27configurationModes.Count)
-                {
-                    ExperimentDurationCount = V100configurationModes.Count;
-                }
-                else if (V27configurationModes.Count > V100configurationModes.Count)
-                {
 
-                    ExperimentDurationCount = V27configurationModes.Count;
-                }
+
+
+                ExperimentDurationCount = V100configurationModes.Count > V27configurationModes.Count ? V100configurationModes.Count : V27configurationModes.Count;
+
+                ExperimentDurationCount = ExperimentDurationCount > PowerSupplyConfigModes.Count ? ExperimentDurationCount : PowerSupplyConfigModes.Count;
+
+
+
+
+
+
+
+                //if (V100configurationModes.Count>= V27configurationModes.Count)
+                //{
+                //    ExperimentDurationCount = V100configurationModes.Count;
+                //}
+                //else if (V27configurationModes.Count > V100configurationModes.Count)
+                //{
+
+                //    ExperimentDurationCount = V27configurationModes.Count;
+                //}
                 V27expirementTimer.Start();
                 V100expirementTimer.Start();
                 PowerSupplyExpirementTimer.Start();
@@ -159,7 +172,7 @@ namespace BSC_Stand.Services
         public void V27TimerEventHandler(object sender, EventArgs e)
         {
          
-            if (DateTime.Now - V27NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V27NextConfigTime <= TimeSpan.FromMilliseconds(500)))
+            if (DateTime.Now - V27NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V27NextConfigTime <= TimeSpan.FromMilliseconds(350)))
             {
             
                 if (V27ConfigIndex == V27configurationModes.Count)
@@ -188,7 +201,7 @@ namespace BSC_Stand.Services
         public void V100TimerEventHandler(object sender, EventArgs e)
         {
 
-            if (DateTime.Now - V100NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V100NextConfigTime <= TimeSpan.FromMilliseconds(500)))
+            if (DateTime.Now - V100NextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - V100NextConfigTime <= TimeSpan.FromMilliseconds(350)))
             {
 
                 if (V100ConfigIndex == V100configurationModes.Count)
@@ -216,7 +229,7 @@ namespace BSC_Stand.Services
         public void PowerSupplyEventHandler(object sender, EventArgs e)
         {
 
-            if (DateTime.Now - PowerSupplyNextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - PowerSupplyNextConfigTime <= TimeSpan.FromMilliseconds(500)))
+            if (DateTime.Now - PowerSupplyNextConfigTime >= TimeSpan.FromMilliseconds(0) && (DateTime.Now - PowerSupplyNextConfigTime <= TimeSpan.FromMilliseconds(350)))
             {
 
                 if (PowerSupplyConfigIndex == PowerSupplyConfigModes.Count)
@@ -232,8 +245,7 @@ namespace BSC_Stand.Services
                 }
 
                 {
-                    _PowerSupplyMsgEvent?.Invoke(new(PowerSupplyConfigModes[PowerSupplyConfigIndex], PowerSupplyConfigIndex,false));
-                
+                    _PowerSupplyMsgEvent?.Invoke(new CommandParams(PowerSupplyConfigModes[PowerSupplyConfigIndex], PowerSupplyConfigIndex,false));
                     PowerSupplyNextConfigTime = PowerSupplyNextConfigTime.AddSeconds(PowerSupplyConfigModes[PowerSupplyConfigIndex].Duration);
                     PowerSupplyConfigIndex++;
                 }
