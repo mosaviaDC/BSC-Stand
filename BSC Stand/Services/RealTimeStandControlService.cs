@@ -38,6 +38,8 @@ namespace BSC_Stand.Services
 
         private int ExperimentDurationCount;
 
+        private double ExperimentDuration;
+
         private ObservableCollection<ElectronicConfigMode> V27configurationModes;
 
         private ObservableCollection<ElectronicConfigMode> V100configurationModes;
@@ -119,12 +121,31 @@ namespace BSC_Stand.Services
 
                 //ExperimentDurationCount = ExperimentDurationCount > PowerSupplyConfigModes.Count ? ExperimentDurationCount : PowerSupplyConfigModes.Count;
 
-                //
+                //Max Duration of Experiment
 
-                
+                double ExperimentDuration1 = 0;
+                double ExperimentDuration2 = 0;
+                double ExperimentDuration3 = 0;
+
+                foreach (ElectronicConfigMode mode in V27configurationModes)
+                {
+                    ExperimentDuration1 += mode.Duration;
+                }
+
+                foreach (ElectronicConfigMode mode in V100configurationModes)
+                {
+                    ExperimentDuration2 += mode.Duration;
+                }
+
+                foreach (PowerSupplyConfigMode mode in PowerSupplyConfigModes)
+                {
+                    ExperimentDuration3 += mode.Duration;
+                }
+
+                ExperimentDuration = Math.Max(ExperimentDuration1, Math.Max(ExperimentDuration2, ExperimentDuration3));
 
 
-
+                /* Старый вариант
                 if (V100configurationModes.Count >= V27configurationModes.Count)
                 {
                     ExperimentDurationCount = V100configurationModes.Count;
@@ -134,6 +155,8 @@ namespace BSC_Stand.Services
 
                     ExperimentDurationCount = V27configurationModes.Count;
                 }
+                */
+
                 V27expirementTimer.Start();
                 V100expirementTimer.Start();
                 PowerSupplyExpirementTimer.Start();
@@ -180,11 +203,10 @@ namespace BSC_Stand.Services
                     
                     V27expirementTimer.Stop();
                  //   _V27MsgEvent?.Invoke(new  (V27configurationModes[V27ConfigIndex-1],V27ConfigIndex,true));
-                     if (V27ConfigIndex == ExperimentDurationCount)
-                    {
+                     if (DateTime.Now - StartTime >= TimeSpan.FromSeconds(ExperimentDuration))
+                     {
                         _V27MsgEvent?.Invoke(new(V27configurationModes[V27ConfigIndex - 1], V27ConfigIndex, true));
-                  
-                    }
+                     }
                     Debug.WriteLine($"V27 expirement Stop {DateTime.Now}");
                     return;
                 }
@@ -209,7 +231,8 @@ namespace BSC_Stand.Services
                 if (V100ConfigIndex == V100configurationModes.Count)
                 {
                     V100expirementTimer.Stop();
-                    if (V100ConfigIndex == ExperimentDurationCount)
+                    //if (V100ConfigIndex == ExperimentDurationCount)
+                    if (DateTime.Now - StartTime >= TimeSpan.FromSeconds(ExperimentDuration))
                     {
                         _V100MsgEvent?.Invoke(new(V100configurationModes[V100ConfigIndex - 1], V100ConfigIndex, true));
 
@@ -238,7 +261,8 @@ namespace BSC_Stand.Services
                 if (PowerSupplyConfigIndex == PowerSupplyConfigModes.Count)
                 {
                     PowerSupplyExpirementTimer.Stop();
-                    if (PowerSupplyConfigIndex == ExperimentDurationCount)
+                    //if (PowerSupplyConfigIndex == ExperimentDurationCount)
+                    if (DateTime.Now - StartTime >= TimeSpan.FromSeconds(ExperimentDuration))
                     {
                         _PowerSupplyMsgEvent?.Invoke(new(PowerSupplyConfigModes[PowerSupplyConfigIndex - 1], PowerSupplyConfigIndex, true));
 

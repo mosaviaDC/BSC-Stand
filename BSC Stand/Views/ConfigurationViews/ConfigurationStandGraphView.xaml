@@ -76,7 +76,7 @@
 
         <GroupBox   Header="Параметры"  FontSize="12" FontFamily="Arial" Padding="0" Grid.Column="1">
             <TreeView DataContext="{Binding BSCControlViewModel, Source={StaticResource ViewModelLocator}}">
-                <TreeViewItem Header="Шина 27В">
+                <TreeViewItem Header="Шина 27В" IsExpanded="True">
                     <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*"></RowDefinition>
@@ -93,7 +93,7 @@
 
 
                 </TreeViewItem>
-                <TreeViewItem Header="Шина 100В">
+                <TreeViewItem Header="Шина 100В" IsExpanded="True">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*"></RowDefinition>
@@ -109,7 +109,7 @@
 
 
                 </TreeViewItem>
-                <TreeViewItem Header="Температура">
+                <TreeViewItem Header="Температура" IsExpanded="True">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*"></RowDefinition>

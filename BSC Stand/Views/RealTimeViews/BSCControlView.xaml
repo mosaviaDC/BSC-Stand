@@ -240,12 +240,9 @@
                 </TabItem>
 
             </TabControl>-->
-            
 
-      
-
-
-        <Grid Grid.Column="1"  Grid.Row="1" MinHeight="75" Background="AliceBlue">
+            <Grid Grid.Column="1"  Grid.Row="1" MinHeight="75" Background="AliceBlue">
+                               
                 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.4*"></ColumnDefinition>
@@ -253,9 +250,9 @@
 
             </Grid.ColumnDefinitions>
 
-      
+                
 
-            <GroupBox Grid.Column="0">
+                <GroupBox Grid.Column="0">
                     <local:RealTimeGraphsLegendControl></local:RealTimeGraphsLegendControl>
                 </GroupBox>
             <GroupBox Grid.Column="1">
