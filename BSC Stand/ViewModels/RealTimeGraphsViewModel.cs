@@ -812,8 +812,8 @@ namespace BSC_Stand.ViewModels
 
                 TIBXASeries = new LineSeries
                 {
-                    Title = "T℃  ИБХА",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ИБХА",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.Green,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -823,8 +823,8 @@ namespace BSC_Stand.ViewModels
 
                 TBSCSeries = new LineSeries
                 {
-                    Title = "T℃  ЭОБСК",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ЭОБСК",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.ForestGreen,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -957,8 +957,8 @@ namespace BSC_Stand.ViewModels
 
                 TIBXASeries2 = new LineSeries
                 {
-                    Title = "T℃  ИБХА",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ИБХА",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.Green,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -968,8 +968,8 @@ namespace BSC_Stand.ViewModels
 
                 TBSCSeries2 = new LineSeries
                 {
-                    Title = "T℃  ЭОБСК",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ЭОБСК",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.ForestGreen,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1101,8 +1101,8 @@ namespace BSC_Stand.ViewModels
 
                 TIBXASeries3 = new LineSeries
                 {
-                    Title = "T℃  ИБХА",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ИБХА",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.Green,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1112,8 +1112,8 @@ namespace BSC_Stand.ViewModels
 
                 TBSCSeries3 = new LineSeries
                 {
-                    Title = "T℃  ЭОБСК",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ЭОБСК",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.ForestGreen,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,

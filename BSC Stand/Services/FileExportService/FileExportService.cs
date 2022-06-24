@@ -18,10 +18,21 @@ using BSC_Stand.Models;
 
 namespace BSC_Stand.Services
 {
+
+
     public class FileExportService : IFileExportService
     {
-        public void ExportToPDF(string FileName, OxyPlot.PlotModel PlotModel1, string CSVFileName, List<ReadingParams> readingParams)
+        public void ExportToPDF(string FileName, PlotModel GenericPlotModel, PlotModel Bus27PlotModel, PlotModel Bus100PlotModel, string CSVFileName, List<ReadingParams> readingParams)
         {
+
+            GenericPlotModel.ResetAllAxes();
+            GenericPlotModel.InvalidatePlot(true);
+            Bus27PlotModel.ResetAllAxes();
+            Bus27PlotModel.InvalidatePlot(true);
+            Bus100PlotModel.ResetAllAxes();
+            Bus100PlotModel.InvalidatePlot(true);
+
+            GenericPlotModel.Ser
 
             // Calculating Max and Min
             float[] comparingParams = new float[12];
@@ -166,17 +177,14 @@ namespace BSC_Stand.Services
             };
 
 
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 12; j++)
-                {
-                    PlotModel1.Series[j].IsVisible = series_states[i, j];
-                }
-                pngExporters[i].Export(PlotModel1, streams[i]);
-            }
+            
+
+            pngExporters[0].Export(Bus27PlotModel, streams[0]);
+            pngExporters[1].Export(Bus100PlotModel, streams[1]);
+            pngExporters[2].Export(GenericPlotModel, streams[2]);
 
             // Вставка PNG в PDF
-            
+
             // Section section = document.AddPage()
             // Get an XGraphics object for drawing
             XGraphics[] gfxs = {

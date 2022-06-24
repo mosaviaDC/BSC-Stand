@@ -142,7 +142,7 @@ namespace BSC_Stand.ViewModels
 
             if(FileName != null)
             {
-                _fileExportService.ExportToPDF(FileName, this.GenericPlotModel,CurrentOpenedFileName,importResult);
+                _fileExportService.ExportToPDF(FileName, GenericPlotModel, Bus27PlotModel, Bus100PlotModel, CurrentOpenedFileName, importResult);
 
             }
             else
@@ -271,7 +271,7 @@ namespace BSC_Stand.ViewModels
         {
            
             importResult = await _fileLoggerService.ReadLogs((string)CurrentOpenedFileName);
-            Label = (string)CurrentOpenedFileName;
+            Label = Path.GetFileName((string)CurrentOpenedFileName);
             ClearGraphSerires();
             int i = 0;
             _statusBarViewModel.SetNewTask(importResult.Count);
@@ -369,8 +369,8 @@ namespace BSC_Stand.ViewModels
 
                 TIBXASeries = new LineSeries
                 {
-                    Title = "T℃  ИБХА",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ИБХА",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.Green,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -380,8 +380,8 @@ namespace BSC_Stand.ViewModels
 
                 TBSCSeries = new LineSeries
                 {
-                    Title = "T℃  ЭОБСК",
-                    TrackerFormatString = "{4:0} T℃  {2:0} сек {0}",
+                    Title = "T°C  ЭОБСК",
+                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
                     Color = OxyColors.ForestGreen,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,

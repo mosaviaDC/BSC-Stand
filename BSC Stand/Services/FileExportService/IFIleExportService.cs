@@ -13,6 +13,7 @@ namespace BSC_Stand.Services
 
         public void ExportToXLSX(string csvFileName, string ExcelFileName);
 
-        public void ExportToPDF(string FileName, OxyPlot.PlotModel PlotModel1, string CSVFileName, List<ReadingParams> readingParams);
+        public void ExportToPDF(string FileName, PlotModel GenericPlotModel, PlotModel Bus27PlotModel, PlotModel Bus100PlotModel, string CSVFileName, List<ReadingParams> readingParams);
+
     }
 }
