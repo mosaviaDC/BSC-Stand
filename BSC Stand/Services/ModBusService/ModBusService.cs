@@ -67,7 +67,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = /*InitICharger()&&*/ InitAkipPort() &&   InitITCPort() &&  InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitV27BusPort() && InitOwenController();
+                ConnectStatus = /*InitICharger()&&*/   InitAkipPort() && InitITCPort() &&  InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitV27BusPort() && InitOwenController();
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -513,7 +513,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM4",
+                PortName = "COM3",
                 StopBits = StopBits.One
              
 
@@ -545,7 +545,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM4",
                 StopBits = StopBits.One
 
             };
