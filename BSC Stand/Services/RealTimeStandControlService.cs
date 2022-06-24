@@ -110,7 +110,7 @@ namespace BSC_Stand.Services
 
                 _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0,false));
                 _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0,false));
-                _PowerSupplyMsgEvent?.Equals(new CommandParams(PowerSupplyConfigModes[0], 0, false));
+                _PowerSupplyMsgEvent?.Invoke(new CommandParams(PowerSupplyConfigModes[0], 0, false));
                 //TO DO расчитать для трех
 
 

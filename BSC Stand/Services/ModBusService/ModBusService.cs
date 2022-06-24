@@ -78,8 +78,6 @@ namespace BSC_Stand.Services
             }
             isBusy = false;
             return (ConnectionStatus, ConnectStatus);
-
-
         }
 
 
