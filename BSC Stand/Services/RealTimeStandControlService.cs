@@ -119,7 +119,7 @@ namespace BSC_Stand.Services
 
                 //ExperimentDurationCount = ExperimentDurationCount > PowerSupplyConfigModes.Count ? ExperimentDurationCount : PowerSupplyConfigModes.Count;
 
-
+                //
 
                 
 
