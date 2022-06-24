@@ -15,7 +15,7 @@ using iTextSharp;
 using OxyPlot.Series;
 namespace BSC_Stand.ViewModels
 {
-    class PostAnalyzeViewModel:ViewModels.Base.ViewModelBase
+    class PostAnalyzeViewModel : ViewModels.Base.ViewModelBase
     {
         private readonly StatusBarViewModel _statusBarViewModel;
         private readonly IFileDialog _fileDialogService;
@@ -43,7 +43,12 @@ namespace BSC_Stand.ViewModels
 
         public PlotModel Bus100PlotModel { get; set; }
 
-
+        public int _SelectedGraphIndex;
+        public int SelectedGraphIndex
+        {
+            get => _SelectedGraphIndex;
+            set => Set(ref _SelectedGraphIndex, value);
+        }
 
 
 
@@ -78,8 +83,16 @@ namespace BSC_Stand.ViewModels
       public ICommand ExportFileToXLSXCommand { get; set; }
       public ICommand ExportFileToPDFCommand { get; set; }
 
+      public ICommand ResetPlotScaleCommand { get; set; }
 
-      public void ImportLogFileCommandExecute(object p)
+      public ICommand ShowHideOxyPlotLegendCommand { get; set; }
+
+        public ICommand ZoomInPlotCOommand { get; set; }
+
+        public ICommand ZoomOutPlotCOommand { get; set; }
+
+
+        public void ImportLogFileCommandExecute(object p)
         {
            CurrentOpenedFileName = null;
            CurrentOpenedFileName = _fileDialogService.OpenCSVFileDialog();
@@ -152,6 +165,89 @@ namespace BSC_Stand.ViewModels
             }
         }
 
+        private void ResetPlotScaleCommandExecute(object p)
+        {
+            switch (SelectedGraphIndex)
+            {
+
+                case 0:
+                    GenericPlotModel.ResetAllAxes();
+                    GenericPlotModel.InvalidatePlot(true);
+                    break;
+                case 1:
+                    Bus27PlotModel.ResetAllAxes();
+                    Bus27PlotModel.InvalidatePlot(true);
+                    break;
+                default:
+                    Bus100PlotModel.ResetAllAxes();
+                    Bus100PlotModel.InvalidatePlot(true);
+                    break;
+
+            }
+        }
+
+        private void ShowHideOxyPlotLegendCommandExecute(object p)
+        {
+            switch (SelectedGraphIndex)
+            {
+
+                case 0:
+                    GenericPlotModel.IsLegendVisible = !GenericPlotModel.IsLegendVisible;
+                    GenericPlotModel.InvalidatePlot(true);
+                    break;
+                case 1:
+                    Bus27PlotModel.IsLegendVisible = !Bus27PlotModel.IsLegendVisible;
+                    Bus27PlotModel.InvalidatePlot(true);
+                    break;
+                default:
+                    Bus100PlotModel.IsLegendVisible = !Bus100PlotModel.IsLegendVisible;
+                    Bus100PlotModel.InvalidatePlot(true);
+                    break;
+            }
+        }
+
+        private void ZoomInPlotCOommandExecute(object p)
+        {
+            switch (SelectedGraphIndex)
+            {
+
+                case 0:
+                    GenericPlotModel.ZoomAllAxes(2);
+                    GenericPlotModel.InvalidatePlot(true);
+                    break;
+                case 1:
+                    Bus27PlotModel.ZoomAllAxes(2);
+                    Bus27PlotModel.InvalidatePlot(true);
+                    break;
+                default:
+                    Bus100PlotModel.ZoomAllAxes(2);
+                    Bus100PlotModel.InvalidatePlot(true);
+                    break;
+            }
+        }
+
+        private void ZoomOutPlotCOommandExecute(object p)
+        {
+            switch (SelectedGraphIndex)
+            {
+
+                case 0:
+                    GenericPlotModel.ZoomAllAxes(0.5);
+                    GenericPlotModel.InvalidatePlot(true);
+                    break;
+                case 1:
+                    Bus27PlotModel.ZoomAllAxes(0.5);
+                    Bus27PlotModel.InvalidatePlot(true);
+                    break;
+                default:
+                    Bus100PlotModel.ZoomAllAxes(0.5);
+                    Bus100PlotModel.InvalidatePlot(true);
+                    break;
+            }
+        }
+
+
+
         public PostAnalyzeViewModel(IFileDialog fileDialogService, IFileLoggerService fileLoggerService, IUserDialogWindowService userDialogWindowService, StatusBarViewModel statusBarViewModel, IFileExportService fileExportService)
         {
             _statusBarViewModel = statusBarViewModel;
@@ -162,8 +258,11 @@ namespace BSC_Stand.ViewModels
             InitGraphSeries();
             ImportLogFileCommand = new ActionCommand(ImportLogFileCommandExecute);
             ExportFileToPDFCommand = new ActionCommand(ExportFileToPDFCommandExecute,CanExportFileToPDFCommandExecuted);
-            ExportFileToXLSXCommand = new ActionCommand(ExportFileToXLSXCommandExecute);
-            
+            ExportFileToXLSXCommand = new ActionCommand(ExportFileToXLSXCommandExecute, CanExportFileToPDFCommandExecuted);
+            ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute);
+            ShowHideOxyPlotLegendCommand = new ActionCommand(ShowHideOxyPlotLegendCommandExecute);
+            ZoomInPlotCOommand = new ActionCommand(ZoomInPlotCOommandExecute);
+            ZoomOutPlotCOommand = new ActionCommand(ZoomOutPlotCOommandExecute);
         }
 
 

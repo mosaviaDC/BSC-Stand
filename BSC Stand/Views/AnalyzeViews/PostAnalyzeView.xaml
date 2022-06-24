@@ -9,6 +9,7 @@
              xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              DataContext="{Binding PostAnalyzeViewModel,Source={StaticResource ViewModelLocator}}"
+             
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.Resources>
@@ -50,10 +51,45 @@
             </fa5:FontAwesome>
 
 
+            
+
+            <fa5:FontAwesome  Margin="20,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб" FontSize="21.5">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}"  ></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+            </fa5:FontAwesome>
+
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика" FontSize="21.5">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ShowHideOxyPlotLegendCommand}" ></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+            </fa5:FontAwesome>
+
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Plus" x:Name="ZoomIn" ToolTip="Увеличить масштаб" FontSize="21.5">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ZoomInPlotCOommand}" ></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+            </fa5:FontAwesome>
+
+            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Minus" x:Name="ZoomOut" ToolTip="Уменьшить масштаб" FontSize="21.5">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
+                        <behaviors:InvokeCommandAction Command="{Binding ZoomOutPlotCOommand}" ></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+            </fa5:FontAwesome>
+
             <TextBlock MinWidth="150" Text="{Binding Label}" ></TextBlock>
+
         </Menu>
 
-        <TabControl Margin="0,50,0,0">
+        <TabControl SelectedIndex="{Binding SelectedGraphIndex,Mode=TwoWay}" Margin="0,50,0,0">
             <TabItem Header="Общий вид">
 
                 <oxy:PlotView Margin="0,0,0,0"  Model="{Binding  GenericPlotModel}" >

@@ -161,8 +161,8 @@
                 <RowDefinition Height="0.15*"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Menu Grid.Row="0" VerticalAlignment="Top" Height="35" Background="AliceBlue"  HorizontalAlignment="Stretch">
-                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент">
+            <Menu Grid.Row="0" VerticalAlignment="Top" Height="40" Background="AliceBlue"  HorizontalAlignment="Stretch">
+                <fa5:FontAwesome  Margin="0,-15,0,0"  Foreground="{StaticResource IconBrush}" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент" FontSize="21.5">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                             <behaviors:InvokeCommandAction Command="{Binding StartExpirementCommand}" ></behaviors:InvokeCommandAction>
@@ -170,7 +170,7 @@
                     </behaviors:Interaction.Triggers>
 
                 </fa5:FontAwesome>
-                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_StopCircle"   x:Name="StopExp" ToolTip="Остановка эксперимента">
+                <fa5:FontAwesome  Margin="0,-10,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_StopCircle"   x:Name="StopExp" ToolTip="Остановка эксперимента">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                             <behaviors:InvokeCommandAction Command="{Binding StopExpirementCommand}" ></behaviors:InvokeCommandAction>
@@ -181,7 +181,7 @@
 
                 
 
-                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Ethernet" x:Name="CheckConnection" ToolTip="Принудительно проверить подключение">
+                <fa5:FontAwesome  Margin="0,-10,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Ethernet" x:Name="CheckConnection" ToolTip="Принудительно проверить подключение">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                             <behaviors:InvokeCommandAction Command="{Binding CheckConnectionStatusCommand}" ></behaviors:InvokeCommandAction>
@@ -190,7 +190,7 @@
 
                 </fa5:FontAwesome>
                
-                <fa5:FontAwesome  Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
+                <fa5:FontAwesome  Margin="0,-10,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                             <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}"  ></behaviors:InvokeCommandAction>
@@ -198,7 +198,7 @@
                     </behaviors:Interaction.Triggers>
 
                 </fa5:FontAwesome>
-                <fa5:FontAwesome Margin="0,-20,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика">
+                <fa5:FontAwesome Margin="0,-10,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
                             <behaviors:InvokeCommandAction Command="{Binding ShowHideOxyPlotLegendCommand}" ></behaviors:InvokeCommandAction>
