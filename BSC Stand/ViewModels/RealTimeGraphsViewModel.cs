@@ -644,9 +644,38 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public void UpdateGraphsSeries(ReadingParams readingParams)
+        public async void UpdateGraphsSeries(ReadingParams readingParams)
         {
             //Обновление серий
+          await  Task.Factory.StartNew(() =>
+            {
+
+                LineSeries[,] series =
+               {
+                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries },
+                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2 },
+                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3 }
+                };
+
+                float[] parameters = { readingParams.ITCVValue, readingParams.ITCAValue, readingParams.ITCWValue,
+                                   readingParams.AKIPAValue, readingParams.AKIPVValue, readingParams.AKIPWValue,
+                                   readingParams.V27Value, readingParams.I27Value,
+                                   readingParams.V100Value, readingParams.I100Value,
+                                   readingParams.IBXATemperature, readingParams.BSCTemperature};
+
+                for (int i = 0; i < 3; i++)
+                {
+                    int j = 0;
+                    foreach (var param in parameters)
+                    {
+                        series[i, j].Points.Add(new DataPoint(readingParams.ExpTime, parameters[j]));
+                        j++;
+                    }
+                }
+
+
+            });
+
             {
                 LineSeries[,] series =
                 {
