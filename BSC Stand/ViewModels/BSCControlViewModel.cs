@@ -116,7 +116,7 @@ namespace BSC_Stand.ViewModels
                         else
                         {
                             WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
-                            UpdateDataTimer.Start();
+                           
                             StartTime = DateTime.Now;
                         }
                     }
@@ -146,7 +146,7 @@ namespace BSC_Stand.ViewModels
             _modBusService.ExitCommand();
             _realTimeStandControlService.StopExpirement();
 
-            UpdateDataTimer.Stop();
+          //  UpdateDataTimer.Stop();
         }
 
 
