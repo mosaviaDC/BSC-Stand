@@ -37,6 +37,9 @@ namespace BSC_Stand.Services
         private SerialPort U100SerialPort;
         private SerialPort I100SerialPort;
 
+
+        private SerialPort IChargerSerialPort;
+
         private SerialPort AkipSerialPort;
 
         private SerialPort ITCSerialPort;
@@ -64,7 +67,7 @@ namespace BSC_Stand.Services
             try
             {
                 _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = InitAkipPort() && InitITCPort() && InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitV27BusPort() && InitOwenController();
+                ConnectStatus = InitICharger()&& InitAkipPort() && InitITCPort() && InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitV27BusPort() && InitOwenController();
                 _statusBarViewModel.UpdateTaskProgress(100);
             }
             catch (Exception ex)
@@ -343,6 +346,52 @@ namespace BSC_Stand.Services
 
         }
 
+        private bool InitICharger()
+        {
+            if (IChargerSerialPort != null)
+            {
+                IChargerSerialPort.Close();
+            }
+            IChargerSerialPort = new SerialPort()
+            {
+                BaudRate = 9600,
+                PortName = "COM8",
+                StopBits = StopBits.One
+
+
+            };
+            IChargerSerialPort.Close();
+            IChargerSerialPort.WriteTimeout = 200;
+            IChargerSerialPort.ReadTimeout = 200;
+            IChargerSerialPort.Open();
+
+            if (ReadICharger(IChargerSerialPort) != null)
+            {
+
+                return true;
+            }
+            else
+            {
+                IChargerSerialPort.Close();
+                IChargerSerialPort.Dispose();
+                return false;
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         private bool InitV100BusPort()
         {
             if (V100ModbusController != null)
@@ -444,32 +493,6 @@ namespace BSC_Stand.Services
         #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private bool InitOwenController()
         {
             owenControllerTCPCLient?.Dispose();
@@ -490,7 +513,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM7",
                 StopBits = StopBits.One
              
 
@@ -522,7 +545,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM4",
+                PortName = "COM6",
                 StopBits = StopBits.One
 
             };
@@ -621,6 +644,17 @@ namespace BSC_Stand.Services
 
 
         }
+
+        private string ReadICharger(SerialPort port)
+        {
+            
+            port.WriteLine(@":01r33=0");
+            string r = port.ReadLine();
+            Debug.WriteLine(r);
+            return r;
+        }
+
+
         private string ReadIDN(SerialPort port)
         {
             port.WriteLine(@"
