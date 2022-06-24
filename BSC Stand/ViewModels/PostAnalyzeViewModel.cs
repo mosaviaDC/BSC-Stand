@@ -41,6 +41,8 @@ namespace BSC_Stand.ViewModels
 
         public PlotModel Bus27PlotModel { get; set; }
 
+        public PlotModel Bus100PlotModel { get; set; }
+
 
 
 
@@ -208,7 +210,10 @@ namespace BSC_Stand.ViewModels
         private void InitGraphSeries()
         {
 
+            //Generic Plot Model
+
             GenericPlotModel = new PlotModel();
+           
 
             {
 
@@ -356,7 +361,6 @@ namespace BSC_Stand.ViewModels
             }
 
 
-
             GenericPlotModel.Series.Add(TIBXASeries);
             GenericPlotModel.Series.Add(TBSCSeries);
 
@@ -373,23 +377,87 @@ namespace BSC_Stand.ViewModels
             GenericPlotModel.Series.Add(AKIPVSeries);
             GenericPlotModel.Series.Add(AKIPASeries);
             GenericPlotModel.Series.Add(AKIPWSeries);
-
             
-
             GenericPlotModel.Legends.Add(new OxyPlot.Legends.Legend()
             {
                 LegendTitle = "",
                 LegendFontSize = 14
             });
 
-            Bus27PlotModel = new PlotModel()
+            //Bus27 Plot Model
+
+            Bus27PlotModel = new PlotModel();
             {
-               
+                V27Series = new LineSeries
+                {
+                    Title = "V 27",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    Color = OxyColors.Blue,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                I27Series = new LineSeries
+                {
+                    Title = "I 27",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    Color = OxyColors.BlueViolet,
+                    MarkerFill = OxyColors.DarkBlue,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+
+                };
+
+                Bus27PlotModel.Series.Add(V27Series);
+                Bus27PlotModel.Series.Add(I27Series);
+
+                Bus27PlotModel.Legends.Add(new OxyPlot.Legends.Legend()
+                {
+                    LegendTitle = "",
+                    LegendFontSize = 14
+                });
 
             };
-            
 
+            //Bus100 Plot Model
 
+            Bus100PlotModel = new PlotModel();
+            {
+                V100Series = new LineSeries
+                {
+                    Title = "V 100",
+                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    Color = OxyColors.DarkOrange,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+                I100Series = new LineSeries
+                {
+                    Title = "I 100",
+                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    Color = OxyColors.OrangeRed,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true,
+                };
+
+                Bus100PlotModel.Series.Add(V100Series);
+                Bus100PlotModel.Series.Add(I100Series);
+
+                Bus100PlotModel.Legends.Add(new OxyPlot.Legends.Legend()
+                {
+                    LegendTitle = "",
+                    LegendFontSize = 14
+                });
+
+            };
 
 
         }
