@@ -209,12 +209,55 @@ namespace BSC_Stand.ViewModels
             }
         }
 
+        public ICommand ZoomInPlotCOommand { get; set; }
+
+        private void ZoomInPlotCOommandExecute(object p)
+        {
+            switch (_realTimeGraphsViewModel.SelectedGraphIndex)
+            {
+
+                case 0:
+                    _realTimeGraphsViewModel.PlotModel1.ZoomAllAxes(2);
+                    _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
+                    break;
+                case 1:
+                    _realTimeGraphsViewModel.PlotModel2.ZoomAllAxes(2);
+                    _realTimeGraphsViewModel.PlotModel2.InvalidatePlot(true);
+                    break;
+                default:
+                    _realTimeGraphsViewModel.PlotModel3.ZoomAllAxes(2);
+                    _realTimeGraphsViewModel.PlotModel3.InvalidatePlot(true);
+                    break;
+            }
+        }
+
+        public ICommand ZoomOutPlotCOommand { get; set; }
+
+        private void ZoomOutPlotCOommandExecute(object p)
+        {
+            switch (_realTimeGraphsViewModel.SelectedGraphIndex)
+            {
+
+                case 0:
+                    _realTimeGraphsViewModel.PlotModel1.ZoomAllAxes(0.5);
+                    _realTimeGraphsViewModel.PlotModel1.InvalidatePlot(true);
+                    break;
+                case 1:
+                    _realTimeGraphsViewModel.PlotModel2.ZoomAllAxes(0.5);
+                    _realTimeGraphsViewModel.PlotModel2.InvalidatePlot(true);
+                    break;
+                default:
+                    _realTimeGraphsViewModel.PlotModel3.ZoomAllAxes(0.5);
+                    _realTimeGraphsViewModel.PlotModel3.InvalidatePlot(true);
+                    break;
+            }
+        }
 
 
         #endregion
 
         #region properties
-      
+
         private TimeSpan ExpTimeSpan;
         
         private DateTime StartTime;
@@ -384,6 +427,8 @@ namespace BSC_Stand.ViewModels
             ResetPlotScaleCommand = new ActionCommand(ResetPlotScaleCommandExecute, CanResetPlotScaleCommandExecute);
             CheckConnectionStatusCommand = new ActionCommand(CheckConnectionStatusCommandExecute);
             ShowHideOxyPlotLegendCommand = new ActionCommand(ShowHideOxyPlotLegendCommandExecute);
+            ZoomInPlotCOommand = new ActionCommand(ZoomInPlotCOommandExecute);
+            ZoomOutPlotCOommand = new ActionCommand(ZoomOutPlotCOommandExecute);
             V27Value = "V Нет данных";
             I27Value = "I Нет данных";
             //  OwenConnectStatus = "Нет соединения";
