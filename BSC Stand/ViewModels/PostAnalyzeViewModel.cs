@@ -37,7 +37,38 @@ namespace BSC_Stand.ViewModels
         public LineSeries AKIPVSeries { get; set; }
         public LineSeries AKIPASeries { get; set; }
         public LineSeries AKIPWSeries { get; set; }
-        public PlotModel PlotModel1 { get; set; }
+        public PlotModel GenericPlotModel { get; set; }
+
+        public PlotModel Bus27PlotModel { get; set; }
+
+
+
+
+
+
+
+
+
+        private string _Label;
+
+        public string Label
+        {
+            get
+            {
+                return _Label;
+            }
+            set
+            {
+                Set(ref _Label, value);
+            }
+        }
+
+
+
+
+
+
+
 
 
       public ICommand ImportLogFileCommand { get; set; }
@@ -96,7 +127,7 @@ namespace BSC_Stand.ViewModels
 
             if(FileName != null)
             {
-                _fileExportService.ExportToPDF(FileName, this.PlotModel1,CurrentOpenedFileName,importResult);
+                _fileExportService.ExportToPDF(FileName, this.GenericPlotModel,CurrentOpenedFileName,importResult);
 
             }
             else
@@ -130,6 +161,7 @@ namespace BSC_Stand.ViewModels
             ImportLogFileCommand = new ActionCommand(ImportLogFileCommandExecute);
             ExportFileToPDFCommand = new ActionCommand(ExportFileToPDFCommandExecute,CanExportFileToPDFCommandExecuted);
             ExportFileToXLSXCommand = new ActionCommand(ExportFileToXLSXCommandExecute);
+            
         }
 
 
@@ -138,6 +170,7 @@ namespace BSC_Stand.ViewModels
         {
            
             importResult = await _fileLoggerService.ReadLogs((string)CurrentOpenedFileName);
+            Label = (string)CurrentOpenedFileName;
             ClearGraphSerires();
             int i = 0;
             _statusBarViewModel.SetNewTask(importResult.Count);
@@ -175,7 +208,7 @@ namespace BSC_Stand.ViewModels
         private void InitGraphSeries()
         {
 
-            PlotModel1 = new PlotModel();
+            GenericPlotModel = new PlotModel();
 
             {
 
@@ -324,29 +357,39 @@ namespace BSC_Stand.ViewModels
 
 
 
-            PlotModel1.Series.Add(TIBXASeries);
-            PlotModel1.Series.Add(TBSCSeries);
+            GenericPlotModel.Series.Add(TIBXASeries);
+            GenericPlotModel.Series.Add(TBSCSeries);
 
-            PlotModel1.Series.Add(V27Series);
-            PlotModel1.Series.Add(I27Series);
+            GenericPlotModel.Series.Add(V27Series);
+            GenericPlotModel.Series.Add(I27Series);
 
-            PlotModel1.Series.Add(V100Series);
-            PlotModel1.Series.Add(I100Series);
+            GenericPlotModel.Series.Add(V100Series);
+            GenericPlotModel.Series.Add(I100Series);
 
-            PlotModel1.Series.Add(ITCVSeries);
-            PlotModel1.Series.Add(ITCASeries);
-            PlotModel1.Series.Add(ITCWSeries);
+            GenericPlotModel.Series.Add(ITCVSeries);
+            GenericPlotModel.Series.Add(ITCASeries);
+            GenericPlotModel.Series.Add(ITCWSeries);
 
-            PlotModel1.Series.Add(AKIPVSeries);
-            PlotModel1.Series.Add(AKIPASeries);
-            PlotModel1.Series.Add(AKIPWSeries);
+            GenericPlotModel.Series.Add(AKIPVSeries);
+            GenericPlotModel.Series.Add(AKIPASeries);
+            GenericPlotModel.Series.Add(AKIPWSeries);
 
+            
 
-            PlotModel1.Legends.Add(new OxyPlot.Legends.Legend()
+            GenericPlotModel.Legends.Add(new OxyPlot.Legends.Legend()
             {
                 LegendTitle = "",
                 LegendFontSize = 14
             });
+
+            Bus27PlotModel = new PlotModel()
+            {
+               
+
+            };
+            
+
+
 
 
         }
@@ -367,7 +410,7 @@ namespace BSC_Stand.ViewModels
             AKIPASeries.Points.Clear();
             AKIPWSeries.Points.Clear();
 
-            PlotModel1.InvalidatePlot(true);
+            GenericPlotModel.InvalidatePlot(true);
         }
 
       

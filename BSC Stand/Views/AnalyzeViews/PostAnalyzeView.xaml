@@ -47,16 +47,40 @@
                     </behaviors:EventTrigger>
                 </behaviors:Interaction.Triggers>
 
-
-
-
-
-
             </fa5:FontAwesome>
+
+
+            <TextBlock MinWidth="150" Text="{Binding Label}" ></TextBlock>
         </Menu>
 
-        <oxy:PlotView Margin="0,50,0,0"  Model="{Binding  PlotModel1}" >
+        <TabControl Margin="0,50,0,0">
+            <TabItem Header="Общий вид">
 
-        </oxy:PlotView>
+                <oxy:PlotView Margin="0,0,0,0"  Model="{Binding  GenericPlotModel}" >
+
+                </oxy:PlotView>
+
+            </TabItem>
+            <TabItem Header="Шина 27В">
+                <oxy:PlotView Margin="0,0,0,0"  Model="{Binding  Bus27PlotModel}" >
+
+                </oxy:PlotView>
+
+
+            </TabItem>
+
+            <TabItem Header="Шина 100В">
+
+
+             
+
+
+            </TabItem>
+
+        </TabControl>
+       
+        <!--<oxy:PlotView Margin="0,50,0,0"  Model="{Binding  PlotModel1}" >
+
+        </oxy:PlotView>-->
     </Grid>
 </UserControl>
