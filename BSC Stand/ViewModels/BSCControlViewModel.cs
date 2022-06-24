@@ -57,12 +57,15 @@ namespace BSC_Stand.ViewModels
             else
             {
 
-                WriteMessage("Начало эксперимента", MessageType.Info);
-                StartTime = DateTime.Now;
+            
+                
                 _realTimeStandControlService.StartExpirent();
                 _realTimeGraphsViewModel.ClearAllPoints();
                 _fileLoggerService.CreateFile();
-                UpdateDataTimer?.Start();
+                GC.Collect();
+                WriteMessage("Начало эксперимента", MessageType.Info);
+                StartTime = DateTime.Now;
+                //   UpdateDataTimer?.Start();
             }
 
             
@@ -114,6 +117,7 @@ namespace BSC_Stand.ViewModels
                         {
                             WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
                             UpdateDataTimer.Start();
+                            StartTime = DateTime.Now;
                         }
                     }
                 }
