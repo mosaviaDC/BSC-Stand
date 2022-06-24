@@ -63,19 +63,98 @@ namespace BSC_Stand.Services
             string ConnectionStatus = "";
             _statusBarViewModel.SetNewTask(100);
             _modbusFactory = new ModbusFactory();
-            ConnectStatus = false;
+            ConnectStatus = true;
+
+            //Charger
+            _statusBarViewModel.UpdateTaskProgress(12);
             try
             {
-                _statusBarViewModel.UpdateTaskProgress(50);
-                ConnectStatus = /*InitICharger()&&*/   InitAkipPort() && InitITCPort() &&  InitV100BusPort() && InitI100BusPort() && InitI27BusPort() && InitV27BusPort() && InitOwenController();
-                _statusBarViewModel.UpdateTaskProgress(100);
+                ConnectStatus = ConnectStatus && InitICharger();
+            } 
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            //Akip Port
+            _statusBarViewModel.UpdateTaskProgress(24);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitAkipPort();
             }
             catch (Exception ex)
             {
-                _statusBarViewModel.UpdateTaskProgress(100);
                 ConnectionStatus += $"{ex.Message}";
-                isBusy = false;
             }
+
+            //ITC Port
+            _statusBarViewModel.UpdateTaskProgress(36);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitITCPort();
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            //V100 Bus Port
+            _statusBarViewModel.UpdateTaskProgress(48);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitV100BusPort();
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            //I100 Bus Port
+            _statusBarViewModel.UpdateTaskProgress(60);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitI100BusPort();
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            //V27 Bus Port
+            _statusBarViewModel.UpdateTaskProgress(72);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitV27BusPort();
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            //I27 Bus Port
+            _statusBarViewModel.UpdateTaskProgress(84);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitI27BusPort();
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            //Owen Controller
+            _statusBarViewModel.UpdateTaskProgress(95);
+            try
+            {
+                ConnectStatus = ConnectStatus && InitOwenController();
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus += $"{ex.Message}";
+            }
+
+            _statusBarViewModel.UpdateTaskProgress(100);
+
             isBusy = false;
             return (ConnectionStatus, ConnectStatus);
 
