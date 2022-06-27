@@ -162,6 +162,8 @@ namespace BSC_Stand.Services
             // CONSTS
             const int IMG_WIDTH = 600;
             const int IMG_HEIGHT = 650;
+            const int IMG_PRINT_WIDTH = 600;
+            const int IMG_PRINT_HEIGHT = 650;
             double PAGE_WIDTH = pages[0].Width;
             double PAGE_HEIGHT = pages[0].Height;
             int[] TABLE_TOP =
@@ -213,9 +215,9 @@ namespace BSC_Stand.Services
                 XImage.FromStream(streams[1]),
                 XImage.FromStream(streams[2])
             };
-            gfxs[0].DrawImage(images[0], 30, 30, IMG_WIDTH - 60, IMG_HEIGHT);
-            gfxs[1].DrawImage(images[1], 30, 30, IMG_WIDTH - 60, IMG_HEIGHT);
-            gfxs[2].DrawImage(images[2], 30, 30, IMG_WIDTH - 60, PAGE_HEIGHT - 70);
+            gfxs[0].DrawImage(images[0], 30, 30, IMG_PRINT_WIDTH - 60, IMG_PRINT_HEIGHT);
+            gfxs[1].DrawImage(images[1], 30, 30, IMG_PRINT_WIDTH - 60, IMG_PRINT_HEIGHT);
+            gfxs[2].DrawImage(images[2], 30, 30, IMG_PRINT_WIDTH - 60, PAGE_HEIGHT - 70);
 
             
 
