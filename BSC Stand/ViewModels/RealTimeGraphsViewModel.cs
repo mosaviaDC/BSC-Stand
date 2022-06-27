@@ -796,10 +796,10 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public  void UpdateGraphsSeries(ReadingParams readingParams)
+        public async Task UpdateGraphsSeries(ReadingParams readingParams)
         {
             //Обновление серий
-             Task.Factory.StartNew(() =>
+         await    Task.Factory.StartNew(() =>
             {
 
                 LineSeries[,] series =
