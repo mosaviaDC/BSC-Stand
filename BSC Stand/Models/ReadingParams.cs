@@ -46,6 +46,14 @@ namespace BSC_Stand.Models
         [Name("Температура ЭО БСК")]
         public float BSCTemperature { get; set; }
 
+        [Name("Напряжение сточник питания")]
+        public float TetronVValue { get; set; }
+
+        [Name("Cила тока источник питания")]
+        public float TetronAValue { get; set; }
+        [Name("Мощность источник питания")]
+        public float TetronWValue { get; set; }
+
         [Name("Секунда эксперимента")]
         public float ExpTime { get; set; }
 

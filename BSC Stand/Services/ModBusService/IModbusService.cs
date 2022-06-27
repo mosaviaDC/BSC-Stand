@@ -35,6 +35,8 @@ namespace BSC_Stand.Services
         /// [5] = Akip Voltage (V)
         /// </returns>
         public Task<float[]> ReadElectronicLoadParams();
+
+        public Task<float[]> ReadPowerSupplyParams();
         public void ExitCommand();
         }
     }

@@ -244,6 +244,23 @@ namespace BSC_Stand.Services
         }
 
 
+        public async Task<float[]> ReadPowerSupplyParams()
+        {
+            
+           return await Task.Factory.StartNew(() =>
+            {
+                float[] result = new float[3];
+                result[0] = -1;
+                result[1] = -1;
+                result[2] = -1;
+                return result;
+            });
+
+
+           
+        }
+
+
         public async Task<Single> Read100BusVoltage()
         {
             try

@@ -397,6 +397,31 @@ namespace BSC_Stand.ViewModels
 
         }
 
+        private string _TetronVValue;
+        public string TetronVValue
+        {
+            get => _TetronVValue;
+            set => Set(ref _TetronVValue, value);
+
+        }
+
+        private string _TetronAValue;
+        public string TetronAValue
+        {
+            get => _TetronAValue;
+            set => Set(ref _TetronAValue, value);
+
+        }
+        private string _TetronWValue;
+        public string TetronWValue
+        {
+            get => _TetronWValue;
+            set => Set(ref _TetronWValue, value);
+
+        }
+
+
+
 
 
 
@@ -451,6 +476,10 @@ namespace BSC_Stand.ViewModels
 
             V100Value = "V Нет данных";
             I100Value = "I Нет данных";
+
+            TetronAValue = "A Нет данных";
+            TetronVValue = "V Нет данных";
+            TetronWValue = "W Нет данных";
             if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(5)) // 
             {
            
@@ -470,65 +499,75 @@ namespace BSC_Stand.ViewModels
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
 
-            DebugData();
-           // var logTime = DateTime.Now;
+          //  DebugData();
+            var logTime = DateTime.Now;
 
-           // ExpTimeSpan = logTime - StartTime;
+            ExpTimeSpan = logTime - StartTime;
 
-           // //Параметры эл нагрузок;
-           // _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
+            //Параметры эл нагрузок;
+            _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
 
-           // var result =  await  _modBusService.ReadElectronicLoadParams();
-           // if (result != null)
-           // {
-                
-           //     ITCAValue = result[0].ToAmperageString();
-           //     ITCVValue = result[1].ToVoltageString();
-           //     ITCWValue = result[2].ToPowerString();
+            var result = await _modBusService.ReadElectronicLoadParams();
+            if (result != null)
+            {
 
-           //     AKIPWValue = result[3].ToPowerString();
-           //     AKIPAValue  = result[4].ToAmperageString();
-           //     AKIPVValue = result[5].ToVoltageString();
+                ITCAValue = result[0].ToAmperageString();
+                ITCVValue = result[1].ToVoltageString();
+                ITCWValue = result[2].ToPowerString();
 
-           //     _readingParams.ITCAValue = result[0];
-           //     _readingParams.ITCVValue = result[1];
-           //     _readingParams.ITCWValue = result[2];
+                AKIPWValue = result[3].ToPowerString();
+                AKIPAValue = result[4].ToAmperageString();
+                AKIPVValue = result[5].ToVoltageString();
 
-           //     _readingParams.AKIPWValue= result[3];
-           //     _readingParams.AKIPAValue= result[4];
-           //     _readingParams.AKIPVValue= result[5];
-           // }
-           // // Параметры с преобразователей
+                _readingParams.ITCAValue = result[0];
+                _readingParams.ITCVValue = result[1];
+                _readingParams.ITCWValue = result[2];
 
-           // _readingParams.V27Value = await _modBusService.Read27BusVoltage();
-           // V27Value = _readingParams.V27Value.ToVoltageString();
+                _readingParams.AKIPWValue = result[3];
+                _readingParams.AKIPAValue = result[4];
+                _readingParams.AKIPVValue = result[5];
+            }
+            // Параметры с преобразователей
 
-
-           // _readingParams.I27Value = await _modBusService.Read27BusAmperage();
-           // I27Value = _readingParams.I27Value.ToAmperageString();
+            _readingParams.V27Value = await _modBusService.Read27BusVoltage();
+            V27Value = _readingParams.V27Value.ToVoltageString();
 
 
-           // _readingParams.V100Value = await _modBusService.Read100BusVoltage();
-           // V100Value = _readingParams.V100Value.ToVoltageString();
+            _readingParams.I27Value = await _modBusService.Read27BusAmperage();
+            I27Value = _readingParams.I27Value.ToAmperageString();
 
 
-           // _readingParams.I100Value = await _modBusService.Read100BusAmperage();
-           // I100Value = _readingParams.I100Value.ToAmperageString();
+            _readingParams.V100Value = await _modBusService.Read100BusVoltage();
+            V100Value = _readingParams.V100Value.ToVoltageString();
 
-           // _readingParams.IBXATemperature = 0;
-           // _readingParams.BSCTemperature = 0;
-           // //Параметры с Owen
-           //IBXATemperature = 0f.ToIBXATemperatureString();
-           //BSCTemperature = 0f.ToBSCTemperatureString();
 
-           // if (_realTimeStandControlService.GetExperimentStatus())
-           // {
-           //     Debug.WriteLine(logTime);
-           //     _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
-           //      _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
-           //     _fileLoggerService.WriteLog(_readingParams);
-           // }
-      
+            _readingParams.I100Value = await _modBusService.Read100BusAmperage();
+            I100Value = _readingParams.I100Value.ToAmperageString();
+
+            _readingParams.IBXATemperature = 0;
+            _readingParams.BSCTemperature = 0;
+            //Параметры с Owen
+            IBXATemperature = 0f.ToIBXATemperatureString();
+            BSCTemperature = 0f.ToBSCTemperatureString();
+
+             result =   await _modBusService.ReadPowerSupplyParams();
+            {
+                TetronAValue = result[0].ToAmperageString();
+                TetronVValue = result[1].ToVoltageString();
+                TetronWValue = result[2].ToPowerString();
+                _readingParams.TetronAValue = result[0];
+                _readingParams.TetronVValue = result[1];
+                _readingParams.TetronWValue = result[2];
+            }
+
+            if (_realTimeStandControlService.GetExperimentStatus())
+            {
+                Debug.WriteLine(logTime);
+                _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
+                _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+                _fileLoggerService.WriteLog(_readingParams);
+            }
+
         }
 
         public void WriteMessage(string Message, MessageType messageType)

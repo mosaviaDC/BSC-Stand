@@ -75,6 +75,19 @@
 
                 </TreeViewItem>
 
+                <TreeViewItem Header="Тетрон 15016С"  Background="#FFAFAFAF" FontSize="14" IsExpanded="True">
+                    <TextBlock Text="{Binding TetronVValue, Mode=TwoWay}"></TextBlock>
+
+                    <TextBlock Text="{Binding TetronAValue,Mode=TwoWay}" ></TextBlock>
+
+                    <TextBlock Text="{Binding TetronWValue,Mode=TwoWay}" ></TextBlock>
+
+                </TreeViewItem>
+
+
+
+
+
 
 
             </TreeView>
