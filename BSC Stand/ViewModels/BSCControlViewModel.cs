@@ -626,7 +626,7 @@ namespace BSC_Stand.ViewModels
 
             ExpTimeSpan = logTime - StartTime;
 
-            //Параметры эл нагрузок;
+            //Параметры эл  нагрузок;
             _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
             Random random = new Random();
             _readingParams.V27Value = (float) (random.NextDouble() + 25);
