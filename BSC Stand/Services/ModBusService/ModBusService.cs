@@ -627,7 +627,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM4",
                 StopBits = StopBits.One
              
 
@@ -659,7 +659,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM4",
+                PortName = "COM3",
                 StopBits = StopBits.One
 
             };
@@ -730,13 +730,13 @@ namespace BSC_Stand.Services
 
 
                          AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                         results[3] = Single.Parse(AkipSerialPort.ReadLine(), culture);
+                         results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture);  //3
 
                          AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                         results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture);
+                         results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //4
 
                          AkipSerialPort.WriteLine("MEASURE:POWER?");
-                         results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture);
+                         results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //5
                         
                   
 
@@ -746,6 +746,19 @@ namespace BSC_Stand.Services
                      {
 
                          Debug.WriteLine(ex.Message);
+
+                         results[0] = -1;
+
+                         results[1] = -1;
+
+                         results[2] = -1;
+                       
+                         results[3] = -1;
+
+                         results[4] = -1;
+
+                         results[5] = -1;
+
                      }
 
                      return results;
