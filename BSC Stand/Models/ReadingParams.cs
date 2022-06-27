@@ -46,18 +46,18 @@ namespace BSC_Stand.Models
         [Name("Температура ЭО БСК")]
         public float BSCTemperature { get; set; }
 
-        [Name("Напряжение сточник питания")]
+        [Name("Напряжение источника питания")]
         public float TetronVValue { get; set; }
 
-        [Name("Cила тока источник питания")]
+        [Name("Cила тока источника питания")]
         public float TetronAValue { get; set; }
-        [Name("Мощность источник питания")]
+        [Name("Мощность источника питания")]
         public float TetronWValue { get; set; }
 
         [Name("Секунда эксперимента")]
         public float ExpTime { get; set; }
 
-        [Name("Время фиксации значения(Unix TimeStamp UTC +3")]
+        [Name("Время фиксации значения(Unix TimeStamp UTC +3)")]
         public long TimeStamp { get; set; }
 
 

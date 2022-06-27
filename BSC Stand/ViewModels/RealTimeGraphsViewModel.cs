@@ -36,6 +36,9 @@ namespace BSC_Stand.ViewModels
         public LineSeries AKIPVSeries { get; set; }
         public LineSeries AKIPASeries { get; set; }
         public LineSeries AKIPWSeries { get; set; }
+        public LineSeries TetronVSeries { get; set; }
+        public LineSeries TetronASeries { get; set; }
+        public LineSeries TetronWSeries { get; set; }
         #endregion
 
         #region LineSeries2
@@ -51,6 +54,9 @@ namespace BSC_Stand.ViewModels
         public LineSeries AKIPVSeries2 { get; set; }
         public LineSeries AKIPASeries2 { get; set; }
         public LineSeries AKIPWSeries2 { get; set; }
+        public LineSeries TetronVSeries2 { get; set; }
+        public LineSeries TetronASeries2 { get; set; }
+        public LineSeries TetronWSeries2 { get; set; }
         #endregion
 
         #region LineSeries3
@@ -66,6 +72,9 @@ namespace BSC_Stand.ViewModels
         public LineSeries AKIPVSeries3 { get; set; }
         public LineSeries AKIPASeries3 { get; set; }
         public LineSeries AKIPWSeries3 { get; set; }
+        public LineSeries TetronVSeries3 { get; set; }
+        public LineSeries TetronASeries3 { get; set; }
+        public LineSeries TetronWSeries3 { get; set; }
         #endregion
 
 
@@ -259,6 +268,54 @@ namespace BSC_Stand.ViewModels
                 PlotModel1.InvalidatePlot(true);
             }
         }
+
+        private bool _TetronVSeriesVisible;
+        public bool TetronVSeriesVisible
+        {
+            get
+            {
+                return _TetronVSeriesVisible;
+            }
+            set
+            {
+
+                Set(ref _TetronVSeriesVisible, value);
+                TetronVSeries.IsVisible = value;
+                PlotModel1.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TetronASeriesVisible;
+        public bool TetronASeriesVisible
+        {
+            get
+            {
+                return _TetronASeriesVisible;
+            }
+            set
+            {
+
+                Set(ref _TetronASeriesVisible, value);
+                TetronASeries.IsVisible = value;
+                PlotModel1.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TetronWSeriesVisible;
+        public bool TetronWSeriesVisible
+        {
+            get
+            {
+                return _TetronWSeriesVisible;
+            }
+            set
+            {
+
+                Set(ref _TetronWSeriesVisible, value);
+                TetronWSeries.IsVisible = value;
+                PlotModel1.InvalidatePlot(true);
+            }
+        }
         #endregion
         #region Series2
         private bool _AKIPVSeriesVisible2;
@@ -443,8 +500,55 @@ namespace BSC_Stand.ViewModels
                 PlotModel2.InvalidatePlot(true);
             }
         }
-        #endregion
 
+        private bool _TetronVSeriesVisible2;
+        public bool TetronVSeriesVisible2
+        {
+            get
+            {
+                return _TetronVSeriesVisible2;
+            }
+            set
+            {
+
+                Set(ref _TetronVSeriesVisible2, value);
+                TetronVSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TetronASeriesVisible2;
+        public bool TetronASeriesVisible2
+        {
+            get
+            {
+                return _TetronASeriesVisible2;
+            }
+            set
+            {
+
+                Set(ref _TetronASeriesVisible2, value);
+                TetronASeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TetronWSeriesVisible2;
+        public bool TetronWSeriesVisible2
+        {
+            get
+            {
+                return _TetronWSeriesVisible2;
+            }
+            set
+            {
+
+                Set(ref _TetronWSeriesVisible2, value);
+                TetronWSeries2.IsVisible = value;
+                PlotModel2.InvalidatePlot(true);
+            }
+        }
+        #endregion
         #region Series3
         private bool _AKIPVSeriesVisible3;
         public bool AKIPVSeriesVisible3
@@ -630,6 +734,54 @@ namespace BSC_Stand.ViewModels
                 PlotModel3.InvalidatePlot(true);
             }
         }
+
+        private bool _TetronVSeriesVisible3;
+        public bool TetronVSeriesVisible3
+        {
+            get
+            {
+                return _TetronVSeriesVisible3;
+            }
+            set
+            {
+
+                Set(ref _TetronVSeriesVisible3, value);
+                TetronVSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TetronASeriesVisible3;
+        public bool TetronASeriesVisible3
+        {
+            get
+            {
+                return _TetronASeriesVisible3;
+            }
+            set
+            {
+
+                Set(ref _TetronASeriesVisible3, value);
+                TetronASeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
+
+        private bool _TetronWSeriesVisible3;
+        public bool TetronWSeriesVisible3
+        {
+            get
+            {
+                return _TetronWSeriesVisible3;
+            }
+            set
+            {
+
+                Set(ref _TetronWSeriesVisible3, value);
+                TetronWSeries3.IsVisible = value;
+                PlotModel3.InvalidatePlot(true);
+            }
+        }
         #endregion
 
 
@@ -652,16 +804,17 @@ namespace BSC_Stand.ViewModels
 
                 LineSeries[,] series =
                {
-                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries },
-                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2 },
-                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3 }
+                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries, TetronVSeries, TetronASeries, TetronWSeries },
+                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
+                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3, TetronVSeries3, TetronASeries3, TetronWSeries3 }
                 };
 
                 float[] parameters = { readingParams.ITCVValue, readingParams.ITCAValue, readingParams.ITCWValue,
                                    readingParams.AKIPAValue, readingParams.AKIPVValue, readingParams.AKIPWValue,
                                    readingParams.V27Value, readingParams.I27Value,
                                    readingParams.V100Value, readingParams.I100Value,
-                                   readingParams.IBXATemperature, readingParams.BSCTemperature};
+                                   readingParams.IBXATemperature, readingParams.BSCTemperature,
+                                   readingParams.TetronVValue, readingParams.TetronAValue, readingParams.TetronWValue };
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -676,19 +829,21 @@ namespace BSC_Stand.ViewModels
 
             });
 
+            /*
             {
                 LineSeries[,] series =
                 {
-                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries },
-                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2 },
-                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3 }
+                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries, TetronVSeries, TetronASeries, TetronWSeries },
+                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
+                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3, TetronVSeries3, TetronASeries3, TetronWSeries3 }
                 };
 
                 float[] parameters = { readingParams.ITCVValue, readingParams.ITCAValue, readingParams.ITCWValue,
-                                   readingParams.AKIPAValue, readingParams.AKIPVValue, readingParams.AKIPWValue, 
+                                   readingParams.AKIPAValue, readingParams.AKIPVValue, readingParams.AKIPWValue,
                                    readingParams.V27Value, readingParams.I27Value,
                                    readingParams.V100Value, readingParams.I100Value,
-                                   readingParams.IBXATemperature, readingParams.BSCTemperature};
+                                   readingParams.IBXATemperature, readingParams.BSCTemperature,
+                                   readingParams.TetronVValue, readingParams.TetronAValue, readingParams.TetronWValue };
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -698,7 +853,7 @@ namespace BSC_Stand.ViewModels
                         series[i, j].Points.Add(new DataPoint(readingParams.ExpTime, parameters[j]));
                         j++;
                     }
-                }
+                } */
                 
                 /*
                 ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
@@ -753,7 +908,7 @@ namespace BSC_Stand.ViewModels
                 TIBXASeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
                 TBSCSeries3.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
                 */
-            }
+            //}
             //
 
 
@@ -929,6 +1084,39 @@ namespace BSC_Stand.ViewModels
                     MarkerSize = 1,
                     IsVisible = true
                 };
+
+                TetronVSeries = new LineSeries
+                {
+                    Title = "V Тетрон",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.LightGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronASeries = new LineSeries
+                {
+                    Title = "A Тетрон",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.Gray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronWSeries = new LineSeries
+                {
+                    Title = "W Тетрон",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
             }
             ///Series 2
             {
@@ -1069,6 +1257,39 @@ namespace BSC_Stand.ViewModels
                     Title = "W АКИП",
                     TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
                     Color = OxyColors.DarkViolet,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronVSeries2 = new LineSeries
+                {
+                    Title = "V Тетрон",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.LightGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronASeries2 = new LineSeries
+                {
+                    Title = "A Тетрон",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.Gray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronWSeries2 = new LineSeries
+                {
+                    Title = "W Тетрон",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkGray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
                     MarkerSize = 1,
@@ -1218,6 +1439,39 @@ namespace BSC_Stand.ViewModels
                     MarkerSize = 1,
                     IsVisible = true
                 };
+
+                TetronVSeries3 = new LineSeries
+                {
+                    Title = "V Тетрон",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.LightGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronASeries3 = new LineSeries
+                {
+                    Title = "A Тетрон",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.Gray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronWSeries3 = new LineSeries
+                {
+                    Title = "W Тетрон",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
             }
 
             #endregion
@@ -1241,6 +1495,10 @@ namespace BSC_Stand.ViewModels
                 PlotModel1.Series.Add(AKIPVSeries);
                 PlotModel1.Series.Add(AKIPASeries);
                 PlotModel1.Series.Add(AKIPWSeries);
+
+                PlotModel1.Series.Add(TetronVSeries);
+                PlotModel1.Series.Add(TetronASeries);
+                PlotModel1.Series.Add(TetronWSeries);
             }
             {
                 PlotModel2.Series.Add(TIBXASeries2);
@@ -1259,6 +1517,10 @@ namespace BSC_Stand.ViewModels
                 PlotModel2.Series.Add(AKIPVSeries2);
                 PlotModel2.Series.Add(AKIPASeries2);
                 PlotModel2.Series.Add(AKIPWSeries2);
+
+                PlotModel2.Series.Add(TetronVSeries2);
+                PlotModel2.Series.Add(TetronASeries2);
+                PlotModel2.Series.Add(TetronWSeries2);
             }
 
             {
@@ -1278,6 +1540,10 @@ namespace BSC_Stand.ViewModels
                 PlotModel3.Series.Add(AKIPVSeries3);
                 PlotModel3.Series.Add(AKIPASeries3);
                 PlotModel3.Series.Add(AKIPWSeries3);
+
+                PlotModel3.Series.Add(TetronVSeries3);
+                PlotModel3.Series.Add(TetronASeries3);
+                PlotModel3.Series.Add(TetronWSeries3);
             }
 
 
@@ -1323,6 +1589,9 @@ namespace BSC_Stand.ViewModels
             ITCWSeriesVisible = true;
             V100SeriesVisible = true;
             I100SeriesVisible = true;
+            TetronVSeriesVisible = true;
+            TetronASeriesVisible = true;
+            TetronWSeriesVisible = true;
 
 
             TIBXASeriesVisible2 = true;
@@ -1337,6 +1606,9 @@ namespace BSC_Stand.ViewModels
             ITCWSeriesVisible2 = true;
             V100SeriesVisible2 = true;
             I100SeriesVisible2 = true;
+            TetronVSeriesVisible2 = true;
+            TetronASeriesVisible2 = true;
+            TetronWSeriesVisible2 = true;
 
             TIBXASeriesVisible3 = true;
             TBSCSeriesVisible3 = true;
@@ -1350,10 +1622,10 @@ namespace BSC_Stand.ViewModels
             ITCWSeriesVisible3 = true;
             V100SeriesVisible3 = true;
             I100SeriesVisible3 = true;
+            TetronVSeriesVisible3 = true;
+            TetronASeriesVisible3 = true;
+            TetronWSeriesVisible3 = true;
 
-
-
-          
         }
 
 
@@ -1372,6 +1644,9 @@ namespace BSC_Stand.ViewModels
             AKIPVSeries.Points.Clear();
             AKIPASeries.Points.Clear();
             AKIPWSeries.Points.Clear();
+            TetronVSeries.Points.Clear();
+            TetronASeries.Points.Clear();
+            TetronWSeries.Points.Clear();
 
             V27Series2.Points.Clear();
             I27Series2.Points.Clear();
@@ -1385,6 +1660,9 @@ namespace BSC_Stand.ViewModels
             AKIPVSeries2.Points.Clear();
             AKIPASeries2.Points.Clear();
             AKIPWSeries2.Points.Clear();
+            TetronVSeries2.Points.Clear();
+            TetronASeries2.Points.Clear();
+            TetronWSeries2.Points.Clear();
 
             V27Series3.Points.Clear();
             I27Series3.Points.Clear();
@@ -1398,6 +1676,9 @@ namespace BSC_Stand.ViewModels
             AKIPVSeries3.Points.Clear();
             AKIPASeries3.Points.Clear();
             AKIPWSeries3.Points.Clear();
+            TetronVSeries3.Points.Clear();
+            TetronASeries3.Points.Clear();
+            TetronWSeries3.Points.Clear();
 
 
 
@@ -1408,11 +1689,7 @@ namespace BSC_Stand.ViewModels
             PlotModel1.ResetAllAxes();
             PlotModel2.ResetAllAxes();
             PlotModel3.ResetAllAxes();
-
         }
-
-
-
 
     }
 }
