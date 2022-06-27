@@ -25,6 +25,8 @@ namespace BSC_Stand.Services
         private IModbusSerialMaster V27ModbusController;
         private IModbusSerialMaster I27ModbusController;
 
+        private IModbusSerialMaster PowerSupplyModbusController;
+
         private IModbusSerialMaster V100ModbusController;
         private IModbusSerialMaster I100ModbusController;
 
@@ -37,12 +39,13 @@ namespace BSC_Stand.Services
         private SerialPort U100SerialPort;
         private SerialPort I100SerialPort;
 
-
         private SerialPort IChargerSerialPort;
 
         private SerialPort AkipSerialPort;
 
         private SerialPort ITCSerialPort;
+
+        private SerialPort PowerSupplySerialPort;
 
 
         private StatusBarViewModel _statusBarViewModel;
@@ -246,18 +249,19 @@ namespace BSC_Stand.Services
 
         public async Task<float[]> ReadPowerSupplyParams()
         {
-            
+          
            return await Task.Factory.StartNew(() =>
             {
                 float[] result = new float[3];
                 result[0] = -1;
                 result[1] = -1;
                 result[2] = -1;
+
                 return result;
             });
 
 
-           
+            return null;
         }
 
 
@@ -291,15 +295,6 @@ namespace BSC_Stand.Services
         }
 
 
-
-
-
-
-
-
-
-
-
         public async Task<Single> Read100BusAmperage()
         {
             try
@@ -328,16 +323,6 @@ namespace BSC_Stand.Services
             }
 
         }
-
-
-
-
-
-
-
-
-
-
 
 
         #region InitUSRVirtualPorts
@@ -475,17 +460,6 @@ namespace BSC_Stand.Services
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
         private bool InitV100BusPort()
         {
             if (V100ModbusController != null)
@@ -584,6 +558,53 @@ namespace BSC_Stand.Services
             }
         }
 
+        private bool InitPowerSupplyPort()
+        {
+            if (PowerSupplyModbusController != null)
+            {
+                PowerSupplyModbusController.Transport.ReadTimeout = 1500;
+                PowerSupplyModbusController.Transport.WriteTimeout = 1000;
+                Debug.WriteLine("*");
+
+
+                if (PowerSupplyModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            PowerSupplySerialPort = new SerialPort();
+            {
+
+                PowerSupplySerialPort.Close();
+                PowerSupplySerialPort.PortName = "*";
+                PowerSupplySerialPort.BaudRate = 9600;
+                PowerSupplySerialPort.DataBits = 8;
+                PowerSupplySerialPort.StopBits = StopBits.One;
+                PowerSupplySerialPort.Open();
+
+                serialPortAdapter = new SerialPortAdapter(PowerSupplySerialPort);
+
+                PowerSupplyModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
+                PowerSupplyModbusController.Transport.WriteTimeout = 1000;
+                PowerSupplyModbusController.Transport.ReadTimeout = 1500;
+
+                if (PowerSupplyModbusController.ReadInputRegisters(1, 7, 2) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    PowerSupplySerialPort.Close();
+                    PowerSupplySerialPort.Dispose();
+                    return false;
+                }
+            }
+        }
         #endregion
 
 
@@ -596,7 +617,6 @@ namespace BSC_Stand.Services
             owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
             return owenControllerTCPCLient.Connected;
         }
-
 
         private bool InitITCPort()
         {
@@ -661,6 +681,7 @@ namespace BSC_Stand.Services
                 return false;
             }
         }
+      
 
         #region SCPI region
 
@@ -748,7 +769,6 @@ namespace BSC_Stand.Services
             return r;
         }
 
-
         private string ReadIDN(SerialPort port)
         {
             port.WriteLine(@"
@@ -757,7 +777,7 @@ namespace BSC_Stand.Services
             return port.ReadLine();
             
         }
-        public bool SetAKIPPowerValue(double value)
+        public async Task<bool> SetAKIPPowerValue(double value)
         {
             bool result = false;
             Task.Run(() =>
@@ -787,10 +807,10 @@ namespace BSC_Stand.Services
             });
             return result;
         }
-        public bool SetITCPowerValue(double value)
+        public async Task<bool> SetITCPowerValue(double value)
         {
             bool result = false;    
-            Task.Run(() =>
+          return  await Task.Run(() =>
             {
                 lock (this)
                 {
@@ -808,6 +828,7 @@ namespace BSC_Stand.Services
                         ITCSerialPort.Close();
                         ITCSerialPort.Open();
                         result = true;
+                      
                     }
 
                     else
@@ -816,8 +837,48 @@ namespace BSC_Stand.Services
                     }
 
                 }
+                return result;
             });
-            return result;
+            
+        }
+
+
+        public async Task<bool> SetIchargerValue(double value)
+        {
+            bool result = false;
+            return await Task.Run(() =>
+            {
+                lock (this)
+                {
+                    if (IChargerSerialPort != null)
+                    {
+                        IChargerSerialPort.Close();
+                        IChargerSerialPort.Open();
+                        string query = ($@"SYSTEM:REM
+                            Mode Power
+                            INPut 1
+                            Power {value.ToString("G2", culture)}
+                            Power?");
+
+                        IChargerSerialPort.WriteLine(query);
+                        IChargerSerialPort.Close();
+                        IChargerSerialPort.Open();
+                        result = true;
+
+                    }
+
+                    else
+                    {
+                        result = false;
+                    }
+
+                }
+                return result;
+            });
+
+
+
+           
         }
 
         #endregion

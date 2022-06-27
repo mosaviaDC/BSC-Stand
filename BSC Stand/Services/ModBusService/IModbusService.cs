@@ -21,8 +21,9 @@ namespace BSC_Stand.Services
         public Task<Single> Read100BusVoltage();
         public Task<Single> Read100BusAmperage();
 
-        public bool SetAKIPPowerValue(double value);
-        public bool SetITCPowerValue(double value);
+        public Task<bool> SetAKIPPowerValue(double value);
+        public Task<bool> SetITCPowerValue(double value);
+        public Task<bool> SetIchargerValue(double value);
         /// <summary>
         /// 
         /// </summary>
