@@ -323,19 +323,6 @@ namespace BSC_Stand.ViewModels
             }
             Bus100PlotModel.InvalidatePlot(true);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 

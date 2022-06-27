@@ -72,42 +72,76 @@ namespace BSC_Stand.Services
             _statusBarViewModel.UpdateTaskProgress(12);
             try
             {
+               
                 ConnectStatus = InitICharger();
             } 
             catch (Exception ex)
             {
+               
                 ConnectStatus = false;
-                ConnectionStatus += $"Ошибка при подключении к Juntek {ex.Message}";
+              
+            }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к Juntek \n";
+
+                }
+               
             }
 
             //Akip Port
             _statusBarViewModel.UpdateTaskProgress(24);
             try
             {
+          
                 ConnectStatus = ConnectStatus && InitAkipPort();
             }
             catch (Exception ex)
             {
                 ConnectStatus = false;
-                ConnectionStatus += $"Ошибка при подключении к АКИП {ex.Message}";
+                ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к АКИП {ex.Message}";
+            }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к АКИП \n";
+
+                }
             }
 
             //ITC Port
             _statusBarViewModel.UpdateTaskProgress(36);
             try
             {
+              
                 ConnectStatus = ConnectStatus && InitITCPort();
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"Ошибка при подключении к ITC8515C+ {ex.Message}";
+                ConnectionStatus =  $"Ошибка при подключении к ITC8515C+ {ex.Message}";
                 ConnectStatus = false;
             }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к ITC8516C+ \n";
+
+                }
+            }
+
+
+
+
 
             //V100 Bus Port
             _statusBarViewModel.UpdateTaskProgress(48);
             try
             {
+              
                 ConnectStatus = ConnectStatus && InitV100BusPort();
             }
             catch (Exception ex)
@@ -115,11 +149,20 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
                 ConnectStatus = false;
             }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В\n";
+
+                }
+            }
 
             //I100 Bus Port
             _statusBarViewModel.UpdateTaskProgress(60);
             try
             {
+               
                 ConnectStatus = ConnectStatus && InitI100BusPort();
             }
             catch (Exception ex)
@@ -127,11 +170,19 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 100В {ex.Message}";
                 ConnectStatus = false;
             }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 100В\n";
 
+                }
+            }
             //V27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(72);
             try
             {
+               
                 ConnectStatus = ConnectStatus && InitV27BusPort();
             }
             catch (Exception ex)
@@ -139,11 +190,20 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В\n";
+
+                }
+            }
 
             //I27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(84);
             try
             {
+
                 ConnectStatus = ConnectStatus && InitI27BusPort();
             }
             catch (Exception ex)
@@ -151,17 +211,34 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В \n";
+
+                }
+            }
 
             //Owen Controller
             _statusBarViewModel.UpdateTaskProgress(95);
             try
             {
+               
                 ConnectStatus = ConnectStatus && InitOwenController();
             }
             catch (Exception ex)
             {
                 ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
                 ConnectStatus = false;
+            }
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus += $"Ошибка при подключении к ОВЕН \n";
+
+                }
             }
 
             _statusBarViewModel.UpdateTaskProgress(100);
