@@ -35,25 +35,32 @@ namespace BSC_Stand.Services
 
         public void WriteLog(ReadingParams readingParams)
         {
-
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                // Don't write the header again
-                HasHeaderRecord = true
-            };
-
-
-            using (var stream = File.Open(FilePath, FileMode.Append))
-            using (var writer = new StreamWriter(stream))
-            using (var csv = new CsvWriter(writer, config))
+          
+                lock (this)
                 {
 
-                    csv.WriteRecord(readingParams);
 
-                    csv.NextRecord();                   
-               // StreamWriter.Flush();
+                    var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    {
+                        // Don't write the header again
+                        HasHeaderRecord = true
+                    };
+
+
+                    using (var stream = File.Open(FilePath, FileMode.Append))
+                    using (var writer = new StreamWriter(stream))
+                    using (var csv = new CsvWriter(writer, config))
+                    {
+
+                        csv.WriteRecord(readingParams);
+
+                        csv.NextRecord();
+                        // StreamWriter.Flush();
+                    }
+
+
                 }
-              
+
 
         }
 

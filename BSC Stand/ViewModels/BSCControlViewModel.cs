@@ -59,13 +59,13 @@ namespace BSC_Stand.ViewModels
 
             
                 
-                _realTimeStandControlService.StartExpirent();
+               
                 _realTimeGraphsViewModel.ClearAllPoints();
                 _realTimeGraphsViewModel.ResetAllAxes();
                 _fileLoggerService.CreateFile(); 
                 GC.Collect();
                 WriteMessage("Начало эксперимента", MessageType.Info);
-                
+                _realTimeStandControlService.StartExpirent();
                 StartTime = DateTime.Now;
                 //   UpdateDataTimer?.Start();
             }
@@ -564,8 +564,9 @@ namespace BSC_Stand.ViewModels
             {
                 Debug.WriteLine(logTime);
                 _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
-                _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
-                _fileLoggerService.WriteLog(_readingParams);
+                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+                 _fileLoggerService.WriteLog(_readingParams);
+       
             }
 
         }
@@ -611,6 +612,11 @@ namespace BSC_Stand.ViewModels
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {
                 WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Info);
+                _modBusService.SetIchargerValue("001");
+            }
+            else
+            {
+                _modBusService.SetIchargerValue("0100");
             }
         }
 

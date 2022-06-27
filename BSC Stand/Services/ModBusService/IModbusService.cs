@@ -23,7 +23,7 @@ namespace BSC_Stand.Services
 
         public Task<bool> SetAKIPPowerValue(double value);
         public Task<bool> SetITCPowerValue(double value);
-        public Task<bool> SetIchargerValue(double value);
+        public Task<bool> SetIchargerValue(string value);
         /// <summary>
         /// 
         /// </summary>

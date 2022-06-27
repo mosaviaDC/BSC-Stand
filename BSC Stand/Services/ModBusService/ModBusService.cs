@@ -72,11 +72,12 @@ namespace BSC_Stand.Services
             _statusBarViewModel.UpdateTaskProgress(12);
             try
             {
-                ConnectStatus = true; //InitICharger();
+                ConnectStatus = InitICharger();
             } 
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectStatus = false;
+                ConnectionStatus += $"Ошибка при подключении к Juntek {ex.Message}";
             }
 
             //Akip Port
@@ -87,7 +88,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectStatus = false;
+                ConnectionStatus += $"Ошибка при подключении к АКИП {ex.Message}";
             }
 
             //ITC Port
@@ -98,7 +100,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectionStatus += $"Ошибка при подключении к ITC8515C+ {ex.Message}";
+                ConnectStatus = false;
             }
 
             //V100 Bus Port
@@ -109,7 +112,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
+                ConnectStatus = false;
             }
 
             //I100 Bus Port
@@ -120,7 +124,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 100В {ex.Message}";
+                ConnectStatus = false;
             }
 
             //V27 Bus Port
@@ -131,7 +136,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
+                ConnectStatus = false;
             }
 
             //I27 Bus Port
@@ -142,7 +148,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
+                ConnectStatus = false;
             }
 
             //Owen Controller
@@ -153,7 +160,8 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"{ex.Message}";
+                ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
+                ConnectStatus = false;
             }
 
             _statusBarViewModel.UpdateTaskProgress(100);
@@ -627,7 +635,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM4",
+                PortName = "COM6",
                 StopBits = StopBits.One
              
 
@@ -659,7 +667,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM7",
                 StopBits = StopBits.One
 
             };
@@ -793,7 +801,7 @@ namespace BSC_Stand.Services
         public async Task<bool> SetAKIPPowerValue(double value)
         {
             bool result = false;
-            Task.Run(() =>
+           return await Task.Run(() =>
             {
                 lock (this)
                 {
@@ -810,6 +818,7 @@ namespace BSC_Stand.Services
                         AkipSerialPort.Close();
                         AkipSerialPort.Open();
                         result = true;
+                     
                     }
                     else
                     {
@@ -817,8 +826,9 @@ namespace BSC_Stand.Services
                     }
 
                 }
+                return result;
             });
-            return result;
+           
         }
         public async Task<bool> SetITCPowerValue(double value)
         {
@@ -856,7 +866,7 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task<bool> SetIchargerValue(double value)
+        public async Task<bool> SetIchargerValue(string value)
         {
             bool result = false;
             return await Task.Run(() =>
@@ -867,16 +877,13 @@ namespace BSC_Stand.Services
                     {
                         IChargerSerialPort.Close();
                         IChargerSerialPort.Open();
-                        string query = ($@"SYSTEM:REM
-                            Mode Power
-                            INPut 1
-                            Power {value.ToString("G2", culture)}
-                            Power?");
+                        string query = ($"01w11={value}");
 
                         IChargerSerialPort.WriteLine(query);
                         IChargerSerialPort.Close();
                         IChargerSerialPort.Open();
                         result = true;
+                        Debug.WriteLine(query);
 
                     }
 
