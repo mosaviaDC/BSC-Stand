@@ -774,17 +774,24 @@ namespace BSC_Stand.Services
         {
             try
             {
-                AkipSerialPort.WriteLine($@"Power 0
+                if (AkipSerialPort !=null  && ITCSerialPort != null)
+                {
+
+
+                    AkipSerialPort.WriteLine($@"Power 0
                                         INPUT 0
                                         SYST:LOC
                                         ");
-                ITCSerialPort.WriteLine($@"Power 0
+                    ITCSerialPort.WriteLine($@"Power 0
                                        INPUT 0
                                        SYST:LOC");
+
+                }
+             
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
             }
         }
         public async Task<float[]> ReadElectronicLoadParams()
