@@ -40,15 +40,27 @@ namespace BSC_Stand.Services
 
         private double ExperimentDuration;
 
+
+        private int PowerSupplyExpRepeatCount { get; set; }
+
+        private int V27ExpRepeatCount { get; set; }
+
+        private int V100ExpRepeatCount { get; set; }
+
         private ObservableCollection<ElectronicConfigMode> V27configurationModes;
 
         private ObservableCollection<ElectronicConfigMode> V100configurationModes;
 
         private ObservableCollection<PowerSupplyConfigMode> PowerSupplyConfigModes;
 
-
         private readonly IUserDialogWindowService _userDialogWindowService;
+
+        private readonly StandConfigurationViewModel _standConfigurationViewModel;
+
         private bool isExpirementPepformed;
+        private List<ElectronicConfigMode> V27tempModes;
+        private List<ElectronicConfigMode> V100tempModes;
+        private List<PowerSupplyConfigMode> PowerSupplyTempModes;
 
         public delegate void V27Msg(CommandParams commandParams);
         public event V27Msg _V27MsgEvent;
@@ -63,6 +75,7 @@ namespace BSC_Stand.Services
         public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel, IUserDialogWindowService userDialogWindowService)
         {
             _userDialogWindowService = userDialogWindowService;
+            _standConfigurationViewModel = standConfigurationViewModel;
             isExpirementPepformed = false;
             V27expirementTimer = new DispatcherTimer();
             V27expirementTimer.Interval = TimeSpan.FromMilliseconds(250);
@@ -80,6 +93,11 @@ namespace BSC_Stand.Services
             V27configurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100configurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             PowerSupplyConfigModes = standConfigurationViewModel.PowerSupplyConfigurationModes;
+            PowerSupplyExpRepeatCount = standConfigurationViewModel.PowerSupplyCyclogramRepeatCount;
+            V27ExpRepeatCount = standConfigurationViewModel.V27BusCyclogramRepeatCount;
+            V100ExpRepeatCount = standConfigurationViewModel.V100BusCyclogramRepeatCount;
+
+
             _V27MsgEvent += bSCControlViewModel.SendV27ModBusCommand;
             _V100MsgEvent += bSCControlViewModel.SendV100ModBusCommand;
             _PowerSupplyMsgEvent += bSCControlViewModel.SendPowerSupplyCommand;
@@ -93,8 +111,12 @@ namespace BSC_Stand.Services
         public void UpdateExpiremntParams()
         {
 
-            if (V100configurationModes.Count > 0 || V27configurationModes.Count > 0 || PowerSupplyConfigModes.Count >0)
+            if (V100configurationModes.Count > 0 || V27configurationModes.Count > 0 || PowerSupplyConfigModes.Count > 0)
             {
+                V27ExpRepeatCount = _standConfigurationViewModel.V27BusCyclogramRepeatCount;
+                V100ExpRepeatCount = _standConfigurationViewModel.V100BusCyclogramRepeatCount;
+                PowerSupplyExpRepeatCount = _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount;
+
 
                 StartTime = DateTime.Now;
 
@@ -110,8 +132,8 @@ namespace BSC_Stand.Services
                 PowerSupplyNextConfigTime = PowerSupplyNextConfigTime.AddSeconds(PowerSupplyConfigModes[PowerSupplyConfigIndex].Duration);
                 PowerSupplyConfigIndex++;
 
-                _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0],0,false));
-                _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0],0,false));
+                _V27MsgEvent?.Invoke(new CommandParams(V27configurationModes[0], 0, false));
+                _V100MsgEvent?.Invoke(new CommandParams(V100configurationModes[0], 0, false));
                 _PowerSupplyMsgEvent?.Invoke(new CommandParams(PowerSupplyConfigModes[0], 0, false));
                 //TO DO расчитать для трех
 
@@ -127,6 +149,46 @@ namespace BSC_Stand.Services
                 double ExperimentDuration2 = 0;
                 double ExperimentDuration3 = 0;
 
+             
+                V27tempModes = V27configurationModes.ToList();
+                
+                for (int i = 1; i < V27ExpRepeatCount; i++)
+                {
+                
+                    foreach (var p in V27tempModes)
+                    {
+                        V27configurationModes.Add(p);
+                    }
+                
+
+                }
+
+                V100tempModes = V100configurationModes.ToList();
+
+                for (int i = 1; i < V100ExpRepeatCount; i++)
+                {
+
+                    foreach (var p in V100tempModes)
+                    {
+                       V100configurationModes.Add(p);
+                    }
+                   
+
+                }
+
+                PowerSupplyTempModes = PowerSupplyConfigModes.ToList();
+
+                for (int i = 1; i < PowerSupplyExpRepeatCount; i++)
+                {
+
+                    foreach (var p in PowerSupplyTempModes)
+                    {
+                       PowerSupplyConfigModes.Add(p);
+                    }
+
+
+                }
+               
                 foreach (ElectronicConfigMode mode in V27configurationModes)
                 {
                     ExperimentDuration1 += mode.Duration;
@@ -144,18 +206,6 @@ namespace BSC_Stand.Services
 
                 ExperimentDuration = Math.Max(ExperimentDuration1, Math.Max(ExperimentDuration2, ExperimentDuration3));
 
-
-                /* Старый вариант
-                if (V100configurationModes.Count >= V27configurationModes.Count)
-                {
-                    ExperimentDurationCount = V100configurationModes.Count;
-                }
-                else if (V27configurationModes.Count > V100configurationModes.Count)
-                {
-
-                    ExperimentDurationCount = V27configurationModes.Count;
-                }
-                */
 
                 V27expirementTimer.Start();
                 V100expirementTimer.Start();
@@ -189,6 +239,22 @@ namespace BSC_Stand.Services
             V27expirementTimer.Stop();
             V100expirementTimer.Stop();
             PowerSupplyExpirementTimer.Stop();
+            V27configurationModes.Clear();
+            foreach(var p in V27tempModes)
+            {
+                V27configurationModes.Add(p);
+            }
+            V100configurationModes.Clear();
+            foreach (var p in V100tempModes)
+            {
+                V100configurationModes.Add(p);
+            }
+            PowerSupplyConfigModes.Clear();
+            foreach(var p in PowerSupplyTempModes)
+            {
+                PowerSupplyConfigModes.Add(p);
+            }
+
         }
 
 
