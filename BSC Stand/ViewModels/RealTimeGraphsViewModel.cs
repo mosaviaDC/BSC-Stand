@@ -946,7 +946,7 @@ namespace BSC_Stand.ViewModels
                 V27Series = new LineSeries
                 {
                     Title = "V 27",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    TrackerFormatString = "{4:0.###} В  \n {2:0.##} сек",
                     Color = OxyColors.Blue,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
