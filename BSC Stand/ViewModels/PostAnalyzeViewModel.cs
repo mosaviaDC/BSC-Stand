@@ -41,6 +41,12 @@ namespace BSC_Stand.ViewModels
         public LineSeries TetronASeries { get; set; }
         public LineSeries TetronWSeries { get; set; }
 
+        public LineSeries V27Series2 { get; set; }
+        public LineSeries I27Series2 { get; set; }
+
+        public LineSeries V100Series3 { get; set; }
+        public LineSeries I100Series3 { get; set; }
+
         public PlotModel GenericPlotModel { get; set; }
         public PlotModel Bus27PlotModel { get; set; }
         public PlotModel Bus100PlotModel { get; set; }
@@ -89,7 +95,7 @@ namespace BSC_Stand.ViewModels
                     Thread thread = new Thread(ImportLogs);
                     thread.IsBackground = true;
                     thread.Start(CurrentOpenedFileName);
-                   
+                    
                 }
                 else
                 {
@@ -247,7 +253,13 @@ namespace BSC_Stand.ViewModels
             ZoomOutPlotCOommand = new ActionCommand(ZoomOutPlotCOommandExecute);
         }
 
-
+        public DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dateTime;
+        }
 
         private async void ImportLogs(object? CurrentOpenedFileName)
         {
@@ -259,30 +271,47 @@ namespace BSC_Stand.ViewModels
             _statusBarViewModel.SetNewTask(importResult.Count);
             foreach (var readingParams in importResult)
             {
+                //ITCVSeries.Points.Add(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(UnixTimeStampToDateTime(readingParams.TimeStamp)), readingParams.ITCVValue));
 
-                ITCVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCVValue));
-                ITCASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCAValue));
-                ITCWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.ITCWValue));
+                double time_param = readingParams.ExpTime;
 
-                AKIPASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPAValue));
-                AKIPVSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPVValue));
-                AKIPWSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.AKIPWValue));
+                ITCVSeries.Points.Add(new DataPoint(time_param, readingParams.ITCVValue));
+                ITCASeries.Points.Add(new DataPoint(time_param, readingParams.ITCAValue));
+                ITCWSeries.Points.Add(new DataPoint(time_param, readingParams.ITCWValue));
+                
+                AKIPASeries.Points.Add(new DataPoint(time_param, readingParams.AKIPAValue));
+                AKIPVSeries.Points.Add(new DataPoint(time_param, readingParams.AKIPVValue));
+                AKIPWSeries.Points.Add(new DataPoint(time_param, readingParams.AKIPWValue));
 
-                V27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V27Value));
-                I27Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I27Value));
+                V27Series.Points.Add(new DataPoint(time_param, readingParams.V27Value));
+                I27Series.Points.Add(new DataPoint(time_param, readingParams.I27Value));
 
-                V100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.V100Value));
-                I100Series.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.I100Value));
+                V27Series2.Points.Add(new DataPoint(time_param, readingParams.V27Value));
+                I27Series2.Points.Add(new DataPoint(time_param, readingParams.I27Value));
 
-                TIBXASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
-                TBSCSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+                V100Series.Points.Add(new DataPoint(time_param, readingParams.V100Value));
+                I100Series.Points.Add(new DataPoint(time_param, readingParams.I100Value));
 
-                TetronASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.TetronVValue));
-                TetronASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.TetronAValue));
-                TetronASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.TetronWValue));
+                V100Series3.Points.Add(new DataPoint(time_param, readingParams.V100Value));
+                I100Series3.Points.Add(new DataPoint(time_param, readingParams.I100Value));
+
+                TIBXASeries.Points.Add(new DataPoint(time_param, readingParams.IBXATemperature));
+                TBSCSeries.Points.Add(new DataPoint(time_param, readingParams.BSCTemperature));
+
+                TetronASeries.Points.Add(new DataPoint(time_param, readingParams.TetronVValue));
+                TetronASeries.Points.Add(new DataPoint(time_param, readingParams.TetronAValue));
+                TetronASeries.Points.Add(new DataPoint(time_param, readingParams.TetronWValue));
                 i++;
                 _statusBarViewModel.UpdateTaskProgress(i);
             }
+
+            GenericPlotModel.ResetAllAxes();
+            GenericPlotModel.InvalidatePlot(true);
+            Bus27PlotModel.ResetAllAxes();
+            Bus27PlotModel.InvalidatePlot(true);
+            Bus100PlotModel.ResetAllAxes();
+            Bus100PlotModel.InvalidatePlot(true);
+
             return;
         }
 
@@ -298,14 +327,23 @@ namespace BSC_Stand.ViewModels
             //Generic Plot Model
 
             GenericPlotModel = new PlotModel();
-           
+
+            GenericPlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis()
+            {
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                MajorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+            });
+            GenericPlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis());
+
+
 
             {
 
                 V27Series = new LineSeries
                 {
                     Title = "V 27",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.Blue,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -318,7 +356,7 @@ namespace BSC_Stand.ViewModels
                 I27Series = new LineSeries
                 {
                     Title = "I 27",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.BlueViolet,
                     MarkerFill = OxyColors.DarkBlue,
                     MarkerType = MarkerType.Cross,
@@ -331,7 +369,7 @@ namespace BSC_Stand.ViewModels
                 V100Series = new LineSeries
                 {
                     Title = "V 100",
-                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    TrackerFormatString = "{0}\n{4:0} В\n{2:0} сек",
                     Color = OxyColors.DarkOrange,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -344,7 +382,7 @@ namespace BSC_Stand.ViewModels
                 I100Series = new LineSeries
                 {
                     Title = "I 100",
-                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    TrackerFormatString = "{0}\n{4:0} A\n{2:0} сек",
                     Color = OxyColors.OrangeRed,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -356,7 +394,7 @@ namespace BSC_Stand.ViewModels
                 TIBXASeries = new LineSeries
                 {
                     Title = "T°C  ИБХА",
-                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0} T°C\n{2:0} сек",
                     Color = OxyColors.Green,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -367,7 +405,7 @@ namespace BSC_Stand.ViewModels
                 TBSCSeries = new LineSeries
                 {
                     Title = "T°C  ЭОБСК",
-                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0} T°C\n{2:0} сек",
                     Color = OxyColors.ForestGreen,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -380,7 +418,7 @@ namespace BSC_Stand.ViewModels
                 ITCVSeries = new LineSeries
                 {
                     Title = "V IT8516C+",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.Brown,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -391,7 +429,7 @@ namespace BSC_Stand.ViewModels
                 ITCASeries = new LineSeries
                 {
                     Title = "A IT8516C+",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.RosyBrown,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -402,7 +440,7 @@ namespace BSC_Stand.ViewModels
                 ITCWSeries = new LineSeries
                 {
                     Title = "W IT8516C+",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.SandyBrown,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -414,7 +452,7 @@ namespace BSC_Stand.ViewModels
                 AKIPVSeries = new LineSeries
                 {
                     Title = "V АКИП",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.Violet,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -425,7 +463,7 @@ namespace BSC_Stand.ViewModels
                 AKIPASeries = new LineSeries
                 {
                     Title = "A АКИП",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.BlueViolet,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -436,7 +474,7 @@ namespace BSC_Stand.ViewModels
                 AKIPWSeries = new LineSeries
                 {
                     Title = "W АКИП",
-                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} W\n{2:0.##} сек",
                     Color = OxyColors.DarkViolet,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -447,7 +485,7 @@ namespace BSC_Stand.ViewModels
                 TetronVSeries = new LineSeries
                 {
                     Title = "V Тетрон",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.LightGray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -458,7 +496,7 @@ namespace BSC_Stand.ViewModels
                 TetronASeries = new LineSeries
                 {
                     Title = "A Тетрон",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.Gray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -469,7 +507,7 @@ namespace BSC_Stand.ViewModels
                 TetronWSeries = new LineSeries
                 {
                     Title = "W Тетрон",
-                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} W\n{2:0.##} сек",
                     Color = OxyColors.DarkGray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -509,11 +547,21 @@ namespace BSC_Stand.ViewModels
             //Bus27 Plot Model
 
             Bus27PlotModel = new PlotModel();
+
+            Bus27PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis()
             {
-                V27Series = new LineSeries
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                MajorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+            });
+            Bus27PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis());
+
+            {
+                V27Series2 = new LineSeries
                 {
                     Title = "V 27",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
+                    
                     Color = OxyColors.Blue,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -521,10 +569,10 @@ namespace BSC_Stand.ViewModels
                     IsVisible = true
                 };
 
-                I27Series = new LineSeries
+                I27Series2 = new LineSeries
                 {
                     Title = "I 27",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.BlueViolet,
                     MarkerFill = OxyColors.DarkBlue,
                     MarkerType = MarkerType.Cross,
@@ -533,8 +581,8 @@ namespace BSC_Stand.ViewModels
 
                 };
 
-                Bus27PlotModel.Series.Add(V27Series);
-                Bus27PlotModel.Series.Add(I27Series);
+                Bus27PlotModel.Series.Add(V27Series2);
+                Bus27PlotModel.Series.Add(I27Series2);
 
                 Bus27PlotModel.Legends.Add(new OxyPlot.Legends.Legend()
                 {
@@ -547,11 +595,20 @@ namespace BSC_Stand.ViewModels
             //Bus100 Plot Model
 
             Bus100PlotModel = new PlotModel();
+
+            Bus100PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis()
             {
-                V100Series = new LineSeries
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                MajorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+            });
+            Bus100PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis());
+
+            {
+                V100Series3 = new LineSeries
                 {
                     Title = "V 100",
-                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    TrackerFormatString = "{0}\n{4:0} В\n{2:0} сек",
                     Color = OxyColors.DarkOrange,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -559,10 +616,10 @@ namespace BSC_Stand.ViewModels
                     IsVisible = true,
                 };
 
-                I100Series = new LineSeries
+                I100Series3 = new LineSeries
                 {
                     Title = "I 100",
-                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    TrackerFormatString = "{0}\n{4:0} A\n{2:0} сек",
                     Color = OxyColors.OrangeRed,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -570,8 +627,8 @@ namespace BSC_Stand.ViewModels
                     IsVisible = true,
                 };
 
-                Bus100PlotModel.Series.Add(V100Series);
-                Bus100PlotModel.Series.Add(I100Series);
+                Bus100PlotModel.Series.Add(V100Series3);
+                Bus100PlotModel.Series.Add(I100Series3);
 
                 Bus100PlotModel.Legends.Add(new OxyPlot.Legends.Legend()
                 {
@@ -602,6 +659,12 @@ namespace BSC_Stand.ViewModels
             TetronVSeries.Points.Clear();
             TetronASeries.Points.Clear();
             TetronWSeries.Points.Clear();
+
+            V27Series2.Points.Clear();
+            I27Series2.Points.Clear();
+
+            V100Series3.Points.Clear();
+            I100Series3.Points.Clear();
 
             GenericPlotModel.InvalidatePlot(true);
         }

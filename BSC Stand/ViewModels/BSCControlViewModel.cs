@@ -564,9 +564,8 @@ namespace BSC_Stand.ViewModels
             {
                 Debug.WriteLine(logTime);
                 _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
-                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
-                 _fileLoggerService.WriteLog(_readingParams);
-       
+                _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+                _fileLoggerService.WriteLog(_readingParams);
             }
 
         }

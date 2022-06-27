@@ -923,18 +923,42 @@ namespace BSC_Stand.ViewModels
         private void InitGraphSeries()
         {
             PlotModel1 = new PlotModel();
+
+            PlotModel1.Axes.Add(new OxyPlot.Axes.LinearAxis()
+            {
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                MajorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+            });
+            PlotModel1.Axes.Add(new OxyPlot.Axes.LinearAxis());
+
             PlotModel1.Series.Add(new LineSeries()
             {
 
             });
 
+
             PlotModel2 = new PlotModel();
+            PlotModel2.Axes.Add(new OxyPlot.Axes.LinearAxis()
+            {
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                MajorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+            });
+            PlotModel2.Axes.Add(new OxyPlot.Axes.LinearAxis());
             PlotModel2.Series.Add(new LineSeries()
             {
 
             });
 
             PlotModel3 = new PlotModel();
+            PlotModel3.Axes.Add(new OxyPlot.Axes.LinearAxis()
+            {
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                MajorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+            });
+            PlotModel3.Axes.Add(new OxyPlot.Axes.LinearAxis());
             PlotModel3.Series.Add(new LineSeries()
             {
 
@@ -946,7 +970,7 @@ namespace BSC_Stand.ViewModels
                 V27Series = new LineSeries
                 {
                     Title = "V 27",
-                    TrackerFormatString = "{4:0.###} В  \n {2:0.##} сек",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.Blue,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -959,7 +983,7 @@ namespace BSC_Stand.ViewModels
                 I27Series = new LineSeries
                 {
                     Title = "I 27",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.BlueViolet,
                     MarkerFill = OxyColors.DarkBlue,
                     MarkerType = MarkerType.Cross,
@@ -972,7 +996,7 @@ namespace BSC_Stand.ViewModels
                 V100Series = new LineSeries
                 {
                     Title = "V 100",
-                    TrackerFormatString = "{4:0} В {2:0} сек",
+                    TrackerFormatString = "{0}\n{4:0} В\n{2:0} сек",
                     Color = OxyColors.DarkOrange,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -985,7 +1009,7 @@ namespace BSC_Stand.ViewModels
                 I100Series = new LineSeries
                 {
                     Title = "I 100",
-                    TrackerFormatString = "{4:0} A {2:0} сек",
+                    TrackerFormatString = "{0}\n{4:0} A\n{2:0} сек",
                     Color = OxyColors.OrangeRed,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -997,7 +1021,7 @@ namespace BSC_Stand.ViewModels
                 TIBXASeries = new LineSeries
                 {
                     Title = "T°C  ИБХА",
-                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0} T°C\n{2:0} сек",
                     Color = OxyColors.Green,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1008,7 +1032,7 @@ namespace BSC_Stand.ViewModels
                 TBSCSeries = new LineSeries
                 {
                     Title = "T°C  ЭОБСК",
-                    TrackerFormatString = "{4:0} T°C  {2:0} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0} T°C\n{2:0} сек",
                     Color = OxyColors.ForestGreen,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1021,7 +1045,7 @@ namespace BSC_Stand.ViewModels
                 ITCVSeries = new LineSeries
                 {
                     Title = "V IT8516C+",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.Brown,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1032,7 +1056,7 @@ namespace BSC_Stand.ViewModels
                 ITCASeries = new LineSeries
                 {
                     Title = "A IT8516C+",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.RosyBrown,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1043,7 +1067,7 @@ namespace BSC_Stand.ViewModels
                 ITCWSeries = new LineSeries
                 {
                     Title = "W IT8516C+",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.SandyBrown,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1055,7 +1079,7 @@ namespace BSC_Stand.ViewModels
                 AKIPVSeries = new LineSeries
                 {
                     Title = "V АКИП",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.Violet,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1066,7 +1090,7 @@ namespace BSC_Stand.ViewModels
                 AKIPASeries = new LineSeries
                 {
                     Title = "A АКИП",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A {2:0.##} сек",
                     Color = OxyColors.BlueViolet,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1077,7 +1101,7 @@ namespace BSC_Stand.ViewModels
                 AKIPWSeries = new LineSeries
                 {
                     Title = "W АКИП",
-                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} W\n{2:0.##} сек",
                     Color = OxyColors.DarkViolet,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1088,7 +1112,7 @@ namespace BSC_Stand.ViewModels
                 TetronVSeries = new LineSeries
                 {
                     Title = "V Тетрон",
-                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} В\n{2:0.##} сек",
                     Color = OxyColors.LightGray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1099,7 +1123,7 @@ namespace BSC_Stand.ViewModels
                 TetronASeries = new LineSeries
                 {
                     Title = "A Тетрон",
-                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} A\n{2:0.##} сек",
                     Color = OxyColors.Gray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
@@ -1110,7 +1134,7 @@ namespace BSC_Stand.ViewModels
                 TetronWSeries = new LineSeries
                 {
                     Title = "W Тетрон",
-                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    TrackerFormatString = "{0}\n{4:0.###} W\n{2:0.##} сек",
                     Color = OxyColors.DarkGray,
                     MarkerFill = OxyColors.Red,
                     MarkerType = MarkerType.Cross,
