@@ -327,13 +327,6 @@ namespace BSC_Stand.ViewModels
             //Generic Plot Model
 
             GenericPlotModel = new PlotModel();
-
-            GenericPlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis()
-            {
-                Position = OxyPlot.Axes.AxisPosition.Bottom,
-                MajorStep = 1,
-                MajorGridlineStyle = LineStyle.Solid,
-            });
             GenericPlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis());
 
 
@@ -548,12 +541,6 @@ namespace BSC_Stand.ViewModels
 
             Bus27PlotModel = new PlotModel();
 
-            Bus27PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis()
-            {
-                Position = OxyPlot.Axes.AxisPosition.Bottom,
-                MajorStep = 1,
-                MajorGridlineStyle = LineStyle.Solid,
-            });
             Bus27PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis());
 
             {
@@ -596,12 +583,6 @@ namespace BSC_Stand.ViewModels
 
             Bus100PlotModel = new PlotModel();
 
-            Bus100PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis()
-            {
-                Position = OxyPlot.Axes.AxisPosition.Bottom,
-                MajorStep = 1,
-                MajorGridlineStyle = LineStyle.Solid,
-            });
             Bus100PlotModel.Axes.Add(new OxyPlot.Axes.LinearAxis());
 
             {

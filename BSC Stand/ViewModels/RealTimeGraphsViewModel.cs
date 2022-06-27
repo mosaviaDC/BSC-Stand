@@ -796,7 +796,7 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public async Task UpdateGraphsSeries(ReadingParams readingParams)
+        public async void  UpdateGraphsSeries(ReadingParams readingParams)
         {
             //Обновление серий
          await    Task.Factory.StartNew(() =>
@@ -924,12 +924,6 @@ namespace BSC_Stand.ViewModels
         {
             PlotModel1 = new PlotModel();
 
-            PlotModel1.Axes.Add(new OxyPlot.Axes.LinearAxis()
-            {
-                Position = OxyPlot.Axes.AxisPosition.Bottom,
-                MajorStep = 1,
-                MajorGridlineStyle = LineStyle.Solid,
-            });
             PlotModel1.Axes.Add(new OxyPlot.Axes.LinearAxis());
 
             PlotModel1.Series.Add(new LineSeries()
@@ -939,12 +933,6 @@ namespace BSC_Stand.ViewModels
 
 
             PlotModel2 = new PlotModel();
-            PlotModel2.Axes.Add(new OxyPlot.Axes.LinearAxis()
-            {
-                Position = OxyPlot.Axes.AxisPosition.Bottom,
-                MajorStep = 1,
-                MajorGridlineStyle = LineStyle.Solid,
-            });
             PlotModel2.Axes.Add(new OxyPlot.Axes.LinearAxis());
             PlotModel2.Series.Add(new LineSeries()
             {
@@ -952,12 +940,6 @@ namespace BSC_Stand.ViewModels
             });
 
             PlotModel3 = new PlotModel();
-            PlotModel3.Axes.Add(new OxyPlot.Axes.LinearAxis()
-            {
-                Position = OxyPlot.Axes.AxisPosition.Bottom,
-                MajorStep = 1,
-                MajorGridlineStyle = LineStyle.Solid,
-            });
             PlotModel3.Axes.Add(new OxyPlot.Axes.LinearAxis());
             PlotModel3.Series.Add(new LineSeries()
             {
