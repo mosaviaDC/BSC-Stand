@@ -37,10 +37,12 @@ namespace BSC_Stand.ViewModels
         public LineSeries AKIPVSeries { get; set; }
         public LineSeries AKIPASeries { get; set; }
         public LineSeries AKIPWSeries { get; set; }
+        public LineSeries TetronVSeries { get; set; }
+        public LineSeries TetronASeries { get; set; }
+        public LineSeries TetronWSeries { get; set; }
+
         public PlotModel GenericPlotModel { get; set; }
-
         public PlotModel Bus27PlotModel { get; set; }
-
         public PlotModel Bus100PlotModel { get; set; }
 
         public int _SelectedGraphIndex;
@@ -49,12 +51,6 @@ namespace BSC_Stand.ViewModels
             get => _SelectedGraphIndex;
             set => Set(ref _SelectedGraphIndex, value);
         }
-
-
-
-
-
-
 
         private string _Label;
 
@@ -71,26 +67,13 @@ namespace BSC_Stand.ViewModels
         }
 
 
-
-
-
-
-
-
-
-      public ICommand ImportLogFileCommand { get; set; }
-
-      public ICommand ExportFileToXLSXCommand { get; set; }
-      public ICommand ExportFileToPDFCommand { get; set; }
-
-      public ICommand ResetPlotScaleCommand { get; set; }
-
-      public ICommand ShowHideOxyPlotLegendCommand { get; set; }
-
+        public ICommand ImportLogFileCommand { get; set; }
+        public ICommand ExportFileToXLSXCommand { get; set; }
+        public ICommand ExportFileToPDFCommand { get; set; }
+        public ICommand ResetPlotScaleCommand { get; set; }
+        public ICommand ShowHideOxyPlotLegendCommand { get; set; }
         public ICommand ZoomInPlotCOommand { get; set; }
-
         public ICommand ZoomOutPlotCOommand { get; set; }
-
 
         public void ImportLogFileCommandExecute(object p)
         {
@@ -138,10 +121,9 @@ namespace BSC_Stand.ViewModels
         {
             string FileName = _fileDialogService.SavePDFFileDialog();
 
-            
-
             if(FileName != null)
             {
+
                 _fileExportService.ExportToPDF(FileName, GenericPlotModel, Bus27PlotModel, Bus100PlotModel, CurrentOpenedFileName, importResult);
 
             }
@@ -294,6 +276,10 @@ namespace BSC_Stand.ViewModels
 
                 TIBXASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.IBXATemperature));
                 TBSCSeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.BSCTemperature));
+
+                TetronASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.TetronVValue));
+                TetronASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.TetronAValue));
+                TetronASeries.Points.Add(new DataPoint(readingParams.ExpTime, readingParams.TetronWValue));
                 i++;
                 _statusBarViewModel.UpdateTaskProgress(i);
             }
@@ -457,8 +443,41 @@ namespace BSC_Stand.ViewModels
                     MarkerSize = 1,
                     IsVisible = true
                 };
-            }
 
+                TetronVSeries = new LineSeries
+                {
+                    Title = "V Тетрон",
+                    TrackerFormatString = "{4:0.###} В {2:0.##} сек {0}",
+                    Color = OxyColors.LightGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronASeries = new LineSeries
+                {
+                    Title = "A Тетрон",
+                    TrackerFormatString = "{4:0.###} A {2:0.##} сек {0}",
+                    Color = OxyColors.Gray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+                TetronWSeries = new LineSeries
+                {
+                    Title = "W Тетрон",
+                    TrackerFormatString = "{4:0.###} W {2:0.##} сек {0}",
+                    Color = OxyColors.DarkGray,
+                    MarkerFill = OxyColors.Red,
+                    MarkerType = MarkerType.Cross,
+                    MarkerSize = 1,
+                    IsVisible = true
+                };
+
+            }
 
             GenericPlotModel.Series.Add(TIBXASeries);
             GenericPlotModel.Series.Add(TBSCSeries);
@@ -476,7 +495,11 @@ namespace BSC_Stand.ViewModels
             GenericPlotModel.Series.Add(AKIPVSeries);
             GenericPlotModel.Series.Add(AKIPASeries);
             GenericPlotModel.Series.Add(AKIPWSeries);
-            
+
+            GenericPlotModel.Series.Add(TetronVSeries);
+            GenericPlotModel.Series.Add(TetronASeries);
+            GenericPlotModel.Series.Add(TetronWSeries);
+
             GenericPlotModel.Legends.Add(new OxyPlot.Legends.Legend()
             {
                 LegendTitle = "",
@@ -576,6 +599,9 @@ namespace BSC_Stand.ViewModels
             AKIPVSeries.Points.Clear();
             AKIPASeries.Points.Clear();
             AKIPWSeries.Points.Clear();
+            TetronVSeries.Points.Clear();
+            TetronASeries.Points.Clear();
+            TetronWSeries.Points.Clear();
 
             GenericPlotModel.InvalidatePlot(true);
         }

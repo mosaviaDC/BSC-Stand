@@ -34,13 +34,13 @@ namespace BSC_Stand.Services
 
 
             // Calculating Max and Min
-            float[] comparingParams = new float[12];
-            float[] maxParams = new float[12];
-            float[] minParams = new float[12];
-            float[] ExpTimeMax = new float[12];
-            float[] ExpTimeMin = new float[12];
-            long[] TimeStampMax = new long[12];
-            long[] TimeStampMin = new long[12];
+            float[] comparingParams = new float[15];
+            float[] maxParams = new float[15];
+            float[] minParams = new float[15];
+            float[] ExpTimeMax = new float[15];
+            float[] ExpTimeMin = new float[15];
+            long[] TimeStampMax = new long[15];
+            long[] TimeStampMin = new long[15];
 
             {
                 var param = readingParams[0];
@@ -61,6 +61,10 @@ namespace BSC_Stand.Services
                 maxParams[10] = param.IBXATemperature;
                 maxParams[11] = param.BSCTemperature;
 
+                maxParams[12] = param.TetronVValue;
+                maxParams[13] = param.TetronAValue;
+                maxParams[14] = param.TetronWValue;
+
                 minParams[0] = param.ITCAValue;
                 minParams[1] = param.ITCVValue;
                 minParams[2] = param.ITCWValue;
@@ -77,6 +81,10 @@ namespace BSC_Stand.Services
 
                 minParams[10] = param.IBXATemperature;
                 minParams[11] = param.BSCTemperature;
+
+                minParams[12] = param.TetronVValue;
+                minParams[13] = param.TetronAValue;
+                minParams[14] = param.TetronWValue;
 
                 for (int i = 0; i < 12; i++)
                 {
@@ -105,6 +113,10 @@ namespace BSC_Stand.Services
 
                 comparingParams[10] = param.IBXATemperature;
                 comparingParams[11] = param.BSCTemperature;
+
+                comparingParams[12] = param.TetronVValue;
+                comparingParams[13] = param.TetronAValue;
+                comparingParams[14] = param.TetronWValue;
 
                 for (int i = 0; i < 12; i++)
                 {
@@ -226,6 +238,7 @@ namespace BSC_Stand.Services
             font = new XFont("Consolas", 10, XFontStyle.BoldItalic, new XPdfFontOptions(PdfFontEncoding.Unicode));
             XPen pen = new XPen(XColors.Black, 1);
 
+
             string[] rowNames =
             {
                 "Сила тока ITC8156C+",
@@ -239,7 +252,10 @@ namespace BSC_Stand.Services
                 "Напряжение шины 100В",
                 "Сила тока на шине 100В",
                 "Температура ИБХА",
-                "Температура ЭО БСК"
+                "Температура ЭО БСК",
+                "Напряжение источника питания",
+                "Cила тока источника питания",
+                "Мощность источника питания"
             };
 
             string[] columnNames =
@@ -279,10 +295,10 @@ namespace BSC_Stand.Services
 
             bool[,] tablesOnPages =
             {
-                { true, false, false, false, false, false, false, true, true, false, false, false, false },
-                { true, false, false, false, false, false, false, false, false, true, true, false, false },
-                { false, false, false, false, false, false, false, false, false, false, false, false, false },
-                { true, true, true, true, true, true, true, true, true, true, true, true, true },
+                { true, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false },
+                { true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false },
+                { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false },
+                { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true },
             };
 
             int[] pagesToTables = { 0, 1, 3 };

@@ -32,48 +32,59 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
                             <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible}" ></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ИБХА"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
 
 
                             <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible}"></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ЭО БСК"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
 
 
 
                             <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible}" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
                         
-                        <CheckBox  Grid.Row="3" Grid.Column="0" IsChecked="{Binding I27SeriesVisible}" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 27В"></TextBlock>
+                            <CheckBox  Grid.Row="3" Grid.Column="0" IsChecked="{Binding I27SeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 27В"></TextBlock>
 
-                       <CheckBox  Grid.Row="4" Grid.Column="0" IsChecked="{Binding V100SeriesVisible}" ></CheckBox>
-                       <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 100В"></TextBlock>
+                            <CheckBox  Grid.Row="4" Grid.Column="0" IsChecked="{Binding V100SeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 100В"></TextBlock>
 
-                       <CheckBox  Grid.Row="5" Grid.Column="0" IsChecked="{Binding I100SeriesVisible}" ></CheckBox>
-                      <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 100В"></TextBlock>
+                            <CheckBox  Grid.Row="5" Grid.Column="0" IsChecked="{Binding I100SeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I шины 100В"></TextBlock>
 
-                       <CheckBox  Grid.Row="6" Grid.Column="0" IsChecked="{Binding ITCVSeriesVisible}" ></CheckBox>
-                       <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V ITC8516C+"></TextBlock>
+                            <CheckBox  Grid.Row="6" Grid.Column="0" IsChecked="{Binding ITCVSeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V ITC8516C+"></TextBlock>
                         
-                        <CheckBox  Grid.Row="7" Grid.Column="0" IsChecked="{Binding ITCASeriesVisible}" ></CheckBox>
+                            <CheckBox  Grid.Row="7" Grid.Column="0" IsChecked="{Binding ITCASeriesVisible}" ></CheckBox>
                             <TextBlock Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Text="A ITC8516C+"></TextBlock>
 
                             <CheckBox  Grid.Row="8" Grid.Column="0" IsChecked="{Binding ITCWSeriesVisible}" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W ITC81516C+"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W ITC81516C+"></TextBlock>
 
-                        <CheckBox  Grid.Row="9" Grid.Column="0" IsChecked="{Binding AKIPVSeriesVisible}" ></CheckBox>
-                         <TextBlock Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V АКИП"></TextBlock>
+                            <CheckBox  Grid.Row="9" Grid.Column="0" IsChecked="{Binding AKIPVSeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V АКИП"></TextBlock>
 
                             <CheckBox  Grid.Row="10" Grid.Column="0" IsChecked="{Binding AKIPASeriesVisible}" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="A АКИП"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="A АКИП"></TextBlock>
 
-                        <CheckBox  Grid.Row="11" Grid.Column="0" IsChecked="{Binding AKIPWSeriesVisible}" ></CheckBox>
-                        <TextBlock Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W АКИП"></TextBlock>
+                            <CheckBox  Grid.Row="11" Grid.Column="0" IsChecked="{Binding AKIPWSeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W АКИП"></TextBlock>
 
+                            <CheckBox  Grid.Row="12" Grid.Column="0" IsChecked="{Binding TetronVSeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V Тетрон"></TextBlock>
 
-                            </Grid>
+                            <CheckBox  Grid.Row="13" Grid.Column="0" IsChecked="{Binding TetronASeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I Тетрон"></TextBlock>
+
+                            <CheckBox  Grid.Row="14" Grid.Column="0" IsChecked="{Binding TetronWSeriesVisible}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W Тетрон"></TextBlock>
+
+                        </Grid>
 
                         </ScrollViewer>
 
@@ -103,13 +114,16 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible2}" ></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ИБХА"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
 
 
                             <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible2}"></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ЭО БСК"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
 
                             <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible2}" ></CheckBox>
                             <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
@@ -140,6 +154,14 @@
                             <CheckBox  Grid.Row="11" Grid.Column="0" IsChecked="{Binding AKIPWSeriesVisible2}" ></CheckBox>
                             <TextBlock Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W АКИП"></TextBlock>
 
+                            <CheckBox  Grid.Row="12" Grid.Column="0" IsChecked="{Binding TetronVSeriesVisible2}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V Тетрон"></TextBlock>
+
+                            <CheckBox  Grid.Row="13" Grid.Column="0" IsChecked="{Binding TetronASeriesVisible2}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I Тетрон"></TextBlock>
+
+                            <CheckBox  Grid.Row="14" Grid.Column="0" IsChecked="{Binding TetronWSeriesVisible2}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W Тетрон"></TextBlock>
 
                         </Grid>
 
@@ -173,13 +195,16 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible3}" ></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ИБХА"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
 
 
                             <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible3}"></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т℃  ЭО БСК"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
 
                             <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible3}" ></CheckBox>
                             <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
@@ -211,6 +236,14 @@
                             <CheckBox  Grid.Row="11" Grid.Column="0" IsChecked="{Binding ITCWSeriesVisible3}" ></CheckBox>
                             <TextBlock Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W IT851C6+"></TextBlock>
 
+                            <CheckBox  Grid.Row="12" Grid.Column="0" IsChecked="{Binding TetronVSeriesVisible3}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V Тетрон"></TextBlock>
+
+                            <CheckBox  Grid.Row="13" Grid.Column="0" IsChecked="{Binding TetronASeriesVisible3}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Center" Text="I Тетрон"></TextBlock>
+
+                            <CheckBox  Grid.Row="14" Grid.Column="0" IsChecked="{Binding TetronWSeriesVisible3}" ></CheckBox>
+                            <TextBlock Grid.Column="1" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Center" Text="W Тетрон"></TextBlock>
 
                         </Grid>
 
