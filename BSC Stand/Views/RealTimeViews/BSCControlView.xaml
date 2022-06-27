@@ -263,7 +263,7 @@
             <GridSplitter Width="3" VerticalAlignment="Stretch" ></GridSplitter>
 
         </Grid>
-
+            <GridSplitter VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="5"> </GridSplitter>
 
 
 

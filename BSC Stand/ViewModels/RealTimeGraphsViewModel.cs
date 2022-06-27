@@ -1403,7 +1403,13 @@ namespace BSC_Stand.ViewModels
 
         }
 
+        public void ResetAllAxes()
+        {
+            PlotModel1.ResetAllAxes();
+            PlotModel2.ResetAllAxes();
+            PlotModel3.ResetAllAxes();
 
+        }
 
 
 
