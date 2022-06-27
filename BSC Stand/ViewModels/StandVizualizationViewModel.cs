@@ -159,8 +159,7 @@ namespace BSC_Stand.ViewModels
 
         public void Update27BusPlotModel(ObservableCollection<ElectronicConfigMode> configurationModes,int repeatCount)
         {
-
-            for (int i = 0; i <repeatCount; i++)
+            for (int i = 0; i < repeatCount; i++)
             {
 
 
@@ -171,20 +170,20 @@ namespace BSC_Stand.ViewModels
                     {
                         s1.Points.Clear();
 
-                            s1.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
-                            s1.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
+                        s1.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
+                        s1.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
 
-                            foreach (var configurationMode in configurationModes)
+                        foreach (var configurationMode in configurationModes)
+                        {
+                            if (configurationModes.IndexOf(configurationMode) > 0)
                             {
-                                if (configurationModes.IndexOf(configurationMode) > 0)
-                                {
-                                    s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
-                                    s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
-                        
+                                s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                                s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
+
                             }
-                            }
-                        
-                       
+                        }
+
+
                     }
                     else
                     {
@@ -196,7 +195,7 @@ namespace BSC_Stand.ViewModels
                             {
                                 s1.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
                                 s1.Points.Add(new DataPoint(configurationMode.Duration + s1.Points.Last().X, configurationMode.MaxValue));
-                              
+
                             }
                         }
 
@@ -204,6 +203,7 @@ namespace BSC_Stand.ViewModels
                 }
             }
             Bus27PlotModel.InvalidatePlot(true);
+
 
         }
 
@@ -275,33 +275,27 @@ namespace BSC_Stand.ViewModels
             {
 
 
+
                 if (configurationModes.Count > 0)
                 {
                     if (i == 0)
                     {
                         s2.Points.Clear();
-                        if (configurationModes.Count == 1)
+
+                        s2.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
+                        s2.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
+
+                        foreach (var configurationMode in configurationModes)
                         {
-
-
-                        }
-
-                        {
-                            s2.Points.Add(new DataPoint(0, configurationModes[0].MaxValue));
-                            s2.Points.Add(new DataPoint(configurationModes[0].Duration, configurationModes[0].MaxValue));
-
-                            foreach (var configurationMode in configurationModes)
+                            if (configurationModes.IndexOf(configurationMode) > 0)
                             {
-                                if (configurationModes.IndexOf(configurationMode) > 0)
-                                {
-                                    s2.Points.Add(new DataPoint(s2.Points.Last().X, configurationMode.MaxValue));
-                                    s2.Points.Add(new DataPoint(configurationMode.Duration + s2.Points.Last().X, configurationMode.MaxValue));
-                                }
+                                s2.Points.Add(new DataPoint(s2.Points.Last().X, configurationMode.MaxValue));
+                                s2.Points.Add(new DataPoint(configurationMode.Duration + s2.Points.Last().X, configurationMode.MaxValue));
 
                             }
-
                         }
-                      
+
+
                     }
                     else
                     {
@@ -311,15 +305,14 @@ namespace BSC_Stand.ViewModels
                         {
                             if (configurationModes.IndexOf(configurationMode) > 0)
                             {
-                                s2.Points.Add(new DataPoint(s1.Points.Last().X, configurationMode.MaxValue));
+                                s2.Points.Add(new DataPoint(s2.Points.Last().X, configurationMode.MaxValue));
                                 s2.Points.Add(new DataPoint(configurationMode.Duration + s2.Points.Last().X, configurationMode.MaxValue));
 
                             }
                         }
+
                     }
                 }
-
-
             }
             Bus100PlotModel.InvalidatePlot(true);
 
@@ -345,6 +338,8 @@ namespace BSC_Stand.ViewModels
             if (numberOfVisiblePoints <= 3000)
             {
                 Bus27PlotModel.PlotView.InvalidatePlot(true);
+                Bus100PlotModel.PlotView.InvalidatePlot(true);
+                PowerSupplyPlotModel.PlotView.InvalidatePlot(true);
                
             }
 
