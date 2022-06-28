@@ -22,6 +22,7 @@ namespace BSC_Stand.ViewModels
 {
     internal class BSCControlViewModel:ViewModelBase
     {
+        private readonly PostAnalyzeViewModel _postAnalyzeViewModel;
         private readonly IFileLoggerService _fileLoggerService;
         private readonly ReadingParams _readingParams;
         private readonly RealTimeGraphsViewModel _realTimeGraphsViewModel;
@@ -161,6 +162,11 @@ namespace BSC_Stand.ViewModels
             return true;
 
         }
+
+
+
+
+
 
         public ICommand ResetPlotScaleCommand { get; set; }
 
@@ -437,8 +443,9 @@ namespace BSC_Stand.ViewModels
 
         #endregion
 
-        public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService, RealTimeGraphsViewModel realTimeGraphsViewModel, IFileLoggerService fileLoggerService)
+        public BSCControlViewModel(StandConfigurationViewModel standConfigurationViewModel, IModbusService modbusService, IUserDialogWindowService userDialogWindowService, RealTimeGraphsViewModel realTimeGraphsViewModel, IFileLoggerService fileLoggerService, PostAnalyzeViewModel postAnalyzeViewModel)
         {
+            _postAnalyzeViewModel = postAnalyzeViewModel;
             _fileLoggerService = fileLoggerService;
             _readingParams = new ReadingParams();
             _realTimeGraphsViewModel = realTimeGraphsViewModel;
@@ -447,7 +454,7 @@ namespace BSC_Stand.ViewModels
             V27ConfigurationModes = standConfigurationViewModel.Bus27ConfigurationModes;
             V100ConfigurationModes = standConfigurationViewModel.Bus100ConfigurationModes;
             PowerSupplyConfigurationModes = standConfigurationViewModel.PowerSupplyConfigurationModes;
-            _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService);
+            _realTimeStandControlService = new RealTimeStandControlService(this, _standConfigurationViewModel, _userDialogWindowService,postAnalyzeViewModel,fileLoggerService);
             _modBusService = modbusService;
    
             UpdateDataTimer = new DispatcherTimer();
@@ -504,7 +511,7 @@ namespace BSC_Stand.ViewModels
 
             //  DebugData();
             var logTime = DateTime.Now;
-            Debug.WriteLine($"{logTime} {DateTime.Now.Millisecond}");
+            // Debug.WriteLine($"{logTime} {DateTime.Now.Millisecond}");
             ExpTimeSpan = logTime - StartTime;
 
             ////Параметры эл нагрузок;
@@ -512,14 +519,14 @@ namespace BSC_Stand.ViewModels
 
            
             //// Параметры с преобразователей
-            Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
+            // Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
             Task.Factory.StartNew(() =>
             {
 
                 if (CanReadPortsEthernet)
                 {
                     CanReadPortsEthernet = false;
-                    Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
+                    // Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
                     _readingParams.V27Value = _modBusService.Read27BusVoltage().Result;
                     V27Value = _readingParams.V27Value.ToVoltageString();
 
@@ -559,7 +566,7 @@ namespace BSC_Stand.ViewModels
             });
 
 
-            Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
+            // Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
              Task.Factory.StartNew(() =>
             {
                 if (CanReadPortsSerial)
@@ -617,7 +624,7 @@ namespace BSC_Stand.ViewModels
 
             if (_realTimeStandControlService.GetExperimentStatus())
             {
-                //Debug.WriteLine(logTime);
+                //// Debug.WriteLine(logTime);
                 _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
                 _fileLoggerService.WriteLog(_readingParams);

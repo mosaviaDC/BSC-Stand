@@ -33,6 +33,11 @@ namespace BSC_Stand.Services
 
         }
 
+
+        public  string GetFilePath()
+        {
+            return this.FilePath;
+        }
         public void WriteLog(ReadingParams readingParams)
         {
           

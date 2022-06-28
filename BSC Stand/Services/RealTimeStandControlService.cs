@@ -52,7 +52,8 @@ namespace BSC_Stand.Services
         private ObservableCollection<ElectronicConfigMode> V100configurationModes;
 
         private ObservableCollection<PowerSupplyConfigMode> PowerSupplyConfigModes;
-
+        private readonly PostAnalyzeViewModel _postAnalyzeViewModel;
+        private readonly IFileLoggerService _fileLoggerService;
         private readonly IUserDialogWindowService _userDialogWindowService;
 
         private readonly StandConfigurationViewModel _standConfigurationViewModel;
@@ -72,8 +73,14 @@ namespace BSC_Stand.Services
         public delegate void PowerSupplyMsg(CommandParams commandParamse);
         public event PowerSupplyMsg _PowerSupplyMsgEvent;
 
-        public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel, IUserDialogWindowService userDialogWindowService)
+
+
+        public RealTimeStandControlService(BSCControlViewModel bSCControlViewModel, StandConfigurationViewModel standConfigurationViewModel, IUserDialogWindowService userDialogWindowService, PostAnalyzeViewModel postAnalyzeViewModel, IFileLoggerService fileLoggerService)
         {
+
+            
+            _postAnalyzeViewModel = postAnalyzeViewModel;
+            _fileLoggerService = fileLoggerService;
             _userDialogWindowService = userDialogWindowService;
             _standConfigurationViewModel = standConfigurationViewModel;
             isExpirementPepformed = false;
@@ -101,7 +108,6 @@ namespace BSC_Stand.Services
             _V27MsgEvent += bSCControlViewModel.SendV27ModBusCommand;
             _V100MsgEvent += bSCControlViewModel.SendV100ModBusCommand;
             _PowerSupplyMsgEvent += bSCControlViewModel.SendPowerSupplyCommand;
-   
           
 
         }
@@ -255,6 +261,8 @@ namespace BSC_Stand.Services
                 PowerSupplyConfigModes.Add(p);
             }
 
+            Debug.WriteLine($"{_fileLoggerService.GetFilePath()}");
+            _postAnalyzeViewModel.ImportLogFileCommandExecute(_fileLoggerService.GetFilePath());
         }
 
 
