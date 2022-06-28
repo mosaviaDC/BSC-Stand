@@ -38,7 +38,7 @@
             </Button>
 
             <Button Margin="10, 0, 0, 0" Command="{Binding OpenPeriodStandParamsControlWindowCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
-                <fa5:FontAwesome Foreground="White" FontSize="23" Icon="Solid_FileExport" x:Name="TestIcon" ToolTip="Импорт конфигурации Ctrl+O" />
+                <fa5:FontAwesome Foreground="White" FontSize="23" Icon="Solid_Wrench" x:Name="TestIcon" ToolTip="Импорт конфигурации Ctrl+O" />
             </Button>
 
             <TextBlock HorizontalAlignment="Center"  Margin="70,0,0,0"   Text="{Binding Title}" FontFamily="Times New Roman" FontSize="14" FontWeight="Normal" TextDecorations="{x:Null}" FontStyle="Normal"></TextBlock>

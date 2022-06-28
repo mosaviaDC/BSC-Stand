@@ -173,75 +173,65 @@
                 <RowDefinition Height="0.85*" ></RowDefinition>
                 <RowDefinition Height="0.15*"></RowDefinition>
             </Grid.RowDefinitions>
-            
-            <Menu Grid.Row="0" VerticalAlignment="Top" Height="50" Background="AliceBlue"  HorizontalAlignment="Stretch">
-                <fa5:FontAwesome  Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding StartExpirementCommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
 
-                </fa5:FontAwesome>
-                <fa5:FontAwesome  Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_StopCircle"   x:Name="StopExp" ToolTip="Остановка эксперимента" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding StopExpirementCommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top" Height="50" Background="AliceBlue"  HorizontalAlignment="Stretch">
 
-                </fa5:FontAwesome>
+                <Button Margin="10, 0, 0, 0" Command="{Binding StartExpirementCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                    <fa5:FontAwesome  Margin="0,0,0,0" Icon="Brands_Atlassian"  x:Name="StartExp" ToolTip="Начать эксперимент" FontSize="21.5">
 
+                    </fa5:FontAwesome>
+                </Button>
+                
 
+                
 
-                <fa5:FontAwesome  Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Ethernet" x:Name="CheckConnection" ToolTip="Принудительно проверить подключение" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding CheckConnectionStatusCommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
+                <Button Margin="10, 0, 0, 0" Command="{Binding StopExpirementCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                    <fa5:FontAwesome  Margin="0,0,0,0"  Icon="Solid_StopCircle"   x:Name="StopExp" ToolTip="Остановка эксперимента" FontSize="21.5">
 
-                </fa5:FontAwesome>
+                    </fa5:FontAwesome>
+                </Button>
 
-                <fa5:FontAwesome  Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}"  ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
+                
 
-                </fa5:FontAwesome>
-                <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding ShowHideOxyPlotLegendCommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
-                </fa5:FontAwesome>
+                <Button Margin="10, 0, 0, 0" Command="{Binding CheckConnectionStatusCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
 
-                <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Plus" x:Name="ZoomIn" ToolTip="Увеличить масштаб" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding ZoomInPlotCOommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
-                </fa5:FontAwesome>
+                    <fa5:FontAwesome  Margin="0,0,0,0"   Icon="Solid_Ethernet" x:Name="CheckConnection" ToolTip="Принудительно проверить подключение" FontSize="21.5">
 
-                <fa5:FontAwesome Margin="0,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_Minus" x:Name="ZoomOut" ToolTip="Уменьшить масштаб" FontSize="21.5">
-                    <behaviors:Interaction.Triggers>
-                        <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                            <behaviors:InvokeCommandAction Command="{Binding ZoomOutPlotCOommand}" ></behaviors:InvokeCommandAction>
-                        </behaviors:EventTrigger>
-                    </behaviors:Interaction.Triggers>
-                </fa5:FontAwesome>
+                    </fa5:FontAwesome>
+                </Button>
 
+                
 
+                <Button Margin="10, 0, 0, 0" Command="{Binding ResetPlotScaleCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                    <fa5:FontAwesome  Margin="0,0,0,0"   Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб" FontSize="21.5">
 
+                    </fa5:FontAwesome>
+                </Button>
 
+                
 
+                <Button Margin="10, 0, 0, 0" Command="{Binding ShowHideOxyPlotLegendCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                    <fa5:FontAwesome Margin="0,0,0,0"   Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика" FontSize="21.5">
+                    </fa5:FontAwesome>
+                </Button>
 
+              
 
-            </Menu>
+                <Button Margin="10, 0, 0, 0" Command="{Binding ZoomInPlotCOommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                    <fa5:FontAwesome Margin="0,0,0,0"   Icon="Solid_Plus" x:Name="ZoomIn" ToolTip="Увеличить масштаб" FontSize="21.5">
+                    </fa5:FontAwesome>
+                </Button>
+
+                
+
+                <Button Margin="10, 0, 0, 0" Command="{Binding ZoomOutPlotCOommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                    <fa5:FontAwesome Margin="0,0,0,0"  Icon="Solid_Minus" x:Name="ZoomOut" ToolTip="Уменьшить масштаб" FontSize="21.5">
+                    </fa5:FontAwesome>
+                </Button>
+
+                
+
+            </StackPanel>
 
             <local:RealTimeGraphView Margin="0,50,0,0"></local:RealTimeGraphView>
             <!--<TabControl Margin="0,35,0,0">

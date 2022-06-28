@@ -144,13 +144,13 @@ namespace BSC_Stand.ViewModels
     public bool CanExportFileToPDFCommandExecuted(object p)
         {
 
-            if (importResult!=null &&  importResult.Count > 0)
+            if (importResult!=null && importResult!.Count > 0)
             {
                 return true;
             }
             else
             {
-                _userDialogWindowService.ShowErrorMessage("Для экспорта отчета необходимо выбрать файл");
+                //_userDialogWindowService.ShowErrorMessage("Для экспорта отчета необходимо выбрать файл");
                 return false;
             }
         }

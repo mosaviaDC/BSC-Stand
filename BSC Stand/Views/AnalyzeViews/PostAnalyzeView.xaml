@@ -15,79 +15,48 @@
         <Grid.Resources>
             <SolidColorBrush x:Key="IconBrush" Color="DarkCyan"></SolidColorBrush>
         </Grid.Resources>
-        <Menu VerticalAlignment="Top" Height="50"       Background="AliceBlue">
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Regular_FileAlt"   ToolTip="Импорт записи экспиремента"   FontSize="21.5">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ImportLogFileCommand}"></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-                
-                
-                
-                
-                
-                
-            </fa5:FontAwesome>
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FileExcel"   ToolTip="Экспорт в XLSX" FontSize="21.5">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="50"       Background="AliceBlue">
 
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ExportFileToXLSXCommand}"></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
+            <Button Margin="10, 0, 0, 0" Command="{Binding ImportLogFileCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Icon="Regular_FileAlt"   ToolTip="Импорт записи экспиремента"   FontSize="21.5"/>
+            </Button>
 
+            <Button Margin="10, 0, 0, 0" Command="{Binding ExportFileToXLSXCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Margin="0,0,0,0" Icon="Solid_FileExcel"   ToolTip="Экспорт в XLSX" FontSize="21.5" />
+            </Button>
 
-            </fa5:FontAwesome>
-         
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_FilePdf"     ToolTip="Экспорт в PDF"    FontSize="21.5">
+            <Button Margin="10, 0, 0, 0" Command="{Binding ExportFileToPDFCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Margin="0,0,0,0" Icon="Solid_FilePdf"     ToolTip="Экспорт в PDF"    FontSize="21.5" />
+            </Button>
 
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ExportFileToPDFCommand}"></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-
-            </fa5:FontAwesome>
-
+            <Button Margin="10, 0, 0, 0" Command="{Binding ResetPlotScaleCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб" FontSize="21.5" />
+            </Button>
 
             
 
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_ArrowsAlt" x:Name="ResetPlot" ToolTip="Сбросить масштаб" FontSize="21.5">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ResetPlotScaleCommand}"  ></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
+            <Button Margin="10, 0, 0, 0" Command="{Binding ShowHideOxyPlotLegendCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика" FontSize="21.5" />
+            </Button>
+            
 
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Eye" x:Name="ShowHideLegend" ToolTip="Показать/скрыть легенду графика" FontSize="21.5">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ShowHideOxyPlotLegendCommand}" ></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
+            <Button Margin="10, 0, 0, 0" Command="{Binding ZoomInPlotCOommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Icon="Solid_Plus" x:Name="ZoomIn" ToolTip="Увеличить масштаб" FontSize="21.5" />
 
-            <fa5:FontAwesome Margin="0,0,0,0"  Foreground="{StaticResource IconBrush}" Icon="Solid_Plus" x:Name="ZoomIn" ToolTip="Увеличить масштаб" FontSize="21.5">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ZoomInPlotCOommand}" ></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
+            </Button>
+            
+            
 
-            <fa5:FontAwesome Margin="0,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_Minus" x:Name="ZoomOut" ToolTip="Уменьшить масштаб" FontSize="21.5">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding ZoomOutPlotCOommand}" ></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
+            <Button Margin="10, 0, 0, 0" Command="{Binding ZoomOutPlotCOommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Icon="Solid_Minus" x:Name="ZoomOut" ToolTip="Уменьшить масштаб" FontSize="21.5" />
+
+            </Button>
+            
+            
 
             <TextBlock MinWidth="150" Text="{Binding Label}" ></TextBlock>
 
-        </Menu>
+        </StackPanel>
 
         <TabControl SelectedIndex="{Binding SelectedGraphIndex,Mode=TwoWay}" Margin="0,50,0,0">
             <TabItem Header="Общий вид">
