@@ -526,44 +526,24 @@ namespace BSC_Stand.ViewModels
                 if (CanReadPortsEthernet)
                 {
                     CanReadPortsEthernet = false;
+
                     // Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
                     _readingParams.V27Value = _modBusService.Read27BusVoltage().Result;
-                    V27Value = _readingParams.V27Value.ToVoltageString();
-
                     _readingParams.I27Value = _modBusService.Read27BusAmperage().Result;
-                    I27Value = _readingParams.I27Value.ToAmperageString();
-
-
                     _readingParams.V100Value = _modBusService.Read100BusVoltage().Result;
-                    V100Value = _readingParams.V100Value.ToVoltageString();
-
                     _readingParams.I100Value = _modBusService.Read100BusAmperage().Result;
-                    I100Value = _readingParams.I100Value.ToAmperageString();
-
-
                     _readingParams.BSCTemperature = _modBusService.ReadDataFromOwenController().Result;
-                    BSCTemperature = _readingParams.BSCTemperature.ToBSCTemperatureString();
                     _readingParams.IBXATemperature = _modBusService.ReadDataFromOwenController().Result;
-                    IBXATemperature = _readingParams.IBXATemperature.ToIBXATemperatureString();
-                    //    _readingParams.ITCAValue = result[0];
-                    //    _readingParams.ITCVValue = result[1];
-                    //    _readingParams.ITCWValue = result[2];
-
-                    //    _readingParams.AKIPWValue = result[3];
-                    //    _readingParams.AKIPAValue = result[4];
-                    //    _readingParams.AKIPVValue = result[5];
-                    //}
-                    //result = _modBusService.ReadPowerSupplyParams().Result;
-                    //{
-                    //    TetronAValue = result[0].ToAmperageString();
-                    //    TetronVValue = result[1].ToVoltageString();
-                    //    TetronWValue = result[2].ToPowerString();
-                    //    _readingParams.TetronAValue = result[0];
-                    //    _readingParams.TetronVValue = result[1];
-                    //    _readingParams.TetronWValue = result[2];
-                    //}
+                    
                     CanReadPortsEthernet = true;
-                
+
+                    V27Value = _readingParams.V27Value.ToVoltageString();
+                    I27Value = _readingParams.I27Value.ToAmperageString();
+                    V100Value = _readingParams.V100Value.ToVoltageString();
+                    I100Value = _readingParams.I100Value.ToAmperageString();
+                    BSCTemperature = _readingParams.BSCTemperature.ToBSCTemperatureString();
+                    IBXATemperature = _readingParams.IBXATemperature.ToIBXATemperatureString();
+
                 }
             });
 
@@ -603,26 +583,6 @@ namespace BSC_Stand.ViewModels
                     CanReadPortsSerial = true;
                 }
             });
-
-
-            //_readingParams.I100Value = await _modBusService.Read100BusAmperage();
-            //I100Value = _readingParams.I100Value.ToAmperageString();
-
-            //_readingParams.IBXATemperature = 0;
-            //_readingParams.BSCTemperature = 0;
-            ////Параметры с Owen
-            //IBXATemperature = 0f.ToIBXATemperatureString();
-            //BSCTemperature = 0f.ToBSCTemperatureString();
-
-            // result =   await _modBusService.ReadPowerSupplyParams();
-            //{
-            //    TetronAValue = result[0].ToAmperageString();
-            //    TetronVValue = result[1].ToVoltageString();
-            //    TetronWValue = result[2].ToPowerString();
-            //    _readingParams.TetronAValue = result[0];
-            //    _readingParams.TetronVValue = result[1];
-            //    _readingParams.TetronWValue = result[2];
-            //}
 
             if (_realTimeStandControlService.GetExperimentStatus())
             {
