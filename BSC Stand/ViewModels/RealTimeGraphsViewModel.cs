@@ -75,9 +75,14 @@ namespace BSC_Stand.ViewModels
         public LineSeries TetronVSeries3 { get; set; }
         public LineSeries TetronASeries3 { get; set; }
         public LineSeries TetronWSeries3 { get; set; }
-
-        private LineSeries[,] series { get; set; }
         #endregion
+
+
+
+
+
+
+
 
         #region GraphVisible
         #region Series1
@@ -789,11 +794,21 @@ namespace BSC_Stand.ViewModels
             InitGraphSeries();
         }
 
+
+
         public async void  UpdateGraphsSeries(ReadingParams readingParams)
         {
             //Обновление серий
          await    Task.Factory.StartNew(() =>
             {
+
+                LineSeries[,] series =
+               {
+                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries, TetronVSeries, TetronASeries, TetronWSeries },
+                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
+                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3, TetronVSeries3, TetronASeries3, TetronWSeries3 }
+                };
+
                 float[] parameters = { readingParams.ITCVValue, readingParams.ITCAValue, readingParams.ITCWValue,
                                    readingParams.AKIPAValue, readingParams.AKIPVValue, readingParams.AKIPWValue,
                                    readingParams.V27Value, readingParams.I27Value,
@@ -1109,8 +1124,6 @@ namespace BSC_Stand.ViewModels
                     IsVisible = true
                 };
             }
-
-
             ///Series 2
             {
 
@@ -1469,13 +1482,6 @@ namespace BSC_Stand.ViewModels
 
             #endregion
 
-
-            LineSeries[,] series = {
-                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries, TetronVSeries, TetronASeries, TetronWSeries },
-                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
-                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3, TetronVSeries3, TetronASeries3, TetronWSeries3 }
-                };
-
             #region AddSerieToPlot
             //Add Series to Plot Models (Порядок в легенде меняется тут)
             {
@@ -1551,7 +1557,7 @@ namespace BSC_Stand.ViewModels
 
             #endregion
 
-            
+
 
 
 

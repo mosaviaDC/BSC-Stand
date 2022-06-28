@@ -72,8 +72,8 @@ namespace BSC_Stand.Services
             _statusBarViewModel.UpdateTaskProgress(12);
             try
             {
-               
-                ConnectStatus = InitICharger();
+
+                ConnectStatus = true;
             } 
             catch (Exception ex)
             {
@@ -285,35 +285,53 @@ namespace BSC_Stand.Services
         public async Task<Single> Read27BusVoltage()
         {
             ushort[] result = new ushort[2];
-            
             try
             {
-                result = await V27ModbusController.ReadInputRegistersAsync(1, 7, 2);
+                result =  V100ModbusController.ReadInputRegisters(1, 7, 2);
+                Debug.WriteLine($" V27 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                return -1;
-            }
 
+                Debug.WriteLine(ex.Message);
+            }
             return getValueByBytesResult(result);
         }
 
 
         public async Task<Single> Read27BusAmperage()
         {
+
             ushort[] result = new ushort[2];
             try
             {
-                result = await I27ModbusController.ReadInputRegistersAsync(1, 7, 2);
+                result =  V100ModbusController.ReadInputRegisters(1, 7, 2);
+                Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                return -1;
-            }
 
+                Debug.WriteLine(ex.Message);
+            }
             return getValueByBytesResult(result);
+
+            /*return await Task.Factory.StartNew(() =>
+            {
+                ushort[] result = new ushort[2];
+                try
+                {
+                    result = V100ModbusController.ReadInputRegisters(1, 7, 2);
+                    Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
+                }
+                catch (Exception ex)
+                {
+
+                    Debug.WriteLine(ex.Message);
+                }
+                return getValueByBytesResult(result);
+
+            });
+            */
 
         }
 
@@ -337,19 +355,20 @@ namespace BSC_Stand.Services
 
         public async Task<Single> Read100BusVoltage()
         {
-            ushort[] result = new ushort[2];
 
+            ushort[] result = new ushort[2];
             try
             {
-                result = await V100ModbusController.ReadInputRegistersAsync(1, 7, 2);
+                result =  V100ModbusController.ReadInputRegisters(1, 7, 2);
+                Debug.WriteLine($" V100 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                return -1;
-            }
 
+                Debug.WriteLine(ex.Message);
+            }
             return getValueByBytesResult(result);
+
 
         }
 
@@ -357,17 +376,16 @@ namespace BSC_Stand.Services
         public async Task<Single> Read100BusAmperage()
         {
             ushort[] result = new ushort[2];
-
             try
             {
-                result = await I100ModbusController.ReadInputRegistersAsync(1, 7, 2);
+                result = V100ModbusController.ReadInputRegisters(1, 7, 2);
+                Debug.WriteLine($" A100 {result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                return -1;
-            }
 
+                Debug.WriteLine(ex.Message);
+            }
             return getValueByBytesResult(result);
 
         }
@@ -378,7 +396,7 @@ namespace BSC_Stand.Services
         {
             if (V27ModbusController != null)
             {
-                V27ModbusController.Transport.ReadTimeout = 1500;
+                V27ModbusController.Transport.ReadTimeout = 750;
                 V27ModbusController.Transport.WriteTimeout = 1000;
                 Debug.WriteLine("*");
 
@@ -407,7 +425,7 @@ namespace BSC_Stand.Services
 
                 V27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
                 V27ModbusController.Transport.WriteTimeout = 1000;
-                V27ModbusController.Transport.ReadTimeout = 1500;
+                V27ModbusController.Transport.ReadTimeout = 750;
 
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -428,7 +446,7 @@ namespace BSC_Stand.Services
         {
             if (I27ModbusController != null)
             {
-                I27ModbusController.Transport.ReadTimeout = 1500;
+                I27ModbusController.Transport.ReadTimeout = 750;
                 I27ModbusController.Transport.WriteTimeout = 1000;
                 Debug.WriteLine("*");
 
@@ -457,7 +475,7 @@ namespace BSC_Stand.Services
 
                 I27ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
                 I27ModbusController.Transport.WriteTimeout = 1000;
-                I27ModbusController.Transport.ReadTimeout = 1500;
+                I27ModbusController.Transport.ReadTimeout = 750;
 
                 if (I27ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -512,7 +530,7 @@ namespace BSC_Stand.Services
         {
             if (V100ModbusController != null)
             {
-                V100ModbusController.Transport.ReadTimeout = 1500;
+                V100ModbusController.Transport.ReadTimeout = 750;
                 V100ModbusController.Transport.WriteTimeout = 1000;
                
 
@@ -540,7 +558,7 @@ namespace BSC_Stand.Services
 
                 V100ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
                 V100ModbusController.Transport.WriteTimeout = 1000;
-                V100ModbusController.Transport.ReadTimeout = 1500;
+                V100ModbusController.Transport.ReadTimeout = 750;
 
                 if (V100ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -562,9 +580,9 @@ namespace BSC_Stand.Services
         {
             if (I100ModbusController != null)
             {
-                I100ModbusController.Transport.ReadTimeout = 1500;
+                I100ModbusController.Transport.ReadTimeout = 750;
                 I100ModbusController.Transport.WriteTimeout = 1000;
-                Debug.WriteLine("*");
+                
 
 
                 if (I100ModbusController.ReadInputRegisters(1, 7, 2) != null)
@@ -590,8 +608,8 @@ namespace BSC_Stand.Services
                 serialPortAdapter = new SerialPortAdapter(I100SerialPort);
 
                 I100ModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
-                I100ModbusController.Transport.WriteTimeout = 1000;
-                I100ModbusController.Transport.ReadTimeout = 1500;
+                I100ModbusController.Transport.WriteTimeout = 500;
+                I100ModbusController.Transport.ReadTimeout = 750;
 
                 if (I100ModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -610,9 +628,9 @@ namespace BSC_Stand.Services
         {
             if (PowerSupplyModbusController != null)
             {
-                PowerSupplyModbusController.Transport.ReadTimeout = 1500;
-                PowerSupplyModbusController.Transport.WriteTimeout = 1000;
-                Debug.WriteLine("*");
+                PowerSupplyModbusController.Transport.ReadTimeout = 750;
+                PowerSupplyModbusController.Transport.WriteTimeout = 500;
+            
 
 
                 if (PowerSupplyModbusController.ReadInputRegisters(1, 7, 2) != null)
@@ -638,8 +656,8 @@ namespace BSC_Stand.Services
                 serialPortAdapter = new SerialPortAdapter(PowerSupplySerialPort);
 
                 PowerSupplyModbusController = _modbusFactory.CreateRtuMaster(serialPortAdapter);
-                PowerSupplyModbusController.Transport.WriteTimeout = 1000;
-                PowerSupplyModbusController.Transport.ReadTimeout = 1500;
+                PowerSupplyModbusController.Transport.WriteTimeout = 500;
+                PowerSupplyModbusController.Transport.ReadTimeout = 750;
 
                 if (PowerSupplyModbusController.ReadInputRegisters(1, 7, 2) != null)
                 {
@@ -675,7 +693,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM6",
+                PortName = "COM3",
                 StopBits = StopBits.One
              
 
@@ -707,7 +725,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM7",
+                PortName = "COM4",
                 StopBits = StopBits.One
 
             };

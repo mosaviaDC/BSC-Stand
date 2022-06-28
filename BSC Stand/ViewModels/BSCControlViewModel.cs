@@ -448,7 +448,7 @@ namespace BSC_Stand.ViewModels
             _modBusService = modbusService;
    
             UpdateDataTimer = new DispatcherTimer();
-            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(250);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
             
@@ -499,74 +499,99 @@ namespace BSC_Stand.ViewModels
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
 
-          //  DebugData();
+            //  DebugData();
             var logTime = DateTime.Now;
-
+            Debug.WriteLine($"{logTime} {DateTime.Now.Millisecond}");
             ExpTimeSpan = logTime - StartTime;
 
-            //Параметры эл нагрузок;
+            ////Параметры эл нагрузок;
             _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
 
-            var result = await _modBusService.ReadElectronicLoadParams();
-            if (result != null)
+           
+            //// Параметры с преобразователей
+            Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
+         await   Task.Factory.StartNew(() =>
             {
-
-                ITCAValue = result[0].ToAmperageString();
-                ITCVValue = result[1].ToVoltageString();
-                ITCWValue = result[2].ToPowerString();
-
-                AKIPWValue = result[3].ToPowerString();
-                AKIPAValue = result[4].ToAmperageString();
-                AKIPVValue = result[5].ToVoltageString();
-
-                _readingParams.ITCAValue = result[0];
-                _readingParams.ITCVValue = result[1];
-                _readingParams.ITCWValue = result[2];
-
-                _readingParams.AKIPWValue = result[3];
-                _readingParams.AKIPAValue = result[4];
-                _readingParams.AKIPVValue = result[5];
-            }
-            // Параметры с преобразователей
-
-            _readingParams.V27Value = await _modBusService.Read27BusVoltage();
-            V27Value = _readingParams.V27Value.ToVoltageString();
+                Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
+                _readingParams.V27Value =  _modBusService.Read27BusVoltage().Result;
+                V27Value = _readingParams.V27Value.ToVoltageString();
 
 
-            _readingParams.I27Value = await _modBusService.Read27BusAmperage();
-            I27Value = _readingParams.I27Value.ToAmperageString();
+                _readingParams.I27Value =  _modBusService.Read27BusAmperage().Result;
+                I27Value = _readingParams.I27Value.ToAmperageString();
 
 
-            _readingParams.V100Value = await _modBusService.Read100BusVoltage();
-            V100Value = _readingParams.V100Value.ToVoltageString();
+                _readingParams.V100Value =  _modBusService.Read100BusVoltage().Result;
+                V100Value = _readingParams.V100Value.ToVoltageString();
+
+                _readingParams.I100Value =  _modBusService.Read100BusAmperage().Result;
+                I100Value = _readingParams.I100Value.ToAmperageString();
 
 
-            _readingParams.I100Value = await _modBusService.Read100BusAmperage();
-            I100Value = _readingParams.I100Value.ToAmperageString();
+               
 
-            _readingParams.IBXATemperature = 0;
-            _readingParams.BSCTemperature = 0;
-            //Параметры с Owen
-            IBXATemperature = 0f.ToIBXATemperatureString();
-            BSCTemperature = 0f.ToBSCTemperatureString();
+                //var result =  _modBusService.ReadElectronicLoadParams().Result;
+                //if (result != null)
+                //{
 
-             result =   await _modBusService.ReadPowerSupplyParams();
-            {
-                TetronAValue = result[0].ToAmperageString();
-                TetronVValue = result[1].ToVoltageString();
-                TetronWValue = result[2].ToPowerString();
-                _readingParams.TetronAValue = result[0];
-                _readingParams.TetronVValue = result[1];
-                _readingParams.TetronWValue = result[2];
-            }
+                //    ITCAValue = result[0].ToAmperageString();
+                //    ITCVValue = result[1].ToVoltageString();
+                //    ITCWValue = result[2].ToPowerString();
+
+                //    AKIPWValue = result[3].ToPowerString();
+                //    AKIPAValue = result[4].ToAmperageString();
+                //    AKIPVValue = result[5].ToVoltageString();
+
+                //    _readingParams.ITCAValue = result[0];
+                //    _readingParams.ITCVValue = result[1];
+                //    _readingParams.ITCWValue = result[2];
+
+                //    _readingParams.AKIPWValue = result[3];
+                //    _readingParams.AKIPAValue = result[4];
+                //    _readingParams.AKIPVValue = result[5];
+                //}
+                //result = _modBusService.ReadPowerSupplyParams().Result;
+                //{
+                //    TetronAValue = result[0].ToAmperageString();
+                //    TetronVValue = result[1].ToVoltageString();
+                //    TetronWValue = result[2].ToPowerString();
+                //    _readingParams.TetronAValue = result[0];
+                //    _readingParams.TetronVValue = result[1];
+                //    _readingParams.TetronWValue = result[2];
+                //}
+
+
+            });
+            Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
+
+
+
+            //_readingParams.I100Value = await _modBusService.Read100BusAmperage();
+            //I100Value = _readingParams.I100Value.ToAmperageString();
+
+            //_readingParams.IBXATemperature = 0;
+            //_readingParams.BSCTemperature = 0;
+            ////Параметры с Owen
+            //IBXATemperature = 0f.ToIBXATemperatureString();
+            //BSCTemperature = 0f.ToBSCTemperatureString();
+
+            // result =   await _modBusService.ReadPowerSupplyParams();
+            //{
+            //    TetronAValue = result[0].ToAmperageString();
+            //    TetronVValue = result[1].ToVoltageString();
+            //    TetronWValue = result[2].ToPowerString();
+            //    _readingParams.TetronAValue = result[0];
+            //    _readingParams.TetronVValue = result[1];
+            //    _readingParams.TetronWValue = result[2];
+            //}
 
             if (_realTimeStandControlService.GetExperimentStatus())
             {
-                Debug.WriteLine(logTime);
+                //Debug.WriteLine(logTime);
                 _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
-                  _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
-                 _fileLoggerService.WriteLog(_readingParams);
-       
+                _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
+                _fileLoggerService.WriteLog(_readingParams);
+
             }
 
         }
@@ -612,11 +637,11 @@ namespace BSC_Stand.ViewModels
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {
                 WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Info);
-                _modBusService.SetIchargerValue("001");
+            //    _modBusService.SetIchargerValue("001");
             }
             else
             {
-                _modBusService.SetIchargerValue("0100");
+           //     _modBusService.SetIchargerValue("0100");
             }
         }
 
