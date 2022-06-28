@@ -520,7 +520,7 @@ namespace BSC_Stand.ViewModels
            
             //// Параметры с преобразователей
             // Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
-            Task.Factory.StartNew(() =>
+            _ = Task.Run(() =>
             {
 
                 if (CanReadPortsEthernet)
@@ -569,7 +569,7 @@ namespace BSC_Stand.ViewModels
 
 
             // Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
-             Task.Factory.StartNew(() =>
+             _ = Task.Run(() =>
             {
                 if (CanReadPortsSerial)
                 {
