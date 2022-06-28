@@ -510,12 +510,11 @@ namespace BSC_Stand.ViewModels
            
             //// Параметры с преобразователей
             Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
-         await   Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
                 _readingParams.V27Value =  _modBusService.Read27BusVoltage().Result;
                 V27Value = _readingParams.V27Value.ToVoltageString();
-
 
                 _readingParams.I27Value =  _modBusService.Read27BusAmperage().Result;
                 I27Value = _readingParams.I27Value.ToAmperageString();
@@ -526,21 +525,28 @@ namespace BSC_Stand.ViewModels
 
                 _readingParams.I100Value =  _modBusService.Read100BusAmperage().Result;
                 I100Value = _readingParams.I100Value.ToAmperageString();
+                
+                var result =  _modBusService.ReadITCSerialPort().Result;
+                if (result != null)
+                {
 
+                    ITCAValue = result[0].ToAmperageString();
+                    ITCVValue = result[1].ToVoltageString();
+                    ITCWValue = result[2].ToPowerString();
 
-               
+                }
 
-                //var result =  _modBusService.ReadElectronicLoadParams().Result;
-                //if (result != null)
-                //{
+                result = _modBusService.ReadAkipSerialPort().Result;
 
-                //    ITCAValue = result[0].ToAmperageString();
-                //    ITCVValue = result[1].ToVoltageString();
-                //    ITCWValue = result[2].ToPowerString();
+                if (result != null)
+                {
 
-                //    AKIPWValue = result[3].ToPowerString();
-                //    AKIPAValue = result[4].ToAmperageString();
-                //    AKIPVValue = result[5].ToVoltageString();
+                    AKIPWValue = result[0].ToPowerString();
+                    AKIPAValue = result[1].ToAmperageString();
+                    AKIPVValue = result[2].ToVoltageString();
+
+                }
+                
 
                 //    _readingParams.ITCAValue = result[0];
                 //    _readingParams.ITCVValue = result[1];

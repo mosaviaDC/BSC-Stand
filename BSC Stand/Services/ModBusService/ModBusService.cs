@@ -774,65 +774,77 @@ namespace BSC_Stand.Services
                 Debug.WriteLine(ex.Message);
             }
         }
-        public async Task<float[]> ReadElectronicLoadParams()
+
+        public async Task<float[]> ReadITCSerialPort()
         {
+            float[] results = new float[3];
+            try
+            {
+                lock (this)
+                {
+                    //TODO еще раз проверить параметры
 
-            return await Task.Run(() =>
-             {
-                 lock (this)
-                 {
-                     float[] results = new float[6];
-                     try
-                     {
-                         //TODO еще раз проверить параметры
+                    ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                    results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);
 
+                    ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                    results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture);
 
+                    ITCSerialPort.WriteLine("MEASURE:POWER?");
+                    results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture);
 
-                         ITCSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                         results[0] = Single.Parse(ITCSerialPort.ReadLine(), culture);
-
-                         ITCSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                         results[1] = Single.Parse(ITCSerialPort.ReadLine(), culture);
-
-                         ITCSerialPort.WriteLine("MEASURE:POWER?");
-                         results[2] = Single.Parse(ITCSerialPort.ReadLine(), culture);
+                }
 
 
-                         AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
-                         results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture);  //3
+            }
+            catch (Exception ex)
+            {
 
-                         AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
-                         results[4] = Single.Parse(AkipSerialPort.ReadLine(), culture); //4
+                Debug.WriteLine(ex.Message);
 
-                         AkipSerialPort.WriteLine("MEASURE:POWER?");
-                         results[5] = Single.Parse(AkipSerialPort.ReadLine(), culture); //5
-                        
-                  
+                results[0] = -1;
+                results[1] = -1;
+                results[2] = -1;
+
+            }
+
+            return results;
 
 
-                     }
-                     catch (Exception ex)
-                     {
+        }
+        public async Task<float[]> ReadAkipSerialPort()
+        {
+            float[] results = new float[3];
+            try
+            {
+                lock (this)
+                {
+                    //TODO еще раз проверить параметры
 
-                         Debug.WriteLine(ex.Message);
+                    AkipSerialPort.WriteLine("MEASURE:VOLTAGE?");
+                    results[0] = Single.Parse(AkipSerialPort.ReadLine(), culture);  //3
 
-                         results[0] = -1;
-                         results[1] = -1;
-                         results[2] = -1;
-                         results[3] = -1;
-                         results[4] = -1;
-                         results[5] = -1;
+                    AkipSerialPort.WriteLine($@"MEASURE:CURRENT?");
+                    results[1] = Single.Parse(AkipSerialPort.ReadLine(), culture); //4
 
-                     }
+                    AkipSerialPort.WriteLine("MEASURE:POWER?");
+                    results[2] = Single.Parse(AkipSerialPort.ReadLine(), culture); //5
 
-                     return results;
-                 }
-             });
-        
-           
+                }
 
-           
+            }
+            catch (Exception ex)
+            {
 
+                Debug.WriteLine(ex.Message);
+
+                results[0] = -1;
+                results[1] = -1;
+                results[2] = -1;
+
+            }
+
+            return results;
 
 
         }
