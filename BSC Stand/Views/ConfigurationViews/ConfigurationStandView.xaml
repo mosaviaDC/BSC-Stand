@@ -80,6 +80,11 @@
      
         <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
             <StackPanel>
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="MouseMove" >
+                        <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}"></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
                 <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
                 <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <TreeViewItem Header="Режимы" IsExpanded="True">
@@ -393,7 +398,7 @@
                                 <DataGrid.Style>
                                     <Style TargetType="DataGrid">
                                         <Style.Triggers>
-                                            
+
 
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Источник питания">
                                                 <Setter Property="ItemsSource"  Value="{Binding Source={StaticResource PowerSupplyConfigurationModes}}" ></Setter>
@@ -407,12 +412,12 @@
                                                 <Setter Property="Visibility" Value="Hidden"></Setter>
 
                                             </DataTrigger>
-                                           
+
                                         </Style.Triggers>
                                     </Style>
                                 </DataGrid.Style>
                                 <behaviors:Interaction.Triggers>
-                                    <behaviors:EventTrigger EventName="QueryCursor" >
+                                    <behaviors:EventTrigger EventName="MouseMove" >
                                         <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}" CommandParameter="{Binding CurrentItem  ,ElementName=DataGrid}"></behaviors:InvokeCommandAction>
                                     </behaviors:EventTrigger>
                                     <behaviors:EventTrigger EventName="CellEditEnding">
@@ -455,14 +460,19 @@
 
 
                         <Grid MinWidth="300">
-                            <TextBlock Width="150" Text="Количество повторений" HorizontalAlignment="Left" ></TextBlock>
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseMove" >
+                                        <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}"></behaviors:InvokeCommandAction>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            <TextBlock Width="150" Text="Количество повторений" HorizontalAlignment="Left"></TextBlock>
                             <TextBox Width="20">
+
+                                
+
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
                                         <Style.Triggers>
-                                            
-
-
                                             <DataTrigger Binding="{Binding  SelectedItem.ModuleName,ElementName=StandConfigModules}" Value="Нагрузка электронная (шина 27В)">
                                                 <Setter Property="Text"  Value="{Binding Path= V27BusCyclogramRepeatCount}"></Setter>
                                             </DataTrigger>
