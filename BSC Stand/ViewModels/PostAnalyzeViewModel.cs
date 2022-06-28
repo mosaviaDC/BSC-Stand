@@ -83,21 +83,14 @@ namespace BSC_Stand.ViewModels
 
         public void ImportLogFileCommandExecute(object p)
         {
-            try
-            {
-
-                CurrentOpenedFileName = (string)p;
-
-            }
-            catch
+            if (p is null)
             {
                 CurrentOpenedFileName = _fileDialogService.OpenCSVFileDialog();
             }
-
-         
-
-          
-          
+            else
+            {
+                CurrentOpenedFileName = (string) p;
+            }
 
             if (CurrentOpenedFileName != null)
             {
