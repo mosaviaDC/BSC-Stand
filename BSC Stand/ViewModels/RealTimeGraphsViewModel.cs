@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using BSC_Stand.Models;
 using OxyPlot;
 using OxyPlot.Series;
@@ -75,8 +77,11 @@ namespace BSC_Stand.ViewModels
         public LineSeries TetronVSeries3 { get; set; }
         public LineSeries TetronASeries3 { get; set; }
         public LineSeries TetronWSeries3 { get; set; }
+
+        private LineSeries[,] series = new LineSeries[3,15];
         #endregion
 
+        private DispatcherTimer UpdateDataTimer;
 
 
 
@@ -790,24 +795,33 @@ namespace BSC_Stand.ViewModels
         #endregion
         public RealTimeGraphsViewModel()
         {
-          
+
+            UpdateDataTimer = new DispatcherTimer();
+            UpdateDataTimer.Tick += UpdateDataTimer_Tick;
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(100);
+            UpdateDataTimer.Start();
             InitGraphSeries();
         }
 
-
+        private  async void UpdateDataTimer_Tick(object? sender, EventArgs e)
+        {
+          PlotModel1.InvalidatePlot(true);
+            PlotModel2.InvalidatePlot(true);
+            PlotModel3.InvalidatePlot(true);
+        }
 
         public async void  UpdateGraphsSeries(ReadingParams readingParams)
         {
             //Обновление серий
          await    Task.Factory.StartNew(() =>
             {
-
-                LineSeries[,] series =
-               {
+                LineSeries[,] series = new LineSeries[3, 15]
+          {
                     { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries, TetronVSeries, TetronASeries, TetronWSeries },
                     { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
                     { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3, TetronVSeries3, TetronASeries3, TetronWSeries3 }
-                };
+              };
+
 
                 float[] parameters = { readingParams.ITCVValue, readingParams.ITCAValue, readingParams.ITCWValue,
                                    readingParams.AKIPAValue, readingParams.AKIPVValue, readingParams.AKIPWValue,
@@ -821,7 +835,9 @@ namespace BSC_Stand.ViewModels
                     int j = 0;
                     foreach (var param in parameters)
                     {
+
                         series[i, j].Points.Add(new DataPoint(readingParams.ExpTime, parameters[j]));
+                       
                         j++;
                     }
                 }
@@ -915,9 +931,7 @@ namespace BSC_Stand.ViewModels
 
 
 
-            PlotModel2.InvalidatePlot(true);
-            PlotModel1.InvalidatePlot(true);
-            PlotModel3.InvalidatePlot(true);
+            
 
         }
         private void InitGraphSeries()
@@ -1631,8 +1645,9 @@ namespace BSC_Stand.ViewModels
             TetronVSeriesVisible3 = true;
             TetronASeriesVisible3 = true;
             TetronWSeriesVisible3 = true;
+          
 
-        }
+            }
 
 
 
@@ -1685,6 +1700,8 @@ namespace BSC_Stand.ViewModels
             TetronVSeries3.Points.Clear();
             TetronASeries3.Points.Clear();
             TetronWSeries3.Points.Clear();
+
+           
 
 
 

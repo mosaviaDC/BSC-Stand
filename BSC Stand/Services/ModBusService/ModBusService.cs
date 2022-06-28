@@ -693,7 +693,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM4",
                 StopBits = StopBits.One
              
 
@@ -725,7 +725,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM4",
+                PortName = "COM3",
                 StopBits = StopBits.One
 
             };

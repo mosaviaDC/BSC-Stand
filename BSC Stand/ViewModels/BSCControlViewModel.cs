@@ -30,7 +30,10 @@ namespace BSC_Stand.ViewModels
         private StandConfigurationViewModel _standConfigurationViewModel;
         private RealTimeStandControlService _realTimeStandControlService;
         private IModbusService _modBusService;
-        private static DispatcherTimer UpdateDataTimer;
+        private  DispatcherTimer UpdateDataTimer;
+
+        private bool CanReadPortsEthernet = true;
+        private bool CanReadPortsSerial = true;
         #endregion
 
         #region Commands
@@ -448,7 +451,7 @@ namespace BSC_Stand.ViewModels
             _modBusService = modbusService;
    
             UpdateDataTimer = new DispatcherTimer();
-            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(250);
+            UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(50);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
             
@@ -510,66 +513,87 @@ namespace BSC_Stand.ViewModels
            
             //// Параметры с преобразователей
             Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
-            await Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
             {
-                Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
-                _readingParams.V27Value =  _modBusService.Read27BusVoltage().Result;
-                V27Value = _readingParams.V27Value.ToVoltageString();
 
-                _readingParams.I27Value =  _modBusService.Read27BusAmperage().Result;
-                I27Value = _readingParams.I27Value.ToAmperageString();
-
-
-                _readingParams.V100Value =  _modBusService.Read100BusVoltage().Result;
-                V100Value = _readingParams.V100Value.ToVoltageString();
-
-                _readingParams.I100Value =  _modBusService.Read100BusAmperage().Result;
-                I100Value = _readingParams.I100Value.ToAmperageString();
-                
-                var result =  _modBusService.ReadITCSerialPort().Result;
-                if (result != null)
+                if (CanReadPortsEthernet)
                 {
+                    CanReadPortsEthernet = false;
+                    Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
+                    _readingParams.V27Value = _modBusService.Read27BusVoltage().Result;
+                    V27Value = _readingParams.V27Value.ToVoltageString();
 
-                    ITCAValue = result[0].ToAmperageString();
-                    ITCVValue = result[1].ToVoltageString();
-                    ITCWValue = result[2].ToPowerString();
+                    _readingParams.I27Value = _modBusService.Read27BusAmperage().Result;
+                    I27Value = _readingParams.I27Value.ToAmperageString();
 
-                }
 
-                result = _modBusService.ReadAkipSerialPort().Result;
+                    _readingParams.V100Value = _modBusService.Read100BusVoltage().Result;
+                    V100Value = _readingParams.V100Value.ToVoltageString();
 
-                if (result != null)
-                {
+                    _readingParams.I100Value = _modBusService.Read100BusAmperage().Result;
+                    I100Value = _readingParams.I100Value.ToAmperageString();
 
-                    AKIPWValue = result[0].ToPowerString();
-                    AKIPAValue = result[1].ToAmperageString();
-                    AKIPVValue = result[2].ToVoltageString();
 
-                }
+
+
+                    //    _readingParams.ITCAValue = result[0];
+                    //    _readingParams.ITCVValue = result[1];
+                    //    _readingParams.ITCWValue = result[2];
+
+                    //    _readingParams.AKIPWValue = result[3];
+                    //    _readingParams.AKIPAValue = result[4];
+                    //    _readingParams.AKIPVValue = result[5];
+                    //}
+                    //result = _modBusService.ReadPowerSupplyParams().Result;
+                    //{
+                    //    TetronAValue = result[0].ToAmperageString();
+                    //    TetronVValue = result[1].ToVoltageString();
+                    //    TetronWValue = result[2].ToPowerString();
+                    //    _readingParams.TetronAValue = result[0];
+                    //    _readingParams.TetronVValue = result[1];
+                    //    _readingParams.TetronWValue = result[2];
+                    //}
+                    CanReadPortsEthernet = true;
                 
-
-                //    _readingParams.ITCAValue = result[0];
-                //    _readingParams.ITCVValue = result[1];
-                //    _readingParams.ITCWValue = result[2];
-
-                //    _readingParams.AKIPWValue = result[3];
-                //    _readingParams.AKIPAValue = result[4];
-                //    _readingParams.AKIPVValue = result[5];
-                //}
-                //result = _modBusService.ReadPowerSupplyParams().Result;
-                //{
-                //    TetronAValue = result[0].ToAmperageString();
-                //    TetronVValue = result[1].ToVoltageString();
-                //    TetronWValue = result[2].ToPowerString();
-                //    _readingParams.TetronAValue = result[0];
-                //    _readingParams.TetronVValue = result[1];
-                //    _readingParams.TetronWValue = result[2];
-                //}
-
-
+                }
             });
-            Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
 
+
+            Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
+             Task.Factory.StartNew(() =>
+            {
+                if (CanReadPortsSerial)
+                {
+                    CanReadPortsSerial = false;
+                    var result = _modBusService.ReadITCSerialPort().Result;
+                    if (result != null)
+                    {
+
+                        ITCAValue = result[0].ToAmperageString();
+                        _readingParams.ITCAValue = result[0];
+                        ITCVValue = result[1].ToVoltageString();
+                        _readingParams.ITCVValue = result[1];
+                        ITCWValue = result[2].ToPowerString();
+                        _readingParams.ITCVValue = result[2];
+
+                    }
+
+                    result = _modBusService.ReadAkipSerialPort().Result;
+
+                    if (result != null)
+                    {
+
+                        AKIPWValue = result[0].ToPowerString();
+                        _readingParams.AKIPWValue = result[0];
+                        AKIPAValue = result[1].ToAmperageString();
+                        _readingParams.AKIPAValue = result[1];
+                        AKIPVValue = result[2].ToVoltageString();
+                        _readingParams.AKIPVValue = result[2];
+
+                    }
+                    CanReadPortsSerial = true;
+                }
+            });
 
 
             //_readingParams.I100Value = await _modBusService.Read100BusAmperage();
