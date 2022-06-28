@@ -97,11 +97,7 @@ namespace BSC_Stand.ViewModels
 
                 if (CurrentOpenedFileName.EndsWith(".csv"))
                 {
-
-                    Thread thread = new Thread(ImportLogs);
-                    thread.IsBackground = true;
-                    thread.Start(CurrentOpenedFileName);
-
+                    Task.Run(() => ImportLogs(CurrentOpenedFileName));
                 }
                 else
                 {

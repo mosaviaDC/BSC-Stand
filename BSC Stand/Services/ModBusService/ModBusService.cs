@@ -24,9 +24,7 @@ namespace BSC_Stand.Services
         private SerialPortAdapter serialPortAdapter;
         private IModbusSerialMaster V27ModbusController;
         private IModbusSerialMaster I27ModbusController;
-
         private IModbusSerialMaster PowerSupplyModbusController;
-
         private IModbusSerialMaster V100ModbusController;
         private IModbusSerialMaster I100ModbusController;
 
@@ -38,15 +36,10 @@ namespace BSC_Stand.Services
         private SerialPort I27SerialPort;
         private SerialPort U100SerialPort;
         private SerialPort I100SerialPort;
-
         private SerialPort IChargerSerialPort;
-
         private SerialPort AkipSerialPort;
-
         private SerialPort ITCSerialPort;
-
         private SerialPort PowerSupplySerialPort;
-
 
         private StatusBarViewModel _statusBarViewModel;
         private readonly CultureInfo culture;
@@ -238,7 +231,7 @@ namespace BSC_Stand.Services
                 }
             }
 
-            _statusBarViewModel.UpdateTaskProgress(100);
+            _statusBarViewModel.UpdateTaskProgress(99);
 
             isBusy = false;
             return (ConnectionStatus, ConnectStatus);
