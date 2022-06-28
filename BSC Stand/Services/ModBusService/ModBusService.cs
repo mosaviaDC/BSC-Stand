@@ -247,9 +247,22 @@ namespace BSC_Stand.Services
 
 
 
-        public async Task<ushort[]> ReadDataFromOwenController()
+        public async Task<Single> ReadDataFromOwenController()
         {
-            return null;
+            ushort[] result = new ushort[2];
+            try
+            {
+                result = V100ModbusController.ReadHoldingRegisters(1, 5, 2);
+               
+            }
+            catch (Exception ex)
+            {
+
+                // Debug.WriteLine(ex.Message);
+            }
+             Debug.WriteLine(getValueByBytesResult(result));
+
+            return getValueByBytesResult(result);
         }
 
         public bool GetConnectStatus()
@@ -288,12 +301,12 @@ namespace BSC_Stand.Services
             try
             {
                 result =  V100ModbusController.ReadInputRegisters(1, 7, 2);
-                Debug.WriteLine($" V27 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
+                // Debug.WriteLine($" V27 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
             }
             return getValueByBytesResult(result);
         }
@@ -306,12 +319,12 @@ namespace BSC_Stand.Services
             try
             {
                 result =  V100ModbusController.ReadInputRegisters(1, 7, 2);
-                Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
+                // Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
             }
             return getValueByBytesResult(result);
 
@@ -321,12 +334,12 @@ namespace BSC_Stand.Services
                 try
                 {
                     result = V100ModbusController.ReadInputRegisters(1, 7, 2);
-                    Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
+                    // Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
                 }
                 catch (Exception ex)
                 {
 
-                    Debug.WriteLine(ex.Message);
+                    // Debug.WriteLine(ex.Message);
                 }
                 return getValueByBytesResult(result);
 
@@ -360,12 +373,12 @@ namespace BSC_Stand.Services
             try
             {
                 result =  V100ModbusController.ReadInputRegisters(1, 7, 2);
-                Debug.WriteLine($" V100 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
+                // Debug.WriteLine($" V100 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
             }
             return getValueByBytesResult(result);
 
@@ -379,12 +392,12 @@ namespace BSC_Stand.Services
             try
             {
                 result = V100ModbusController.ReadInputRegisters(1, 7, 2);
-                Debug.WriteLine($" A100 {result} {DateTime.Now} {DateTime.Now.Millisecond}");
+                // Debug.WriteLine($" A100 {result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
             }
             return getValueByBytesResult(result);
 
@@ -398,7 +411,7 @@ namespace BSC_Stand.Services
             {
                 V27ModbusController.Transport.ReadTimeout = 750;
                 V27ModbusController.Transport.WriteTimeout = 1000;
-                Debug.WriteLine("*");
+                // Debug.WriteLine("*");
 
 
                 if (V27ModbusController.ReadInputRegisters(1, 7, 2) != null)
@@ -448,7 +461,7 @@ namespace BSC_Stand.Services
             {
                 I27ModbusController.Transport.ReadTimeout = 750;
                 I27ModbusController.Transport.WriteTimeout = 1000;
-                Debug.WriteLine("*");
+                // Debug.WriteLine("*");
 
 
                 if (I27ModbusController.ReadInputRegisters(1, 7, 2) != null)
@@ -771,7 +784,7 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
             }
         }
 
@@ -800,7 +813,7 @@ namespace BSC_Stand.Services
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
 
                 results[0] = -1;
                 results[1] = -1;
@@ -836,7 +849,7 @@ namespace BSC_Stand.Services
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.Message);
+                // Debug.WriteLine(ex.Message);
 
                 results[0] = -1;
                 results[1] = -1;
@@ -854,7 +867,7 @@ namespace BSC_Stand.Services
             
             port.WriteLine(@":01r33=0");
             string r = port.ReadLine();
-            Debug.WriteLine(r);
+            // Debug.WriteLine(r);
             return r;
         }
 
@@ -951,7 +964,7 @@ namespace BSC_Stand.Services
                         IChargerSerialPort.Close();
                         IChargerSerialPort.Open();
                         result = true;
-                        Debug.WriteLine(query);
+                        // Debug.WriteLine(query);
 
                     }
 

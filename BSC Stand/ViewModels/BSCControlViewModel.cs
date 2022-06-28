@@ -541,8 +541,10 @@ namespace BSC_Stand.ViewModels
                     I100Value = _readingParams.I100Value.ToAmperageString();
 
 
-
-
+                    _readingParams.BSCTemperature = _modBusService.ReadDataFromOwenController().Result;
+                    BSCTemperature = _readingParams.BSCTemperature.ToBSCTemperatureString();
+                    _readingParams.IBXATemperature = _modBusService.ReadDataFromOwenController().Result;
+                    IBXATemperature = _readingParams.IBXATemperature.ToIBXATemperatureString();
                     //    _readingParams.ITCAValue = result[0];
                     //    _readingParams.ITCVValue = result[1];
                     //    _readingParams.ITCWValue = result[2];
