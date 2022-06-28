@@ -57,12 +57,12 @@ namespace BSC_Stand.Services
             isBusy = true;
 
             string ConnectionStatus = "";
-            _statusBarViewModel.SetNewTask(100);
+            _statusBarViewModel.SetNewTask(9);
             _modbusFactory = new ModbusFactory();
             ConnectStatus = false;
 
             //Charger
-            _statusBarViewModel.UpdateTaskProgress(12);
+            _statusBarViewModel.UpdateTaskProgress(1);
             try
             {
 
@@ -85,7 +85,7 @@ namespace BSC_Stand.Services
             }
 
             //Akip Port
-            _statusBarViewModel.UpdateTaskProgress(24);
+            _statusBarViewModel.UpdateTaskProgress(2);
             try
             {
           
@@ -106,7 +106,7 @@ namespace BSC_Stand.Services
             }
 
             //ITC Port
-            _statusBarViewModel.UpdateTaskProgress(36);
+            _statusBarViewModel.UpdateTaskProgress(3);
             try
             {
               
@@ -128,7 +128,7 @@ namespace BSC_Stand.Services
 
 
             //V100 Bus Port
-            _statusBarViewModel.UpdateTaskProgress(48);
+            _statusBarViewModel.UpdateTaskProgress(4);
             try
             {
               
@@ -149,7 +149,7 @@ namespace BSC_Stand.Services
             }
 
             //I100 Bus Port
-            _statusBarViewModel.UpdateTaskProgress(60);
+            _statusBarViewModel.UpdateTaskProgress(5);
             try
             {
                
@@ -169,7 +169,7 @@ namespace BSC_Stand.Services
                 }
             }
             //V27 Bus Port
-            _statusBarViewModel.UpdateTaskProgress(72);
+            _statusBarViewModel.UpdateTaskProgress(6);
             try
             {
                
@@ -190,7 +190,7 @@ namespace BSC_Stand.Services
             }
 
             //I27 Bus Port
-            _statusBarViewModel.UpdateTaskProgress(84);
+            _statusBarViewModel.UpdateTaskProgress(7);
             try
             {
 
@@ -211,7 +211,7 @@ namespace BSC_Stand.Services
             }
 
             //Owen Controller
-            _statusBarViewModel.UpdateTaskProgress(95);
+            _statusBarViewModel.UpdateTaskProgress(8);
             try
             {
                
@@ -231,7 +231,7 @@ namespace BSC_Stand.Services
                 }
             }
 
-            _statusBarViewModel.UpdateTaskProgress(99);
+            _statusBarViewModel.UpdateTaskProgress(9);
 
             isBusy = false;
             return (ConnectionStatus, ConnectStatus);

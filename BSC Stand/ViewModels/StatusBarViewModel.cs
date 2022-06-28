@@ -49,7 +49,7 @@ namespace BSC_Stand.ViewModels
 
 
 
-        public void SetNewTask(int MaxValue =100)
+        public void SetNewTask(int MaxValue = 100)
         {
             CurrentProggresValue = 0;
             MaxStatusBarValue = MaxValue; 
@@ -57,11 +57,6 @@ namespace BSC_Stand.ViewModels
         }
         public void UpdateTaskProgress(int Value)
         {
-            if (Value == MaxStatusBarValue)
-            {
-                SetNewTask(100);
-            }
-            else 
            CurrentProggresValue = Value;
         }
 
