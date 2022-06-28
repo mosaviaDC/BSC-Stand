@@ -134,9 +134,6 @@ namespace BSC_Stand.Services
             }
 
 
-
-
-
             //V100 Bus Port
             _statusBarViewModel.UpdateTaskProgress(48);
             try
@@ -252,7 +249,6 @@ namespace BSC_Stand.Services
 
         public async Task<ushort[]> ReadDataFromOwenController()
         {
-
             return null;
         }
 
@@ -272,26 +268,27 @@ namespace BSC_Stand.Services
             return isBusy;
         }
 
+        private float getValueByBytesResult(ushort[] result)
+        {
+            if (result == null) return -1;
+
+            byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
+            byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
+
+            Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
+            Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
+            Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
+
+            return BitConverter.ToSingle(bytes, 0);
+        }
+
         public async Task<Single> Read27BusVoltage()
         {
+            ushort[] result = new ushort[2];
+            
             try
             {
-                ushort[] result = new ushort[2];
-
                 result = await V27ModbusController.ReadInputRegistersAsync(1, 7, 2);
-
-                if (result != null)
-                {
-                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
-
-                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
-                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-
-                    return BitConverter.ToSingle(bytes, 0);
-                }
-                else return -1;
             }
             catch (Exception ex)
             {
@@ -299,35 +296,24 @@ namespace BSC_Stand.Services
                 return -1;
             }
 
+            return getValueByBytesResult(result);
         }
 
 
         public async Task<Single> Read27BusAmperage()
         {
+            ushort[] result = new ushort[2];
             try
             {
-                ushort[] result = new ushort[2];
-
                 result = await I27ModbusController.ReadInputRegistersAsync(1, 7, 2);
-
-                if (result != null)
-                {
-                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
-
-                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
-                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-
-                    return BitConverter.ToSingle(bytes, 0);
-                }
-                else return -1;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return -1;
             }
+
+            return getValueByBytesResult(result);
 
         }
 
@@ -345,67 +331,44 @@ namespace BSC_Stand.Services
                 return result;
             });
 
-
             return null;
         }
 
 
         public async Task<Single> Read100BusVoltage()
         {
+            ushort[] result = new ushort[2];
+
             try
             {
-                ushort[] result = new ushort[2];
-
                 result = await V100ModbusController.ReadInputRegistersAsync(1, 7, 2);
-
-                if (result != null)
-                {
-                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
-
-                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
-                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-
-                    return BitConverter.ToSingle(bytes, 0);
-                }
-                else return -1;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return -1;
             }
+
+            return getValueByBytesResult(result);
 
         }
 
 
         public async Task<Single> Read100BusAmperage()
         {
+            ushort[] result = new ushort[2];
+
             try
             {
-                ushort[] result = new ushort[2];
-
                 result = await I100ModbusController.ReadInputRegistersAsync(1, 7, 2);
-
-                if (result != null)
-                {
-                    byte[] bytes = new byte[result.Length * sizeof(ushort)]; //4 byte или 32 бита
-
-                    byte[] Voltage = BitConverter.GetBytes(result[0]); //первые 8 битов или первый byte
-                    Buffer.BlockCopy(Voltage, 0, bytes, 0, Voltage.Length);
-                    Voltage = BitConverter.GetBytes(result[1]); //второй байт или вторые 8 битов
-                    Buffer.BlockCopy(Voltage, 0, bytes, 2, Voltage.Length);
-
-                    return BitConverter.ToSingle(bytes, 0);
-                }
-                else return -1;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return -1;
             }
+
+            return getValueByBytesResult(result);
 
         }
 
@@ -774,9 +737,8 @@ namespace BSC_Stand.Services
         {
             try
             {
-                if (AkipSerialPort !=null  && ITCSerialPort != null)
+                if (AkipSerialPort != null  && ITCSerialPort != null)
                 {
-
 
                     AkipSerialPort.WriteLine($@"Power 0
                                         INPUT 0
@@ -796,9 +758,6 @@ namespace BSC_Stand.Services
         }
         public async Task<float[]> ReadElectronicLoadParams()
         {
-
-
-
 
             return await Task.Run(() =>
              {
@@ -840,15 +799,10 @@ namespace BSC_Stand.Services
                          Debug.WriteLine(ex.Message);
 
                          results[0] = -1;
-
                          results[1] = -1;
-
                          results[2] = -1;
-                       
                          results[3] = -1;
-
                          results[4] = -1;
-
                          results[5] = -1;
 
                      }
