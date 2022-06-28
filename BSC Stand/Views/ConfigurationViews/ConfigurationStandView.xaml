@@ -85,7 +85,7 @@
                         <behaviors:InvokeCommandAction Command="{Binding UpdateCommand}"></behaviors:InvokeCommandAction>
                     </behaviors:EventTrigger>
                 </behaviors:Interaction.Triggers>
-                <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#FF673AB7" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
+                <TextBlock  Text="{Binding SelectedItem.ModuleName, ElementName=StandConfigModules}"   Margin="39,10,10,10" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16" Foreground="#007070" FontWeight="Bold" FontFamily="Times New Roman" TextDecorations="Underline"></TextBlock>
                 <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <TreeViewItem Header="Режимы" IsExpanded="True">
                         <ListBox x:Name="configurationModesList"  ItemsSource="{Binding SelectedItem.Modes, ElementName=StandConfigModules}">
@@ -159,7 +159,7 @@
                                 
 
                             </Grid>
-                            <Button  Command="{Binding AddConfigToCyclogram}" Name="Test" Cursor="Hand" Content="Добавить в циклограмму">
+                            <Button  Command="{Binding AddConfigToCyclogram}" Name="Test" Cursor="Hand" Content="Добавить в циклограмму" FontWeight="Bold" Foreground="White">
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                         <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>
@@ -270,7 +270,7 @@
 
 
                             </Grid>
-                            <Button  Command="{Binding AddConfigToCyclogram}" Cursor="Hand" Content="Добавить в циклограмму">
+                            <Button  Command="{Binding AddConfigToCyclogram}" Cursor="Hand" Content="Добавить в циклограмму" FontWeight="Bold" Foreground="White">
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                         <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>

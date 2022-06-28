@@ -15,10 +15,8 @@
         Background="White" Width="1080" Height="720" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized"
         DataContext="{Binding MenuWindowViewModel ,Source={StaticResource ViewModelLocator}}"
         Title="{Binding Title}"
-        Icon="ico.ico"
-
-
-    >
+        Icon="ico.ico">
+    
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFileCommand}"  Gesture="CTRL+O" Key="O"></KeyBinding>
         <KeyBinding Command="{Binding SaveFileCommand}"  CommandParameter="HotKey" Gesture="CTRL+S" Key="S"></KeyBinding>
@@ -29,67 +27,31 @@
     </Window.Resources>
     <Grid>
 
-        <Menu Height="45" VerticalAlignment="Top" Margin="0,0,0,0">
+        <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Top" Margin="0,0,0,0">
 
-            <fa5:FontAwesome Margin="0,-4,0,0" Padding="5, 10, 5, 10"  Foreground="{StaticResource IconBrush}" FontSize="23"  Icon="Solid_FileImport" x:Name="FileImportIcon" ToolTip="Импорт конфигурации Ctrl+O">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding OpenFileCommand}" ></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
+            <Button Margin="10, 0, 0, 0" Command="{Binding OpenFileCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Foreground="White" FontSize="23"  Icon="Solid_FileImport" x:Name="FileImportIcon" ToolTip="Импорт конфигурации Ctrl+O" />
+            </Button>
 
-            <fa5:FontAwesome  Margin="0,-4,0,0" Padding="5, 10, 5, 10"  Foreground="{StaticResource IconBrush}" FontSize="23"  Icon="Solid_FileExport" ToolTip ="Экспорт конифуграции Ctrl+S" x:Name="FileExportIcon">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding SaveFileCommand}"></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
-            <!--<fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_UndoAlt" x:Name="UndoIcon">
+            <Button Margin="10, 0, 0, 0" Command="{Binding SaveFileCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Foreground="White" FontSize="23"  Icon="Solid_FileExport" ToolTip ="Экспорт конифуграции Ctrl+S" x:Name="FileExportIcon" />
+            </Button>
 
-            </fa5:FontAwesome>
-            <fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_RedoAlt" x:Name="RedoIcon">
-
-            </fa5:FontAwesome>-->
-            <fa5:FontAwesome Margin="0,-4,0,0" Padding="5, 10, 5, 10" Foreground="{StaticResource IconBrush}"  FontSize="23"  Icon="Solid_Wrench"  ToolTip="Периодическая проверка" x:Name="TestIcon">
-                <behaviors:Interaction.Triggers>
-                    <behaviors:EventTrigger EventName="MouseLeftButtonDown" >
-                        <behaviors:InvokeCommandAction Command="{Binding OpenPeriodStandParamsControlWindowCommand}"></behaviors:InvokeCommandAction>
-                    </behaviors:EventTrigger>
-                </behaviors:Interaction.Triggers>
-            </fa5:FontAwesome>
-
-            <!--<fa5:FontAwesome Padding="0" Margin="-15,0,0,0" Foreground="{StaticResource IconBrush}" Icon="Solid_Info" FontSize="23"  ToolTip="Информация" x:Name="InfoIcon">
-             
-            </fa5:FontAwesome>-->
-
-
-
-
-
-
+            <Button Margin="10, 0, 0, 0" Command="{Binding OpenPeriodStandParamsControlWindowCommand}" Cursor="Hand" FontWeight="Bold" Foreground="White">
+                <fa5:FontAwesome Foreground="White" FontSize="23" Icon="Solid_FileExport" x:Name="TestIcon" ToolTip="Импорт конфигурации Ctrl+O" />
+            </Button>
 
             <TextBlock HorizontalAlignment="Center"  Margin="70,0,0,0"   Text="{Binding Title}" FontFamily="Times New Roman" FontSize="14" FontWeight="Normal" TextDecorations="{x:Null}" FontStyle="Normal"></TextBlock>
 
-
-
-            <!--<Button  Background="{x:Null}" Width="30" Height="30"  BorderBrush="Black" Cursor="Hand" Command="{Binding OpenFileCommand}" ToolTip="Открыть файл Ctrl+O">
-                <fa5:FontAwesome Foreground="Black"  FontSize="25" Icon="Solid_FileImport"/>
-            </Button>
-            <Button Background="{x:Null}" BorderBrush="Black" Command="{Binding SaveFileCommand}" ToolTip="Сохранить файл Ctrl+S">
-                <fa5:FontAwesome Foreground="Black" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Icon="Solid_FileExport"></fa5:FontAwesome>
-            </Button>-->
-
-            <Menu.Background>
+            <StackPanel.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
-            </Menu.Background>
+            </StackPanel.Background>
 
 
 
            
 
-        </Menu>
+        </StackPanel>
         <TabControl Margin="0,45,0,45"  SelectedIndex="{Binding SelectedIndex}" x:Name="TabeControl" >
             
             <TabItem Header="Конфигурация стенда">
