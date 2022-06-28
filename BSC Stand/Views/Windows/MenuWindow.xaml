@@ -57,7 +57,7 @@
             <TabItem Header="Конфигурация стенда">
                 <Grid >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition  Width="550"></ColumnDefinition>
+                        <ColumnDefinition  Width="570"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <GroupBox  Padding="0" x:Name="StandConfiguration" Grid.Column="0">
