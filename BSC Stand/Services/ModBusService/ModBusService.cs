@@ -245,9 +245,7 @@ namespace BSC_Stand.Services
         }
 
 
-
-
-        public async Task<Single> ReadDataFromOwenController()
+        public Single ReadDataFromOwenController()
         {
             ushort[] result = new ushort[2];
             try
@@ -295,7 +293,7 @@ namespace BSC_Stand.Services
             return BitConverter.ToSingle(bytes, 0);
         }
 
-        public async Task<Single> Read27BusVoltage()
+        public Single Read27BusVoltage()
         {
             ushort[] result = new ushort[2];
             try
@@ -312,7 +310,7 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task<Single> Read27BusAmperage()
+        public Single Read27BusAmperage()
         {
 
             ushort[] result = new ushort[2];
@@ -328,31 +326,13 @@ namespace BSC_Stand.Services
             }
             return getValueByBytesResult(result);
 
-            /*return await Task.Factory.StartNew(() =>
-            {
-                ushort[] result = new ushort[2];
-                try
-                {
-                    result = V100ModbusController.ReadInputRegisters(1, 7, 2);
-                    // Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
-                }
-                catch (Exception ex)
-                {
-
-                    // Debug.WriteLine(ex.Message);
-                }
-                return getValueByBytesResult(result);
-
-            });
-            */
-
         }
 
 
         public async Task<float[]> ReadPowerSupplyParams()
         {
           
-           return await Task.Factory.StartNew(() =>
+           return await Task.Run(() =>
             {
                 float[] result = new float[3];
                 result[0] = -1;
@@ -361,12 +341,10 @@ namespace BSC_Stand.Services
 
                 return result;
             });
-
-            return null;
         }
 
 
-        public async Task<Single> Read100BusVoltage()
+        public Single Read100BusVoltage()
         {
 
             ushort[] result = new ushort[2];
@@ -386,7 +364,7 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task<Single> Read100BusAmperage()
+        public Single Read100BusAmperage()
         {
             ushort[] result = new ushort[2];
             try

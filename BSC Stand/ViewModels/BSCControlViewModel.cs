@@ -474,8 +474,8 @@ namespace BSC_Stand.ViewModels
             V27Value = "V Нет данных";
             I27Value = "I Нет данных";
             //  OwenConnectStatus = "Нет соединения";
-            IBXATemperature = "Температура ИБХА - Нет данных";
-            BSCTemperature = "Температура ЭО БСК - Нет данных";
+            IBXATemperature = "Температура ИБХА Нет данных";
+            BSCTemperature = "Температура ЭО БСК Нет данных";
             AKIPVValue = "V Нет данных";
             AKIPAValue = "A Нет данных";
             AKIPWValue = "W Нет данных";
@@ -500,10 +500,7 @@ namespace BSC_Stand.ViewModels
             {
                 CheckConnectionStatusCommandExecute(null);
             });
-
-           
-
-
+                       
         }
 
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
@@ -528,12 +525,12 @@ namespace BSC_Stand.ViewModels
                     CanReadPortsEthernet = false;
 
                     // Debug.WriteLine($"Inside {DateTime.Now} {DateTime.Now.Millisecond}");
-                    _readingParams.V27Value = _modBusService.Read27BusVoltage().Result;
-                    _readingParams.I27Value = _modBusService.Read27BusAmperage().Result;
-                    _readingParams.V100Value = _modBusService.Read100BusVoltage().Result;
-                    _readingParams.I100Value = _modBusService.Read100BusAmperage().Result;
-                    _readingParams.BSCTemperature = _modBusService.ReadDataFromOwenController().Result;
-                    _readingParams.IBXATemperature = _modBusService.ReadDataFromOwenController().Result;
+                    _readingParams.V27Value = _modBusService.Read27BusVoltage();
+                    _readingParams.I27Value = _modBusService.Read27BusAmperage();
+                    _readingParams.V100Value = _modBusService.Read100BusVoltage();
+                    _readingParams.I100Value = _modBusService.Read100BusAmperage();
+                    _readingParams.BSCTemperature = _modBusService.ReadDataFromOwenController();
+                    _readingParams.IBXATemperature = _modBusService.ReadDataFromOwenController();
                     
                     CanReadPortsEthernet = true;
 
@@ -550,7 +547,7 @@ namespace BSC_Stand.ViewModels
 
             // Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
              _ = Task.Run(() =>
-            {
+             {
                 if (CanReadPortsSerial)
                 {
                     CanReadPortsSerial = false;

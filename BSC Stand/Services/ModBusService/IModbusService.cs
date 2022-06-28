@@ -10,16 +10,16 @@ namespace BSC_Stand.Services
 {
     internal interface IModbusService
     {
-        public  Task<Single> ReadDataFromOwenController();
+        public Single ReadDataFromOwenController();
         public bool GetOwenConnectionStatus();
         public  (string, bool) InitConnections();
         public bool GetConnectStatus();
         public bool GetBusyStatus();
-        public Task<Single> Read27BusVoltage();
-        public Task<Single> Read27BusAmperage();
+        public Single Read27BusVoltage();
+        public Single Read27BusAmperage();
 
-        public Task<Single> Read100BusVoltage();
-        public Task<Single> Read100BusAmperage();
+        public Single Read100BusVoltage();
+        public Single Read100BusAmperage();
 
         public Task<bool> SetAKIPPowerValue(double value);
         public Task<bool> SetITCPowerValue(double value);
