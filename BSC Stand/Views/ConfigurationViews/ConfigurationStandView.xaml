@@ -29,13 +29,13 @@
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </Grid.Background>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"></ColumnDefinition>
-            <ColumnDefinition Width="0.4*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
 
 
-        <GroupBox Grid.Column="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
+        <GroupBox Grid.Column="0" Grid.Row="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
             <Grid> 
                 <ListBox  x:Name="StandConfigModules"   ItemsSource="{Binding programmablePowerSupplyModules}" Loaded="StandConfigModules_Loaded">
                     <ListBox.Style>
@@ -77,8 +77,9 @@
             
         </GroupBox>
 
+        <GridSplitter Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch"></GridSplitter>
      
-        <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="1" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
+        <GroupBox x:Name="ConfigurationModuleGroupBox" Grid.Column="0" Grid.Row="1" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
             <StackPanel>
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="MouseMove" >
@@ -306,7 +307,7 @@
                             </ScrollViewer.Style>
 
 
-                            <DataGrid   x:Name="DataGrid" IsReadOnly="False" AutoGenerateColumns="False"   >
+                            <DataGrid x:Name="DataGrid" IsReadOnly="False" AutoGenerateColumns="False"   >
                                 <DataGrid.Style>
                                     <Style TargetType="DataGrid">
                                         <Style.Triggers>

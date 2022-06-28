@@ -51,10 +51,8 @@
                 <fa5:FontAwesome Icon="Solid_Minus" x:Name="ZoomOut" ToolTip="Уменьшить масштаб" FontSize="21.5" />
 
             </Button>
-            
-            
 
-            <TextBlock MinWidth="150" Text="{Binding Label}" ></TextBlock>
+            <TextBlock Margin="10, 10, 0, 0" MinWidth="150" FontFamily="Times New Roman" Text="{Binding Label}" FontSize="21.5"></TextBlock>
 
         </StackPanel>
 

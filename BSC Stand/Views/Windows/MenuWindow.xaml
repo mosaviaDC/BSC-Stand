@@ -41,7 +41,7 @@
                 <fa5:FontAwesome Foreground="White" FontSize="23" Icon="Solid_Wrench" x:Name="TestIcon" ToolTip="Импорт конфигурации Ctrl+O" />
             </Button>
 
-            <TextBlock HorizontalAlignment="Center"  Margin="70,0,0,0"   Text="{Binding Title}" FontFamily="Times New Roman" FontSize="14" FontWeight="Normal" TextDecorations="{x:Null}" FontStyle="Normal"></TextBlock>
+            <TextBlock HorizontalAlignment="Center"  Margin="10,10,0,0"   Text="{Binding Title}" FontFamily="Times New Roman" FontWeight="Normal" TextDecorations="{x:Null}" FontStyle="Normal" FontSize="21.5"></TextBlock>
 
             <StackPanel.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
@@ -57,8 +57,8 @@
             <TabItem Header="Конфигурация стенда">
                 <Grid >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition  Width="0.4*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                        <ColumnDefinition  Width="550"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <GroupBox  Padding="0" x:Name="StandConfiguration" Grid.Column="0">
                         <configWindows:ConfigurationStandView></configWindows:ConfigurationStandView>

@@ -19,7 +19,7 @@
             </TextBlock>
         </StatusBarItem>
         <StatusBarItem HorizontalAlignment="Center">
-            <ProgressBar Width="150" Value="{Binding CurrentProggresValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="{Binding MaxStatusBarValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+            <ProgressBar Width="150" Height="10" Value="{Binding CurrentProggresValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="{Binding MaxStatusBarValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
 
             </ProgressBar>
         </StatusBarItem>
