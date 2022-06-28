@@ -24,7 +24,7 @@
 
 
 
-        <GroupBox   Header="График" FontSize="12" FontFamily="Arial"  Grid.Column="0" Padding="0,0,0,0">
+        <GroupBox Header="График" FontSize="12" FontFamily="Arial"  Grid.Column="0" Padding="0,0,0,0">
 
          
             <Grid>
@@ -119,10 +119,8 @@
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                             <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column ="0" MinWidth="50" Margin="5" >Температура ЭО БСК</TextBlock>
-                        <TextBlock  Grid.Row="0" Grid.Column ="1" MinWidth="50" Margin="5"  Text=" "></TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column ="0" MinWidth="50" Margin="5" >Температура ИБХА</TextBlock>
-                        <TextBlock  Grid.Row="1" Grid.Column ="1" MinWidth="50" Margin="5" Text=" "></TextBlock>
+                        <TextBlock  Grid.Row="0" Grid.Column ="1" MinWidth="50" Margin="5"  Text="{Binding BSCTemperature}"></TextBlock>
+                        <TextBlock  Grid.Row="1" Grid.Column ="1" MinWidth="50" Margin="5" Text="{Binding IBXATemperature}"></TextBlock>
                     </Grid>
                  
                     

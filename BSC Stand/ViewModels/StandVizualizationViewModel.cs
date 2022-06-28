@@ -47,6 +47,54 @@ namespace BSC_Stand.ViewModels
         public TwoColorAreaSeries s2 { get; set; }
 
         public TwoColorAreaSeries s3 { get; set; }
+
+        //private string _V27Value;
+        //public string V27Value
+        //{
+        //    get => _V27Value;
+        //    set => Set(ref _V27Value, value);
+
+        //}
+
+
+        //private string _I27Value;
+        //public string I27Value
+        //{
+        //    get => _I27Value;
+        //    set => Set(ref _I27Value, value);
+
+        //}
+
+        //private string _I100Value;
+        //public string I100Value
+        //{
+        //    get => _I100Value;
+        //    set => Set(ref _I100Value, value);
+
+        //}
+        //private string _V100Value;
+        //public string V100Value
+        //{
+        //    get => _V100Value;
+        //    set => Set(ref _V100Value, value);
+
+        //}
+
+        //private string _IBXATemperature;
+
+        //public string IBXATemperature
+        //{
+        //    get => _IBXATemperature;
+        //    set => Set(ref _IBXATemperature, value);
+        //}
+
+        //private string _BSCTemperature;
+
+        //public string BSCTemperature
+        //{
+        //    get => _BSCTemperature;
+        //    set => Set(ref _BSCTemperature, value);
+        //}
         #endregion
 
 
