@@ -124,7 +124,7 @@ namespace BSC_Stand.ViewModels
                             WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
                            
                             StartTime = DateTime.Now;
-                            UpdateDataTimer.Start();
+                           UpdateDataTimer.Start();
                         }
                     }
                 }
