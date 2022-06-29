@@ -226,11 +226,11 @@ namespace BSC_Stand.Services
 
             //Draw Title
             gfxs[0].DrawString("График для шины 27В", font, XBrushes.Black, new XRect(0, -PAGE_HEIGHT / 2 + 20, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
-            gfxs[0].DrawString("Данные для шины 27В", font, XBrushes.Black, new XRect(0, TABLE_TOP[0] - 30, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
+            gfxs[0].DrawString("Статистика по шине 27В", font, XBrushes.Black, new XRect(0, TABLE_TOP[0] - 30, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
             gfxs[1].DrawString("График для шины 100В", font, XBrushes.Black, new XRect(0, -PAGE_HEIGHT / 2 + 20, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
-            gfxs[1].DrawString("Данные для шины 100В", font, XBrushes.Black, new XRect(0, TABLE_TOP[1] - 30, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
+            gfxs[1].DrawString("Статистика по шине 100В", font, XBrushes.Black, new XRect(0, TABLE_TOP[1] - 30, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
             gfxs[2].DrawString("Сводный график", font, XBrushes.Black, new XRect(0, -PAGE_HEIGHT / 2 + 20, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
-            gfxs[3].DrawString("Данные", font, XBrushes.Black, new XRect(0, -PAGE_HEIGHT / 2 + 20, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
+            gfxs[3].DrawString("Статистика", font, XBrushes.Black, new XRect(0, -PAGE_HEIGHT / 2 + 20, PAGE_WIDTH, PAGE_HEIGHT), XStringFormats.Center);
 
             
 
