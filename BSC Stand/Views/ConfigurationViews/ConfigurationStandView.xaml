@@ -25,18 +25,18 @@
         <convertes:AddConfigModeContverter x:Key="AddConfigModeConverter"></convertes:AddConfigModeContverter>
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
     
-    <Grid >
+    <Grid>
         
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </Grid.Background>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="110"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" MinWidth="150"></ColumnDefinition>
+                <ColumnDefinition Width="0.4*" MinWidth="250"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        
+        
 
 
         <GroupBox Grid.Column="0" Grid.Row="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
@@ -72,11 +72,9 @@
             
         </GroupBox>
 
-        <GridSplitter Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch"></GridSplitter>
+        
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto">
-
-            <GroupBox x:Name="ConfigurationModuleGroupBox" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
+            <GroupBox Grid.Column="1" x:Name="ConfigurationModuleGroupBox" Header="Параметры модулей" FontSize="12" FontFamily="Arial" Padding="0">
                 <StackPanel>
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="MouseMove" >
@@ -165,23 +163,6 @@
                                         </MultiBinding>
                                     </Button.CommandParameter>
                                 </Button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                             </StackPanel>
 
@@ -447,9 +428,10 @@
                                         <DataGridTextColumn  Header="Продолжительность" Binding="{Binding Path=Duration}">
 
                                         </DataGridTextColumn>
+                                     
 
 
-                                    </DataGrid.Columns>
+                                </DataGrid.Columns>
 
 
 
@@ -498,10 +480,9 @@
                 </StackPanel>
 
             </GroupBox>
-        </ScrollViewer>
+
 
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="2" VerticalAlignment="Stretch"></GridSplitter>
     </Grid>
 
-    </ScrollViewer>
 </UserControl>

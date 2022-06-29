@@ -12,6 +12,7 @@ namespace BSC_Stand.Models.StandConfigurationModels
 
         public float Power {
             get => MaxValue1 * MaxValue;
+           
         }
 
     }
