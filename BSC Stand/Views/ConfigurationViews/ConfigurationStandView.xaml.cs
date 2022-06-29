@@ -34,6 +34,7 @@ namespace BSC_Stand.Views
             {
                 StandConfigModules.SelectedItem = p;
             }
+            StandConfigModules.SelectedIndex = 0;
         }
     }
 }

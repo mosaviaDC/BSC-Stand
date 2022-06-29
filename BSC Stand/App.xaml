@@ -12,6 +12,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="ViewModelLocator"/>
+            <Style x:Key="GroupBoxStyle" TargetType="GroupBox">
+                
+                
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

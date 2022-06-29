@@ -32,14 +32,14 @@
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}"/>
         </Grid.Background>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*" MinWidth="150"></ColumnDefinition>
+                <ColumnDefinition Width="0.25*" MinWidth="150"></ColumnDefinition>
                 <ColumnDefinition Width="0.4*" MinWidth="250"></ColumnDefinition>
             </Grid.ColumnDefinitions>
         
         
 
 
-        <GroupBox Grid.Column="0" Grid.Row="0"  Header="Конфигурация стенда" Padding="0" FontSize="12" FontFamily="Arial">
+        <GroupBox Grid.Column="0" Grid.Row="0"   Header="Конфигурация стенда" Padding="0">
             <Grid> 
                 <ListBox  x:Name="StandConfigModules"   ItemsSource="{Binding programmablePowerSupplyModules}" Loaded="StandConfigModules_Loaded">
                     <ListBox.Style>
@@ -155,7 +155,7 @@
 
 
                                 </Grid>
-                                <Button  Command="{Binding AddConfigToCyclogram}" Name="Test" Cursor="Hand" Content="Добавить в циклограмму" FontWeight="Bold" Foreground="White">
+                            <Button  Command="{Binding AddConfigToCyclogram}" Name="Test" Cursor="Hand" Content="Добавить в циклограмму" FontWeight="Bold" Style="{StaticResource  MaterialDesignFlatDarkBgButton}">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                             <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>
@@ -249,7 +249,7 @@
 
 
                                 </Grid>
-                                <Button  Command="{Binding AddConfigToCyclogram}" Cursor="Hand" Content="Добавить в циклограмму" FontWeight="Bold" Foreground="White">
+                            <Button  Command="{Binding AddConfigToCyclogram}" Cursor="Hand" Content="Добавить в циклограмму" FontWeight="Bold" Style="{StaticResource  MaterialDesignFlatDarkBgButton}">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource AddConfigModeConverter}">
                                             <Binding Path="SelectedItem" ElementName="StandConfigModules" ></Binding>
@@ -270,7 +270,7 @@
 
                         <TreeViewItem Header="Циклограмма" IsExpanded="True">
 
-                            <ScrollViewer MaxHeight="450">
+                            <ScrollViewer MaxHeight="250">
                                 <ScrollViewer.Style>
                                     <Style TargetType="ScrollViewer">
                                         <Style.Triggers>
@@ -285,7 +285,7 @@
                                 </ScrollViewer.Style>
 
 
-                                <DataGrid x:Name="DataGrid" IsReadOnly="False" AutoGenerateColumns="False"   >
+                            <DataGrid x:Name="DataGrid" IsReadOnly="False" AutoGenerateColumns="False"  CanUserReorderColumns="False"  CanUserSortColumns="False"  >
                                     <DataGrid.Style>
                                         <Style TargetType="DataGrid">
                                             <Style.Triggers>
@@ -345,7 +345,7 @@
 
                             </ScrollViewer>
 
-                            <ScrollViewer MaxHeight="450" >
+                            <ScrollViewer MaxHeight="250" >
                                 <ScrollViewer.Style>
                                     <Style TargetType="ScrollViewer">
                                         <Style.Triggers>
@@ -373,7 +373,7 @@
 
 
 
-                                <DataGrid   x:Name="DataGrid1"   IsReadOnly="False" AutoGenerateColumns="False"   >
+                                <DataGrid   x:Name="DataGrid1"  CanUserReorderColumns="False"  CanUserSortColumns="False" IsReadOnly="False" AutoGenerateColumns="False"   >
                                     <DataGrid.Style>
                                         <Style TargetType="DataGrid">
                                             <Style.Triggers>
@@ -425,10 +425,13 @@
 
 
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn  Header="Продолжительность" Binding="{Binding Path=Duration}">
+                                        <DataGridTextColumn   Header="Продолжительность" Binding="{Binding Path=Duration}">
 
                                         </DataGridTextColumn>
-                                     
+                                        <!--<DataGridTextColumn   IsReadOnly="True" Header="Расчетная W" Binding="{Binding Path=Power}">
+
+                                        </DataGridTextColumn>-->
+
 
 
                                 </DataGrid.Columns>
