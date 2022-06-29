@@ -10,7 +10,7 @@ using BSC_Stand.Infastructure.Commands;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
-
+using System.IO;
 using NModbus.IO;
 using NModbus.Device;
 using NModbus;
@@ -81,7 +81,7 @@ namespace BSC_Stand.ViewModels
                     if (result != null)
                     {
                         _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes,  result.PowerSupplyConfigModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount, result.PowerSupplyCyclogramRepeatCount);
-                        Title = $"{CurrentOpenedFileName} - ЭО БСК";
+                        Title = $"{Path.GetFileName(CurrentOpenedFileName)} - ЭО БСК";
                     }
                 }
 
@@ -111,7 +111,7 @@ namespace BSC_Stand.ViewModels
 
         private void CheckFile(object p)
         {
-            Title = $"{CurrentOpenedFileName}* - ЭО БСК";
+            Title = $"{Path.GetFileName(CurrentOpenedFileName)}* - ЭО БСК";
         }
 
 
@@ -125,7 +125,7 @@ namespace BSC_Stand.ViewModels
             {
                 await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.PowerSupplyConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount, _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount);
 
-                Title = $"{CurrentOpenedFileName} - ЭО БСК";
+                Title = $"{Path.GetFileName(CurrentOpenedFileName)} - ЭО БСК";
 
 
             }
@@ -135,7 +135,7 @@ namespace BSC_Stand.ViewModels
                 if (CurrentOpenedFileName != null)
 
                     await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.PowerSupplyConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount, _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount);
-                Title = $"{CurrentOpenedFileName} - ЭО БСК";
+                Title = $"{Path.GetFileName(CurrentOpenedFileName)} - ЭО БСК";
             }
 
 
