@@ -248,7 +248,7 @@ namespace BSC_Stand.Services
             ushort[] result = new ushort[2];
             try
             {
-              result = owenController.ReadHoldingRegisters(1,0,2);
+              result = owenController.ReadInputRegisters(1,0,2);
               Debug.WriteLine($"{getValueByBytesResult(result)}");
              
                 //for (int i=0; i < result1.Length; i++)
