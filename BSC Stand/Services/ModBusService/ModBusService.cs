@@ -66,7 +66,7 @@ namespace BSC_Stand.Services
             try
             {
 
-                ConnectStatus = true;
+                ConnectStatus = InitICharger();
             } 
             catch (Exception ex)
             {
@@ -248,20 +248,22 @@ namespace BSC_Stand.Services
             ushort[] result = new ushort[2];
             try
             {
-              var  result1 = V100ModbusController.ReadHoldingRegisters(1,0,2);
-                for (int i=0; i < result1.Length; i++)
-                {
-                    Debug.Write(result1[i] + "*");
-                }
-                Debug.WriteLine(" ");
-               
+              result = owenController.ReadHoldingRegisters(1,0,2);
+              Debug.WriteLine($"{getValueByBytesResult(result)}");
+             
+                //for (int i=0; i < result1.Length; i++)
+                //{
+                //    Debug.Write(result1[i] + "*");
+                //}
+                //Debug.WriteLine(" ");
+
             }
             catch (Exception ex)
             {
 
-                // Debug.WriteLine(ex.Message);
+                 Debug.WriteLine(ex.Message);
             }
-             Debug.WriteLine(getValueByBytesResult(result));
+           
 
             return getValueByBytesResult(result);
         }
@@ -494,7 +496,7 @@ namespace BSC_Stand.Services
             IChargerSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM8",
+                PortName = "COM15",
                 StopBits = StopBits.One
 
 
@@ -687,7 +689,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM4",
+                PortName = "COM9",
                 StopBits = StopBits.One
              
 
