@@ -76,13 +76,14 @@ namespace BSC_Stand.Services
         }
 
 
-        public string SavePDFFileDialog(string Title = "Сохранить файл")
+        public string SavePDFFileDialog(string Title = "Сохранить файл", string nameOfFile = "")
         {
             string filePath = null;
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
                 InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\PDF",
+                FileName = nameOfFile,
                 Filter = "(*.pdf) |*.pdf"
             };
             if (saveFileDialog.ShowDialog() == true)
@@ -90,17 +91,16 @@ namespace BSC_Stand.Services
                 filePath = saveFileDialog.FileName;
             }
             return filePath;
-
-
         }
 
-        public string SaveXLSXileDialog(string Title = "Сохранить файл")
+        public string SaveXLSXileDialog(string Title = "Сохранить файл", string nameOfFile = "")
         {
             string filePath = null;
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
                 InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\XLSX",
+                FileName = nameOfFile,
                 Filter = "(*.XLSX) |*.XLSX"
             };
             if (saveFileDialog.ShowDialog() == true)

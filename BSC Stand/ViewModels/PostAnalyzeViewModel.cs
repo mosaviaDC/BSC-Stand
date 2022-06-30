@@ -110,7 +110,7 @@ namespace BSC_Stand.ViewModels
 
     public void ExportFileToXLSXCommandExecute(object p)
         {
-            string FileName = _fileDialogService.SaveXLSXileDialog();
+            string FileName = _fileDialogService.SaveXLSXileDialog(null, Label);
 
             if (FileName != null)
             {
@@ -127,7 +127,7 @@ namespace BSC_Stand.ViewModels
 
      public void ExportFileToPDFCommandExecute(object p)
         {
-            string FileName = _fileDialogService.SavePDFFileDialog();
+            string FileName = _fileDialogService.SavePDFFileDialog(null, Label);
 
             if(FileName != null)
             {

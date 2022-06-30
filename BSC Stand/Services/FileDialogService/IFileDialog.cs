@@ -10,9 +10,9 @@ namespace BSC_Stand.Services
     {
         string OpenFileDialog(string Title="Открыть файл");
         string SaveFileDialog(string Title = "Сохранить файл");
-        string SavePDFFileDialog(string Title = "Сохранить файл");
+        string SavePDFFileDialog(string Title = "Сохранить файл", string nameOfFile = "");
 
-        string SaveXLSXileDialog(string Title = "Сохранить файл");
+        string SaveXLSXileDialog(string Title = "Сохранить файл", string nameOfFile = "");
         string OpenCSVFileDialog(string Title = "Открыть файл");
     }
 }

@@ -189,8 +189,23 @@ namespace BSC_Stand.ViewModels
             #endregion
             //timer.Start();
             _Title = "ЭО БСК";
-       
-           
+
+            string[] dirs = {
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Конфигурация экспериментов",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\CSV",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\PDF",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\XLSX",
+            };
+
+            foreach (string dir in dirs)
+            {
+                if (Directory.Exists(dir) == false)
+                {
+                    Directory.CreateDirectory(dir);
+                }
+            }
 
         }
 
