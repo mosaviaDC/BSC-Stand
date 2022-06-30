@@ -461,8 +461,7 @@ namespace BSC_Stand.ViewModels
             UpdateDataTimer.Interval = TimeSpan.FromMilliseconds(50);
             UpdateDataTimer.Tick += UpdateDataTimer_Tick;
             StartTime = DateTime.Now;
-            
-           
+
             #region registerCommands
             StartExpirementCommand = new ActionCommand(StartExpirementCommandExecute, CanStartExpirementCommandExecuted);
             StopExpirementCommand = new ActionCommand(StopExpirementCommandExecute, CanStopExpirementCommandExecuted);
