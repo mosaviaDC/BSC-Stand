@@ -46,6 +46,11 @@ namespace BSC_Stand.Services
         private bool ConnectStatus = false;
         private bool isBusy = false;
 
+        private const int OWEN_PORT = 502;
+        private const string OWEN_IP = "192.168.0.15";
+        private const string ITC_PORT_NAME = "COM19";
+        private const string AKIP_PORT_NAME = "COM16";
+
         public ModBusService(StatusBarViewModel statusBarViewModel)
         {
             _statusBarViewModel = statusBarViewModel;
@@ -695,7 +700,7 @@ namespace BSC_Stand.Services
         {
             owenControllerTCPCLient?.Dispose();
             owenControllerTCPCLient = new TcpClient();
-            owenControllerTCPCLient.Connect("192.168.0.15", 502);
+            owenControllerTCPCLient.Connect(OWEN_IP, OWEN_PORT);
             _statusBarViewModel.UpdateTaskProgress(75);
             owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
             return owenControllerTCPCLient.Connected;
@@ -710,7 +715,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM19",
+                PortName = ITC_PORT_NAME,
                 StopBits = StopBits.One
              
 
@@ -742,7 +747,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM16",
+                PortName = AKIP_PORT_NAME,
                 StopBits = StopBits.One
 
             };
