@@ -97,6 +97,25 @@ namespace BSC_Stand.ViewModels
 
         #endregion
 
+        private void SaveToStoryConfiguration()
+        {
+            ObservableCollection<ElectronicConfigMode> Bus27ConfigurationsTemp = new ObservableCollection<ElectronicConfigMode>();
+            foreach (var mode in this.Bus27ConfigurationModes)
+            {
+                var new_mode = new ElectronicConfigMode();
+                new_mode.MinValue = mode.MinValue;
+                new_mode.MaxValue = mode.MaxValue;
+                new_mode.Discreteness = mode.Discreteness;
+                new_mode.ModeName = mode.ModeName;
+                new_mode.Duration = mode.Duration;
+                new_mode.ModeUnit = mode.ModeUnit;
+                //new_mode.Current = mode.Current;
+                Bus27ConfigurationsTemp.Add(new_mode);
+            }
+            Bus27ConfigurationsStory.Push(Bus27ConfigurationsTemp);
+            Debug.WriteLine("111");
+        }
+
         #region Commands
         public ICommand AddConfigToCyclogram { get; set; }
 
@@ -129,7 +148,9 @@ namespace BSC_Stand.ViewModels
 
                     if (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 27В)")
                     {
+                        SaveToStoryConfiguration();
                         Bus27ConfigurationModes.Add(configurationMode);
+                        
                     }
                     else if (programmablePowerSupplyModule.ModuleName == "Нагрузка электронная (шина 100В)")
                     {
@@ -187,16 +208,35 @@ namespace BSC_Stand.ViewModels
         public ElectronicConfigMode SelectedElectronicConfigMode { get; set; }
         public PowerSupplyConfigMode SelectedPowerSupplyConfigMode { get; set; }
 
+        
+
         public void UndoDataGridCommandExecuted(object p)
         {
+            this.Bus27ConfigurationModes.Clear();
+            if (Bus27ConfigurationsStory.Count > 0)
+            {
+                //Bus27ConfigurationsStory.Pop();
+                ObservableCollection<ElectronicConfigMode> Bus27ConfigurationsTemp = Bus27ConfigurationsStory.Pop();
+                foreach (var mode in Bus27ConfigurationsTemp)
+                {
+                    var new_mode = new ElectronicConfigMode();
+                    new_mode.MinValue = mode.MinValue;
+                    new_mode.MaxValue = mode.MaxValue;
+                    new_mode.Discreteness = mode.Discreteness;
+                    new_mode.ModeName = mode.ModeName;
+                    new_mode.Duration = mode.Duration;
+                    new_mode.ModeUnit = mode.ModeUnit;
+                    Bus27ConfigurationModes.Add(new_mode);
+                }
 
-            
-         //   Debug.WriteLine("UndoCommand");
-         ////   var lastConfig = V27BusConfigurationStack.Pop();
-         //   this.Bus27ConfigurationModes = lastConfig;
-            
-         //   this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
-        
+            }
+
+            //   Debug.WriteLine("UndoCommand");
+            ////   var lastConfig = V27BusConfigurationStack.Pop();
+            //   this.Bus27ConfigurationModes = lastConfig;
+
+            //   this.Bus27ConfigurationModes.CollectionChanged += Bus27ConfigurationModes_CollectionChanged;
+
 
             ////this.Bus27ConfigurationModes.CollectionChanged -= Bus27ConfigurationModes_CollectionChanged;
             ////this.Bus27ConfigurationModes.Clear();
@@ -234,6 +274,8 @@ namespace BSC_Stand.ViewModels
         public StandConfigurationViewModel(StandVizualizationViewModel standVizualizationViewModel)
         {
             _standVizualizationViewModel = standVizualizationViewModel;
+
+            
           
             #region Commands
             AddConfigToCyclogram = new ActionCommand(AddConfigToCyclogramExecuted, CanAddConfigToCyclogramExecuted);
@@ -305,6 +347,8 @@ namespace BSC_Stand.ViewModels
                 ModeUnit = "А",
                
             }
+
+
           
 
 
@@ -363,10 +407,12 @@ namespace BSC_Stand.ViewModels
            // UpdateCyclograms(null);
             
         }
+
+
+        Stack<ObservableCollection<ElectronicConfigMode>> Bus27ConfigurationsStory = new Stack<ObservableCollection<ElectronicConfigMode>>();
         private void Bus27ConfigurationModes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-               
-          
+            //SaveToStoryConfiguration();
         }
 
         private void UpdateCyclograms(object p )
