@@ -17,6 +17,7 @@ using System.IO;
 using BSC_Stand.Models;
 using BSC_Stand.Extensions;
 using BSC_Stand.Models.StandConfigurationModels;
+using System.Windows.Controls;
 
 namespace BSC_Stand.ViewModels
 {

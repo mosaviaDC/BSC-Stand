@@ -259,8 +259,9 @@
                     <local:RealTimeGraphsLegendControl></local:RealTimeGraphsLegendControl>
                 </GroupBox>
             <GroupBox Grid.Column="1">
-                    <ScrollViewer>
-                        <TextBlock   Text="{Binding DebugString}"></TextBlock>
+                    <ScrollViewer x:Name="ConsoleScrollViewer" x:FieldModifier="public">
+                        
+                        <TextBlock  Text="{Binding DebugString}" VerticalAlignment="Bottom"></TextBlock>
                     </ScrollViewer>
                 </GroupBox>
             <GridSplitter Width="3" VerticalAlignment="Stretch" ></GridSplitter>
