@@ -54,7 +54,7 @@ namespace BSC_Stand.ViewModels
                 return;
             }
 
-            if (V27ConfigurationModes.Count == 0 || V100ConfigurationModes.Count == 0)
+            if ((V27ConfigurationModes.Count == 0 || V100ConfigurationModes.Count == 0) || PowerSupplyConfigurationModes.Count == 0)
             {
                 _userDialogWindowService.ShowErrorMessage("Выбрана пустая конфигурация");
             }
