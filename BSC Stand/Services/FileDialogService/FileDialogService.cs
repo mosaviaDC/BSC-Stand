@@ -78,6 +78,11 @@ namespace BSC_Stand.Services
 
         public string SavePDFFileDialog(string Title = "Сохранить файл", string nameOfFile = "")
         {
+            if (nameOfFile.Length > 4)
+            {
+                nameOfFile = nameOfFile.Substring(0, nameOfFile.Length - 4);
+                nameOfFile += ".pdf";
+            }
             string filePath = null;
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
@@ -95,6 +100,11 @@ namespace BSC_Stand.Services
 
         public string SaveXLSXileDialog(string Title = "Сохранить файл", string nameOfFile = "")
         {
+            if (nameOfFile.Length > 4)
+            {
+                nameOfFile = nameOfFile.Substring(0, nameOfFile.Length - 4);
+                nameOfFile += ".xlsx";
+            }
             string filePath = null;
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
