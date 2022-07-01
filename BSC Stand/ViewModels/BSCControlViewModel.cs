@@ -528,8 +528,9 @@ namespace BSC_Stand.ViewModels
                     _readingParams.I27Value = _modBusService.Read27BusAmperage();
                     _readingParams.V100Value = _modBusService.Read100BusVoltage();
                     _readingParams.I100Value = _modBusService.Read100BusAmperage();
-                    _readingParams.BSCTemperature = _modBusService.ReadDataFromOwenController();
-                    _readingParams.IBXATemperature = _modBusService.ReadDataFromOwenController();
+                    var result = _modBusService.ReadDataFromOwenController();
+                    _readingParams.BSCTemperature = result[0];
+                    _readingParams.IBXATemperature = result[1];
                     
                     CanReadPortsEthernet = true;
 

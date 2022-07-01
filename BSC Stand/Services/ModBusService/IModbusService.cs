@@ -10,7 +10,7 @@ namespace BSC_Stand.Services
 {
     internal interface IModbusService
     {
-        public Single ReadDataFromOwenController();
+        public float[] ReadDataFromOwenController();
         public bool GetOwenConnectionStatus();
         public  (string, bool) InitConnections();
         public bool GetConnectStatus();

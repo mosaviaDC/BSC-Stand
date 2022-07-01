@@ -243,29 +243,50 @@ namespace BSC_Stand.Services
         }
 
 
-        public Single ReadDataFromOwenController()
+        public float[] ReadDataFromOwenController()
         {
-            ushort[] result = new ushort[2];
+            var result = new ushort[4];
+            var res1 = new ushort[2]
+            {
+                  result[0],
+                  result[1],
+            }
+            ;
+            var res2 = new ushort[2]
+           {
+                  result[2],
+                  result[3]
+
+           };
             try
             {
-              result = owenController.ReadInputRegisters(1,0,2);
-              Debug.WriteLine($"{getValueByBytesResult(result)}");
-             
-                //for (int i=0; i < result1.Length; i++)
-                //{
-                //    Debug.Write(result1[i] + "*");
-                //}
-                //Debug.WriteLine(" ");
 
+                result = owenController.ReadHoldingRegisters(1, 0, 4);
+                res1 = new ushort[2]
+               {
+                  result[0],
+                  result[1],
+               }
+               ;
+                res2 = new ushort[2]
+              {
+                  result[2],
+                  result[3],
+
+              };
             }
             catch (Exception ex)
             {
 
-                 Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
-           
 
-            return getValueByBytesResult(result);
+
+            return new float[]
+            {
+                getValueByBytesResult(res2)-273.15f,
+                getValueByBytesResult(res1)-273.15f
+            };
         }
 
         public bool GetConnectStatus()
@@ -496,7 +517,7 @@ namespace BSC_Stand.Services
             IChargerSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM15",
+                PortName = "COM20",
                 StopBits = StopBits.One
 
 
@@ -674,7 +695,7 @@ namespace BSC_Stand.Services
         {
             owenControllerTCPCLient?.Dispose();
             owenControllerTCPCLient = new TcpClient();
-             owenControllerTCPCLient.Connect("192.168.0.15", 502);
+            owenControllerTCPCLient.Connect("192.168.0.15", 502);
             _statusBarViewModel.UpdateTaskProgress(75);
             owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
             return owenControllerTCPCLient.Connected;
@@ -689,7 +710,7 @@ namespace BSC_Stand.Services
             ITCSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM9",
+                PortName = "COM19",
                 StopBits = StopBits.One
              
 
@@ -721,7 +742,7 @@ namespace BSC_Stand.Services
             AkipSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM3",
+                PortName = "COM16",
                 StopBits = StopBits.One
 
             };
