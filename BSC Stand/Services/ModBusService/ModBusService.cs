@@ -49,15 +49,19 @@ namespace BSC_Stand.Services
 
         private const int OWEN_PORT = 502;
         private const string OWEN_IP = "192.168.0.15";
-        private string ITC_PORT_NAME = ConfigurationManager.AppSettings["ICharger_PORT_NAME"];
+        private string ITC_PORT_NAME = ConfigurationManager.AppSettings["ITC_PORT_NAME"];
         private  string AKIP_PORT_NAME = ConfigurationManager.AppSettings["AKIP_PORT_NAME"];
         private  string ICharger_PORT_NAME = ConfigurationManager.AppSettings["ICharger_PORT_NAME"];
+        private float TempKoef;
         public ModBusService(StatusBarViewModel statusBarViewModel)
         {
             _statusBarViewModel = statusBarViewModel;
             culture = new CultureInfo("en-Us");
-            Debug.WriteLine(ICharger_PORT_NAME);
-        }
+          
+            
+            TempKoef= Single.Parse(ConfigurationManager.AppSettings["TEMPKOEF"], CultureInfo.InvariantCulture);
+            
+    }
 
         public (string, bool) InitConnections()
         {
@@ -292,8 +296,8 @@ namespace BSC_Stand.Services
             return new float[]
             {
                 /// 0.83 = 300/
-                getValueByBytesResult(res2)*0.83f-273.15f,
-                getValueByBytesResult(res1)*0.83f-273.15f
+                getValueByBytesResult(res2)*TempKoef-273.15f,
+                getValueByBytesResult(res1)*TempKoef-273.15f
             };
         }
 
