@@ -881,7 +881,7 @@ namespace BSC_Stand.Services
             port.Write(":01w12=1,\n");
            
 
-            IChargerSerialPort.Write(query);
+            //IChargerSerialPort.Write(query);
             return port.ReadLine();
         }
 
