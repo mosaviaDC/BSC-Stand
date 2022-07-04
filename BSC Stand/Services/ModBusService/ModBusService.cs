@@ -815,7 +815,7 @@ namespace BSC_Stand.Services
             float[] results = new float[3];
             try
             {
-                lock (this)
+                lock (ITCSerialPort)
                 {
                     //TODO еще раз проверить параметры
 
@@ -852,7 +852,7 @@ namespace BSC_Stand.Services
             float[] results = new float[3];
             try
             {
-                lock (this)
+                lock (AkipSerialPort)
                 {
                     //TODO еще раз проверить параметры
 
@@ -914,7 +914,7 @@ namespace BSC_Stand.Services
             bool result = false;
            return await Task.Run(() =>
             {
-                lock (this)
+                lock (AkipSerialPort)
                 {
                     if (AkipSerialPort != null)
                     {
@@ -946,7 +946,7 @@ namespace BSC_Stand.Services
             bool result = false;    
           return  await Task.Run(() =>
             {
-                lock (this)
+                lock (ITCSerialPort)
                 {
                     if (ITCSerialPort != null)
                     {
