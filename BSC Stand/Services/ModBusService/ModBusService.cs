@@ -289,8 +289,8 @@ namespace BSC_Stand.Services
 
             return new float[]
             {
-                getValueByBytesResult(res2)-273.15f,
-                getValueByBytesResult(res1)-273.15f
+                (getValueByBytesResult(res2)-273.15f)*0.3f,
+                (getValueByBytesResult(res1)-273.15f)*0.3f
             };
         }
 
