@@ -634,12 +634,12 @@ namespace BSC_Stand.ViewModels
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {
                 WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Info);
-                _modBusService.SetIchargerValue("0001");
+                _modBusService.SetIchargerValue("0010");
             }
             else
             {
               
-              _modBusService.SetIchargerValue("0100");
+              _modBusService.SetIchargerValue("0200");
             }
         }
 

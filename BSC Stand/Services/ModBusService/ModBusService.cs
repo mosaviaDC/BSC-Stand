@@ -67,7 +67,7 @@ namespace BSC_Stand.Services
         {
             isBusy = true;
 
-            string ConnectionStatus = "";
+            string ConnectionStatus = $" ";
             _statusBarViewModel.SetNewTask(9);
             _modbusFactory = new ModbusFactory();
             ConnectStatus = false;
@@ -785,6 +785,8 @@ namespace BSC_Stand.Services
             try
             {
 
+                IChargerSerialPort.Write(":01w10=0000,\n");
+                IChargerSerialPort.Write(":01w11=0000,\n");
                 IChargerSerialPort.Write(":01w12=0,\n");
                 Debug.WriteLine(IChargerSerialPort.ReadLine());
                 if (AkipSerialPort != null  && ITCSerialPort != null)
@@ -884,9 +886,16 @@ namespace BSC_Stand.Services
 
         private string ReadICharger(SerialPort port)
         {
+
+
+            port.Write(":01w10=3000,\n");
+
+            port.Write(":01w11=0100,\n");
+
+            
             
             port.Write(":01w12=1,\n");
-           
+
 
             //IChargerSerialPort.Write(query);
             return port.ReadLine();
@@ -973,31 +982,45 @@ namespace BSC_Stand.Services
             bool result = false;
             return await Task.Run(() =>
             {
-                lock (this)
+                lock (IChargerSerialPort)
                 {
-                    if (IChargerSerialPort != null)
-                    {
-                        
 
-                        string query = ($":01w11={value},\n") ;
 
-                        IChargerSerialPort.Write(query);
-                        Debug.WriteLine(IChargerSerialPort.ReadLine());
-                      
-                        //IChargerSerialPort.Close();
-                        //IChargerSerialPort.Open();
-                        result = true;
-                        //teLine(query); Debug.Wri
-                        
-                    }
 
-                    else
-                    {
-                        result = false;
-                    }
+                    Debug.WriteLine("SetIcharger");
 
+
+
+                    //if (IChargerSerialPort != null)
+                    //{
+                    //  IChargerSerialPort.Open();
+
+               
+                  //  IChargerSerialPort.Write($":01w12=0,\n");
+
+
+                    string query = ($":01w11={value},\n");
+
+                    IChargerSerialPort.Write(query);
+           
+                    //   IChargerSerialPort.Write($":01w12=1,\n");
+                    // Debug.WriteLine(IChargerSerialPort.ReadLine());
+
+                    //IChargerSerialPort.Close();
+                    //IChargerSerialPort.Open();
+                    result = true;
+                    //teLine(query); Debug.Wri
+                    //  IChargerSerialPort.Close();
+
+
+                    //else
+                    //{
+                    //    result = false;
+                    //}
+
+
+                    return result;
                 }
-                return result;
             });
 
 
