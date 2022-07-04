@@ -14,6 +14,7 @@ using System.IO.Ports;
 using NModbus.Serial;
 using NModbus.IO;
 using System.Globalization;
+using System.Configuration;
 
 namespace BSC_Stand.Services
 {
@@ -48,13 +49,14 @@ namespace BSC_Stand.Services
 
         private const int OWEN_PORT = 502;
         private const string OWEN_IP = "192.168.0.15";
-        private const string ITC_PORT_NAME = "COM3";
-        private const string AKIP_PORT_NAME = "COM4";
-        private const string ICharger_PORT_NAME = "COM17";
+        private string ITC_PORT_NAME = ConfigurationManager.AppSettings["ICharger_PORT_NAME"];
+        private  string AKIP_PORT_NAME = ConfigurationManager.AppSettings["AKIP_PORT_NAME"];
+        private  string ICharger_PORT_NAME = ConfigurationManager.AppSettings["ICharger_PORT_NAME"];
         public ModBusService(StatusBarViewModel statusBarViewModel)
         {
             _statusBarViewModel = statusBarViewModel;
             culture = new CultureInfo("en-Us");
+            Debug.WriteLine(ICharger_PORT_NAME);
         }
 
         public (string, bool) InitConnections()
