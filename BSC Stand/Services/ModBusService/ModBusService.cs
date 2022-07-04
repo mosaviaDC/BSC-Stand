@@ -48,9 +48,9 @@ namespace BSC_Stand.Services
 
         private const int OWEN_PORT = 502;
         private const string OWEN_IP = "192.168.0.15";
-        private const string ITC_PORT_NAME = "COM19";
-        private const string AKIP_PORT_NAME = "COM16";
-
+        private const string ITC_PORT_NAME = "COM3";
+        private const string AKIP_PORT_NAME = "COM4";
+        private const string ICharger_PORT_NAME = "COM17";
         public ModBusService(StatusBarViewModel statusBarViewModel)
         {
             _statusBarViewModel = statusBarViewModel;
@@ -522,7 +522,7 @@ namespace BSC_Stand.Services
             IChargerSerialPort = new SerialPort()
             {
                 BaudRate = 9600,
-                PortName = "COM20",
+                PortName = ICharger_PORT_NAME,
                 StopBits = StopBits.One
 
 
@@ -777,6 +777,9 @@ namespace BSC_Stand.Services
         {
             try
             {
+
+                IChargerSerialPort.Write(":01w12=0,\n");
+                Debug.WriteLine(IChargerSerialPort.ReadLine());
                 if (AkipSerialPort != null  && ITCSerialPort != null)
                 {
 
@@ -788,6 +791,7 @@ namespace BSC_Stand.Services
                                        INPUT 0
                                        SYST:LOC");
 
+                 
                 }
              
             }
@@ -797,7 +801,7 @@ namespace BSC_Stand.Services
             }
         }
 
-        public async Task<float[]> ReadITCSerialPort()
+        public float[] ReadITCSerialPort()
         {
             float[] results = new float[3];
             try
@@ -834,7 +838,7 @@ namespace BSC_Stand.Services
 
 
         }
-        public async Task<float[]> ReadAkipSerialPort()
+        public float[] ReadAkipSerialPort()
         {
             float[] results = new float[3];
             try
@@ -874,10 +878,11 @@ namespace BSC_Stand.Services
         private string ReadICharger(SerialPort port)
         {
             
-            port.WriteLine(@":01r33=0");
-            string r = port.ReadLine();
-            // Debug.WriteLine(r);
-            return r;
+            port.Write(":01w12=1,\n");
+           
+
+            IChargerSerialPort.Write(query);
+            return port.ReadLine();
         }
 
         private string ReadIDN(SerialPort port)
@@ -965,16 +970,18 @@ namespace BSC_Stand.Services
                 {
                     if (IChargerSerialPort != null)
                     {
-                        IChargerSerialPort.Close();
-                        IChargerSerialPort.Open();
-                        string query = ($"01w11={value}");
+                        
 
-                        IChargerSerialPort.WriteLine(query);
-                        IChargerSerialPort.Close();
-                        IChargerSerialPort.Open();
+                        string query = ($":01w11={value},\n") ;
+
+                        IChargerSerialPort.Write(query);
+                        Debug.WriteLine(IChargerSerialPort.ReadLine());
+                      
+                        //IChargerSerialPort.Close();
+                        //IChargerSerialPort.Open();
                         result = true;
-                        // Debug.WriteLine(query);
-
+                        //teLine(query); Debug.Wri
+                        
                     }
 
                     else

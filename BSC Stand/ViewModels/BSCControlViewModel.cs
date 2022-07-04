@@ -552,7 +552,7 @@ namespace BSC_Stand.ViewModels
                 if (CanReadPortsSerial)
                 {
                     CanReadPortsSerial = false;
-                    var result = _modBusService.ReadITCSerialPort().Result;
+                    var result = _modBusService.ReadITCSerialPort();
                     if (result != null)
                     {
 
@@ -565,7 +565,7 @@ namespace BSC_Stand.ViewModels
 
                     }
 
-                    result = _modBusService.ReadAkipSerialPort().Result;
+                    result = _modBusService.ReadAkipSerialPort();
 
                     if (result != null)
                     {
@@ -638,6 +638,7 @@ namespace BSC_Stand.ViewModels
             }
             else
             {
+                Debug.WriteLine("hello");
               _modBusService.SetIchargerValue("0100");
             }
         }
