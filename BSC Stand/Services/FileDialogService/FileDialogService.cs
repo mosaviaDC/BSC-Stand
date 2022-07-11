@@ -14,7 +14,7 @@ namespace BSC_Stand.Services
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Filter = ("(*.json) |*.json"),
-                InitialDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Конфигурация экспериментов",
+                InitialDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Конфигурация экспериментов",
                 Title = Title
             };
 
@@ -32,7 +32,7 @@ namespace BSC_Stand.Services
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Filter = ("(*.csv)|*.csv"),
-                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\CSV",
+                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\CSV",
                 Title = Title
             };
 
@@ -65,7 +65,7 @@ namespace BSC_Stand.Services
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
-                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Конфигурация экспериментов",
+                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Конфигурация экспериментов",
                 Filter = "(*.json) |*.json"
             };
             if (saveFileDialog.ShowDialog() == true)
@@ -87,7 +87,7 @@ namespace BSC_Stand.Services
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
-                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\PDF",
+                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\PDF",
                 FileName = nameOfFile,
                 Filter = "(*.pdf) |*.pdf"
             };
@@ -109,7 +109,7 @@ namespace BSC_Stand.Services
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = Title,
-                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\XLSX",
+                InitialDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\XLSX",
                 FileName = nameOfFile,
                 Filter = "(*.XLSX) |*.XLSX"
             };

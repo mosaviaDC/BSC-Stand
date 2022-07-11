@@ -81,7 +81,7 @@ namespace BSC_Stand.ViewModels
                     if (result != null)
                     {
                         _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes,  result.PowerSupplyConfigModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount, result.PowerSupplyCyclogramRepeatCount);
-                        Title = $"{Path.GetFileName(CurrentOpenedFileName)} - ЭО БСК";
+                        Title = $"{Path.GetFileName(CurrentOpenedFileName)} - CИ СГЭ";
                     }
                 }
 
@@ -111,7 +111,7 @@ namespace BSC_Stand.ViewModels
 
         private void CheckFile(object p)
         {
-            Title = $"{Path.GetFileName(CurrentOpenedFileName)}* - ЭО БСК";
+            Title = $"{Path.GetFileName(CurrentOpenedFileName)}* - СИ СГЭ";
         }
 
 
@@ -125,7 +125,7 @@ namespace BSC_Stand.ViewModels
             {
                 await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.PowerSupplyConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount, _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount);
 
-                Title = $"{Path.GetFileName(CurrentOpenedFileName)} - ЭО БСК";
+                Title = $"{Path.GetFileName(CurrentOpenedFileName)} - СИ СГЭ";
 
 
             }
@@ -135,7 +135,7 @@ namespace BSC_Stand.ViewModels
                 if (CurrentOpenedFileName != null)
 
                     await _projectConfigurationService.SaveProjectConfiguration(CurrentOpenedFileName, _standConfigurationViewModel.Bus27ConfigurationModes, _standConfigurationViewModel.Bus100ConfigurationModes, _standConfigurationViewModel.PowerSupplyConfigurationModes, _standConfigurationViewModel.V27BusCyclogramRepeatCount, _standConfigurationViewModel.V100BusCyclogramRepeatCount, _standConfigurationViewModel.PowerSupplyCyclogramRepeatCount);
-                Title = $"{Path.GetFileName(CurrentOpenedFileName)} - ЭО БСК";
+                Title = $"{Path.GetFileName(CurrentOpenedFileName)} - СИ СГЭ";
             }
 
 
@@ -188,15 +188,15 @@ namespace BSC_Stand.ViewModels
             OpenPeriodStandParamsControlWindowCommand = new ActionCommand(OpenPeriodStandParamsControlWindowCommandExecute);
             #endregion
             //timer.Start();
-            _Title = "ЭО БСК";
+            _Title = "СИ СГЭ";
 
             string[] dirs = {
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК",
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Конфигурация экспериментов",
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты",
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\CSV",
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\PDF",
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\XLSX",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Конфигурация экспериментов",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\CSV",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\PDF",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\XLSX",
             };
 
             foreach (string dir in dirs)

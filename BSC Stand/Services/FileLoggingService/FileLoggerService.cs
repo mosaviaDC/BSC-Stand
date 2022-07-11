@@ -19,7 +19,8 @@ namespace BSC_Stand.Services
 
         public void CreateFile()
         {
-            FilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\ЭО БСК\Отчеты\CSV\Отчет от {DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}.{DateTime.Now.Minute}.csv";
+            FilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\
+\Отчеты\CSV\Отчет от {DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year} {DateTime.Now.Hour}.{DateTime.Now.Minute}.csv";
             File.CreateText(FilePath).Close();
             using (var stream = File.Open(FilePath, FileMode.Append))
             using (var writer = new StreamWriter(stream))
