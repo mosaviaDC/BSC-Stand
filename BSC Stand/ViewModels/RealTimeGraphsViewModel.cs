@@ -817,9 +817,9 @@ namespace BSC_Stand.ViewModels
             {
                 LineSeries[,] series = new LineSeries[3, 15]
                 {
-                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TIBXASeries, TBSCSeries, TetronVSeries, TetronASeries, TetronWSeries },
-                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2, TIBXASeries2, TBSCSeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
-                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3, TIBXASeries3, TBSCSeries3, TetronVSeries3, TetronASeries3, TetronWSeries3 }
+                    { ITCVSeries, ITCASeries, ITCWSeries, AKIPASeries, AKIPVSeries, AKIPWSeries, V27Series, I27Series, V100Series, I100Series, TBSCSeries,TIBXASeries, TetronVSeries, TetronASeries, TetronWSeries },
+                    { ITCVSeries2, ITCASeries2, ITCWSeries2, AKIPASeries2, AKIPVSeries2, AKIPWSeries2, V27Series2, I27Series2, V100Series2, I100Series2,  TBSCSeries2, TIBXASeries2, TetronVSeries2, TetronASeries2, TetronWSeries2 },
+                    { ITCVSeries3, ITCASeries3, ITCWSeries3, AKIPASeries3, AKIPVSeries3, AKIPWSeries3, V27Series3, I27Series3, V100Series3, I100Series3,TBSCSeries3, TIBXASeries3,  TetronVSeries3, TetronASeries3, TetronWSeries3 }
                 };
 
 
@@ -1473,8 +1473,8 @@ namespace BSC_Stand.ViewModels
             #region AddSerieToPlot
             //Add Series to Plot Models (Порядок в легенде меняется тут)
             {
-                PlotModel1.Series.Add(TIBXASeries);
                 PlotModel1.Series.Add(TBSCSeries);
+                PlotModel1.Series.Add(TIBXASeries);
 
                 PlotModel1.Series.Add(V27Series);
                 PlotModel1.Series.Add(I27Series);
@@ -1495,9 +1495,9 @@ namespace BSC_Stand.ViewModels
                 PlotModel1.Series.Add(TetronWSeries);
             }
             {
-                PlotModel2.Series.Add(TIBXASeries2);
                 PlotModel2.Series.Add(TBSCSeries2);
-
+                PlotModel2.Series.Add(TIBXASeries2);
+                
                 PlotModel2.Series.Add(V27Series2);
                 PlotModel2.Series.Add(I27Series2);
 
@@ -1518,8 +1518,9 @@ namespace BSC_Stand.ViewModels
             }
 
             {
-                PlotModel3.Series.Add(TIBXASeries3);
                 PlotModel3.Series.Add(TBSCSeries3);
+                PlotModel3.Series.Add(TIBXASeries3);
+               
 
                 PlotModel3.Series.Add(V27Series3);
                 PlotModel3.Series.Add(I27Series3);

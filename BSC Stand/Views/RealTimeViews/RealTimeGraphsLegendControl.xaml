@@ -16,17 +16,19 @@
                         
 
                         <WrapPanel Orientation="Vertical">
-                      
+
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible}" ></CheckBox>
-                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
+                                <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible}"></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible}"></CheckBox>
-                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
+                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible}" ></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
                             </StackPanel>
+
+                           
 
                             <StackPanel Orientation="Horizontal">
                                     <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible}" ></CheckBox>
@@ -95,13 +97,16 @@
                         <WrapPanel Orientation="Vertical">
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible2}" ></CheckBox>
-                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
+                                <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible2}" ></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible2}"></CheckBox>
-                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
+                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible2}"></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
                             </StackPanel>
+                            
+                            
+                            
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible2}" ></CheckBox>
                                 <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="V шины 27В"></TextBlock>
@@ -169,12 +174,12 @@
                         <WrapPanel Orientation="Vertical">
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible3}" ></CheckBox>
-                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
+                                <CheckBox  Grid.Row="0" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible3}" ></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TBSCSeriesVisible3}"></CheckBox>
-                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ЭО БСК"></TextBlock>
+                                <CheckBox  Grid.Row="1" Grid.Column="0" IsChecked="{Binding TIBXASeriesVisible3}"></CheckBox>
+                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Т°C ИБХА"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox  Grid.Row="2" Grid.Column="0" IsChecked="{Binding V27SeriesVisible3}" ></CheckBox>
