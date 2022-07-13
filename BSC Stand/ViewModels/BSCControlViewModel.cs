@@ -490,7 +490,7 @@ namespace BSC_Stand.ViewModels
             TetronAValue = "A Нет данных";
             TetronVValue = "V Нет данных";
             TetronWValue = "W Нет данных";
-            if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(5)) // 
+            if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(30)) // 
             {
            
                 WriteMessage("Необходимо выполнить периодическую проверку оборудования", MessageType.Ошибка);

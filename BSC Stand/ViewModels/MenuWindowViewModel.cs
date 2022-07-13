@@ -192,7 +192,7 @@ namespace BSC_Stand.ViewModels
 
             string[] dirs = {
                 $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ",
-                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Конфигурация экспериментов",
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Конфигурации экспериментов",
                 $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты",
                 $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\CSV",
                 $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\СИ СГЭ\Отчеты\PDF",

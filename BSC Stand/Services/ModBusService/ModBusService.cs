@@ -81,40 +81,34 @@ namespace BSC_Stand.Services
             } 
             catch (Exception ex)
             {
-               
                 ConnectStatus = false;
-              
+                
             }
             finally
             {
-                if (!ConnectStatus)
-                {
-                    ConnectionStatus += $"Ошибка при подключении к Juntek \n";
-
-                }
-               
+               if (!ConnectStatus)
+                ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к понижающему конвертуру \n";
             }
 
             //Akip Port
             _statusBarViewModel.UpdateTaskProgress(2);
             try
             {
-          
                 ConnectStatus = ConnectStatus && InitAkipPort();
             }
             catch (Exception ex)
             {
                 ConnectStatus = false;
-                ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к АКИП {ex.Message}";
+               
             }
             finally
             {
                 if (!ConnectStatus)
                 {
-                    ConnectionStatus += $"Ошибка при подключении к АКИП \n";
-
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к АКИП \n";
                 }
             }
+          
 
             //ITC Port
             _statusBarViewModel.UpdateTaskProgress(3);
@@ -125,15 +119,13 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus =  $"Ошибка при подключении к ITC8515C+ {ex.Message}";
                 ConnectStatus = false;
             }
             finally
             {
                 if (!ConnectStatus)
                 {
-                    ConnectionStatus += $"Ошибка при подключении к ITC8516C+ \n";
-
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к ITC8515C\n";
                 }
             }
 
@@ -156,10 +148,10 @@ namespace BSC_Stand.Services
             {
                 if (!ConnectStatus)
                 {
-                    ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 100В\n";
-
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к ITC8515C\n";
                 }
             }
+          
             ////V27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(6);
             try
@@ -172,14 +164,7 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
-            finally
-            {
-                if (!ConnectStatus)
-                {
-                    ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В\n";
 
-                }
-            }
 
             //I27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(7);
@@ -193,14 +178,7 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
-            finally
-            {
-                if (!ConnectStatus)
-                {
-                    ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В \n";
-
-                }
-            }
+          
 
             //Owen Controller
             _statusBarViewModel.UpdateTaskProgress(8);
@@ -214,14 +192,7 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
                 ConnectStatus = false;
             }
-            finally
-            {
-                if (!ConnectStatus)
-                {
-                    ConnectionStatus += $"Ошибка при подключении к ОВЕН \n";
-
-                }
-            }
+          
 
             _statusBarViewModel.UpdateTaskProgress(8);
             try
@@ -234,14 +205,8 @@ namespace BSC_Stand.Services
                 ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
                 ConnectStatus = false;
             }
-            finally
-            {
-                if (!ConnectStatus)
-                {
-                    ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В\n";
-
-                }
-            }
+          
+            
 
 
 
@@ -302,7 +267,9 @@ namespace BSC_Stand.Services
             return new float[]
             {
                -1,
-               -1,-1,-1
+               -1,
+               -1,
+               -1
             };
         }
 
