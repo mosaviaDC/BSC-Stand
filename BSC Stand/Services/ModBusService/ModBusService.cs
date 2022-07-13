@@ -985,8 +985,9 @@ namespace BSC_Stand.Services
         public async Task<bool> SetPowerSupplyValue(double AValue, double VValue)
         {
             //PowerSupplyModbusController.WriteSingleRegister
-
-
+            Debug.WriteLine($"Amperage {AValue} Voltage{VValue}");
+            PowerSupplyModbusController.WriteSingleRegister(1, 5, (ushort) VValue); //Настройка напряжения
+            PowerSupplyModbusController.WriteSingleRegister(1, 3, (ushort) AValue);//Предел тока
             return true;
         }
 
