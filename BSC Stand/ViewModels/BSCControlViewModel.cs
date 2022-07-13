@@ -629,7 +629,7 @@ namespace BSC_Stand.ViewModels
                 return;
             }
             PowerSupplySelectedIndex = commandParams.SelectedIndex;
-            _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
+           _modBusService.SetPowerSupplyValue(((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue, ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1);
             WriteMessage($"Отправлена команда на источник питания: A:{ ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} V:{((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Info);
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {

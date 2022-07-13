@@ -256,48 +256,53 @@ namespace BSC_Stand.Services
 
         public float[] ReadDataFromOwenController()
         {
-            var result = new ushort[4];
-            var res1 = new ushort[2]
-            {
-                  result[0],
-                  result[1],
-            }
-            ;
-            var res2 = new ushort[2]
-           {
-                  result[2],
-                  result[3]
+            // var result = new ushort[4];
+            // var res1 = new ushort[2]
+            // {
+            //       result[0],
+            //       result[1],
+            // }
+            // ;
+            // var res2 = new ushort[2]
+            //{
+            //       result[2],
+            //       result[3]
 
-           };
-            try
-            {
+            //};
+            // try
+            // {
 
-                result = owenController.ReadHoldingRegisters(1, 0, 4);
-                res1 = new ushort[2]
-               {
-                  result[0],
-                  result[1],
-               }
-               ;
-                res2 = new ushort[2]
-              {
-                  result[2],
-                  result[3],
+            //     result = owenController.ReadHoldingRegisters(1, 0, 4);
+            //     res1 = new ushort[2]
+            //    {
+            //       result[0],
+            //       result[1],
+            //    }
+            //    ;
+            //     res2 = new ushort[2]
+            //   {
+            //       result[2],
+            //       result[3],
 
-              };
-            }
-            catch (Exception ex)
-            {
+            //   };
+            // }
+            // catch (Exception ex)
+            // {
 
-                Debug.WriteLine(ex.Message);
-            }
+            //     Debug.WriteLine(ex.Message);
+            // }
 
 
+            // return new float[]
+            // {
+            //     /// 0.83 = 300/
+            //     getValueByBytesResult(res2)*TempKoef-273.15f,
+            //     getValueByBytesResult(res1)*TempKoef-273.15f
+            // };
             return new float[]
             {
-                /// 0.83 = 300/
-                getValueByBytesResult(res2)*TempKoef-273.15f,
-                getValueByBytesResult(res1)*TempKoef-273.15f
+               -1,
+               -1,-1,-1
             };
         }
 
@@ -705,12 +710,13 @@ namespace BSC_Stand.Services
 
         private bool InitOwenController()
         {
-            owenControllerTCPCLient?.Dispose();
-            owenControllerTCPCLient = new TcpClient();
-            owenControllerTCPCLient.Connect(OWEN_IP, OWEN_PORT);
-            _statusBarViewModel.UpdateTaskProgress(75);
-            owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
-            return owenControllerTCPCLient.Connected;
+            //    owenControllerTCPCLient?.Dispose();
+            //    owenControllerTCPCLient = new TcpClient();
+            //    owenControllerTCPCLient.Connect(OWEN_IP, OWEN_PORT);
+            //    _statusBarViewModel.UpdateTaskProgress(75);
+            //    owenController = _modbusFactory.CreateMaster(owenControllerTCPCLient);
+            //    return owenControllerTCPCLient.Connected;
+            return true;
         }
 
         private bool InitITCPort()
@@ -976,6 +982,13 @@ namespace BSC_Stand.Services
             
         }
 
+        public async Task<bool> SetPowerSupplyValue(double AValue, double VValue)
+        {
+            //PowerSupplyModbusController.WriteSingleRegister
+
+
+            return true;
+        }
 
         public async Task<bool> SetIchargerValue(string value)
         {
