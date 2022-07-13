@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BSC_Stand.Models
 {
     public enum  MessageType {
-        Info,
-        Warning,
+        Инфо,
+        Ошибка,
     }
 }

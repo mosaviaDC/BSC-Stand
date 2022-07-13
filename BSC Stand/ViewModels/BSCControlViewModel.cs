@@ -69,7 +69,7 @@ namespace BSC_Stand.ViewModels
                 _realTimeGraphsViewModel.ResetAllAxes();
                 _fileLoggerService.CreateFile(); 
                 GC.Collect();
-                WriteMessage("Начало эксперимента", MessageType.Info);
+                WriteMessage("Начало эксперимента", MessageType.Инфо);
                 _realTimeStandControlService.StartExpirent();
                 StartTime = DateTime.Now;
                 //   UpdateDataTimer?.Start();
@@ -100,7 +100,7 @@ namespace BSC_Stand.ViewModels
                 }
                 else
                 {
-                    WriteMessage("Проверка подключения", MessageType.Info);
+                    WriteMessage("Проверка подключения", MessageType.Инфо);
 
                     if (!UpdateDataTimer.IsEnabled)
                     {
@@ -114,15 +114,15 @@ namespace BSC_Stand.ViewModels
 
                         if (!result.Item2)
                         {
-                            WriteMessage(result.Item1, MessageType.Warning);
-                            WriteMessage("Ошибка при проверке подключения", MessageType.Warning);
+                            WriteMessage(result.Item1, MessageType.Ошибка);
+                            WriteMessage("Ошибка при проверке подключения", MessageType.Ошибка);
 
 
                             //UpdateDataTimer.Start();
                         }
                         else
                         {
-                            WriteMessage("Проверка подключения завершена успешно", MessageType.Info);
+                            WriteMessage("Проверка подключения завершена успешно", MessageType.Инфо);
                            
                             StartTime = DateTime.Now;
                            UpdateDataTimer.Start();
@@ -150,7 +150,7 @@ namespace BSC_Stand.ViewModels
                 return;
 
             }
-            WriteMessage("Эксперимент остановлен", MessageType.Info);
+            WriteMessage("Эксперимент остановлен", MessageType.Инфо);
             _modBusService.ExitCommand();
             _realTimeStandControlService.StopExpirement();
 
@@ -493,7 +493,7 @@ namespace BSC_Stand.ViewModels
             if  (DateTime.Now - Properties.Settings.Default.LastCheckDateTime > TimeSpan.FromDays(5)) // 
             {
            
-                WriteMessage("Необходимо выполнить периодическую проверку оборудования", MessageType.Warning);
+                WriteMessage("Необходимо выполнить периодическую проверку оборудования", MessageType.Ошибка);
             }
             #endregion
             Task.Factory.StartNew(() =>
@@ -607,7 +607,7 @@ namespace BSC_Stand.ViewModels
             }
             V27SelectedIndex = commandParams.SelectedIndex;
             _modBusService.SetAKIPPowerValue(commandParams.configurationMode.MaxValue);
-            WriteMessage($"Отправлена команда на шину 27B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
+            WriteMessage($"Отправлена команда на шину 27B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Инфо);
         }
         public void SendV100ModBusCommand(CommandParams commandParams)
         {
@@ -618,7 +618,7 @@ namespace BSC_Stand.ViewModels
             }
             V100SelectedIndex = commandParams.SelectedIndex;
             _modBusService.SetITCPowerValue(commandParams.configurationMode.MaxValue);
-            WriteMessage($"Отправлена команда на шину 100B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Info);
+            WriteMessage($"Отправлена команда на шину 100B: постоянная мощность (СW) {commandParams.configurationMode.MaxValue}Вт", MessageType.Инфо);
         }
         public void SendPowerSupplyCommand(CommandParams commandParams)
         {
@@ -630,10 +630,10 @@ namespace BSC_Stand.ViewModels
             }
             PowerSupplySelectedIndex = commandParams.SelectedIndex;
            _modBusService.SetPowerSupplyValue(((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue, ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1);
-            WriteMessage($"Отправлена команда на источник питания: A:{ ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} V:{((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Info);
+            WriteMessage($"Отправлена команда на источник питания: A:{ ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} V:{((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Инфо);
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {
-                WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Info);
+                WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Инфо);
                 _modBusService.SetIchargerValue("0010");
             }
             else
