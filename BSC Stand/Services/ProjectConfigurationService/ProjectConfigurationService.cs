@@ -24,16 +24,17 @@ namespace BSC_Stand.Services
 
         public async Task<FileProjectConfigurationModel> GetProjectConfiguration(string FilePath)
         {
-            _statusBarViewModel.SetNewTask(100);
+            _statusBarViewModel.SetNewTask(100,"Импорт конфигурации");
 
             using FileStream openStream = File.OpenRead(FilePath);
-            _statusBarViewModel.UpdateTaskProgress(50);
-            _statusBarViewModel.SetNewTask();
+            
+       
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
             {
                
                 ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
             };
+            _statusBarViewModel.UpdateTaskProgress(100);
             return await JsonSerializer.DeserializeAsync<FileProjectConfigurationModel>(openStream,jsonSerializerOptions);
         }
 
@@ -60,7 +61,7 @@ namespace BSC_Stand.Services
 
         public async Task SaveProjectConfiguration(string filePath, ObservableCollection<ElectronicConfigMode> V27ConfigurationModes, ObservableCollection<ElectronicConfigMode> V100ConfigurationModes, ObservableCollection<PowerSupplyConfigMode> powerSupplyConfigModes,   int V27ConfigurationModesRepeatCount, int V100ConfigurationModesRepeatCount, int PowerSupplyRepeatCount)
         {
-            _statusBarViewModel.SetNewTask(100);
+            _statusBarViewModel.SetNewTask(100, "Экспорт конфигурации");
             FileProjectConfigurationModel projectConfiguration = new FileProjectConfigurationModel(V100ConfigurationModes, V27ConfigurationModes, powerSupplyConfigModes, V27ConfigurationModesRepeatCount, V100ConfigurationModesRepeatCount,PowerSupplyRepeatCount);
             _statusBarViewModel.UpdateTaskProgress(25);
 
@@ -75,7 +76,7 @@ namespace BSC_Stand.Services
             await JsonSerializer.SerializeAsync(createStream, projectConfiguration, jsonSerializerOptions);
             await createStream.DisposeAsync();
             _statusBarViewModel.UpdateTaskProgress(100);
-            _statusBarViewModel.SetNewTask();
+         
         }
     }
 }

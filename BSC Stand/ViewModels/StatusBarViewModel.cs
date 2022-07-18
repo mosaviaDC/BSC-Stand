@@ -46,18 +46,34 @@ namespace BSC_Stand.ViewModels
             set => Set(ref _CurrentProggreValue, value);
         }
 
+        private string _CurrentTaskName;
+        public string CurrentTaskName
+        {
+            get => _CurrentTaskName;
+            set => Set(ref _CurrentTaskName, value);
+           
+        }
 
 
 
-        public void SetNewTask(int MaxValue = 100)
+
+        public void SetNewTask(int MaxValue = 100, string TaskName ="")
         {
             CurrentProggresValue = 0;
             MaxStatusBarValue = MaxValue; 
+            CurrentTaskName = TaskName;
        
         }
         public void UpdateTaskProgress(int Value)
         {
            CurrentProggresValue = Value;
+            if (CurrentProggresValue == MaxStatusBarValue)
+            {
+            
+                CurrentTaskName = CurrentTaskName + ":Выполнено";
+                CurrentProggresValue = 0;
+                
+            }
         }
 
 

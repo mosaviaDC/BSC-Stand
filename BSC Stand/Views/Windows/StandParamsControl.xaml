@@ -18,9 +18,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[0]}" IsEnabled="{Binding CurrentProgressList[0]}" Header="Датчик температуры ИБХА">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Фактическая температура совпадает с измеренной?"></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding IBXATemperature}" FontWeight="Bold"></TextBlock>
@@ -32,9 +32,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[1]}" IsEnabled="{Binding CurrentProgressList[1]}" Header="Датчик температуры ЭОБСК">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Фактическая температура совпадает с измеренной?"></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding BSCTemperature}" FontWeight="Bold"></TextBlock>
@@ -46,9 +46,9 @@
             <TreeViewItem  IsExpanded="{Binding CurrentProgressList[2]}" IsEnabled="{Binding CurrentProgressList[2]}" Header="Измеритель напряжения шины 27В">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Фактическое напряжение  совпадает с измеренным"></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding V27Value}" FontWeight="Bold"></TextBlock>
@@ -60,9 +60,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[3]}" IsEnabled="{Binding CurrentProgressList[3]}" Header="Измеритель тока шины 27В">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Фактическая сила тока  совпадает с измеренной?"></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding I27Value}" FontWeight="Bold"></TextBlock>
@@ -73,9 +73,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[4]}" IsEnabled="{Binding CurrentProgressList[4]}" Header="Измеритель напряжения шины 100В">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Фактическое напряжение  совпадает с измеренным?"></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding V100Value}" FontWeight="Bold"></TextBlock>
@@ -87,9 +87,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[5]}" IsEnabled="{Binding CurrentProgressList[5]}" Header="Измеритель тока шины 100В">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Измеренная сила тока"></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding I100Value}" FontWeight="Bold"></TextBlock>
@@ -100,9 +100,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[6]}" IsEnabled="{Binding CurrentProgressList[6]}" Header="Нагрузка электронная АКИП-1381">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Установленный режим CW, значение W="></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding AKIPWValue}" FontWeight="Bold"></TextBlock>
@@ -114,9 +114,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[7]}" IsEnabled="{Binding CurrentProgressList[7]}" Header="Нагрузка электронная IT8516C+">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Установленный режим CW, значение W="></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding ITCWValue}" FontWeight="Bold"></TextBlock>
@@ -128,9 +128,9 @@
             <TreeViewItem IsExpanded="{Binding CurrentProgressList[8]}" IsEnabled="{Binding CurrentProgressList[8]}" Header="Программируемый источник питания Тетрон 15016С">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Установленный режис CC, значение V="></TextBlock>
                     <TextBlock  DataContext="{Binding  BSCControlViewModel, Source={StaticResource ViewModelLocator}}" Grid.Column="1" Text="{Binding TetronVValue}" FontWeight="Bold"></TextBlock>

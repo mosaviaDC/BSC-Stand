@@ -219,6 +219,7 @@ namespace BSC_Stand.Services
             }
             else
             {
+                //Одна из циклограмм не имеет не одного значения
                 Debug.WriteLine("Пустой конфиг");
             }
         }

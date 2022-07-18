@@ -77,7 +77,7 @@ namespace BSC_Stand.ViewModels
                 if (CurrentOpenedFileName.EndsWith(".json"))
                 {
                     var result = await _projectConfigurationService.GetProjectConfiguration(CurrentOpenedFileName);
-                    _statusBarViewModel.UpdateTaskProgress(100);
+                    
                     if (result != null)
                     {
                         _standConfigurationViewModel.UpdateConfigurationModes(result.V27BusConfigurationModes, result.V100BusConfigurationModes,  result.PowerSupplyConfigModes, result.V27BusCyclogramRepeatCount, result.V100BusCyclogramRepeatCount, result.PowerSupplyCyclogramRepeatCount);

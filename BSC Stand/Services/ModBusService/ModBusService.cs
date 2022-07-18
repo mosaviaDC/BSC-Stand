@@ -68,7 +68,7 @@ namespace BSC_Stand.Services
             isBusy = true;
 
             string ConnectionStatus = $" ";
-            _statusBarViewModel.SetNewTask(9);
+            _statusBarViewModel.SetNewTask(9,"Проверка подключения");
             _modbusFactory = new ModbusFactory();
             ConnectStatus = false;
 
@@ -105,7 +105,7 @@ namespace BSC_Stand.Services
             {
                 if (!ConnectStatus)
                 {
-                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к АКИП \n";
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к АКИП-1381\n";
                 }
             }
           
@@ -141,14 +141,14 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 100В {ex.Message}";
+                
                 ConnectStatus = false;
             }
             finally
             {
                 if (!ConnectStatus)
                 {
-                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к ITC8515C\n";
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к измерителю силы тока шины 100В\n";
                 }
             }
           
@@ -161,10 +161,17 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
+             //   ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
-
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к измерителю напряжения шины 27В\n";
+                }
+            }
+               
 
             //I27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(7);
@@ -175,10 +182,17 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
+               // ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
-          
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к измерителю напряжения шины 27В\n";
+                }
+            }
+
 
             //Owen Controller
             _statusBarViewModel.UpdateTaskProgress(8);
@@ -189,10 +203,17 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
+               // ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
                 ConnectStatus = false;
             }
-          
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к ПЛК ОВЕН\n";
+                }
+            }
+
 
             _statusBarViewModel.UpdateTaskProgress(8);
             try
@@ -202,11 +223,18 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
+                //ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
                 ConnectStatus = false;
             }
-          
-            
+            finally
+            {
+                if (!ConnectStatus)
+                {
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к измерителю напряжения шины 100В\n";
+                }
+            }
+
+
 
 
 
@@ -761,7 +789,7 @@ namespace BSC_Stand.Services
                 IChargerSerialPort.Write(":01w10=0000,\n");
                 IChargerSerialPort.Write(":01w11=0000,\n");
                 IChargerSerialPort.Write(":01w12=0,\n");
-                Debug.WriteLine(IChargerSerialPort.ReadLine());
+               // Debug.WriteLine(IChargerSerialPort.ReadLine());
                 if (AkipSerialPort != null  && ITCSerialPort != null)
                 {
 

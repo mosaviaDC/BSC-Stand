@@ -270,7 +270,7 @@ namespace BSC_Stand.ViewModels
             Label = Path.GetFileName((string)CurrentOpenedFileName);
             ClearGraphSerires();
             int i = 0;
-            _statusBarViewModel.SetNewTask(importResult.Count);
+            _statusBarViewModel.SetNewTask(importResult.Count, "Импорт протокола эксперимента");
             foreach (var readingParams in importResult)
             {
                 //ITCVSeries.Points.Add(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(UnixTimeStampToDateTime(readingParams.TimeStamp)), readingParams.ITCVValue));

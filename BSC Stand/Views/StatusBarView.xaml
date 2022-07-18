@@ -22,6 +22,10 @@
             <ProgressBar Width="150" Height="10" Value="{Binding CurrentProggresValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="{Binding MaxStatusBarValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
 
             </ProgressBar>
+         
+        </StatusBarItem>
+        <StatusBarItem HorizontalAlignment="Right" Margin="0,0,15,0">
+            <TextBox MinWidth="150" Text="{Binding CurrentTaskName}" TextAlignment="Right"/>
         </StatusBarItem>
 
 
