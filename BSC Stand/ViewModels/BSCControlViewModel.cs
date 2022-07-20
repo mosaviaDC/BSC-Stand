@@ -506,17 +506,11 @@ namespace BSC_Stand.ViewModels
         private async void UpdateDataTimer_Tick(object? sender, EventArgs e)
         {
 
-            //  DebugData();
-            var logTime = DateTime.Now;
-            // Debug.WriteLine($"{logTime} {DateTime.Now.Millisecond}");
-            ExpTimeSpan = logTime - StartTime;
-
-            ////Параметры эл нагрузок;
-            _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
-
            
-            //// Параметры с преобразователей
-            // Debug.WriteLine($"Before {DateTime.Now} {DateTime.Now.Millisecond}");
+            var logTime = DateTime.Now;
+    
+            ExpTimeSpan = logTime - StartTime;
+            _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
             _ = Task.Run(() =>
             {
 
@@ -532,25 +526,33 @@ namespace BSC_Stand.ViewModels
                     var result = _modBusService.ReadDataFromOwenController();
                     _readingParams.BSCTemperature = result[0];
                     _readingParams.IBXATemperature = result[1];
-                    
-                    CanReadPortsEthernet = true;
 
                     //TO DO чтение значений с ТЕТРОН
+                    _readingParams.TetronAValue = -1;
+                    _readingParams.TetronVValue = -1;
+                    _readingParams.TetronWValue = -1;
+                  
 
+                    CanReadPortsEthernet = true;
 
+             
+
+                    TetronVValue = _readingParams.TetronVValue.ToVoltageString();
+                    TetronAValue = _readingParams.TetronAValue.ToAmperageString();
+                    TetronWValue = _readingParams.TetronWValue.ToPowerString();
 
                     V27Value = _readingParams.V27Value.ToVoltageString();
                     I27Value = _readingParams.I27Value.ToAmperageString();
+
                     V100Value = _readingParams.V100Value.ToVoltageString();
                     I100Value = _readingParams.I100Value.ToAmperageString();
+
                     BSCTemperature = _readingParams.BSCTemperature.ToBSCTemperatureString();
                     IBXATemperature = _readingParams.IBXATemperature.ToIBXATemperatureString();
 
                 }
             });
 
-
-            // Debug.WriteLine($"After {DateTime.Now} {DateTime.Now.Millisecond}");
              _ = Task.Run(() =>
              {
                 if (CanReadPortsSerial)
@@ -588,11 +590,11 @@ namespace BSC_Stand.ViewModels
 
             if (_realTimeStandControlService.GetExperimentStatus())
             {
-                //// Debug.WriteLine(logTime);
                 _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
                 _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
                 _fileLoggerService.WriteLog(_readingParams);
 
+               
             }
 
         }
@@ -647,23 +649,7 @@ namespace BSC_Stand.ViewModels
             }
         }
 
-        private void DebugData()
-        {
-            var logTime = DateTime.Now;
 
-            ExpTimeSpan = logTime - StartTime;
-            //Изменение 2
-            //Параметры эл  нагрузок;
-            _readingParams.ExpTime = (float)ExpTimeSpan.TotalSeconds;
-            Random random = new Random();
-            _readingParams.V27Value = (float) (random.NextDouble() + 25);
-            if (_realTimeStandControlService.GetExperimentStatus())
-            {
-                _readingParams.TimeStamp = ((DateTimeOffset)logTime).ToUnixTimeSeconds();
-                _realTimeGraphsViewModel.UpdateGraphsSeries(this._readingParams);
-            }
-         
-        }
 
     }
 }
