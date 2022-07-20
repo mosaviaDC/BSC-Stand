@@ -535,6 +535,10 @@ namespace BSC_Stand.ViewModels
                     
                     CanReadPortsEthernet = true;
 
+                    //TO DO чтение значений с ТЕТРОН
+
+
+
                     V27Value = _readingParams.V27Value.ToVoltageString();
                     I27Value = _readingParams.I27Value.ToAmperageString();
                     V100Value = _readingParams.V100Value.ToVoltageString();
@@ -634,12 +638,12 @@ namespace BSC_Stand.ViewModels
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {
                 WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Инфо);
-                _modBusService.SetIchargerValue("0010");
+                _modBusService.SetIchargerValue("00010"); //0.01A
             }
             else
             {
               
-              _modBusService.SetIchargerValue("0200");
+              _modBusService.SetIchargerValue("00300"); //0.2A
             }
         }
 

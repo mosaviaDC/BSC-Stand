@@ -234,6 +234,25 @@ namespace BSC_Stand.Services
                 }
             }
 
+            //try
+            //{
+
+            //    ConnectStatus = ConnectStatus && InitPowerSupplyPort();
+            //}
+            //catch (Exception ex)
+            //{
+            //    //ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
+            //    ConnectStatus = false;
+            //}
+            //finally
+            //{
+            //    if (!ConnectStatus)
+            //    {
+            //        ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к источнику питания\n";
+            //    }
+            //}
+
+
 
 
 
@@ -785,10 +804,8 @@ namespace BSC_Stand.Services
         {
             try
             {
-
-                IChargerSerialPort.Write(":01w10=0000,\n");
-                IChargerSerialPort.Write(":01w11=0000,\n");
                 IChargerSerialPort.Write(":01w12=0,\n");
+                IChargerSerialPort.ReadLine();
                // Debug.WriteLine(IChargerSerialPort.ReadLine());
                 if (AkipSerialPort != null  && ITCSerialPort != null)
                 {
@@ -887,18 +904,7 @@ namespace BSC_Stand.Services
 
         private string ReadICharger(SerialPort port)
         {
-
-
-            port.Write(":01w10=3000,\n");
-
-            port.Write(":01w11=0100,\n");
-
-            
-            
-            port.Write(":01w12=1,\n");
-
-
-            //IChargerSerialPort.Write(query);
+            port.Write(":01w20=3000,00100,\n");
             return port.ReadLine();
         }
 
@@ -994,38 +1000,21 @@ namespace BSC_Stand.Services
                 lock (IChargerSerialPort)
                 {
 
+                    //   Debug.WriteLine(value);
 
+                    //  IChargerSerialPort.Write(":01w10=01000,\n");
 
-                    Debug.WriteLine("SetIcharger");
-
-
-
-                    //if (IChargerSerialPort != null)
-                    //{
-                    //  IChargerSerialPort.Open();
-
-               
-                  //  IChargerSerialPort.Write($":01w12=0,\n");
-
+                   
+                    
 
                     string query = ($":01w11={value},\n");
 
                     IChargerSerialPort.Write(query);
-           
-                    //   IChargerSerialPort.Write($":01w12=1,\n");
-                    // Debug.WriteLine(IChargerSerialPort.ReadLine());
-
-                    //IChargerSerialPort.Close();
+                    IChargerSerialPort.ReadLine();
+                    IChargerSerialPort.Write(":01w12=1,\n");
+                    IChargerSerialPort.ReadLine();
                     //IChargerSerialPort.Open();
                     result = true;
-                    //teLine(query); Debug.Wri
-                    //  IChargerSerialPort.Close();
-
-
-                    //else
-                    //{
-                    //    result = false;
-                    //}
 
 
                     return result;
