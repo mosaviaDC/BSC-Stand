@@ -639,13 +639,15 @@ namespace BSC_Stand.ViewModels
             WriteMessage($"Отправлена команда на источник питания: A:{ ((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue} V:{((PowerSupplyConfigMode)commandParams.configurationMode).MaxValue1 }", MessageType.Инфо);
             if (((PowerSupplyConfigMode)commandParams.configurationMode).Power == 0)
             {
-                WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Инфо);
-                _modBusService.SetIchargerValue("00010"); //0.01A
+                //   WriteMessage($"Ограничение тока заряда: 0.01A ", MessageType.Инфо);
+                //   _modBusService.SetIchargerValue("00010"); //0.01A
+                _modBusService.SetIchargerValue("0");// Выключаем выход DC-DC
             }
             else
             {
-              
-              _modBusService.SetIchargerValue("00300"); //0.2A
+
+                //_modBusService.SetIchargerValue("00300"); //0.2A
+                _modBusService.SetIchargerValue("1"); //Выход DC-DC активен
             }
         }
 

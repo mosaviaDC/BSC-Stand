@@ -904,7 +904,8 @@ namespace BSC_Stand.Services
 
         private string ReadICharger(SerialPort port)
         {
-            port.Write(":01w20=3000,00100,\n");
+            //   port.Write(":01w20=3000,00100,\n");
+            port.Write(":01w12=0,\n");
             return port.ReadLine();
         }
 
@@ -1007,11 +1008,13 @@ namespace BSC_Stand.Services
                    
                     
 
-                    string query = ($":01w11={value},\n");
+                    //string query = ($":01w11={value},\n");
 
-                    IChargerSerialPort.Write(query);
-                    IChargerSerialPort.ReadLine();
-                    IChargerSerialPort.Write(":01w12=1,\n");
+                    //IChargerSerialPort.Write(query);
+                    //IChargerSerialPort.ReadLine();
+
+                   
+                    IChargerSerialPort.Write($":01w12={value},\n");
                     IChargerSerialPort.ReadLine();
                     //IChargerSerialPort.Open();
                     result = true;
