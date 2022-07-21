@@ -50,25 +50,25 @@ namespace BSC_Stand.Services
         private const int OWEN_PORT = 502;
         private const string OWEN_IP = "192.168.0.15";
         private string ITC_PORT_NAME = ConfigurationManager.AppSettings["ITC_PORT_NAME"];
-        private  string AKIP_PORT_NAME = ConfigurationManager.AppSettings["AKIP_PORT_NAME"];
-        private  string ICharger_PORT_NAME = ConfigurationManager.AppSettings["ICharger_PORT_NAME"];
+        private string AKIP_PORT_NAME = ConfigurationManager.AppSettings["AKIP_PORT_NAME"];
+        private string ICharger_PORT_NAME = ConfigurationManager.AppSettings["ICharger_PORT_NAME"];
         private float TempKoef;
         public ModBusService(StatusBarViewModel statusBarViewModel)
         {
             _statusBarViewModel = statusBarViewModel;
             culture = new CultureInfo("en-Us");
-          
-            
-            TempKoef= Single.Parse(ConfigurationManager.AppSettings["TEMPKOEF"], CultureInfo.InvariantCulture);
-            
-    }
+
+
+            TempKoef = Single.Parse(ConfigurationManager.AppSettings["TEMPKOEF"], CultureInfo.InvariantCulture);
+
+        }
 
         public (string, bool) InitConnections()
         {
             isBusy = true;
 
             string ConnectionStatus = $" ";
-            _statusBarViewModel.SetNewTask(9,"Проверка подключения");
+            _statusBarViewModel.SetNewTask(9, "Проверка подключения");
             _modbusFactory = new ModbusFactory();
             ConnectStatus = false;
 
@@ -78,16 +78,16 @@ namespace BSC_Stand.Services
             {
 
                 ConnectStatus = InitICharger();
-            } 
+            }
             catch (Exception ex)
             {
                 ConnectStatus = false;
-                
+
             }
             finally
             {
-               if (!ConnectStatus)
-                ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к понижающему конвертуру \n";
+                if (!ConnectStatus)
+                    ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к понижающему конвертуру \n";
             }
 
             //Akip Port
@@ -99,7 +99,7 @@ namespace BSC_Stand.Services
             catch (Exception ex)
             {
                 ConnectStatus = false;
-               
+
             }
             finally
             {
@@ -108,13 +108,13 @@ namespace BSC_Stand.Services
                     ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к АКИП-1381\n";
                 }
             }
-          
+
 
             //ITC Port
             _statusBarViewModel.UpdateTaskProgress(3);
             try
             {
-              
+
                 ConnectStatus = ConnectStatus && InitITCPort();
             }
             catch (Exception ex)
@@ -141,7 +141,7 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-                
+
                 ConnectStatus = false;
             }
             finally
@@ -151,7 +151,7 @@ namespace BSC_Stand.Services
                     ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к измерителю силы тока шины 100В\n";
                 }
             }
-          
+
             ////V27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(6);
             try
@@ -161,7 +161,7 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-             //   ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
+                //   ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
             finally
@@ -171,7 +171,7 @@ namespace BSC_Stand.Services
                     ConnectionStatus = ConnectionStatus + $"Ошибка при подключении к измерителю напряжения шины 27В\n";
                 }
             }
-               
+
 
             //I27 Bus Port
             _statusBarViewModel.UpdateTaskProgress(7);
@@ -182,7 +182,7 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-               // ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
+                // ConnectionStatus += $"Ошибка при подключении к преобразователю силы тока шины 27В { ex.Message}";
                 ConnectStatus = false;
             }
             finally
@@ -203,7 +203,7 @@ namespace BSC_Stand.Services
             }
             catch (Exception ex)
             {
-               // ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
+                // ConnectionStatus += $"Ошибка при подключении к ОВЕН {ex.Message}";
                 ConnectStatus = false;
             }
             finally
@@ -355,7 +355,7 @@ namespace BSC_Stand.Services
             ushort[] result = new ushort[2];
             try
             {
-                result =  V27ModbusController.ReadInputRegisters(1, 7, 2);
+                result = V27ModbusController.ReadInputRegisters(1, 7, 2);
                 // Debug.WriteLine($" V27 Volt{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
@@ -373,7 +373,7 @@ namespace BSC_Stand.Services
             ushort[] result = new ushort[2];
             try
             {
-                result =  I27ModbusController.ReadInputRegisters(1, 7, 2);
+                result = I27ModbusController.ReadInputRegisters(1, 7, 2);
                 // Debug.WriteLine($" A27Amperage{result} {DateTime.Now} {DateTime.Now.Millisecond}");
             }
             catch (Exception ex)
@@ -386,19 +386,57 @@ namespace BSC_Stand.Services
         }
 
 
-        public async Task<float[]> ReadPowerSupplyParams()
+        public float[] ReadPowerSupplyParams()
         {
-          
-           return await Task.Run(() =>
+            var result = new ushort[4];
+            var res1 = new ushort[2]
             {
-                float[] result = new float[3];
-                result[0] = -1;
-                result[1] = -1;
-                result[2] = -1;
+                   result[0],
+                   result[1],
+            }
+            ;
+            var res2 = new ushort[2]
+           {
+                   result[2],
+                   result[3]
 
-                return result;
-            });
+           };
+            try
+            {
+                result = PowerSupplyModbusController.ReadHoldingRegisters(1, 1, 4); //0x0A01 - он же VMAx и 0x0A03 - он же IMAX
+                res1 = new ushort[2]
+               {
+                   result[0],
+                   result[1],
+               }
+               ;
+                res2 = new ushort[2]
+              {
+                   result[2],
+                   result[3],
+
+              };
+            }
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine(ex.Message);
+                return new float[]
+                {
+                    -1,
+                    -1
+                };
+            }
+
+
+            return new float[]
+            {
+
+                getValueByBytesResult(res2),
+                getValueByBytesResult(res1)
+            };
         }
+        
 
 
         public Single Read100BusVoltage()
@@ -681,7 +719,7 @@ namespace BSC_Stand.Services
             
 
 
-                if (PowerSupplyModbusController.ReadInputRegisters(1, 7, 2) != null)
+                if (PowerSupplyModbusController.ReadInputRegisters(1,0, 2) != null)
                 {
                     return true;
                 }
@@ -988,8 +1026,8 @@ namespace BSC_Stand.Services
         {
             //PowerSupplyModbusController.WriteSingleRegister
             Debug.WriteLine($"Amperage {AValue} Voltage{VValue}");
-            PowerSupplyModbusController.WriteSingleRegister(1, 5, (ushort) VValue); //Настройка напряжения
-            PowerSupplyModbusController.WriteSingleRegister(1, 3, (ushort) AValue);//Предел тока
+            await PowerSupplyModbusController.WriteSingleRegisterAsync(1, 1, (ushort) VValue); //Настройка напряжения 0x0A01
+            await PowerSupplyModbusController.WriteSingleRegisterAsync(1, 3, (ushort) AValue);//Предел тока 0x0A03
             return true;
         }
 

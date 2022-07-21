@@ -41,7 +41,7 @@ namespace BSC_Stand.Services
 
         public float[] ReadAkipSerialPort();
 
-        public Task<float[]> ReadPowerSupplyParams();
+        public float[] ReadPowerSupplyParams();
         public void ExitCommand();
         }
     }

@@ -527,15 +527,14 @@ namespace BSC_Stand.ViewModels
                     _readingParams.BSCTemperature = result[0];
                     _readingParams.IBXATemperature = result[1];
 
+                    //***************ЧТЕНИЕ ПАРАМЕТРОВ С ИСТОЧНИКА ПИТАНИЯ**********************
                     //TO DO чтение значений с ТЕТРОН
-                    _readingParams.TetronAValue = -1;
-                    _readingParams.TetronVValue = -1;
-                    _readingParams.TetronWValue = -1;
-                  
+                    //float[] TetronParams = _modBusService.ReadPowerSupplyParams();
+                    //_readingParams.TetronAValue = TetronParams[0];
+                    //_readingParams.TetronVValue = TetronParams[1];
+                    //_readingParams.TetronWValue = _readingParams.TetronAValue * _readingParams.TetronWValue;
 
                     CanReadPortsEthernet = true;
-
-             
 
                     TetronVValue = _readingParams.TetronVValue.ToVoltageString();
                     TetronAValue = _readingParams.TetronAValue.ToAmperageString();
