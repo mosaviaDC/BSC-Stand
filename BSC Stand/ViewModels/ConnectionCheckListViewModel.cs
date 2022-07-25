@@ -173,6 +173,8 @@ namespace BSC_Stand.ViewModels
             {
                 _modBusService.SetAKIPPowerValue(5);
                 _modBusService.SetITCPowerValue(10);
+              //  _modBusService.SetPowerSupplyValue(0, 2);
+
 
                 for (int i = 0; i < CurrentProgressList.Count; i++)
                 {
