@@ -234,6 +234,7 @@ namespace BSC_Stand.Services
                 }
             }
 
+            //PowerSupplyPower
             //try
             //{
 
@@ -241,7 +242,7 @@ namespace BSC_Stand.Services
             //}
             //catch (Exception ex)
             //{
-            //    //ConnectionStatus += $"Ошибка при подключении к преобразователю напряжения шины 100В{ex.Message}";
+            //    //ConnectionStatus += $"Ошибка при подключении к источнику питания{ex.Message}";
             //    ConnectStatus = false;
             //}
             //finally
@@ -403,7 +404,8 @@ namespace BSC_Stand.Services
            };
             try
             {
-                result = PowerSupplyModbusController.ReadHoldingRegisters(1, 1, 4); //0x0A01 - он же VMAx и 0x0A03 - он же IMAX
+                //Возможно не HoldingRegisters
+                result = PowerSupplyModbusController.ReadHoldingRegisters(1, 5, 7); //0x0A05 - он же VSet и 0x0A07 - он же ISet   
                 res1 = new ushort[2]
                {
                    result[0],
@@ -719,7 +721,7 @@ namespace BSC_Stand.Services
             
 
 
-                if (PowerSupplyModbusController.ReadInputRegisters(1,0, 2) != null)
+                if (PowerSupplyModbusController.ReadInputRegisters(1,5, 1) != null)
                 {
                     return true;
                 }
@@ -844,7 +846,11 @@ namespace BSC_Stand.Services
             {
                 IChargerSerialPort.Write(":01w12=0,\n");
                 IChargerSerialPort.ReadLine();
-               // Debug.WriteLine(IChargerSerialPort.ReadLine());
+
+                //PowerSupplyModbusController.WriteSingleRegisterAsync(1, 1, 0); //Настройка напряжения 0x0A01,устанавливаем как ноль
+                //PowerSupplyModbusController.WriteSingleRegisterAsync(1, 3, 0; //Предел тока 0x0A03б,устанавливаем как ноль
+                // PowerSupplyModbusController.WriteSingleCoils(1, 13, false);//Вылючение входа
+                //PowerSupplyModbusController.WriteSingleCoil(1, 0, false);//Выключение дист режима;
                 if (AkipSerialPort != null  && ITCSerialPort != null)
                 {
 
@@ -1024,10 +1030,12 @@ namespace BSC_Stand.Services
 
         public async Task<bool> SetPowerSupplyValue(double AValue, double VValue)
         {
-            //PowerSupplyModbusController.WriteSingleRegister
             Debug.WriteLine($"Amperage {AValue} Voltage{VValue}");
+            await PowerSupplyModbusController.WriteSingleCoilAsync(1, 0, true);// Перевеод в диистанционный режим
+            await PowerSupplyModbusController.WriteSingleCoilAsync(1, 13, true);//Включение входа
             await PowerSupplyModbusController.WriteSingleRegisterAsync(1, 1, (ushort) VValue); //Настройка напряжения 0x0A01
-            await PowerSupplyModbusController.WriteSingleRegisterAsync(1, 3, (ushort) AValue);//Предел тока 0x0A03
+            await PowerSupplyModbusController.WriteSingleRegisterAsync(1, 3, (ushort) AValue); //Предел тока 0x0A03
+            //Возможно, нужно использовать другие функции(Coil,Single,MultiplyRegisters)
             return true;
         }
 
